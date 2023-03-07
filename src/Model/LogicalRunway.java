@@ -12,9 +12,6 @@ public class LogicalRunway {
     private double newLda;
 
     //not sure if will be use
-    //displacedThreshold;
-    //private double clearway;
-    //private double stopway;
     //private double minCGArea;
     //private double maxCGArea;
 
@@ -26,26 +23,19 @@ public class LogicalRunway {
         this.lda = lda;
     }
 
-    public void setNewParameter(double newTora,double newAsda, double newToda, double newLda){
-        this.newTora = newTora;
-        this.newAsda = newAsda;
-        this.newToda = newToda;
-        this.newLda  = newLda ;
-    }
-
     @Override
     public String toString() {
-        return "LogicalRunway{" +
-                "designator='" + designator + '\'' +
-                ", tora=" + tora +
+        return "\nLogicalRunway{" +
+                "designator= '" + designator + '\'' +
+                "\n tora=" + tora +
                 ", toda=" + toda +
                 ", asda=" + asda +
                 ", lda=" + lda +
-                ", newTora=" + newTora +
+                "\n newTora=" + newTora +
                 ", newToda=" + newToda +
                 ", newAsda=" + newAsda +
                 ", newLda=" + newLda +
-                '}';
+                "}\n";
     }
 
     public String getDesignator() {
@@ -104,15 +94,31 @@ public class LogicalRunway {
         return newTora;
     }
 
+    public void setNewTora(double newTora) {
+        this.newTora = newTora;
+    }
+
     public double getNewToda() {
         return newToda;
+    }
+
+    public void setNewToda(double newToda) {
+        this.newToda = newToda;
     }
 
     public double getNewAsda() {
         return newAsda;
     }
 
+    public void setNewAsda(double newAsda) {
+        this.newAsda = newAsda;
+    }
+
     public double getNewLda() {
         return newLda;
+    }
+
+    public void setNewLda(double newLda) {
+        this.newLda = newLda;
     }
 }
