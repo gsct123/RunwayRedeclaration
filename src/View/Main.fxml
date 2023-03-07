@@ -4,8 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,7 +19,7 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="File">
           <items>
             <MenuItem mnemonicParsing="false" text="New" />
             <MenuItem mnemonicParsing="false" text="Open…" />
@@ -35,7 +35,7 @@
             <MenuItem mnemonicParsing="false" text="Quit" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
+        <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Edit">
           <items>
             <MenuItem mnemonicParsing="false" text="Undo" />
             <MenuItem mnemonicParsing="false" text="Redo" />
@@ -49,46 +49,45 @@
             <MenuItem mnemonicParsing="false" text="Unselect All" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Help">
+        <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Help">
           <items>
             <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
           </items>
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.2467, 0.7511" focusTraversable="true" opacity="0.23" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <items>
-        <AnchorPane>
-          <children>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Master" textAlignment="CENTER" wrapText="false">
-              <font>
-                <Font size="18.0" fx:id="x1" />
-              </font>
-              <textFill>
-                <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
-              </textFill>
-            </Label>
-          </children>
-        </AnchorPane>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
-          <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
-              <children>
-                <Label alignment="CENTER" layoutX="113.0" layoutY="19.0" style="&#10;" text="Runway Redeclaration" textAlignment="CENTER" wrapText="false">
-                           <font>
-                              <Font size="24.0" />
-                           </font></Label>
-              </children>
+      <Label alignment="CENTER" prefHeight="84.0" prefWidth="900.0" text="Runway Redeclaration" textAlignment="CENTER">
+         <font>
+            <Font name="Verdana Bold" size="39.0" />
+         </font>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </Label>
+      <SplitPane dividerPositions="0.3, 0.7" opacity="0.41" prefHeight="581.0" prefWidth="900.0" style="-fx-border-color: rgb(244,244,244);">
+         <items>
+            <AnchorPane prefHeight="494.0" prefWidth="256.0">
+               <children>
+                  <Label layoutX="5.0" layoutY="4.0" prefHeight="17.0" prefWidth="273.0" style="-fx-text-fill: #000000;" text="Airport and Obstacle Information">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" top="5.0" />
+                     </padding>
+                     <font>
+                        <Font name="Verdana Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <MenuButton layoutX="10.0" layoutY="44.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="225.0" text="Select An Airport">
+                    <items>
+                      <MenuItem fx:id="airportMenu" mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                  </MenuButton>
+               </children>
             </AnchorPane>
-          </content>
-        </ScrollPane>
-        <AnchorPane>
-          <children>
-            <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-          </children>
-        </AnchorPane>
-      </items>
-    </SplitPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+         </items>
+      </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
       <children>
         <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
