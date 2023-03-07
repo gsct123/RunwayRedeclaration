@@ -1,16 +1,20 @@
 package View;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
+        MainController controller = new MainController();
+        loader.setController(controller);
+        Parent root = loader.load();
         //sdf
         Scene scene = new Scene(root);
 
