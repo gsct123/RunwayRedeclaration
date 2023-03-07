@@ -6,6 +6,14 @@ public class Airport {
     private String name;
     private ObservableList<LogicalRunway> logicalRunways;
 
+    @Override
+    public String toString() {
+        return "Airport{" +
+                "name='" + name + '\'' +
+                "\n logicalRunways=" + logicalRunways +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
