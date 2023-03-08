@@ -16,6 +16,7 @@ public class Main extends Application {
         MainController controller = new MainController();
         loader.setController(controller);
         Parent root = loader.load();
+
         //sdf
         Scene scene = new Scene(root);
 
