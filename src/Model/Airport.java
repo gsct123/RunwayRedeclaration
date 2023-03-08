@@ -4,13 +4,13 @@ import javafx.collections.ObservableList;
 
 public class Airport {
     private String name;
-    private ObservableList<LogicalRunway> logicalRunways;
+    private ObservableList<PhysicalRunway> physicalRunways;
 
     @Override
     public String toString() {
         return "Airport{" +
                 "name='" + name + '\'' +
-                "\n logicalRunways=" + logicalRunways +
+                "\n physicalRunways=" + physicalRunways +
                 '}';
     }
 
@@ -22,11 +22,11 @@ public class Airport {
         this.name = name;
     }
 
-    public ObservableList<LogicalRunway> getLogicalRunways() {
-        return logicalRunways;
+    public ObservableList<PhysicalRunway> getLogicalRunways() {
+        return physicalRunways;
     }
 
-    public void setLogicalRunways(ObservableList<LogicalRunway> logicalRunways) {
-        this.logicalRunways = logicalRunways;
+    public void setPhysicalRunways(ObservableList<PhysicalRunway> physicalRunways) {
+        this.physicalRunways = physicalRunways;
     }
 }
