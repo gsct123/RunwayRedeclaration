@@ -1,83 +1,74 @@
 package Model;
 
 public class Calculator {
-    //als and tocs
     private final static double resa = 240;
     private final static double blastProtection = 300;
     private final static double stripEnd = 60;
 
-    //calculate Take-off Away and Landing Over
-    public static void calcTALO(Obstacle obstacle, LogicalRunway runways){
-        int ldaChoice;
-        double tora, toda, asda, lda;
-        tora = runways.getTora() - blastProtection - obstacle.getDistFThreshold() - runways.getDisplacedThreshold();
-
-        asda = tora + runways.getStopway();
-
-        toda = tora + runways.getClearway();
-
+    //TA = TakeOff Away
+    public static double calcTora_TA(Obstacle obstacle, LogicalRunway runways){
+        double tora = runways.getTora() - blastProtection - obstacle.getDistFThreshold() - runways.getDisplacedThreshold();
+        runways.setNewTora(tora);
+        return tora;
+    }
+    //LO = Landing Over
+    public static double calcLda_LO(Obstacle obstacle, LogicalRunway runways){
+        double lda;
         if (resa > obstacle.getAlsTocs()){
             //not sure
             lda = runways.getLda() - obstacle.getDistFThreshold() - stripEnd - resa - obstacle.getWidth();
-            ldaChoice = 1;
         } else if (blastProtection > obstacle.getAlsTocs()) {
             //not sure
             lda = runways.getLda() - obstacle.getDistFThreshold() - blastProtection - obstacle.getWidth();
-            ldaChoice = 2;
         } else {
+            //LDA = Original LDA - dist from threshold - stripEnd (60) - Als (height * 50)
             lda = runways.getLda() - obstacle.getDistFThreshold() - stripEnd - obstacle.getAlsTocs();
-            ldaChoice = 3;
         }
-        runways.setNewParameter(tora,asda,toda,lda);
-        printCalculationBreakdown(obstacle, runways, tora, toda, asda, lda, 1, ldaChoice);
+        runways.setNewLda(lda);
+        return lda;
     }
 
-    //calculate Take-off Towards AND Landing Towards
-    public static void calcTTLT(Obstacle obstacle, LogicalRunway runways){
-        int toraChoice;
-        double tora =0;
-        double toda, asda, lda;
+    //TT = TakeOff Towards
+    public static double calcTora_TT(Obstacle obstacle, LogicalRunway runways){
+        double tora;
         if (resa > obstacle.getAlsTocs()){
             //not sure
             tora = obstacle.getDistFThreshold() + runways.getDisplacedThreshold() - resa - obstacle.getWidth() - stripEnd;
-            toraChoice = 1;
         }else {
             tora = obstacle.getDistFThreshold() + runways.getDisplacedThreshold() - obstacle.getAlsTocs() - stripEnd;
-            toraChoice = 2;
         }
-        asda = tora;
-        toda = tora;
-        lda = obstacle.getDistFThreshold() - stripEnd - resa;
-        runways.setNewParameter(tora,asda,toda,lda);
-        printCalculationBreakdown(obstacle, runways, tora, toda, asda, lda, 1, toraChoice);
+        runways.setNewTora(tora);
+        return tora;
     }
-    public static void printCalculationBreakdown(Obstacle obstacle, LogicalRunway runways, double tora, double toda, double asda, double lda, int breakdownChoice, int ldaOrToraChoice){
-        System.out.println("Calculation Breakdown:");
-        if (breakdownChoice == 1){
-            System.out.println("TORA: " + runways.getTora() + " - " + blastProtection + " - " + obstacle.getDistFThreshold() + " - " + runways.getDisplacedThreshold() + " = " + tora);
-            System.out.println("ASDA: " + tora + " + " + runways.getStopway() + " = " + asda);
-            System.out.println("TODA: " + tora + " + " + runways.getClearway() + " = " + toda);
-            if (ldaOrToraChoice == 1){
-                System.out.println("LDA: " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + resa+" - " + obstacle.getWidth() + " = " + lda);
-            }
-            else if (ldaOrToraChoice == 2){
-                System.out.println("LDA: " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + blastProtection + " - " + obstacle.getWidth() + " = " + lda);
-            }
-            else{
-                System.out.println("LDA: " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + obstacle.getAlsTocs() + " = " + lda);
-            }
-        }
-        else {
-            if (ldaOrToraChoice == 1){
-                System.out.println("TORA: " + obstacle.getDistFThreshold() + " + " + runways.getDisplacedThreshold() + " - " + resa + " - " + obstacle.getWidth() + " - " + stripEnd + " = " + tora);
-            }
-            else {
-                System.out.println("TORA: " + obstacle.getDistFThreshold() + " + " + runways.getDisplacedThreshold() + " - " + obstacle.getAlsTocs() + " - " + stripEnd + " = " + tora);
-            }
-            System.out.println("ASDA: " + tora + " = " + asda);
-            System.out.println("TODA: " + tora + " = " + toda);
-            System.out.println("LDA: " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + resa + " = " + lda);
-        }
 
+    //LT = Landing Towards
+    public static double calcLda_LT(Obstacle obstacle, LogicalRunway runways){
+        double lda = obstacle.getDistFThreshold() - stripEnd - resa;
+        runways.setNewLda(lda);
+        return lda;
+    }
+
+    //TALO = Takeoff Away Landing Over
+    //when taking off away / landing over, ASDA and TODA needs to include clearway and stopway
+    public static double calcAsda_TALO(LogicalRunway runways){
+        double newAsda =  runways.getNewTora() + runways.getStopway();
+        runways.setNewAsda(newAsda);
+        return newAsda;
+    }
+    public static double calcToda_TALO(LogicalRunway runways){
+        double newToda = runways.getNewTora() + runways.getClearway();
+        runways.setNewToda(newToda);
+        return newToda;
+    }
+
+    //TTLT = Takeoff Towards Landing Towards
+    //when taking off towards and landing towards, ASDA and TODA don't have to include stopway and clearway
+    public static double calcAsda_TTLT(LogicalRunway runways){
+        runways.setNewAsda(runways.getNewTora());
+        return runways.getNewTora();
+    }
+    public static double calcToda_TTLT(LogicalRunway runways){
+        runways.setNewToda(runways.getNewTora());
+        return runways.getNewTora();
     }
 }
