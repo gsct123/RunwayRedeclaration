@@ -3,6 +3,7 @@ package Controller;
 
 import Model.Airport;
 import Model.LogicalRunway;
+import Model.Obstacle;
 import Model.PhysicalRunway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,8 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.net.URL;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 
@@ -27,21 +30,36 @@ public class MainController implements Initializable {
     @FXML
     private MenuButton airportMenu;
     @FXML
-    private MenuButton runwayMenu;
+    private MenuButton physicalRunwayMenu;
+    @FXML
+    private MenuButton logicalRunwayMenu;
+
+    ObservableList<Airport> airports = FXCollections.observableArrayList();
+    ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            for (Airport airport : helperReader("src/Data/airports.xml")) {
+            airports = helperReader("src/Data/airports.xml");
+            for (Airport airport : airports) {
                 MenuItem airportMenuItem = new MenuItem(airport.getName());
                 airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
                 airportMenuItem.setOnAction(e -> {
-                    airportMenu.setText(airportMenuItem.getText());
-                    runwayMenu.setDisable(false);
+                    airportMenu.setText(airport.getName());
+                    physicalRunwayMenu.setDisable(false);
                     for(PhysicalRunway runway: airport.getPhysicalRunways()){
                         MenuItem runwayMenuItem = new MenuItem(runway.getName());
+                        runwayMenuItem.setOnAction(f -> {
+                            physicalRunwayMenu.setText(runway.getName());
+                            logicalRunwayMenu.setDisable(false);
+                            for(LogicalRunway logicalRunway: runway.getLogicalRunways()){
+                                MenuItem lRunwayMenuItem = new MenuItem(logicalRunway.getDesignator());
+                                lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+                                logicalRunwayMenu.getItems().add(lRunwayMenuItem);
+                            }
+                        });
                         runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
-                        runwayMenu.getItems().add(runwayMenuItem);
+                        physicalRunwayMenu.getItems().add(runwayMenuItem);
                     }
                 });
                 airportMenu.getItems().add(airportMenuItem);
@@ -129,6 +147,12 @@ public class MainController implements Initializable {
                 airports.add(new Airport(airportName, physicalRunways));
             }
         }
+        Collections.sort(airports, new Comparator<Airport>() {
+            @Override
+            public int compare(Airport o1, Airport o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
         return airports;
     }
 }

@@ -68,26 +68,58 @@
          <items>
             <AnchorPane prefHeight="351.0" prefWidth="278.0">
                <children>
-                  <Label layoutX="24.0" layoutY="15.0" prefHeight="30.0" prefWidth="335.0" style="-fx-text-fill: #000000;" text="Airport and Runway">
+                  <Label layoutX="24.0" layoutY="15.0" prefHeight="30.0" prefWidth="335.0" style="-fx-text-fill: #000000;" text="Airport and Runways">
                      <padding>
                         <Insets bottom="5.0" left="10.0" top="5.0" />
                      </padding>
                      <font>
-                        <Font name="Verdana Bold" size="20.0" />
+                        <Font name="Verdana" size="20.0" />
                      </font>
                   </Label>
-                  <MenuButton id="airportMenu" fx:id="airportMenu" layoutX="33.0" layoutY="64.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="310.0" text="Select An Airport">
+                  <MenuButton id="airportMenu" fx:id="airportMenu" layoutX="33.0" layoutY="64.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="310.0" text="Select an Airport">
                     <items>
                     </items>
                      <font>
                         <Font name="Verdana" size="20.0" />
                      </font>
                   </MenuButton>
-                  <MenuButton id="runwayMenu" fx:id="runwayMenu" disable="true" layoutX="33.0" layoutY="131.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="309.0" text="Select Runway">
+                  <MenuButton id="runwayMenu" fx:id="physicalRunwayMenu" disable="true" layoutX="33.0" layoutY="131.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="310.0" text="Select Physical Runway">
                      <font>
                         <Font name="Verdana" size="20.0" />
                      </font>
                   </MenuButton>
+                  <Label layoutX="31.0" layoutY="258.0" prefHeight="30.0" prefWidth="335.0" style="-fx-text-fill: #000000;" text="Obstacle">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" top="5.0" />
+                     </padding>
+                     <font>
+                        <Font name="Verdana" size="20.0" />
+                     </font>
+                  </Label>
+                  <MenuButton disable="true" layoutX="31.0" layoutY="307.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="310.0" text="Select an Obstacle">
+                     <font>
+                        <Font name="Verdana" size="20.0" />
+                     </font>
+                  </MenuButton>
+                  <MenuButton fx:id="logicalRunwayMenu" disable="true" layoutX="33.0" layoutY="201.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="310.0" text="Select Logical Runway">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </MenuButton>
+                  <Label layoutX="42.0" layoutY="377.0" text="Obstacle height:-">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="42.0" layoutY="404.0" text="Obstacle weight:-">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
