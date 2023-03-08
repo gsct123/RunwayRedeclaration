@@ -1,11 +1,19 @@
 package Model;
 
 public class Calculator {
-    private final static double resa = 240;
-    private final static double blastProtection = 300;
-    private final static double stripEnd = 60;
+    private static final double resa = 240;
+    private static final double blastProtection = 300;
+    private static final double stripEnd = 60;
     private static final double minCGArea = 75;
     private static final double maxCGArea = 105;
+
+
+    //if the obstacle is within the strip end, or minimum clear graded area, the declaration needs to be redeclare.
+    public static boolean needRedeclare(Obstacle obstacle, LogicalRunway logicalRunway){
+        boolean withinStripEnd = obstacle.getDistFThreshold() <= logicalRunway.getTora() + stripEnd && obstacle.getDistFThreshold() >= -stripEnd;
+        boolean withinCentreline = obstacle.getDistFCent() <= minCGArea && obstacle.getDistFCent() >= -minCGArea;
+        return withinStripEnd && withinCentreline;
+    }
 
     //TA = TakeOff Away
     public static double calcTora_TA(Obstacle obstacle, LogicalRunway runways){
@@ -29,6 +37,15 @@ public class Calculator {
         runways.setNewLda(lda);
         return lda;
     }
+
+    //public static double calcLda_LO(Obstacle obstacle, LogicalRunway runways){
+    //    double lda;
+    //    //find the maximum value between 3 different
+    //    double maxValue = Math.max(stripEnd - resa - obstacle.getWidth(), Math.max(blastProtection - obstacle.getWidth(),stripEnd - obstacle.getAlsTocs()));
+    //    lda = runways.getLda() - obstacle.getDistFThreshold() - maxValue;
+    //    runways.setNewLda(lda);
+    //    return lda;
+    //}
 
     //TT = TakeOff Towards
     public static double calcTora_TT(Obstacle obstacle, LogicalRunway runways){
