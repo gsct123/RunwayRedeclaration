@@ -1,5 +1,6 @@
 package Controller;
 
+
 import Model.Airport;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,20 +23,32 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
-    ObservableList airports = FXCollections.observableArrayList();
 
     @FXML
     private MenuButton airportMenu;
+    @FXML
+    private MenuButton runwayMenu;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            airports = helperReader("src/Data/airports.xml");
+            for (Airport airport : helperReader("src/Data/airports.xml")) {
+                MenuItem airportMenuItem = new MenuItem(airport.getName());
+                airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+                airportMenuItem.setOnAction(e -> {
+                    airportMenu.setText(airportMenuItem.getText());
+                    runwayMenu.setDisable(false);
+                    for(PhysicalRunway runway: airport.getPhysicalRunways()){
+                        MenuItem runwayMenuItem = new MenuItem(runway.getName());
+                        runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+                        runwayMenu.getItems().add(runwayMenuItem);
+                    }
+                });
+                airportMenu.getItems().add(airportMenuItem);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        airportMenu.getItems().addAll(airports);
-
     }
 
 
