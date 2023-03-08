@@ -6,6 +6,12 @@ public class Airport {
     private String name;
     private ObservableList<PhysicalRunway> physicalRunways;
 
+    public Airport(String name, ObservableList<PhysicalRunway> physicalRunways) {
+        this.name = name;
+        this.physicalRunways = physicalRunways;
+    }
+
+
     @Override
     public String toString() {
         return "Airport{" +
@@ -22,7 +28,7 @@ public class Airport {
         this.name = name;
     }
 
-    public ObservableList<PhysicalRunway> getLogicalRunways() {
+    public ObservableList<PhysicalRunway> getPhysicalRunways() {
         return physicalRunways;
     }
 
