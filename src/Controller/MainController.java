@@ -23,18 +23,26 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
-    ObservableList item = FXCollections.observableArrayList();
 
     @FXML
     private MenuButton airportMenu;
+    @FXML
+    private MenuButton runwayMenu;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             for (Airport airport : helperReader("src/Data/airports.xml")) {
                 MenuItem airportMenuItem = new MenuItem(airport.getName());
+                airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
                 airportMenuItem.setOnAction(e -> {
-                    // Do something when this airport is selected
+                    airportMenu.setText(airportMenuItem.getText());
+                    runwayMenu.setDisable(false);
+                    for(PhysicalRunway runway: airport.getPhysicalRunways()){
+                        MenuItem runwayMenuItem = new MenuItem(runway.getName());
+                        runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+                        runwayMenu.getItems().add(runwayMenuItem);
+                    }
                 });
                 airportMenu.getItems().add(airportMenuItem);
             }
