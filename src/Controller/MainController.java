@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
-    ObservableList airports = FXCollections.observableArrayList();
+    ObservableList item = FXCollections.observableArrayList();
 
     @FXML
     private MenuButton airportMenu;
@@ -29,12 +30,16 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            airports = helperReader("src/Data/airports.xml");
+            for (Airport airport : helperReader("src/Data/airports.xml")) {
+                MenuItem airportMenuItem = new MenuItem(airport.getName());
+                airportMenuItem.setOnAction(e -> {
+                    // Do something when this airport is selected
+                });
+                airportMenu.getItems().add(airportMenuItem);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        airportMenu.getItems().addAll(airports);
-
     }
 
 
