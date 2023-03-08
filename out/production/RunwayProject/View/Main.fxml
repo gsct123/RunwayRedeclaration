@@ -78,8 +78,6 @@
                   </Label>
                   <MenuButton id="airportMenu" fx:id="airportMenu" layoutX="10.0" layoutY="44.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="248.0" text="Select An Airport">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
                     </items>
                   </MenuButton>
                </children>
