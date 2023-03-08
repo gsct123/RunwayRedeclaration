@@ -4,6 +4,8 @@ public class Calculator {
     private final static double resa = 240;
     private final static double blastProtection = 300;
     private final static double stripEnd = 60;
+    private static final double minCGArea = 75;
+    private static final double maxCGArea = 105;
 
     //TA = TakeOff Away
     public static double calcTora_TA(Obstacle obstacle, LogicalRunway runways){
