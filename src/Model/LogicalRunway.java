@@ -12,8 +12,7 @@ public class LogicalRunway {
     private double newLda;
 
     //not sure if will be use
-    //private double minCGArea;
-    //private double maxCGArea;
+
 
     public LogicalRunway(String designator, double tora, double toda, double asda, double lda) {
         this.designator = designator;
@@ -121,4 +120,5 @@ public class LogicalRunway {
     public void setNewLda(double newLda) {
         this.newLda = newLda;
     }
+
 }
