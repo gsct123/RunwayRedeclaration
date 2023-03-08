@@ -5,64 +5,75 @@ import Model.LogicalRunway;
 import Model.PhysicalRunway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Writer {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Writer tmp = new Writer();
 
         ObservableList<LogicalRunway> logRunways = FXCollections.observableArrayList();
         logRunways.add(new LogicalRunway("09L", 3902, 3902, 3902, 3595));
         logRunways.add(new LogicalRunway("27R", 3884, 3962, 3884, 3884));
+        logRunways.add(new LogicalRunway("09R", 3660, 3660, 3660, 3353));
+        logRunways.add(new LogicalRunway("27L", 3660, 3660, 3660, 3660));
 
         ObservableList<PhysicalRunway> physRunways = FXCollections.observableArrayList();
         physRunways.add(new PhysicalRunway("09L/27R", logRunways));
 
-
         Airport airport = new Airport("Heathrow", physRunways);
+        List<Airport> airports = new ArrayList<>();
+        airports.add(airport);
 
-        tmp.helperWriter();
+        tmp.helperWriter(airports, "src/Data/airports.xml");
     }
 
     public void helperWriter(List<Airport> airports, String file) throws Exception {
-        // Create a JAXB context for the Person class
-        JAXBContext context = JAXBContext.newInstance(Airport.class);
+        // Create a DocumentBuilder
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
-        // Create a Marshaller from the JAXB context
-        Marshaller marshaller = context.createMarshaller();
+        // Create the root element
+        Document doc = docBuilder.newDocument();
+        Element rootElement = doc.createElement("airports");
+        doc.appendChild(rootElement);
 
-        // Set the Marshaller to output formatted XML
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-        // Create a new root element for the XML document
-        Element root = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument().createElement("people");
-
-        // Iterate through the List of Person objects and create a new XML element for each one
+        // Create an XML element for each airport in the list
         for (Airport airport : airports) {
-            Element airportElement = root.getOwnerDocument().createElement("airport");
-            Element nameElement = root.getOwnerDocument().createElement("name");
-            nameElement.setTextContent(airport.getName());
+            Element airportElement = doc.createElement("airport");
+            rootElement.appendChild(airportElement);
+
+            // Create an XML element for the airport name
+            Element nameElement = doc.createElement("name");
+            nameElement.appendChild(doc.createTextNode(airport.getName()));
+            airportElement.appendChild(nameElement);
+
             // Create an XML element for the physical runways
-            Element physRunwayElements = root.getOwnerDocument().createElement("physicalRunways");
+            Element physRunwayElements = doc.createElement("physicalRunways");
+            airportElement.appendChild(physRunwayElements);
 
             // Iterate through the list of physical runways and create an XML element for each one
             for (PhysicalRunway physicalRunway : airport.getPhysicalRunways()) {
-                Element physRunwayElement = root.getOwnerDocument().createElement("physicalRunway");
-
-                // Add attributes to the runway element
+                Element physRunwayElement = doc.createElement("physicalRunway");
                 physRunwayElement.setAttribute("name", physicalRunway.getName());
+                physRunwayElements.appendChild(physRunwayElement);
 
-                Element logRunwayElements = root.getOwnerDocument().createElement("logicalRunways");
+                // Create an XML element for the logical runways
+                Element logRunwayElements = doc.createElement("logicalRunways");
+                physRunwayElement.appendChild(logRunwayElements);
 
-                for(LogicalRunway logicalRunway : physicalRunway.getLogicalRunways()){
-                    Element logRunwayElement = root.getOwnerDocument().createElement("logicalRunway");
-
+                // Iterate through the list of logical runways and create an XML element for each one
+                for (LogicalRunway logicalRunway : physicalRunway.getLogicalRunways()) {
+                    Element logRunwayElement = doc.createElement("logicalRunway");
                     logRunwayElement.setAttribute("designator", logicalRunway.getDesignator());
                     logRunwayElement.setAttribute("tora", Double.toString(logicalRunway.getTora()));
                     logRunwayElement.setAttribute("toda", Double.toString(logicalRunway.getToda()));
@@ -77,11 +88,15 @@ public class Writer {
             physRunwayElements.setTextContent(airport.getPhysicalRunways().toString());
             airportElement.appendChild(nameElement);
             airportElement.appendChild(physRunwayElements);
-            root.appendChild(airportElement);
+            rootElement.appendChild(airportElement);
         }
 
         // Write the XML document to a file
-        marshaller.marshal(root, new File(file));
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(file);
+        transformer.transform(source, result);
     }
 }
 

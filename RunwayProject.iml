@@ -33,6 +33,15 @@
         <jarDirectory url="file://$USER_HOME$/javafx-sdk-19.0.2.1/lib" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="jaxb-api-2.3.1" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/jaxb-api-2.3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="sun.xml.bind.jaxb.impl" level="project" />
   </component>
 </module>
