@@ -5,6 +5,8 @@ import Model.LogicalRunway;
 import Model.PhysicalRunway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.MenuButton;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -13,24 +15,31 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class MainController {
+public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
+    ObservableList airports = FXCollections.observableArrayList();
 
+    @FXML
     private MenuButton airportMenu;
 
-    public static void main(String[] args) throws Exception {
-        List<Airport> airports = helperReader("src/Data/airports.xml");
-        System.out.println(airports);
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            airports = helperReader("src/Data/airports.xml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        airportMenu.getItems().addAll(airports);
+
     }
 
-    public void initialize() {
-    }
 
-    public static List<Airport> helperReader(String file) throws Exception {
+    //this function read from a xml file and instantiate list of airports available
+    public ObservableList<Airport> helperReader(String file) throws Exception {
         // Create a DocumentBuilder
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -42,7 +51,7 @@ public class MainController {
         NodeList airportElements = doc.getElementsByTagName("airport");
 
         // Create a list to hold the airports
-        List<Airport> airports = new ArrayList<>();
+        ObservableList<Airport> airports = FXCollections.observableArrayList();
 
         // Loop over each airport element and create an Airport object
         for (int i = 0; i < airportElements.getLength(); i++) {
@@ -108,6 +117,4 @@ public class MainController {
         }
         return airports;
     }
-
-
 }
