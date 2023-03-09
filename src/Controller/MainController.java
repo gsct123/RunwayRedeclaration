@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -39,6 +40,8 @@ public class MainController implements Initializable {
     private Label obstacleHeightLabel;
     @FXML
     private Label obstacleWidthLabel;
+    @FXML
+    private TextField distanceThresholdTextField;
 
     ObservableList<Airport> airports = FXCollections.observableArrayList();
     ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
@@ -214,6 +217,7 @@ public class MainController implements Initializable {
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight());
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth());
+                distanceThresholdTextField.setDisable(false);
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }

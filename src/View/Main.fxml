@@ -149,7 +149,7 @@
                         <Font name="Verdana" size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="clDistTextField" disable="true" layoutX="250.0" layoutY="420.0" prefHeight="26.0" prefWidth="92.0" />
+                  <TextField fx:id="clDistTextField" layoutX="250.0" layoutY="420.0" prefHeight="26.0" prefWidth="92.0" text="0" />
                   <MenuButton fx:id="flightMethodMenu" disable="true" layoutX="28.0" layoutY="462.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="320.0" text="Select Flight Method">
                      <font>
                         <Font name="Verdana" size="16.0" />
