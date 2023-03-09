@@ -9,10 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -27,6 +24,12 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
+    private Airport airportSelected = null;
+    private PhysicalRunway physRunwaySelected = null;
+    private LogicalRunway logRunwaySelected = null;
+    private Obstacle obstacleSelected = null;
+    private double distFromThreshold = 0;
+    private double distFromCentreLine = 0;
 
     @FXML
     private MenuButton airportMenu;
@@ -42,6 +45,8 @@ public class MainController implements Initializable {
     private Label obstacleWidthLabel;
     @FXML
     private TextField distanceThresholdTextField;
+    @FXML
+    private Button performCalculationButton;
 
     ObservableList<Airport> airports = FXCollections.observableArrayList();
     ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
@@ -145,18 +150,21 @@ public class MainController implements Initializable {
             MenuItem airportMenuItem = new MenuItem(airport.getName());
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
             airportMenuItem.setOnAction(e -> {
+                airportSelected = airport;
                 physicalRunwayMenu.getItems().clear();
                 airportMenu.setText(airport.getName());
                 physicalRunwayMenu.setDisable(false);
                 for(PhysicalRunway runway: airport.getPhysicalRunways()){
                     MenuItem runwayMenuItem = new MenuItem(runway.getName());
                     runwayMenuItem.setOnAction(f -> {
+                        physRunwaySelected = runway;
                         logicalRunwayMenu.getItems().clear();
                         physicalRunwayMenu.setText(runway.getName());
                         logicalRunwayMenu.setDisable(false);
                         for(LogicalRunway logicalRunway: runway.getLogicalRunways()){
                             MenuItem lRunwayMenuItem = new MenuItem(logicalRunway.getDesignator());
                             lRunwayMenuItem.setOnAction(g -> {
+                                logRunwaySelected = logicalRunway;
                                 logicalRunwayMenu.setText(logicalRunway.getDesignator());
                                 obstacleMenu.setDisable(false);
                             });
@@ -172,6 +180,7 @@ public class MainController implements Initializable {
         }
     }
 
+    //functions to load obstacles from xml files and displayed in the menu selection
     public void loadObstacles(String file) throws Exception {
         // Create a DocumentBuilder
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -214,10 +223,30 @@ public class MainController implements Initializable {
             MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
             obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
             obstacleMenuItem.setOnAction(e -> {
+                obstacleSelected = obstacle;
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight());
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth());
                 distanceThresholdTextField.setDisable(false);
+                distanceThresholdTextField.setOnAction(actionEvent -> {
+                    String disThreshold = distanceThresholdTextField.getText().trim();
+                    while(true){
+                        try{
+                            if(disThreshold.startsWith("-")){
+                                distFromThreshold = -1 * Double.parseDouble(disThreshold.substring(1));
+                            } else{
+                                distFromThreshold = Double.parseDouble(disThreshold);
+                            }
+                            break;
+                        } catch (NumberFormatException exception) {
+                            //display error message
+                        }
+                    }
+                    performCalculationButton.setDisable(false);
+                    performCalculationButton.setOnAction(actionEvent1 -> {
+                        //perform calculation
+                    });
+                });
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }
