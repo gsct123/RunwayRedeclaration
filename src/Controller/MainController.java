@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import org.w3c.dom.Document;
@@ -19,7 +20,6 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
@@ -33,6 +33,12 @@ public class MainController implements Initializable {
     private MenuButton physicalRunwayMenu;
     @FXML
     private MenuButton logicalRunwayMenu;
+    @FXML
+    private MenuButton obstacleMenu;
+    @FXML
+    private Label obstacleHeightLabel;
+    @FXML
+    private Label obstacleWidthLabel;
 
     ObservableList<Airport> airports = FXCollections.observableArrayList();
     ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
@@ -40,30 +46,8 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            airports = helperReader("src/Data/airports.xml");
-            for (Airport airport : airports) {
-                MenuItem airportMenuItem = new MenuItem(airport.getName());
-                airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
-                airportMenuItem.setOnAction(e -> {
-                    airportMenu.setText(airport.getName());
-                    physicalRunwayMenu.setDisable(false);
-                    for(PhysicalRunway runway: airport.getPhysicalRunways()){
-                        MenuItem runwayMenuItem = new MenuItem(runway.getName());
-                        runwayMenuItem.setOnAction(f -> {
-                            physicalRunwayMenu.setText(runway.getName());
-                            logicalRunwayMenu.setDisable(false);
-                            for(LogicalRunway logicalRunway: runway.getLogicalRunways()){
-                                MenuItem lRunwayMenuItem = new MenuItem(logicalRunway.getDesignator());
-                                lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
-                                logicalRunwayMenu.getItems().add(lRunwayMenuItem);
-                            }
-                        });
-                        runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
-                        physicalRunwayMenu.getItems().add(runwayMenuItem);
-                    }
-                });
-                airportMenu.getItems().add(airportMenuItem);
-            }
+            loadAirports("src/Data/airports.xml");
+            loadObstacles("src/Data/obstacles.xml");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,7 +55,7 @@ public class MainController implements Initializable {
 
 
     //this function read from a xml file and instantiate list of airports available
-    public ObservableList<Airport> helperReader(String file) throws Exception {
+    public void loadAirports(String file) throws Exception {
         // Create a DocumentBuilder
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -144,15 +128,94 @@ public class MainController implements Initializable {
                 }
 
                 // Create a new Airport object with the physical runways and add it to the list of airports
-                airports.add(new Airport(airportName, physicalRunways));
+                Airport airport = new Airport(airportName, physicalRunways);
+                airports.add(airport);
             }
         }
-        Collections.sort(airports, new Comparator<Airport>() {
+        airports.sort(new Comparator<Airport>() {
             @Override
             public int compare(Airport o1, Airport o2) {
                 return o1.getName().compareTo(o2.getName());
             }
         });
-        return airports;
+        for(Airport airport: airports){
+            MenuItem airportMenuItem = new MenuItem(airport.getName());
+            airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+            airportMenuItem.setOnAction(e -> {
+                physicalRunwayMenu.getItems().clear();
+                airportMenu.setText(airport.getName());
+                physicalRunwayMenu.setDisable(false);
+                for(PhysicalRunway runway: airport.getPhysicalRunways()){
+                    MenuItem runwayMenuItem = new MenuItem(runway.getName());
+                    runwayMenuItem.setOnAction(f -> {
+                        logicalRunwayMenu.getItems().clear();
+                        physicalRunwayMenu.setText(runway.getName());
+                        logicalRunwayMenu.setDisable(false);
+                        for(LogicalRunway logicalRunway: runway.getLogicalRunways()){
+                            MenuItem lRunwayMenuItem = new MenuItem(logicalRunway.getDesignator());
+                            lRunwayMenuItem.setOnAction(g -> {
+                                logicalRunwayMenu.setText(logicalRunway.getDesignator());
+                                obstacleMenu.setDisable(false);
+                            });
+                            lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+                            logicalRunwayMenu.getItems().add(lRunwayMenuItem);
+                        }
+                    });
+                    runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+                    physicalRunwayMenu.getItems().add(runwayMenuItem);
+                }
+            });
+            airportMenu.getItems().add(airportMenuItem);
+        }
+    }
+
+    public void loadObstacles(String file) throws Exception {
+        // Create a DocumentBuilder
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+        // Parse the XML file into a Document
+        Document doc = docBuilder.parse(file);
+
+        // Get a NodeList of all obstacle elements
+        NodeList obstacleElements = doc.getElementsByTagName("obstacle");
+
+        // Create a list to hold the obstacles
+        ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
+
+        // Loop over each obstacle element and create an Obstacle object
+        for (int i = 0; i < obstacleElements.getLength(); i++) {
+            Node obstacleNode = obstacleElements.item(i);
+
+            if (obstacleNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element obstacleElement = (Element) obstacleNode;
+
+                // Get the obstacle name, height and width
+                String obstacleName = obstacleElement.getElementsByTagName("name").item(0).getTextContent();
+                double height = Double.parseDouble(obstacleElement.getElementsByTagName("height").item(0).getTextContent());
+                double width = Double.parseDouble(obstacleElement.getElementsByTagName("width").item(0).getTextContent());
+
+
+                // Create a new Obstacle object with the physical runways and add it to the list of airports
+                Obstacle obstacle = new Obstacle(obstacleName, height, width, 0, 0);
+                obstacles.add(obstacle);
+            }
+        }
+        obstacles.sort(new Comparator<Obstacle>() {
+            @Override
+            public int compare(Obstacle o1, Obstacle o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        for(Obstacle obstacle: obstacles){
+            MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
+            obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+            obstacleMenuItem.setOnAction(e -> {
+                obstacleMenu.setText(obstacle.getName());
+                obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight());
+                obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth());
+            });
+            obstacleMenu.getItems().add(obstacleMenuItem);
+        }
     }
 }
