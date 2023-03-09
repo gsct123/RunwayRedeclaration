@@ -7,13 +7,17 @@ public class Calculator {
     private static final double minCGArea = 75;
     private static final double maxCGArea = 105;
 
+    private static final String talo = "Take-Off Away Landing Over";
+        private static final String ttlt = "Take-Off Towards Landing Towards";
+
     //testing only
     public static void main(String[] args) {
         LogicalRunway runway = new LogicalRunway("09l", 3902, 3902, 3902, 3595);
         Obstacle obstacle = new Obstacle("obs1", 12, 0, 0, 50);
         printCalculationBreakdownT(obstacle, runway, 1);
     }
-    //if the obstacle is within the strip end, or minimum clear graded area, the declaration needs to be redeclare.
+    //check if the obstacle is within the strip end, or minimum clear graded area
+    //the declaration needs to be redeclare if true.
     public static boolean needRedeclare(Obstacle obstacle, LogicalRunway logicalRunway){
         boolean withinStripEnd = obstacle.getDistFThreshold() <= logicalRunway.getTora() + stripEnd && obstacle.getDistFThreshold() >= -stripEnd;
         boolean withinCentreline = obstacle.getDistFCent() <= minCGArea && obstacle.getDistFCent() >= -minCGArea;
@@ -118,9 +122,20 @@ public class Calculator {
         return runways.getNewTora();
     }
 
+    public static String getFlightMethod(Obstacle obstacle, LogicalRunway logicalRunway){
+        String flightMethod;
+        if (obstacle.getDistFThreshold() < logicalRunway.getTora()/2){
+            flightMethod = talo;
+        }else {
+            flightMethod = ttlt;
+        }
+        return flightMethod;
+    }
+
     public static void printCalculationBreakdownT(Obstacle obstacle, LogicalRunway runways, int breakDownChoice){
         int ldaOrToraChoice;
         System.out.println("Calculation Breakdown:");
+        //breakdown choice 1 = Landing Over
         if (breakDownChoice == 1){
             ldaOrToraChoice = ldaBreakdownChoice(obstacle, runways);
             System.out.println("TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced Threshold");
@@ -142,6 +157,7 @@ public class Calculator {
                 System.out.println("LDA: " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + obstacle.getAlsTocs() + " = " + calcLda_LO(obstacle, runways));
             }
         }
+        //breakdown choice 2 = Taking-Off Towards
         else {
             ldaOrToraChoice = toraBreakdownChoice(obstacle, runways);
             if (ldaOrToraChoice == 1){
