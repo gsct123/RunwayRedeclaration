@@ -30,6 +30,7 @@ public class MainController implements Initializable {
     private Obstacle obstacleSelected = null;
     private double distFromThreshold = 0;
     private double distFromCentreLine = 0;
+    private String flightMethod = "";
 
     @FXML
     private MenuButton airportMenu;
@@ -47,6 +48,10 @@ public class MainController implements Initializable {
     private TextField distanceThresholdTextField;
     @FXML
     private Button performCalculationButton;
+    @FXML
+    private TextField clDistTextField;
+    @FXML
+    private MenuButton flightMethodMenu;
 
     ObservableList<Airport> airports = FXCollections.observableArrayList();
     ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
@@ -229,8 +234,8 @@ public class MainController implements Initializable {
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth());
                 distanceThresholdTextField.setDisable(false);
                 distanceThresholdTextField.setOnAction(actionEvent -> {
-                    String disThreshold = distanceThresholdTextField.getText().trim();
                     while(true){
+                        String disThreshold = distanceThresholdTextField.getText().trim();
                         try{
                             if(disThreshold.startsWith("-")){
                                 distFromThreshold = -1 * Double.parseDouble(disThreshold.substring(1));
@@ -242,13 +247,53 @@ public class MainController implements Initializable {
                             //display error message
                         }
                     }
-                    performCalculationButton.setDisable(false);
-                    performCalculationButton.setOnAction(actionEvent1 -> {
-                        //perform calculation
+                    clDistTextField.setOnAction(actionEvent2 -> {
+                        while(true){
+                            String clDistance = clDistTextField.getText();
+                            try{
+                                distFromCentreLine = Double.parseDouble(clDistance);
+                                break;
+                            } catch (NumberFormatException exception){
+                                //display error message
+                            }
+                        }
                     });
+                    flightMethodMenu.setDisable(false);
+                    loadFlightMenu();
                 });
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
+        }
+    }
+
+    public void loadFlightMenu(){
+        ObservableList<MenuItem> methods = FXCollections.observableArrayList();
+        if(distFromThreshold <= logRunwaySelected.getTora()/2){
+            MenuItem takeOffAway = new MenuItem("Take Off Away");
+            MenuItem landOver = new MenuItem("Landing Over");
+            flightMethodMenu.getItems().add(takeOffAway);
+            flightMethodMenu.getItems().add(landOver);
+            methods.add(takeOffAway);
+            methods.add(landOver);
+        }
+        if(distFromThreshold >= logRunwaySelected.getTora()/2){
+            MenuItem takeOffTowards = new MenuItem("Take Off Towards");
+            MenuItem landTowards = new MenuItem("Landing Towards");
+            flightMethodMenu.getItems().add(takeOffTowards);
+            flightMethodMenu.getItems().add(landTowards);
+            methods.add(takeOffTowards);
+            methods.add(landTowards);
+        }
+
+        for(MenuItem method: methods){
+            method.setOnAction(actionEvent -> {
+                flightMethodMenu.setText(method.getText());
+                flightMethod = method.getText();
+                performCalculationButton.setDisable(false);
+                performCalculationButton.setOnAction(actionEvent1 -> {
+                    //perform calculation
+                });
+            });
         }
     }
 }
