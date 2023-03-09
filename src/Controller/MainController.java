@@ -58,6 +58,22 @@ public class MainController implements Initializable {
     private Label originalAsdaLabel;
     @FXML
     private Label originalLdaLabel;
+    @FXML
+    private Label newToraLabel;
+    @FXML
+    private Label newTodaLabel;
+    @FXML
+    private Label newAsdaLabel;
+    @FXML
+    private Label newLdaLabel;
+    @FXML
+    private Label revisedRunwayTitle;
+    @FXML
+    private Label editToBeginLabel;
+    @FXML
+    private Label noCalcPerformedLabel;
+    @FXML
+    private Label breakdownLabel;
 
     ObservableList<Airport> airports = FXCollections.observableArrayList();
     ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
@@ -240,9 +256,9 @@ public class MainController implements Initializable {
             obstacleMenuItem.setOnAction(e -> {
                 obstacleSelected = obstacle;
                 obstacleMenu.setText(obstacle.getName());
+                flightMethodMenu.setDisable(false);
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight());
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth());
-                distanceThresholdTextField.setDisable(false);
                 distanceThresholdTextField.setOnAction(actionEvent -> {
                     String disThreshold = distanceThresholdTextField.getText().trim();
                     try {
@@ -258,7 +274,6 @@ public class MainController implements Initializable {
 
                         if(result.isPresent() && result.get() == ButtonType.OK){
                             distanceThresholdTextField.setText("0");
-                            flightMethodMenu.setDisable(true);
                             performCalculationButton.setDisable(true);
                             errorAlert.close();
                         }
@@ -266,7 +281,6 @@ public class MainController implements Initializable {
                         Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
                         okButton.setOnAction(event -> {
                             distanceThresholdTextField.setText("0");
-                            flightMethodMenu.setDisable(true);
                             performCalculationButton.setDisable(true);
                             errorAlert.close();
                         });
@@ -340,9 +354,18 @@ public class MainController implements Initializable {
                 performCalculationButton.setOnAction(actionEvent1 -> {
                     if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
                         performCalculation();
-                        //link to calculation breakdown and original values
+                        newToraLabel.setText("TORA  =  "+logRunwaySelected.getNewTora());
+                        newTodaLabel.setText("TODA  =  "+logRunwaySelected.getNewToda());
+                        newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getNewAsda());
+                        newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda());
+                        editToBeginLabel.setVisible(false);
+                        noCalcPerformedLabel.setVisible(false);
+                        breakdownLabel.setVisible(true);
+                        //edit this to show the correct breakdown message
+                        breakdownLabel.setText("Calculation breakdown will be shown here");
                     } else{
-
+                        //check needRedeclare function (clarify)
+                        editToBeginLabel.setText("No runway redeclation needed, original runway parameters can be used");
                     }
                 });
             });

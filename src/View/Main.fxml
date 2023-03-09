@@ -199,6 +199,20 @@
 <!--               </children></AnchorPane>-->
              <AnchorPane prefHeight="200.0" prefWidth="200.0">
                  <children>
+                  <AnchorPane fx:id="breakdownPane" layoutX="-1.0" layoutY="58.0" prefHeight="516.0" prefWidth="501.0">
+                     <children>
+                           <Label fx:id="noCalcPerformedLabel" layoutX="122.0" layoutY="213.0" prefHeight="62.0" prefWidth="254.0" text="No calculation performed">
+                               <font>
+                                   <Font name="Verdana" size="20.0" />
+                               </font>
+                           </Label>
+                           <Label fx:id="editToBeginLabel" layoutX="86.0" layoutY="169.0" prefHeight="25.0" prefWidth="338.0" text="Edit airport and obstacle to begin">
+                               <font>
+                                   <Font name="Verdana" size="20.0" />
+                               </font>
+                           </Label>
+                     </children>
+                  </AnchorPane>
                      <Label layoutX="90.0" layoutY="13.0" text="CALCULATION BREAKDOWN">
                          <font>
                              <Font name="Verdana Bold" size="20.0" />
@@ -207,25 +221,15 @@
                              <Insets bottom="5.0" top="5.0" />
                          </padding>
                      </Label>
-                     <Label layoutX="132.0" layoutY="214.0" prefHeight="62.0" prefWidth="254.0" text="No calculation performed">
-                         <font>
-                             <Font name="Verdana" size="20.0" />
-                         </font>
-                     </Label>
-                     <Label layoutX="93.0" layoutY="294.0" prefHeight="25.0" prefWidth="338.0" text="Edit airport and obstacle to begin">
-                         <font>
-                             <Font name="Verdana" size="20.0" />
-                         </font>
-                     </Label>
                  </children></AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="originalToraLabel" layoutX="74.0" layoutY="180.0" text="TORA  =">
+                  <Label fx:id="originalToraLabel" layoutX="59.0" layoutY="83.0" text="TORA  =">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="78.0" layoutY="99.0" prefHeight="56.0" prefWidth="226.0" text="ORIGINAL RUNWAY">
+                  <Label layoutX="80.0" layoutY="2.0" prefHeight="56.0" prefWidth="226.0" text="ORIGINAL RUNWAY">
                      <font>
                         <Font name="Verdana Bold" size="20.0" />
                      </font>
@@ -233,17 +237,45 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="originalAsdaLabel" layoutX="75.0" layoutY="259.0" text="ASDA  =">
+                  <Label fx:id="originalAsdaLabel" layoutX="61.0" layoutY="164.0" text="ASDA  =">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="originalLdaLabel" layoutX="77.0" layoutY="298.0" text="LDA     =">
+                  <Label fx:id="originalLdaLabel" layoutX="63.0" layoutY="205.0" text="LDA     =">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="originalTodaLabel" layoutX="73.0" layoutY="219.0" text="TODA  =">
+                  <Label fx:id="originalTodaLabel" layoutX="59.0" layoutY="123.0" text="TODA  =">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="newToraLabel" layoutX="63.0" layoutY="352.0" text="TORA  =">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="revisedRunwayTitle" layoutX="81.0" layoutY="276.0" prefHeight="56.0" prefWidth="226.0" text="REVISED RUNWAY">
+                     <font>
+                        <Font name="Verdana Bold" size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="newAsdaLabel" layoutX="64.0" layoutY="437.0" text="ASDA  =">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="newLdaLabel" layoutX="66.0" layoutY="479.0" text="LDA     =">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="newTodaLabel" layoutX="62.0" layoutY="394.0" text="TODA  =">
                      <font>
                         <Font size="20.0" />
                      </font>
