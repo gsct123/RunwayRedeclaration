@@ -9,9 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -26,6 +24,13 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
+    private Airport airportSelected = null;
+    private PhysicalRunway physRunwaySelected = null;
+    private LogicalRunway logRunwaySelected = null;
+    private Obstacle obstacleSelected = null;
+    private double distFromThreshold = 0;
+    private double distFromCentreLine = 0;
+    private String flightMethod = "";
 
     @FXML
     private MenuButton airportMenu;
@@ -39,6 +44,14 @@ public class MainController implements Initializable {
     private Label obstacleHeightLabel;
     @FXML
     private Label obstacleWidthLabel;
+    @FXML
+    private TextField distanceThresholdTextField;
+    @FXML
+    private Button performCalculationButton;
+    @FXML
+    private TextField clDistTextField;
+    @FXML
+    private MenuButton flightMethodMenu;
 
     ObservableList<Airport> airports = FXCollections.observableArrayList();
     ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
@@ -142,18 +155,21 @@ public class MainController implements Initializable {
             MenuItem airportMenuItem = new MenuItem(airport.getName());
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
             airportMenuItem.setOnAction(e -> {
+                airportSelected = airport;
                 physicalRunwayMenu.getItems().clear();
                 airportMenu.setText(airport.getName());
                 physicalRunwayMenu.setDisable(false);
                 for(PhysicalRunway runway: airport.getPhysicalRunways()){
                     MenuItem runwayMenuItem = new MenuItem(runway.getName());
                     runwayMenuItem.setOnAction(f -> {
+                        physRunwaySelected = runway;
                         logicalRunwayMenu.getItems().clear();
                         physicalRunwayMenu.setText(runway.getName());
                         logicalRunwayMenu.setDisable(false);
                         for(LogicalRunway logicalRunway: runway.getLogicalRunways()){
                             MenuItem lRunwayMenuItem = new MenuItem(logicalRunway.getDesignator());
                             lRunwayMenuItem.setOnAction(g -> {
+                                logRunwaySelected = logicalRunway;
                                 logicalRunwayMenu.setText(logicalRunway.getDesignator());
                                 obstacleMenu.setDisable(false);
                             });
@@ -169,6 +185,7 @@ public class MainController implements Initializable {
         }
     }
 
+    //functions to load obstacles from xml files and displayed in the menu selection
     public void loadObstacles(String file) throws Exception {
         // Create a DocumentBuilder
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -211,11 +228,72 @@ public class MainController implements Initializable {
             MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
             obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
             obstacleMenuItem.setOnAction(e -> {
+                obstacleSelected = obstacle;
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight());
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth());
+                distanceThresholdTextField.setDisable(false);
+                distanceThresholdTextField.setOnAction(actionEvent -> {
+                    while(true){
+                        String disThreshold = distanceThresholdTextField.getText().trim();
+                        try{
+                            if(disThreshold.startsWith("-")){
+                                distFromThreshold = -1 * Double.parseDouble(disThreshold.substring(1));
+                            } else{
+                                distFromThreshold = Double.parseDouble(disThreshold);
+                            }
+                            break;
+                        } catch (NumberFormatException exception) {
+                            //display error message
+                        }
+                    }
+                    clDistTextField.setOnAction(actionEvent2 -> {
+                        while(true){
+                            String clDistance = clDistTextField.getText();
+                            try{
+                                distFromCentreLine = Double.parseDouble(clDistance);
+                                break;
+                            } catch (NumberFormatException exception){
+                                //display error message
+                            }
+                        }
+                    });
+                    flightMethodMenu.setDisable(false);
+                    loadFlightMenu();
+                });
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
+        }
+    }
+
+    public void loadFlightMenu(){
+        ObservableList<MenuItem> methods = FXCollections.observableArrayList();
+        if(distFromThreshold <= logRunwaySelected.getTora()/2){
+            MenuItem takeOffAway = new MenuItem("Take Off Away");
+            MenuItem landOver = new MenuItem("Landing Over");
+            flightMethodMenu.getItems().add(takeOffAway);
+            flightMethodMenu.getItems().add(landOver);
+            methods.add(takeOffAway);
+            methods.add(landOver);
+        }
+        if(distFromThreshold >= logRunwaySelected.getTora()/2){
+            MenuItem takeOffTowards = new MenuItem("Take Off Towards");
+            MenuItem landTowards = new MenuItem("Landing Towards");
+            flightMethodMenu.getItems().add(takeOffTowards);
+            flightMethodMenu.getItems().add(landTowards);
+            methods.add(takeOffTowards);
+            methods.add(landTowards);
+        }
+
+        for(MenuItem method: methods){
+            method.setOnAction(actionEvent -> {
+                flightMethodMenu.setText(method.getText());
+                flightMethod = method.getText();
+                performCalculationButton.setDisable(false);
+                performCalculationButton.setOnAction(actionEvent1 -> {
+                    //perform calculation
+                });
+            });
         }
     }
 }
