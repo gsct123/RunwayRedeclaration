@@ -154,7 +154,7 @@ public class MainController implements Initializable {
         });
         for(Airport airport: airports){
             MenuItem airportMenuItem = new MenuItem(airport.getName());
-            airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+            airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             airportMenuItem.setOnAction(e -> {
                 airportSelected = airport;
                 physicalRunwayMenu.getItems().clear();
@@ -174,11 +174,11 @@ public class MainController implements Initializable {
                                 logicalRunwayMenu.setText(logicalRunway.getDesignator());
                                 obstacleMenu.setDisable(false);
                             });
-                            lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+                            lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                             logicalRunwayMenu.getItems().add(lRunwayMenuItem);
                         }
                     });
-                    runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+                    runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                     physicalRunwayMenu.getItems().add(runwayMenuItem);
                 }
             });
@@ -227,7 +227,7 @@ public class MainController implements Initializable {
         });
         for(Obstacle obstacle: obstacles){
             MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
-            obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 20px");
+            obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             obstacleMenuItem.setOnAction(e -> {
                 obstacleSelected = obstacle;
                 obstacleMenu.setText(obstacle.getName());
@@ -237,11 +237,7 @@ public class MainController implements Initializable {
                 distanceThresholdTextField.setOnAction(actionEvent -> {
                     String disThreshold = distanceThresholdTextField.getText().trim();
                     try {
-                        if (disThreshold.startsWith("-")) {
-                            distFromThreshold = -1 * Double.parseDouble(disThreshold.substring(1));
-                        } else {
-                            distFromThreshold = Double.parseDouble(disThreshold);
-                        }
+                        distFromThreshold = Double.parseDouble(disThreshold);
                     } catch (NumberFormatException exception) {
                         //display error message
                         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -251,9 +247,10 @@ public class MainController implements Initializable {
                         errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
                         Optional<ButtonType> result = errorAlert.showAndWait();
 
-
                         if(result.isPresent() && result.get() == ButtonType.OK){
                             distanceThresholdTextField.clear();
+                            flightMethodMenu.setDisable(true);
+                            performCalculationButton.setDisable(true);
                             errorAlert.close();
                         }
 
@@ -261,19 +258,41 @@ public class MainController implements Initializable {
                         okButton.setOnAction(event -> {
                             distanceThresholdTextField.clear();
                             flightMethodMenu.setDisable(true);
+                            performCalculationButton.setDisable(true);
                             errorAlert.close();
                         });
                     }
 
                     clDistTextField.setOnAction(actionEvent2 -> {
-                        while(true){
-                            String clDistance = clDistTextField.getText();
-                            try{
-                                distFromCentreLine = Double.parseDouble(clDistance);
-                                break;
-                            } catch (NumberFormatException exception){
-                                //display error message
+                        String clDistance = clDistTextField.getText();
+                        try{
+                            distFromCentreLine = Double.parseDouble(clDistance);
+                            if(distFromCentreLine < 0){
+                                throw new NumberFormatException();
                             }
+                        } catch (NumberFormatException exception){
+                            //display error message
+                            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                            errorAlert.setTitle("Error Message");
+                            errorAlert.setHeaderText("ERROR");
+                            errorAlert.setContentText("Invalid input for distance from centre line\nHint: please input a numerical value greater or equal to 0");
+                            errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
+                            Optional<ButtonType> result = errorAlert.showAndWait();
+
+                            if(result.isPresent() && result.get() == ButtonType.OK){
+                                clDistTextField.clear();
+                                flightMethodMenu.setDisable(true);
+                                performCalculationButton.setDisable(true);
+                                errorAlert.close();
+                            }
+
+                            Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
+                            okButton.setOnAction(event -> {
+                                clDistTextField.clear();
+                                performCalculationButton.setDisable(true);
+                                flightMethodMenu.setDisable(true);
+                                errorAlert.close();
+                            });
                         }
                     });
                     flightMethodMenu.setDisable(false);
@@ -285,6 +304,7 @@ public class MainController implements Initializable {
     }
 
     public void loadFlightMenu(){
+        flightMethodMenu.getItems().clear();
         ObservableList<MenuItem> methods = FXCollections.observableArrayList();
         if(distFromThreshold <= logRunwaySelected.getTora()/2){
             MenuItem takeOffAway = new MenuItem("Take Off Away");
