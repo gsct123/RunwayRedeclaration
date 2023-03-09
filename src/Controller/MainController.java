@@ -50,6 +50,14 @@ public class MainController implements Initializable {
     private TextField clDistTextField;
     @FXML
     private MenuButton flightMethodMenu;
+    @FXML
+    private Label originalToraLabel;
+    @FXML
+    private Label originalTodaLabel;
+    @FXML
+    private Label originalAsdaLabel;
+    @FXML
+    private Label originalLdaLabel;
 
     ObservableList<Airport> airports = FXCollections.observableArrayList();
     ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
@@ -170,6 +178,10 @@ public class MainController implements Initializable {
                                 logRunwaySelected = logicalRunway;
                                 logicalRunwayMenu.setText(logicalRunway.getDesignator());
                                 obstacleMenu.setDisable(false);
+                                originalToraLabel.setText("TORA  =  "+logRunwaySelected.getTora());
+                                originalTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda());
+                                originalAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda());
+                                originalLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda());
                             });
                             lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                             logicalRunwayMenu.getItems().add(lRunwayMenuItem);
@@ -326,29 +338,31 @@ public class MainController implements Initializable {
                 flightMethod = method.getText();
                 performCalculationButton.setDisable(false);
                 performCalculationButton.setOnAction(actionEvent1 -> {
-                    performCalculation();
+                    if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
+                        performCalculation();
+                        //link to calculation breakdown and original values
+                    } else{
+
+                    }
                 });
             });
         }
     }
 
     public void performCalculation(){
-        Calculator calculator = new Calculator();
-
-//        switch (flightMethod) {
-//            case "Landing Over" -> {
-//                calculator.calc
-//            }
-//            case "Take Off Away" -> {
-//
-//            }
-//            case "Landing Towards" -> {
-//
-//            }
-//            case "Take Off Towards" -> {
-//
-//            }
-//        }
-//        calculator.cal
+        switch (flightMethod) {
+            case "Landing Over", "Take Off Away" -> {
+                Calculator.calcTora_TA(obstacleSelected, logRunwaySelected);
+                Calculator.calcAsda_TALO(logRunwaySelected);
+                Calculator.calcToda_TALO(logRunwaySelected);
+                Calculator.calcLda_LO(obstacleSelected, logRunwaySelected);
+            }
+            case "Landing Towards", "Take Off Towards" -> {
+                Calculator.calcTora_TT(obstacleSelected, logRunwaySelected);
+                Calculator.calcAsda_TTLT(logRunwaySelected);
+                Calculator.calcToda_TTLT(logRunwaySelected);
+                Calculator.calcLda_LT(obstacleSelected, logRunwaySelected);
+            }
+        }
     }
 }

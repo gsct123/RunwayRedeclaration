@@ -68,7 +68,7 @@
             <Insets bottom="10.0" top="10.0" />
          </padding>
       </Label>
-      <SplitPane dividerPositions="0.3, 0.7" prefHeight="581.0" prefWidth="900.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
+      <SplitPane dividerPositions="0.2981974921630094, 0.697884012539185" prefHeight="581.0" prefWidth="900.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
          <items>
             <AnchorPane prefHeight="351.0" prefWidth="278.0">
                <children>
@@ -162,9 +162,70 @@
                   </Button>
                </children>
             </AnchorPane>
+<!--            <AnchorPane prefHeight="200.0" prefWidth="200.0">-->
+<!--               <children>-->
+<!--                  <Label layoutX="125.0" layoutY="13.0" text="CALCULATION BREAKDOWN">-->
+<!--                     <font>-->
+<!--                        <Font name="Verdana Bold" size="20.0" />-->
+<!--                     </font>-->
+<!--                     <padding>-->
+<!--                        <Insets bottom="5.0" top="5.0" />-->
+<!--                     </padding>-->
+<!--                  </Label>-->
+<!--                  <Label layoutX="24.0" layoutY="100.0" text="Physical runway (Take off, Landing)" />-->
+<!--                  <Label layoutX="23.0" layoutY="120.0" text="TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced threshold">-->
+<!--                     <font>-->
+<!--                        <Font size="12.5" />-->
+<!--                     </font>-->
+<!--                     <padding>-->
+<!--                        <Insets bottom="30.0" />-->
+<!--                     </padding>-->
+<!--                  </Label>-->
+<!--                  <Label layoutX="24.0" layoutY="160.0" text="ASDA = (R) TORA + stopway ">-->
+<!--                     <padding>-->
+<!--                        <Insets bottom="30.0" />-->
+<!--                     </padding>-->
+<!--                  </Label>-->
+<!--                  <Label layoutX="24.0" layoutY="200.0" text="TODA = (R) TORA + clearway">-->
+<!--                     <padding>-->
+<!--                        <Insets bottom="30.0" />-->
+<!--                     </padding>-->
+<!--                  </Label>-->
+<!--                  <Label layoutX="24.0" layoutY="240.0" text="LDA = Original LDA - Distance from Threshold - Strip End - Slope Calculation">-->
+<!--                     <padding>-->
+<!--                        <Insets bottom="30.0" />-->
+<!--                     </padding>-->
+<!--                  </Label>-->
+<!--               </children></AnchorPane>-->
+             <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                 <children>
+                     <Label layoutX="90.0" layoutY="13.0" text="CALCULATION BREAKDOWN">
+                         <font>
+                             <Font name="Verdana Bold" size="20.0" />
+                         </font>
+                         <padding>
+                             <Insets bottom="5.0" top="5.0" />
+                         </padding>
+                     </Label>
+                     <Label layoutX="132.0" layoutY="214.0" prefHeight="62.0" prefWidth="254.0" text="No calculation performed">
+                         <font>
+                             <Font name="Verdana" size="20.0" />
+                         </font>
+                     </Label>
+                     <Label layoutX="93.0" layoutY="294.0" prefHeight="25.0" prefWidth="338.0" text="Edit airport and obstacle to begin">
+                         <font>
+                             <Font name="Verdana" size="20.0" />
+                         </font>
+                     </Label>
+                 </children></AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="125.0" layoutY="13.0" text="CALCULATION BREAKDOWN">
+                  <Label fx:id="originalToraLabel" layoutX="74.0" layoutY="180.0" text="TORA  =">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="78.0" layoutY="99.0" prefHeight="56.0" prefWidth="226.0" text="ORIGINAL RUNWAY">
                      <font>
                         <Font name="Verdana Bold" size="20.0" />
                      </font>
@@ -172,97 +233,21 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label layoutX="24.0" layoutY="100.0" text="Physical runway (Take off, Landing)" />
-                  <Label layoutX="23.0" layoutY="120.0" text="TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced threshold">
+                  <Label fx:id="originalAsdaLabel" layoutX="75.0" layoutY="259.0" text="ASDA  =">
                      <font>
-                        <Font size="12.5" />
+                        <Font size="20.0" />
                      </font>
-                     <padding>
-                        <Insets bottom="30.0" />
-                     </padding>
                   </Label>
-                  <Label layoutX="24.0" layoutY="160.0" text="ASDA = (R) TORA + stopway ">
-                     <padding>
-                        <Insets bottom="30.0" />
-                     </padding>
+                  <Label fx:id="originalLdaLabel" layoutX="77.0" layoutY="298.0" text="LDA     =">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
                   </Label>
-                  <Label layoutX="24.0" layoutY="200.0" text="TODA = (R) TORA + clearway">
-                     <padding>
-                        <Insets bottom="30.0" />
-                     </padding>
+                  <Label fx:id="originalTodaLabel" layoutX="73.0" layoutY="219.0" text="TODA  =">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
                   </Label>
-                  <Label layoutX="24.0" layoutY="240.0" text="LDA = Original LDA - Distance from Threshold - Strip End - Slope Calculation">
-                     <padding>
-                        <Insets bottom="30.0" />
-                     </padding>
-                  </Label>
-               </children></AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <SplitPane dividerPositions="0.5" layoutX="5.0" layoutY="105.0" orientation="VERTICAL" prefHeight="479.5" prefWidth="259.0" style="-fx-border-color: rgb(244,244,244);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                           <children>
-                              <Label layoutX="29.0" layoutY="18.0" text="Original Runway">
-                                 <font>
-                                    <Font name="Verdana Bold" size="20.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="5.0" top="5.0" />
-                                 </padding>
-                              </Label>
-                              <Label layoutX="30.0" layoutY="59.0" text="TORA:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font></Label>
-                              <Label layoutX="30.0" layoutY="86.0" text="ASDA:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font></Label>
-                              <Label layoutX="30.0" layoutY="115.0" text="LDA:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font></Label>
-                              <Label layoutX="30.0" layoutY="144.0" text="TODA:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font></Label>
-                           </children>
-                        </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                           <children>
-                              <Label layoutX="29.0" layoutY="4.0" text="Revised Runway">
-                                 <font>
-                                    <Font name="Verdana Bold" size="20.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="5.0" top="5.0" />
-                                 </padding>
-                              </Label>
-                              <Label layoutX="30.0" layoutY="41.0" text="TORA:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="30.0" layoutY="72.0" text="ASDA:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="30.0" layoutY="100.0" text="LDA:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="30.0" layoutY="131.0" text="TODA:">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </AnchorPane>
-                    </items>
-                  </SplitPane>
                </children></AnchorPane>
          </items>
       </SplitPane>
