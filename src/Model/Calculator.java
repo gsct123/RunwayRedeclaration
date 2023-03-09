@@ -5,6 +5,10 @@ public class Calculator {
     private static final double blastProtection = 300;
     private static final double stripEnd = 60;
     private static final double minCGArea = 75;
+
+    //empty constructor
+    public Calculator() {}
+
     private static final double maxCGArea = 105;
 
     private static final String talo = "Take-Off Away Landing Over";

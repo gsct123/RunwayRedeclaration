@@ -1,10 +1,7 @@
 package Controller;
 
 
-import Model.Airport;
-import Model.LogicalRunway;
-import Model.Obstacle;
-import Model.PhysicalRunway;
+import Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -248,7 +245,7 @@ public class MainController implements Initializable {
                         Optional<ButtonType> result = errorAlert.showAndWait();
 
                         if(result.isPresent() && result.get() == ButtonType.OK){
-                            distanceThresholdTextField.clear();
+                            distanceThresholdTextField.setText("0");
                             flightMethodMenu.setDisable(true);
                             performCalculationButton.setDisable(true);
                             errorAlert.close();
@@ -256,7 +253,7 @@ public class MainController implements Initializable {
 
                         Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
                         okButton.setOnAction(event -> {
-                            distanceThresholdTextField.clear();
+                            distanceThresholdTextField.setText("0");
                             flightMethodMenu.setDisable(true);
                             performCalculationButton.setDisable(true);
                             errorAlert.close();
@@ -280,7 +277,7 @@ public class MainController implements Initializable {
                             Optional<ButtonType> result = errorAlert.showAndWait();
 
                             if(result.isPresent() && result.get() == ButtonType.OK){
-                                clDistTextField.clear();
+                                clDistTextField.setText("0");
                                 flightMethodMenu.setDisable(true);
                                 performCalculationButton.setDisable(true);
                                 errorAlert.close();
@@ -288,7 +285,7 @@ public class MainController implements Initializable {
 
                             Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
                             okButton.setOnAction(event -> {
-                                clDistTextField.clear();
+                                clDistTextField.setText("0");
                                 performCalculationButton.setDisable(true);
                                 flightMethodMenu.setDisable(true);
                                 errorAlert.close();
@@ -329,9 +326,29 @@ public class MainController implements Initializable {
                 flightMethod = method.getText();
                 performCalculationButton.setDisable(false);
                 performCalculationButton.setOnAction(actionEvent1 -> {
-                    //perform calculation
+                    performCalculation();
                 });
             });
         }
+    }
+
+    public void performCalculation(){
+        Calculator calculator = new Calculator();
+
+//        switch (flightMethod) {
+//            case "Landing Over" -> {
+//                calculator.calc
+//            }
+//            case "Take Off Away" -> {
+//
+//            }
+//            case "Landing Towards" -> {
+//
+//            }
+//            case "Take Off Towards" -> {
+//
+//            }
+//        }
+//        calculator.cal
     }
 }
