@@ -155,7 +155,7 @@
                         <Font name="Verdana" size="16.0" />
                      </font>
                   </MenuButton>
-                  <Button fx:id="performCalculationButton" layoutX="94.0" layoutY="520.0" mnemonicParsing="false" text="Perform Recalculation">
+                  <Button fx:id="performCalculationButton" disable="true" layoutX="94.0" layoutY="520.0" mnemonicParsing="false" text="Perform Recalculation">
                      <font>
                         <Font name="Verdana" size="16.0" />
                      </font>
