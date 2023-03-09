@@ -19,6 +19,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.net.URL;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -234,19 +235,36 @@ public class MainController implements Initializable {
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth());
                 distanceThresholdTextField.setDisable(false);
                 distanceThresholdTextField.setOnAction(actionEvent -> {
-                    while(true){
-                        String disThreshold = distanceThresholdTextField.getText().trim();
-                        try{
-                            if(disThreshold.startsWith("-")){
-                                distFromThreshold = -1 * Double.parseDouble(disThreshold.substring(1));
-                            } else{
-                                distFromThreshold = Double.parseDouble(disThreshold);
-                            }
-                            break;
-                        } catch (NumberFormatException exception) {
-                            //display error message
+                    String disThreshold = distanceThresholdTextField.getText().trim();
+                    try {
+                        if (disThreshold.startsWith("-")) {
+                            distFromThreshold = -1 * Double.parseDouble(disThreshold.substring(1));
+                        } else {
+                            distFromThreshold = Double.parseDouble(disThreshold);
                         }
+                    } catch (NumberFormatException exception) {
+                        //display error message
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                        errorAlert.setTitle("Error Message");
+                        errorAlert.setHeaderText("ERROR");
+                        errorAlert.setContentText("Invalid input for distance from threshold\nHint: please input a numerical value");
+                        errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
+                        Optional<ButtonType> result = errorAlert.showAndWait();
+
+
+                        if(result.isPresent() && result.get() == ButtonType.OK){
+                            distanceThresholdTextField.clear();
+                            errorAlert.close();
+                        }
+
+                        Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
+                        okButton.setOnAction(event -> {
+                            distanceThresholdTextField.clear();
+                            flightMethodMenu.setDisable(true);
+                            errorAlert.close();
+                        });
                     }
+
                     clDistTextField.setOnAction(actionEvent2 -> {
                         while(true){
                             String clDistance = clDistTextField.getText();
