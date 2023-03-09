@@ -13,15 +13,12 @@ public class PhysicalRunway{
     public String toString() {
         return "PhysicalRunway{" +
                 "name='" + name + '\'' +
-                "\nlogicalRunways=" + logicalRunways +
-                "\nobstacle=" + obstacle +
-                '}';
+                "\nlogicalRunways=" + logicalRunways + '}';
     }
 
-    public PhysicalRunway(String name, ObservableList<LogicalRunway> logicalRunways, Obstacle obstacle){
+    public PhysicalRunway(String name, ObservableList<LogicalRunway> logicalRunways){
         this.name = name;
         this.logicalRunways = logicalRunways;
-        this.obstacle = obstacle;
     }
 
     public String getName() {
@@ -38,13 +35,5 @@ public class PhysicalRunway{
 
     public void setLogicalRunways(ObservableList<LogicalRunway> logicalRunways) {
         this.logicalRunways = logicalRunways;
-    }
-
-    public Obstacle getObstacle() {
-        return obstacle;
-    }
-
-    public void setObstacle(Obstacle obstacle) {
-        this.obstacle = obstacle;
     }
 }
