@@ -5,13 +5,15 @@ import javafx.collections.ObservableList;
 public class PhysicalRunway{
     private String name;
     private ObservableList<LogicalRunway> logicalRunways;
+    //Obstacle is on a physical runway, one obstacle could affect all the logical runway in a physical runway.
+    //There could only be ONE obstacle according to the requirement
+    private Obstacle obstacle;
 
     @Override
     public String toString() {
         return "PhysicalRunway{" +
                 "name='" + name + '\'' +
-                "\nlogicalRunways=" + logicalRunways +
-                '}';
+                "\nlogicalRunways=" + logicalRunways + '}';
     }
 
     public PhysicalRunway(String name, ObservableList<LogicalRunway> logicalRunways){
