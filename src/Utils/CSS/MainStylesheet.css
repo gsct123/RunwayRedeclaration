@@ -1,3 +1,9 @@
 .split-pane > .split-pane-divider {
     -fx-background-color: transparent;
 }
+
+.my-alert > .content-text {
+    -fx-font-family: Verdana;
+    -fx-font-size: 14px;
+    -fx-text-fill: red;
+}
