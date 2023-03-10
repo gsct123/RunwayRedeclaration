@@ -8,17 +8,16 @@ public class Calculator {
 
     //empty constructor
     public Calculator() {}
-
-    private static final double maxCGArea = 105;
-
+    private static final double maxCGArea = 150;
     private static final String talo = "Take-Off Away Landing Over";
-        private static final String ttlt = "Take-Off Towards Landing Towards";
+    private static final String ttlt = "Take-Off Towards Landing Towards";
 
     //testing only
     public static void main(String[] args) {
         LogicalRunway runway = new LogicalRunway("09l", 3902, 3902, 3902, 3595);
         Obstacle obstacle = new Obstacle("obs1", 12, 0, 0, 50);
-        printCalculationBreakdownT(obstacle, runway, 1);
+        //improvement: use Calculator.getFlightMethod inside the function getCalculationBreakdownT to get the flight method
+        getCalculationBreakdownT(obstacle, runway, Calculator.getFlightMethod(obstacle, runway));
     }
     //check if the obstacle is within the strip end, or minimum clear graded area
     //the declaration needs to be redeclare if true.
@@ -39,7 +38,7 @@ public class Calculator {
         double lda;
         if (resa > obstacle.getAlsTocs()){
             //not sure
-            lda = runways.getLda() - obstacle.getDistFThreshold() - stripEnd - resa - obstacle.getWidth();
+            lda = runways.getLda() - obstacle.getDistFThreshold() - stripEnd - resa ;
         } else if (blastProtection > obstacle.getAlsTocs()) {
             //not sure
             lda = runways.getLda() - obstacle.getDistFThreshold() - blastProtection - obstacle.getWidth();
@@ -51,14 +50,21 @@ public class Calculator {
         return lda;
     }
 
-    //public static double calcLda_LO(Obstacle obstacle, LogicalRunway runways){
-    //    double lda;
-    //    //find the maximum value between 3 different
-    //    double maxValue = Math.max(stripEnd - resa - obstacle.getWidth(), Math.max(blastProtection - obstacle.getWidth(),stripEnd - obstacle.getAlsTocs()));
-    //    lda = runways.getLda() - obstacle.getDistFThreshold() - maxValue;
-    //    runways.setNewLda(lda);
-    //    return lda;
-    //}
+    public static double getDisplacedLandingThreshold(Double alsTocs){
+        double displacedLandingThreshold;
+        if (alsTocs < resa){
+            displacedLandingThreshold = resa + stripEnd;
+        }else {
+            displacedLandingThreshold = alsTocs + stripEnd;
+        }
+        //This condition is given in the definition based on different plane can have different blastProtection value/runway can have different resa
+        //But in here we just assume they're all the same, thus this will be always true, if alsTocs lesser than resa, (if the condition (obstacle.getAlsTocs() < resa) is true, (displacedLandingThreshold <= blastProtection) will also always be true)
+        //since blastprotection value must be greater than resa + stripEnd/AlsTocs + stripEnd
+        if (displacedLandingThreshold <= blastProtection){
+            displacedLandingThreshold += blastProtection;
+        }
+        return displacedLandingThreshold;
+    }
 
     public static int ldaBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
         int choice;
@@ -134,53 +140,6 @@ public class Calculator {
             flightMethod = ttlt;
         }
         return flightMethod;
-    }
-
-    public static void printCalculationBreakdownT(Obstacle obstacle, LogicalRunway runways, int breakDownChoice){
-        int ldaOrToraChoice;
-        System.out.println("Calculation Breakdown:");
-        //breakdown choice 1 = Landing Over
-        if (breakDownChoice == 1){
-            ldaOrToraChoice = ldaBreakdownChoice(obstacle, runways);
-            System.out.println("TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced Threshold");
-            System.out.println("     = " + runways.getTora() + " - " + blastProtection + " - " + obstacle.getDistFThreshold() + " - " + runways.getDisplacedThreshold() + " = " + calcTora_TA(obstacle, runways));
-            System.out.println("ASDA = (R) TORA + STOPWAY");
-            System.out.println("     = " + runways.getNewTora() + " + " + runways.getStopway() + " = " + calcAsda_TALO(runways));
-            System.out.println("TODA = (R) TORA + CLEARWAY");
-            System.out.println("     = " + runways.getNewTora() + " + " + runways.getClearway() + " = " + calcToda_TALO(runways));
-            if (ldaOrToraChoice == 1){
-                System.out.println("LDA  = Original LDA - Distance from threshold - Strip End - RESA - Obstacle Width");
-                System.out.println("LDA  = " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + resa+" - " + obstacle.getWidth() + " = " + calcLda_LO(obstacle, runways));
-            }
-            else if (ldaOrToraChoice == 2){
-                System.out.println("LDA  = Original LDA - Distance from threshold - Blast Protection - Obstacle Width");
-                System.out.println("LDA  = " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + blastProtection + " - " + obstacle.getWidth() + " = " + calcLda_LO(obstacle, runways));
-            }
-            else {
-                System.out.println("LDA  = Original LDA - Distance from threshold - Strip End - Slope Calculation");
-                System.out.println("LDA: " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + obstacle.getAlsTocs() + " = " + calcLda_LO(obstacle, runways));
-            }
-        }
-        //breakdown choice 2 = Taking-Off Towards
-        else {
-            ldaOrToraChoice = toraBreakdownChoice(obstacle, runways);
-            if (ldaOrToraChoice == 1){
-                System.out.println("TORA = Distance from threshold + Displaced Threshold - RESA - Obstacle Width - Strip End");
-                System.out.println("TORA = " + obstacle.getDistFThreshold() + " + " + runways.getDisplacedThreshold() + " - " + resa + " - " + obstacle.getWidth() + " - " + stripEnd + " = " + calcTora_TT(obstacle, runways));
-            }
-            else{
-                System.out.println("TORA =  Distance from threshold + Displaced Threshold - Slope Calculation - Strip End");
-                System.out.println("TORA = " + obstacle.getDistFThreshold() + " + " + runways.getDisplacedThreshold() + " - " + obstacle.getAlsTocs() + " - " + stripEnd + " = " + calcTora_TT(obstacle, runways));
-            }
-            System.out.println("ASDA = (R) TORA");
-            System.out.println("ASDA = " + calcTora_TT(obstacle, runways) + " = " + calcAsda_TTLT(runways));
-            System.out.println("TODA = (R) TORA");
-            System.out.println("TODA = " + calcTora_TT(obstacle, runways) + " = " + calcToda_TTLT(runways));
-            System.out.println("LDA  = Distance from Threshold - Strip End - RESA");
-            System.out.println("LDA  = " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + resa + " = " + calcLda_LT(obstacle, runways));
-        }
-        System.out.println();
-
     }
 
     public static String getCalculationBreakdownT(Obstacle obstacle, LogicalRunway runways, String flightPath){
