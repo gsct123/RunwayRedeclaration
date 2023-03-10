@@ -1,5 +1,3 @@
-package Test;
-
 import Model.Calculator;
 import Model.LogicalRunway;
 import Model.Obstacle;
@@ -42,28 +40,28 @@ class CalculatorTest {
     @DisplayName("Test calculation of Asda for Takeoff Away Landing Over")
     void calcAsda_TALO() {
         Calculator.calcTora(obstacle1,lR09L);
-        assertEquals(3345,Calculator.calcAsda_TALO(lR09L));
+        assertEquals(3345,Calculator.calcAsda(obstacle1,lR09L));
     }
 
     @Test
     @DisplayName("Test calculation of Toda for Takeoff Away Landing Over")
     void calcToda_TALO() {
         Calculator.calcTora(obstacle1,lR09L);
-        assertEquals(3345,Calculator.calcToda_TALO(lR09L));
+        assertEquals(3345,Calculator.calcToda(obstacle1,lR09L));
     }
 
     @Test
     @DisplayName("Test calculation of Asda for Takeoff Towards Landing Towards")
     void calcAsda_TTLT() {
         Calculator.calcTora(obstacle2,lR27R);
-        assertEquals(2986,Calculator.calcAsda_TTLT(lR27R));
+        assertEquals(2986,Calculator.calcAsda(obstacle2,lR27R));
     }
 
     @Test
     @DisplayName("Test calculation of Toda for Takeoff Towards Landing Towards")
     void calcToda_TTLT() {
         Calculator.calcTora(obstacle2,lR27R);
-        assertEquals(2986,Calculator.calcToda_TTLT(lR27R));
+        assertEquals(2986,Calculator.calcToda(obstacle2,lR27R));
     }
 
     //GT = greater than

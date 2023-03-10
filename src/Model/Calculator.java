@@ -1,10 +1,10 @@
 package Model;
 
 public class Calculator {
-    private static final double resa = 240;
-    private static final double blastProtection = 300;
-    private static final double stripEnd = 60;
-    private static final double minCGArea = 75;
+    public static final double resa = 240;
+    public static final double blastProtection = 300;
+    public static final double stripEnd = 60;
+    public static final double minCGArea = 75;
     //empty constructor
     public Calculator() {}
     public static final double maxCGArea = 150;
@@ -16,27 +16,6 @@ public class Calculator {
         LogicalRunway runway = new LogicalRunway("09l", 3902, 3902, 3902, 3595);
         Obstacle obstacle = new Obstacle("obs1", 12, 0, 0, 50);
         getCalculationBreakdownT(obstacle, runway, Calculator.getFlightMethod(obstacle, runway));
-    }
-
-    public static double getDisplacedLandingThreshold(double alsTocs, String flightMethod){
-        double displacedLandingThreshold;
-        if (alsTocs < resa){
-            displacedLandingThreshold = resa + stripEnd;
-        }else {
-            displacedLandingThreshold = alsTocs + stripEnd;
-        }
-        if (displacedLandingThreshold <= blastProtection && flightMethod.equals(talo)){
-            displacedLandingThreshold += blastProtection;
-        }
-        return displacedLandingThreshold;
-    }
-
-    //check if the obstacle is within the strip end, or minimum clear graded area
-    //the declaration needs to be redeclare if true.
-    public static boolean needRedeclare(Obstacle obstacle, LogicalRunway logicalRunway){
-        boolean withinStripEnd = obstacle.getDistFThreshold() <= logicalRunway.getTora() + stripEnd && obstacle.getDistFThreshold() >= -stripEnd;
-        boolean withinCentreline = obstacle.getDistFCent() <= minCGArea && obstacle.getDistFCent() >= -minCGArea;
-        return withinStripEnd && withinCentreline;
     }
 
     public static double calcTora(Obstacle obstacle,LogicalRunway runway){
@@ -63,28 +42,55 @@ public class Calculator {
         return lda;
     }
 
-    //TALO = Takeoff Away Landing Over
-    //when taking off away / landing over, ASDA and TODA needs to include clearway and stopway
-    public static double calcAsda_TALO(LogicalRunway runways){
-        double newAsda =  runways.getNewTora() + runways.getStopway();
-        runways.setNewAsda(newAsda);
+    public static double calcAsda(Obstacle obstacle, LogicalRunway runway){
+        String flightMethod = getFlightMethod(obstacle,runway);
+        double newAsda;
+        double newTora = runway.getNewTora();
+        double stopway = runway.getStopway();
+
+        if (flightMethod.equals(talo)){
+            newAsda =  newTora + stopway;
+        }else {
+            newAsda = newTora;
+        }
+        runway.setNewAsda(newAsda);
         return newAsda;
     }
-    public static double calcToda_TALO(LogicalRunway runways){
-        double newToda = runways.getNewTora() + runways.getClearway();
-        runways.setNewToda(newToda);
+
+    public static double calcToda(Obstacle obstacle, LogicalRunway runway){
+        String flightMethod = getFlightMethod(obstacle,runway);
+        double newToda;
+        double newTora = runway.getNewTora();
+        double clearway = runway.getClearway();
+
+        if (flightMethod.equals(talo)){
+            newToda =  newTora + clearway;
+        }else {
+            newToda = newTora;
+        }
+        runway.setNewToda(newToda);
         return newToda;
     }
 
-    //TTLT = Takeoff Towards Landing Towards
-    //when taking off towards and landing towards, ASDA and TODA don't have to include stopway and clearway
-    public static double calcAsda_TTLT(LogicalRunway runways){
-        runways.setNewAsda(runways.getNewTora());
-        return runways.getNewTora();
+    public static double getDisplacedLandingThreshold(double alsTocs, String flightMethod){
+        double displacedLandingThreshold;
+        if (alsTocs < resa){
+            displacedLandingThreshold = resa + stripEnd;
+        }else {
+            displacedLandingThreshold = alsTocs + stripEnd;
+        }
+        if (displacedLandingThreshold <= blastProtection && flightMethod.equals(talo)){
+            displacedLandingThreshold += blastProtection;
+        }
+        return displacedLandingThreshold;
     }
-    public static double calcToda_TTLT(LogicalRunway runways){
-        runways.setNewToda(runways.getNewTora());
-        return runways.getNewTora();
+
+    //check if the obstacle is within the strip end, or minimum clear graded area
+    //the declaration needs to be redeclare if true.
+    public static boolean needRedeclare(Obstacle obstacle, LogicalRunway logicalRunway){
+        boolean withinStripEnd = obstacle.getDistFThreshold() <= logicalRunway.getTora() + stripEnd && obstacle.getDistFThreshold() >= -stripEnd;
+        boolean withinCentreline = obstacle.getDistFCent() <= minCGArea && obstacle.getDistFCent() >= -minCGArea;
+        return withinStripEnd && withinCentreline;
     }
 
     public static String getFlightMethod(Obstacle obstacle, LogicalRunway logicalRunway){
@@ -97,7 +103,7 @@ public class Calculator {
         return flightMethod;
     }
 
-    public static int ldaBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
+    private static int ldaBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
         int choice;
         if (resa > obstacle.getAlsTocs()){
             choice = 1;
@@ -109,7 +115,7 @@ public class Calculator {
         return choice;
     }
 
-    public static int toraBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
+    private static int toraBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
         int choice;
         if (resa > obstacle.getAlsTocs()){
             choice = 1;
@@ -128,9 +134,9 @@ public class Calculator {
             result += "TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced Threshold\n";
             result += "     = " + runways.getTora() + " - " + blastProtection + " - " + obstacle.getDistFThreshold() + " - " + runways.getDisplacedThreshold() + " = " + calcTora(obstacle, runways) + "\n";
             result += "ASDA = (R) TORA + STOPWAY\n";
-            result += "     = " + runways.getNewTora() + " + " + runways.getStopway() + " = " + calcAsda_TALO(runways) + "\n";
+            result += "     = " + runways.getNewTora() + " + " + runways.getStopway() + " = " + calcAsda(obstacle,runways) + "\n";
             result += "TODA = (R) TORA + CLEARWAY\n";
-            result += "     = " + runways.getNewTora() + " + " + runways.getClearway() + " = " + calcToda_TALO(runways) + "\n";
+            result += "     = " + runways.getNewTora() + " + " + runways.getClearway() + " = " + calcToda(obstacle,runways) + "\n";
             if (ldaOrToraChoice == 1){
                 result += "LDA  = Original LDA - Distance from threshold - Strip End - RESA - Obstacle Width\n";
                 result += "LDA  = " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + resa+" - " + obstacle.getWidth() + " = " + calcLda(obstacle, runways) + "\n";
@@ -156,9 +162,9 @@ public class Calculator {
                 result += "TORA = " + obstacle.getDistFThreshold() + " + " + runways.getDisplacedThreshold() + " - " + obstacle.getAlsTocs() + " - " + stripEnd + " = " + calcTora(obstacle, runways) + "\n";
             }
             result += "ASDA = (R) TORA\n";
-            result += "ASDA = " + calcTora(obstacle, runways) + " = " + calcAsda_TTLT(runways) + "\n";
+            result += "ASDA = " + calcTora(obstacle, runways) + " = " + calcAsda(obstacle,runways) + "\n";
             result += "TODA = (R) TORA\n";
-            result += "TODA = " + calcTora(obstacle, runways) + " = " + calcToda_TTLT(runways) + "\n";
+            result += "TODA = " + calcTora(obstacle, runways) + " = " + calcToda(obstacle,runways) + "\n";
             result += "LDA  = Distance from Threshold - Strip End - RESA\n";
             result += "LDA  = " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + resa + " = " + calcLda(obstacle, runways) + "\n";
         }
