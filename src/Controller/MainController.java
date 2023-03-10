@@ -375,16 +375,16 @@ public class MainController implements Initializable {
     public void performCalculation(){
         switch (flightMethod) {
             case "Landing Over", "Take Off Away" -> {
-                Calculator.calcTora_TA(obstacleSelected, logRunwaySelected);
+                Calculator.calcTora(obstacleSelected, logRunwaySelected);
                 Calculator.calcAsda_TALO(logRunwaySelected);
                 Calculator.calcToda_TALO(logRunwaySelected);
-                Calculator.calcLda_LO(obstacleSelected, logRunwaySelected);
+                Calculator.calcLda(obstacleSelected, logRunwaySelected);
             }
             case "Landing Towards", "Take Off Towards" -> {
-                Calculator.calcTora_TT(obstacleSelected, logRunwaySelected);
+                Calculator.calcTora(obstacleSelected, logRunwaySelected);
                 Calculator.calcAsda_TTLT(logRunwaySelected);
                 Calculator.calcToda_TTLT(logRunwaySelected);
-                Calculator.calcLda_LT(obstacleSelected, logRunwaySelected);
+                Calculator.calcLda(obstacleSelected, logRunwaySelected);
             }
         }
     }

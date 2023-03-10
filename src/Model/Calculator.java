@@ -39,30 +39,27 @@ public class Calculator {
         return withinStripEnd && withinCentreline;
     }
 
-    //TA = TakeOff Away
-    public static double calcTora_TA(Obstacle obstacle, LogicalRunway runways){
-        double tora = runways.getTora() - blastProtection - obstacle.getDistFThreshold() - runways.getDisplacedThreshold();
-        runways.setNewTora(tora);
-        return tora;
-    }
-    //LO = Landing Over
-    public static double calcLda_LO(Obstacle obstacle, LogicalRunway runways){
-        double lda = runways.getLda() - obstacle.getDistFThreshold() - getDisplacedLandingThreshold(obstacle.getAlsTocs(),talo);
-        runways.setNewLda(lda);
-        return lda;
-    }
-
-    //TT = TakeOff Towards
-    public static double calcTora_TT(Obstacle obstacle, LogicalRunway runways){
-        double tora = obstacle.getDistFThreshold() + runways.getDisplacedThreshold() - getDisplacedLandingThreshold(obstacle.getAlsTocs(),ttlt);;
-        runways.setNewTora(tora);
+    public static double calcTora(Obstacle obstacle,LogicalRunway runway){
+        String flightMethod = getFlightMethod(obstacle,runway);
+        double tora;
+        if(flightMethod.equals(talo)){
+            tora = runway.getTora() - blastProtection - obstacle.getDistFThreshold() - runway.getDisplacedThreshold();
+        }else {
+            tora = obstacle.getDistFThreshold() + runway.getDisplacedThreshold() - getDisplacedLandingThreshold(obstacle.getAlsTocs(),ttlt);
+        }
+        runway.setNewTora(tora);
         return tora;
     }
 
-    //LT = Landing Towards
-    public static double calcLda_LT(Obstacle obstacle, LogicalRunway runways){
-        double lda = obstacle.getDistFThreshold() - stripEnd - resa;
-        runways.setNewLda(lda);
+    public static double calcLda(Obstacle obstacle,LogicalRunway runway){
+        String flightMethod = getFlightMethod(obstacle,runway);
+        double lda;
+        if (flightMethod.equals(talo)){
+            lda = runway.getLda() - obstacle.getDistFThreshold() - getDisplacedLandingThreshold(obstacle.getAlsTocs(),talo);
+        }else {
+            lda = obstacle.getDistFThreshold() - stripEnd - resa;
+        }
+        runway.setNewLda(lda);
         return lda;
     }
 
@@ -129,41 +126,41 @@ public class Calculator {
         if (flightPath.equals("Take-Off Away Landing Over")){
             ldaOrToraChoice = ldaBreakdownChoice(obstacle, runways);
             result += "TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced Threshold\n";
-            result += "     = " + runways.getTora() + " - " + blastProtection + " - " + obstacle.getDistFThreshold() + " - " + runways.getDisplacedThreshold() + " = " + calcTora_TA(obstacle, runways) + "\n";
+            result += "     = " + runways.getTora() + " - " + blastProtection + " - " + obstacle.getDistFThreshold() + " - " + runways.getDisplacedThreshold() + " = " + calcTora(obstacle, runways) + "\n";
             result += "ASDA = (R) TORA + STOPWAY\n";
             result += "     = " + runways.getNewTora() + " + " + runways.getStopway() + " = " + calcAsda_TALO(runways) + "\n";
             result += "TODA = (R) TORA + CLEARWAY\n";
             result += "     = " + runways.getNewTora() + " + " + runways.getClearway() + " = " + calcToda_TALO(runways) + "\n";
             if (ldaOrToraChoice == 1){
                 result += "LDA  = Original LDA - Distance from threshold - Strip End - RESA - Obstacle Width\n";
-                result += "LDA  = " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + resa+" - " + obstacle.getWidth() + " = " + calcLda_LO(obstacle, runways) + "\n";
+                result += "LDA  = " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + resa+" - " + obstacle.getWidth() + " = " + calcLda(obstacle, runways) + "\n";
             }
             else if (ldaOrToraChoice == 2){
                 result += "LDA  = Original LDA - Distance from threshold - Blast Protection - Obstacle Width\n";
                 result += "LDA  = " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + blastProtection + " - " +
-                        obstacle.getWidth() + " = " + calcLda_LO(obstacle, runways) + "\n";
+                        obstacle.getWidth() + " = " + calcLda(obstacle, runways) + "\n";
             }
             else {
                 result += "LDA  = Original LDA - Distance from threshold - Strip End - Slope Calculation\n";
-                result += "LDA: " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + obstacle.getAlsTocs() + " = " + calcLda_LO(obstacle, runways) + "\n";
+                result += "LDA: " + runways.getLda() + " - " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + obstacle.getAlsTocs() + " = " + calcLda(obstacle, runways) + "\n";
             }
         }
         else {
             ldaOrToraChoice = toraBreakdownChoice(obstacle, runways);
             if (ldaOrToraChoice == 1){
                 result += "TORA = Distance from threshold + Displaced Threshold - RESA - Obstacle Width - Strip End\n";
-                result += "TORA = " + obstacle.getDistFThreshold() + " + " + runways.getDisplacedThreshold() + " - " + resa + " - " + obstacle.getWidth() + " - " + stripEnd + " = " + calcTora_TT(obstacle, runways) + "\n";
+                result += "TORA = " + obstacle.getDistFThreshold() + " + " + runways.getDisplacedThreshold() + " - " + resa + " - " + obstacle.getWidth() + " - " + stripEnd + " = " + calcTora(obstacle, runways) + "\n";
             }
             else{
                 result += "TORA =  Distance from threshold + Displaced Threshold - Slope Calculation - Strip End\n";
-                result += "TORA = " + obstacle.getDistFThreshold() + " + " + runways.getDisplacedThreshold() + " - " + obstacle.getAlsTocs() + " - " + stripEnd + " = " + calcTora_TT(obstacle, runways) + "\n";
+                result += "TORA = " + obstacle.getDistFThreshold() + " + " + runways.getDisplacedThreshold() + " - " + obstacle.getAlsTocs() + " - " + stripEnd + " = " + calcTora(obstacle, runways) + "\n";
             }
             result += "ASDA = (R) TORA\n";
-            result += "ASDA = " + calcTora_TT(obstacle, runways) + " = " + calcAsda_TTLT(runways) + "\n";
+            result += "ASDA = " + calcTora(obstacle, runways) + " = " + calcAsda_TTLT(runways) + "\n";
             result += "TODA = (R) TORA\n";
-            result += "TODA = " + calcTora_TT(obstacle, runways) + " = " + calcToda_TTLT(runways) + "\n";
+            result += "TODA = " + calcTora(obstacle, runways) + " = " + calcToda_TTLT(runways) + "\n";
             result += "LDA  = Distance from Threshold - Strip End - RESA\n";
-            result += "LDA  = " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + resa + " = " + calcLda_LT(obstacle, runways) + "\n";
+            result += "LDA  = " + obstacle.getDistFThreshold() + " - " + stripEnd + " - " + resa + " = " + calcLda(obstacle, runways) + "\n";
         }
         result += "\n";
         return result;
