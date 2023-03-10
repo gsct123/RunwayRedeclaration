@@ -1,5 +1,3 @@
-package Test;
-
 import Model.Calculator;
 import Model.LogicalRunway;
 import Model.Obstacle;
@@ -14,6 +12,7 @@ class CalculatorTest {
     LogicalRunway lR27R = new LogicalRunway("27R",3884,3962,3884,3884);
     Obstacle obstacle1 = new Obstacle("obstacle1",12,0,0,-50);
     Obstacle obstacle2 = new Obstacle("obstacle2",12,0,0,3646);
+
     @Test
     @DisplayName("Test calculation of Tora for Takeoff Away")
     void calcTora_TA() {
@@ -42,28 +41,28 @@ class CalculatorTest {
     @DisplayName("Test calculation of Asda for Takeoff Away Landing Over")
     void calcAsda_TALO() {
         Calculator.calcTora(obstacle1,lR09L);
-        assertEquals(3345,Calculator.calcAsda_TALO(lR09L));
+        assertEquals(3345,Calculator.calcAsda(obstacle1,lR09L));
     }
 
     @Test
     @DisplayName("Test calculation of Toda for Takeoff Away Landing Over")
     void calcToda_TALO() {
         Calculator.calcTora(obstacle1,lR09L);
-        assertEquals(3345,Calculator.calcToda_TALO(lR09L));
+        assertEquals(3345,Calculator.calcToda(obstacle1,lR09L));
     }
 
     @Test
     @DisplayName("Test calculation of Asda for Takeoff Towards Landing Towards")
     void calcAsda_TTLT() {
         Calculator.calcTora(obstacle2,lR27R);
-        assertEquals(2986,Calculator.calcAsda_TTLT(lR27R));
+        assertEquals(2986,Calculator.calcAsda(obstacle2,lR27R));
     }
 
     @Test
     @DisplayName("Test calculation of Toda for Takeoff Towards Landing Towards")
     void calcToda_TTLT() {
         Calculator.calcTora(obstacle2,lR27R);
-        assertEquals(2986,Calculator.calcToda_TTLT(lR27R));
+        assertEquals(2986,Calculator.calcToda(obstacle2,lR27R));
     }
 
     //GT = greater than
@@ -83,13 +82,6 @@ class CalculatorTest {
     }
 
     @Test
-    @DisplayName("Test if a right choice was given between TALO and TTLT")
-    void getCalculationBreakdown(){
-        assertEquals("Take-Off Away Landing Over",Calculator.getFlightMethod(obstacle1,lR09L));
-        assertEquals("Take-Off Towards Landing Towards",Calculator.getFlightMethod(obstacle2,lR27R));
-    }
-
-    @Test
     void ldaBreakdownChoice(){
     }
 
@@ -99,6 +91,12 @@ class CalculatorTest {
 
     @Test
     void printCalculationBreakdownT(){
+    }
+
+    @Test
+    void getFlightMethod(){
+        assertEquals(Calculator.talo,Calculator.getFlightMethod(obstacle1,lR09L));
+        assertEquals(Calculator.ttlt,Calculator.getFlightMethod(obstacle2,lR27R));
     }
 
     @Test
