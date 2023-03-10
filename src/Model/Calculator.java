@@ -5,20 +5,32 @@ public class Calculator {
     private static final double blastProtection = 300;
     private static final double stripEnd = 60;
     private static final double minCGArea = 75;
-
     //empty constructor
     public Calculator() {}
-    private static final double maxCGArea = 150;
-    private static final String talo = "Take-Off Away Landing Over";
-    private static final String ttlt = "Take-Off Towards Landing Towards";
+    public static final double maxCGArea = 150;
+    public static final String talo = "Take-Off Away Landing Over";
+    public static final String ttlt = "Take-Off Towards Landing Towards";
 
     //testing only
     public static void main(String[] args) {
         LogicalRunway runway = new LogicalRunway("09l", 3902, 3902, 3902, 3595);
         Obstacle obstacle = new Obstacle("obs1", 12, 0, 0, 50);
-        //improvement: use Calculator.getFlightMethod inside the function getCalculationBreakdownT to get the flight method
         getCalculationBreakdownT(obstacle, runway, Calculator.getFlightMethod(obstacle, runway));
     }
+
+    public static double getDisplacedLandingThreshold(double alsTocs, String flightMethod){
+        double displacedLandingThreshold;
+        if (alsTocs < resa){
+            displacedLandingThreshold = resa + stripEnd;
+        }else {
+            displacedLandingThreshold = alsTocs + stripEnd;
+        }
+        if (displacedLandingThreshold <= blastProtection && flightMethod.equals(talo)){
+            displacedLandingThreshold += blastProtection;
+        }
+        return displacedLandingThreshold;
+    }
+
     //check if the obstacle is within the strip end, or minimum clear graded area
     //the declaration needs to be redeclare if true.
     public static boolean needRedeclare(Obstacle obstacle, LogicalRunway logicalRunway){
@@ -35,68 +47,14 @@ public class Calculator {
     }
     //LO = Landing Over
     public static double calcLda_LO(Obstacle obstacle, LogicalRunway runways){
-        double lda;
-        if (resa > obstacle.getAlsTocs()){
-            //not sure
-            lda = runways.getLda() - obstacle.getDistFThreshold() - stripEnd - resa ;
-        } else if (blastProtection > obstacle.getAlsTocs()) {
-            //not sure
-            lda = runways.getLda() - obstacle.getDistFThreshold() - blastProtection - obstacle.getWidth();
-        } else {
-            //LDA = Original LDA - dist from threshold - stripEnd (60) - Als (height * 50)
-            lda = runways.getLda() - obstacle.getDistFThreshold() - stripEnd - obstacle.getAlsTocs();
-        }
+        double lda = runways.getLda() - obstacle.getDistFThreshold() - getDisplacedLandingThreshold(obstacle.getAlsTocs(),talo);
         runways.setNewLda(lda);
         return lda;
     }
 
-    public static double getDisplacedLandingThreshold(Double alsTocs){
-        double displacedLandingThreshold;
-        if (alsTocs < resa){
-            displacedLandingThreshold = resa + stripEnd;
-        }else {
-            displacedLandingThreshold = alsTocs + stripEnd;
-        }
-        //This condition is given in the definition based on different plane can have different blastProtection value/runway can have different resa
-        //But in here we just assume they're all the same, thus this will be always true, if alsTocs lesser than resa, (if the condition (obstacle.getAlsTocs() < resa) is true, (displacedLandingThreshold <= blastProtection) will also always be true)
-        //since blastprotection value must be greater than resa + stripEnd/AlsTocs + stripEnd
-        if (displacedLandingThreshold <= blastProtection){
-            displacedLandingThreshold += blastProtection;
-        }
-        return displacedLandingThreshold;
-    }
-
-    public static int ldaBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
-        int choice;
-        if (resa > obstacle.getAlsTocs()){
-           choice = 1;
-        } else if (blastProtection > obstacle.getAlsTocs()) {
-           choice = 2;
-        } else {
-           choice = 3;
-        }
-        return choice;
-    }
-
-    public static int toraBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
-        int choice;
-        if (resa > obstacle.getAlsTocs()){
-            choice = 1;
-        }else {
-            choice = 2;
-        }
-        return choice;
-    }
-
     //TT = TakeOff Towards
     public static double calcTora_TT(Obstacle obstacle, LogicalRunway runways){
-        double tora;
-        if (resa > obstacle.getAlsTocs()){
-            //not sure
-            tora = obstacle.getDistFThreshold() + runways.getDisplacedThreshold() - resa - obstacle.getWidth() - stripEnd;
-        }else {
-            tora = obstacle.getDistFThreshold() + runways.getDisplacedThreshold() - obstacle.getAlsTocs() - stripEnd;
-        }
+        double tora = obstacle.getDistFThreshold() + runways.getDisplacedThreshold() - getDisplacedLandingThreshold(obstacle.getAlsTocs(),ttlt);;
         runways.setNewTora(tora);
         return tora;
     }
@@ -140,6 +98,28 @@ public class Calculator {
             flightMethod = ttlt;
         }
         return flightMethod;
+    }
+
+    public static int ldaBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
+        int choice;
+        if (resa > obstacle.getAlsTocs()){
+            choice = 1;
+        } else if (blastProtection > obstacle.getAlsTocs()) {
+            choice = 2;
+        } else {
+            choice = 3;
+        }
+        return choice;
+    }
+
+    public static int toraBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
+        int choice;
+        if (resa > obstacle.getAlsTocs()){
+            choice = 1;
+        }else {
+            choice = 2;
+        }
+        return choice;
     }
 
     public static String getCalculationBreakdownT(Obstacle obstacle, LogicalRunway runways, String flightPath){
