@@ -6,6 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -14,6 +18,10 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.Optional;
@@ -74,12 +82,22 @@ public class MainController implements Initializable {
     private Label noCalcPerformedLabel;
     @FXML
     private Label breakdownLabel;
+    @FXML
+    private MenuItem aboutProject;
 
     ObservableList<Airport> airports = FXCollections.observableArrayList();
     ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        aboutProject.setOnAction(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
+            } catch (IOException | URISyntaxException ex) {
+                // Handle exceptions
+            }
+        });
+
         try {
             loadAirports("src/Data/airports.xml");
             loadObstacles("src/Data/obstacles.xml");
@@ -369,6 +387,7 @@ public class MainController implements Initializable {
                         breakdownLabel.setVisible(true);
                         //edit this to show the correct breakdown message
                     } else{
+                        breakdownLabel.setVisible(false);
                         //check needRedeclare function (clarify)
                         editToBeginLabel.setVisible(true);
                         noCalcPerformedLabel.setVisible(true);
