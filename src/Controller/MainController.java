@@ -379,11 +379,8 @@ public class MainController implements Initializable {
                         newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda());
                         editToBeginLabel.setVisible(false);
                         noCalcPerformedLabel.setVisible(false);
-                        int flightChoice = 0;
-                        if(flightMethod.equals("Landing Over") || flightMethod.equals("Take Off Away")){
-                            flightChoice = 1;
-                        }
-                        breakdownLabel.setText(Calculator.getCalculationBreakdownT(obstacleSelected, logRunwaySelected, flightChoice == 0? "Take-Off Towards Landing Towards": "Take-Off Away Landing Over"));
+                        //start breaking down
+                        breakdownLabel.setText(Calculator.getCalculationBreakdownT(obstacleSelected, logRunwaySelected));
                         breakdownLabel.setVisible(true);
                         //edit this to show the correct breakdown message
                     } else{
