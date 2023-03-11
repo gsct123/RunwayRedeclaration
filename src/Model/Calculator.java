@@ -20,26 +20,36 @@ public class Calculator {
 
     public static double calcTora(Obstacle obstacle,LogicalRunway runway){
         String flightMethod = getFlightMethod(obstacle,runway);
-        double tora;
+        double originalTora = runway.getTora();
+        double newTora;
+        double distanceFromThreshold = obstacle.getDistFThreshold();
+        double displacedThreshold = runway.getDisplacedThreshold();
+        double displacedLandingThreshold = getDisplacedLandingThreshold(obstacle.getAlsTocs(),ttlt);
+
         if(flightMethod.equals(talo)){
-            tora = runway.getTora() - blastProtection - obstacle.getDistFThreshold() - runway.getDisplacedThreshold();
+            newTora = originalTora - blastProtection - distanceFromThreshold - displacedThreshold;
         }else {
-            tora = obstacle.getDistFThreshold() + runway.getDisplacedThreshold() - getDisplacedLandingThreshold(obstacle.getAlsTocs(),ttlt);
+            //if flight method is TTLT,
+            newTora = distanceFromThreshold + displacedThreshold - displacedLandingThreshold;
         }
-        runway.setNewTora(tora);
-        return tora;
+        runway.setNewTora(newTora);
+        return newTora;
     }
 
     public static double calcLda(Obstacle obstacle,LogicalRunway runway){
         String flightMethod = getFlightMethod(obstacle,runway);
-        double lda;
+        double originalLda = runway.getLda();
+        double distanceFromThreshold = obstacle.getDistFThreshold();
+        double newLda;
+        double displacedLandingThreshold = getDisplacedLandingThreshold(obstacle.getAlsTocs(),talo);
+
         if (flightMethod.equals(talo)){
-            lda = runway.getLda() - obstacle.getDistFThreshold() - getDisplacedLandingThreshold(obstacle.getAlsTocs(),talo);
+            newLda = originalLda - distanceFromThreshold - displacedLandingThreshold;
         }else {
-            lda = obstacle.getDistFThreshold() - stripEnd - resa;
+            newLda = distanceFromThreshold - stripEnd - resa;
         }
-        runway.setNewLda(lda);
-        return lda;
+        runway.setNewLda(newLda);
+        return newLda;
     }
 
     public static double calcAsda(Obstacle obstacle, LogicalRunway runway){
@@ -72,6 +82,10 @@ public class Calculator {
         return newToda;
     }
 
+    // For both flight method TTLT(Takeoff Towards Landing Towards) and TALO(Takeoff Away Landing Over),
+    // If alsTocs(height of obstacle * 50) is less than RESA, displaced threshold will be (resa + strip) end otherwise it will be (alsTocs + strip end).
+    // Only if the flight method is TALO(Takeoff Away Landing Over),
+    // When either (resa + strip) or (alsTocs + strip end) is less than blast protection value, we need to add blast protection value into Displaced Landing Threshold.
     public static double getDisplacedLandingThreshold(double alsTocs, String flightMethod){
         double displacedLandingThreshold;
         if (alsTocs < resa){
