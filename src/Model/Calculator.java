@@ -201,9 +201,9 @@ public class Calculator {
                 result += "         = " + distanceFromThreshold + " + " + displacedThreshold + " - " + slopeCalculation + " - " + stripEnd + "\n         = " + newTora + "\n\n";
             }
             result += "ASDA = (R) TORA\n";
-            result += "         = " + newTora + "\n         = " + newAsda + "\n\n";
+            result += "         = " + newAsda + "\n\n";
             result += "TODA = (R) TORA\n";
-            result += "         = " + newTora + "\n         = " + newToda + "\n\n";
+            result += "         = " + newToda + "\n\n";
             result += "LDA   = Distance from Threshold - Strip End - RESA\n";
             result += "         = " + distanceFromThreshold + " - " + stripEnd + " - " + resa + "\n         = " + newLda + "\n\n";
         }
