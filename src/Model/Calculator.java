@@ -120,7 +120,7 @@ public class Calculator {
         return flightMethod;
     }
 
-    private static int ldaBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
+    public static int ldaBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
         int choice;
         double alsTocs = obstacle.getAlsTocs();
         if (resa > obstacle.getAlsTocs()){
@@ -133,7 +133,7 @@ public class Calculator {
         return choice;
     }
 
-    private static int toraBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
+    public static int toraBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
         int choice;
         if (resa > obstacle.getAlsTocs()){
             choice = 1;
