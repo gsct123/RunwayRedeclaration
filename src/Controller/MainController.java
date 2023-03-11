@@ -254,15 +254,18 @@ public class MainController implements Initializable {
             MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
             obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             obstacleMenuItem.setOnAction(e -> {
+                flightMethodMenu.setDisable(false);
+                loadFlightMenu();
                 obstacleSelected = obstacle;
                 obstacleMenu.setText(obstacle.getName());
-                flightMethodMenu.setDisable(false);
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight());
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth());
                 distanceThresholdTextField.setOnAction(actionEvent -> {
                     String disThreshold = distanceThresholdTextField.getText().trim();
                     try {
                         distFromThreshold = Double.parseDouble(disThreshold);
+                        obstacle.setDistFThreshold(distFromThreshold);
+                        loadFlightMenu();
                     } catch (NumberFormatException exception) {
                         //display error message
                         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -293,6 +296,8 @@ public class MainController implements Initializable {
                             if(distFromCentreLine < 0){
                                 throw new NumberFormatException();
                             }
+                            obstacle.setDistFCent(distFromCentreLine);
+                            loadFlightMenu();
                         } catch (NumberFormatException exception){
                             //display error message
                             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -304,7 +309,6 @@ public class MainController implements Initializable {
 
                             if(result.isPresent() && result.get() == ButtonType.OK){
                                 clDistTextField.setText("0");
-                                flightMethodMenu.setDisable(true);
                                 performCalculationButton.setDisable(true);
                                 errorAlert.close();
                             }
@@ -313,13 +317,10 @@ public class MainController implements Initializable {
                             okButton.setOnAction(event -> {
                                 clDistTextField.setText("0");
                                 performCalculationButton.setDisable(true);
-                                flightMethodMenu.setDisable(true);
                                 errorAlert.close();
                             });
                         }
                     });
-                    flightMethodMenu.setDisable(false);
-                    loadFlightMenu();
                 });
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
@@ -360,12 +361,40 @@ public class MainController implements Initializable {
                         newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda());
                         editToBeginLabel.setVisible(false);
                         noCalcPerformedLabel.setVisible(false);
+                        int flightChoice = 0;
+                        if(flightMethod.equals("Landing Over") || flightMethod.equals("Take Off Away")){
+                            flightChoice = 1;
+                        }
+                        breakdownLabel.setText(Calculator.getCalculationBreakdownT(obstacleSelected, logRunwaySelected, flightChoice == 0? "Take-Off Towards Landing Towards": "Take-Off Away Landing Over"));
                         breakdownLabel.setVisible(true);
                         //edit this to show the correct breakdown message
-                        breakdownLabel.setText("Calculation breakdown will be shown here");
                     } else{
                         //check needRedeclare function (clarify)
-                        editToBeginLabel.setText("No runway redeclation needed, original runway parameters can be used");
+                        editToBeginLabel.setVisible(true);
+                        noCalcPerformedLabel.setVisible(true);
+                        editToBeginLabel.setText("No runway redeclation needed");
+                        noCalcPerformedLabel.setText("Original runway parameters can be used");
+
+                        newToraLabel.setText("TORA  =  "+logRunwaySelected.getTora());
+                        newTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda());
+                        newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda());
+                        newLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda());
+
+                        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+                        infoAlert.setTitle("Information");
+                        infoAlert.setHeaderText("INFO");
+                        infoAlert.setContentText("No runway redeclaration needed\nOriginal runway parameters can be used");
+                        infoAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
+                        Optional<ButtonType> result = infoAlert.showAndWait();
+
+                        if(result.isPresent() && result.get() == ButtonType.OK){
+                            infoAlert.close();
+                        }
+
+                        Button okButton = (Button) infoAlert.getDialogPane().lookupButton(ButtonType.OK);
+                        okButton.setOnAction(event -> {
+                            infoAlert.close();
+                        });
                     }
                 });
             });

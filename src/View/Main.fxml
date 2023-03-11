@@ -201,12 +201,17 @@
                  <children>
                   <AnchorPane fx:id="breakdownPane" layoutX="-1.0" layoutY="58.0" prefHeight="516.0" prefWidth="501.0">
                      <children>
-                           <Label fx:id="noCalcPerformedLabel" layoutX="122.0" layoutY="213.0" prefHeight="62.0" prefWidth="254.0" text="No calculation performed">
+                        <Label fx:id="breakdownLabel" alignment="CENTER" layoutX="61.0" layoutY="54.0" prefHeight="400.0" prefWidth="405.0" text="BreakdownLabel" visible="false" wrapText="true">
+                           <font>
+                              <Font name="Verdana" size="16.0" />
+                           </font>
+                        </Label>
+                           <Label fx:id="noCalcPerformedLabel" alignment="CENTER" layoutX="-1.0" layoutY="213.0" prefHeight="62.0" prefWidth="503.0" text="No calculation performed">
                                <font>
                                    <Font name="Verdana" size="20.0" />
                                </font>
                            </Label>
-                           <Label fx:id="editToBeginLabel" layoutX="86.0" layoutY="169.0" prefHeight="25.0" prefWidth="338.0" text="Edit airport and obstacle to begin">
+                           <Label fx:id="editToBeginLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="169.0" prefHeight="25.0" prefWidth="501.0" text="Edit airport and obstacle to begin">
                                <font>
                                    <Font name="Verdana" size="20.0" />
                                </font>
