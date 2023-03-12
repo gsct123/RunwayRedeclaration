@@ -1,5 +1,3 @@
-package Test;
-
 import Model.Calculator;
 import Model.LogicalRunway;
 import Model.Obstacle;
@@ -92,14 +90,14 @@ class CalculatorTest {
 
     @Test
     void ldaBreakdownChoice(){
-        assertEquals(3, Calculator.ldaBreakdownChoice(obstacle1, lR09L));
+        assertEquals(3, Calculator.ldaBreakdownChoice(obstacle1));
     }
 
     @Test
     void toraBreakdownChoice(){
-        assertEquals(2, Calculator.toraBreakdownChoice(obstacle2, lR27R));
+        assertEquals(2, Calculator.toraBreakdownChoice(obstacle2));
         Obstacle obstacle3 = new Obstacle("obs3", 20, 0, 20, 3546);
-        assertEquals(2, Calculator.toraBreakdownChoice(obstacle3, lR09L));
+        assertEquals(2, Calculator.toraBreakdownChoice(obstacle3));
     }
 
     @Test

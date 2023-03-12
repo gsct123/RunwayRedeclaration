@@ -120,7 +120,7 @@ public class Calculator {
         return flightMethod;
     }
 
-    public static int ldaBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
+    public static int ldaBreakdownChoice(Obstacle obstacle){
         int choice;
         double alsTocs = obstacle.getAlsTocs();
         if (resa > obstacle.getAlsTocs()){
@@ -133,7 +133,7 @@ public class Calculator {
         return choice;
     }
 
-    public static int toraBreakdownChoice(Obstacle obstacle, LogicalRunway runways){
+    public static int toraBreakdownChoice(Obstacle obstacle){
         int choice;
         if (resa > obstacle.getAlsTocs()){
             choice = 1;
@@ -170,7 +170,7 @@ public class Calculator {
 
         //Calculation Breakdown
         if (flightMethod.equals("Take-Off Away Landing Over")){
-            ldaOrToraChoice = ldaBreakdownChoice(obstacle, runway);
+            ldaOrToraChoice = ldaBreakdownChoice(obstacle);
             result += "TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced Threshold\n";
             result += "         = " + originalTora + " - " + blastProtection + " - " + distanceFromThreshold + " - " + displacedThreshold + "\n         = " + newTora + "\n\n";
             result += "ASDA = (R) TORA + STOPWAY\n";
@@ -191,7 +191,7 @@ public class Calculator {
             }
         }
         else {
-            ldaOrToraChoice = toraBreakdownChoice(obstacle, runway);
+            ldaOrToraChoice = toraBreakdownChoice(obstacle);
             if (ldaOrToraChoice == 1){
                 result += "TORA = Distance from threshold + Displaced Threshold - RESA - Strip End\n";
                 result += "         = " + distanceFromThreshold + " + " + displacedThreshold + " - " + resa + " - " + " - " + stripEnd + "\n         = " + newTora + "\n";
