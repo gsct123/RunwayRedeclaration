@@ -20,11 +20,6 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
         <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Help">
           <items>
             <MenuItem fx:id="aboutProject" mnemonicParsing="false" text="About runway project" />

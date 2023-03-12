@@ -220,13 +220,21 @@ public class MainController implements Initializable {
                 airportSelected = airport;
                 physicalRunwayMenu.getItems().clear();
                 airportMenu.setText(airport.getName());
+                physicalRunwayMenu.setText("Select Physical Runway");
                 physicalRunwayMenu.setDisable(false);
+                physRunwaySelected = null;
+                logicalRunwayMenu.setText("Select Logical Runway");
+                logRunwaySelected = null;
+                performCalculationButton.setDisable(true);
                 for(PhysicalRunway runway: airport.getPhysicalRunways()){
                     MenuItem runwayMenuItem = new MenuItem(runway.getName());
                     runwayMenuItem.setOnAction(f -> {
                         physRunwaySelected = runway;
                         logicalRunwayMenu.getItems().clear();
                         physicalRunwayMenu.setText(runway.getName());
+                        logicalRunwayMenu.setText("Select Logical Runway");
+                        logRunwaySelected = null;
+                        performCalculationButton.setDisable(true);
                         logicalRunwayMenu.setDisable(false);
                         for(LogicalRunway logicalRunway: runway.getLogicalRunways()){
                             MenuItem lRunwayMenuItem = new MenuItem(logicalRunway.getDesignator());
@@ -294,18 +302,21 @@ public class MainController implements Initializable {
             MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
             obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             obstacleMenuItem.setOnAction(e -> {
+                performCalculationButton.setDisable(true);
+                flightMethodMenu.setText("Select Flight Method");
                 flightMethodMenu.setDisable(false);
                 loadFlightMenu();
                 obstacleSelected = obstacle;
                 obstacleMenu.setText(obstacle.getName());
-                obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight());
-                obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth());
+                obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
+                obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
                 distanceThresholdTextField.setOnAction(actionEvent -> {
                     String disThreshold = distanceThresholdTextField.getText().trim();
                     try {
                         distFromThreshold = Double.parseDouble(disThreshold);
                         obstacle.setDistFThreshold(distFromThreshold);
                         loadFlightMenu();
+                        performCalculationButton.setDisable(true);
                     } catch (NumberFormatException exception) {
                         //display error message
                         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -338,6 +349,7 @@ public class MainController implements Initializable {
                             }
                             obstacle.setDistFCent(distFromCentreLine);
                             loadFlightMenu();
+                            performCalculationButton.setDisable(true);
                         } catch (NumberFormatException exception){
                             //display error message
                             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -369,6 +381,7 @@ public class MainController implements Initializable {
 
     public void loadFlightMenu(){
         flightMethodMenu.getItems().clear();
+        flightMethodMenu.setText("Select Flight Method");
         ObservableList<MenuItem> methods = FXCollections.observableArrayList();
         if(distFromThreshold <= logRunwaySelected.getTora()/2){
             MenuItem takeOffAway = new MenuItem("Take Off Away");
