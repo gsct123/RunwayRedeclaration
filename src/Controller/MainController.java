@@ -15,9 +15,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -119,9 +121,16 @@ public class MainController implements Initializable {
         try {
             loadAirports("src/Data/airports.xml");
             loadObstacles("src/Data/obstacles.xml");
+            System.out.println(obstacles);
+            addObstacleEvent();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //getters
+    public ObservableList<Obstacle> getObstacles(){
+        return this.obstacles;
     }
 
     public void loadInfos() {
@@ -260,7 +269,7 @@ public class MainController implements Initializable {
     }
 
     //functions to load obstacles from xml files and displayed in the menu selection
-    public void loadObstacles(String file) throws Exception {
+    public void loadObstacles(String file) throws IOException, ParserConfigurationException, SAXException {
         // Create a DocumentBuilder
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -289,16 +298,14 @@ public class MainController implements Initializable {
 
                 // Create a new Obstacle object with the physical runways and add it to the list of airports
                 Obstacle obstacle = new Obstacle(obstacleName, height, width, 0, 0);
-                obstacles.add(obstacle);
+                getObstacles().add(obstacle);
             }
         }
-        obstacles.sort(new Comparator<Obstacle>() {
-            @Override
-            public int compare(Obstacle o1, Obstacle o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
-        for(Obstacle obstacle: obstacles){
+        obstacles.sort(Comparator.comparing(Obstacle::getName));
+    }
+
+    public void addObstacleEvent(){
+        for(Obstacle obstacle: getObstacles()){
             MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
             obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             obstacleMenuItem.setOnAction(e -> {
