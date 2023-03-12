@@ -84,6 +84,24 @@ public class MainController implements Initializable {
     private Label breakdownLabel;
     @FXML
     private MenuItem aboutProject;
+    @FXML
+    private Button oldToraInfo;
+    @FXML
+    private Button oldTodaInfo;
+    @FXML
+    private Button oldAsdaInfo;
+    @FXML
+    private Button oldLdaInfo;
+    @FXML
+    private Button newToraInfo;
+    @FXML
+    private Button newTodaInfo;
+    @FXML
+    private Button newAsdaInfo;
+    @FXML
+    private Button newLdaInfo;
+    @FXML
+    private Label oldToraInfoLabel;
 
     ObservableList<Airport> airports = FXCollections.observableArrayList();
     ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
@@ -97,7 +115,7 @@ public class MainController implements Initializable {
                 // Handle exceptions
             }
         });
-
+        loadInfos();
         try {
             loadAirports("src/Data/airports.xml");
             loadObstacles("src/Data/obstacles.xml");
@@ -106,6 +124,10 @@ public class MainController implements Initializable {
         }
     }
 
+    public void loadInfos() {
+        oldToraInfo.setOnMouseEntered(mouseEvent -> oldToraInfoLabel.setVisible(true));
+        oldToraInfo.setOnMouseExited(mouseEvent -> oldToraInfoLabel.setVisible(false));
+    }
 
     //this function read from a xml file and instantiate list of airports available
     public void loadAirports(String file) throws Exception {

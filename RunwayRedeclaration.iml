@@ -21,17 +21,17 @@
     <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="library" exported="" name="charm-glisten-6.0.2" level="project" />
     <orderEntry type="library" exported="" name="junit.jupiter" level="project" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="file://$USER_HOME$/Downloads/javafx-sdk-19.0.2.1/lib" />
+          <root url="file://$USER_HOME$/javafx-sdk-19.0.2.1/lib" />
         </CLASSES>
         <JAVADOC />
         <NATIVE>
-          <root url="file://$USER_HOME$/Downloads/javafx-sdk-19.0.2.1/lib" />
+          <root url="file://$USER_HOME$/javafx-sdk-19.0.2.1/lib" />
         </NATIVE>
         <SOURCES />
-        <jarDirectory url="file://$USER_HOME$/Downloads/javafx-sdk-19.0.2.1/lib" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/javafx-sdk-19.0.2.1/lib" recursive="false" />
       </library>
     </orderEntry>
   </component>
