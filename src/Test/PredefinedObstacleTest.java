@@ -1,5 +1,3 @@
-package Test;
-
 import Controller.MainController;
 import org.junit.jupiter.api.Test;
 
