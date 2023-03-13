@@ -282,27 +282,31 @@
                         <Font name="Arial Rounded MT Bold" size="10.0" />
                      </font>
                   </Button>
-                  <Button fx:id="newToraInfo" layoutX="323.0" layoutY="362.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="10.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="newTodaInfo" layoutX="323.0" layoutY="403.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="10.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="newAsdaInfo" layoutX="323.0" layoutY="446.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="10.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="newLdaInfo" layoutX="323.0" layoutY="488.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="10.0" />
-                     </font>
-                  </Button>
                   <Label fx:id="oldToraInfoLabel" layoutX="69.0" layoutY="123.0" prefHeight="186.0" prefWidth="275.0" style="-fx-background-color: white; -fx-border-color: black;" text="Take-Off Run Available - the length of the runway available for take-off. This is the total distance from the point where an aircraft can commence its take-off to the point where the runway can no loger support the weight of the aircraft under normal conditions (and where it should have left the runway during a normal take-off)." textAlignment="JUSTIFY" visible="false" wrapText="true">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font name="Verdana Italic" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="oldTodaInfoLabel" layoutX="68.0" layoutY="160.0" prefHeight="142.0" prefWidth="275.0" style="-fx-background-color: white; -fx-border-color: black;" text="Take-Off Distance Available (TODA) - the length of the runway (TORA) plus any Clearway (area beyond the runway that is considered free from obstructions). This is the total distance an aircraft can safely utilise for its take-off and initial ascent." textAlignment="JUSTIFY" visible="false" wrapText="true">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font name="Verdana Italic" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="oldAsdaInfoLabel" layoutX="70.0" layoutY="203.0" prefHeight="162.0" prefWidth="275.0" style="-fx-background-color: white; -fx-border-color: black;" text="Accelerate-Stop Distance Available (ASDA) - the length of the runway (TORA) plus any Stopway (area that is not part of the TORA, but that can be used to safely stop an aircraft in an emergency). This is the total distance available to the aircraft in case of an aborted take-off." textAlignment="JUSTIFY" visible="false" wrapText="true">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <font>
+                        <Font name="Verdana Italic" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="oldLdaInfoLabel" layoutX="71.0" layoutY="244.0" prefHeight="182.0" prefWidth="275.0" style="-fx-background-color: white; -fx-border-color: black;" text="Landing Distance Available (LDA) - the length of the runway available for landing. The start of this is called the threshold and is typically the same as the start of the TORA. A threshold may be displaced for operational reasons or because of a temporary obstacle, in which case LDA and TORA can differ." textAlignment="JUSTIFY" visible="false" wrapText="true">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>

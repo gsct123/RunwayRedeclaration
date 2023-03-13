@@ -40,6 +40,7 @@ public class MainController implements Initializable {
     private double distFromCentreLine = 0;
     private String flightMethod = "";
 
+    //fxml elements
     @FXML
     private MenuButton airportMenu;
     @FXML
@@ -95,28 +96,20 @@ public class MainController implements Initializable {
     @FXML
     private Button oldLdaInfo;
     @FXML
-    private Button newToraInfo;
-    @FXML
-    private Button newTodaInfo;
-    @FXML
-    private Button newAsdaInfo;
-    @FXML
-    private Button newLdaInfo;
-    @FXML
     private Label oldToraInfoLabel;
+    @FXML
+    private Label oldTodaInfoLabel;
+    @FXML
+    private Label oldAsdaInfoLabel;
+    @FXML
+    private Label oldLdaInfoLabel;
 
+    //list of airports and obstacles from files
     ObservableList<Airport> airports = FXCollections.observableArrayList();
     ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        aboutProject.setOnAction(e -> {
-            try {
-                Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
-            } catch (IOException | URISyntaxException ex) {
-                // Handle exceptions
-            }
-        });
         loadInfos();
         try {
             loadAirports("src/Data/airports.xml");
@@ -133,9 +126,21 @@ public class MainController implements Initializable {
         return this.obstacles;
     }
 
+    //method to load information such as documentation and desription of parameters
     public void loadInfos() {
+        aboutProject.setOnAction(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
+            } catch (IOException | URISyntaxException ignored) {}
+        });
         oldToraInfo.setOnMouseEntered(mouseEvent -> oldToraInfoLabel.setVisible(true));
         oldToraInfo.setOnMouseExited(mouseEvent -> oldToraInfoLabel.setVisible(false));
+        oldTodaInfo.setOnMouseEntered(mouseEvent -> oldTodaInfoLabel.setVisible(true));
+        oldTodaInfo.setOnMouseExited(mouseEvent -> oldTodaInfoLabel.setVisible(false));
+        oldAsdaInfo.setOnMouseEntered(mouseEvent -> oldAsdaInfoLabel.setVisible(true));
+        oldAsdaInfo.setOnMouseExited(mouseEvent -> oldAsdaInfoLabel.setVisible(false));
+        oldLdaInfo.setOnMouseEntered(mouseEvent -> oldLdaInfoLabel.setVisible(true));
+        oldLdaInfo.setOnMouseExited(mouseEvent -> oldLdaInfoLabel.setVisible(false));
     }
 
     //this function read from a xml file and instantiate list of airports available
