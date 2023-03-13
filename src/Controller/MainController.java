@@ -114,7 +114,6 @@ public class MainController implements Initializable {
         try {
             loadAirports("src/Data/airports.xml");
             loadObstacles("src/Data/obstacles.xml");
-            System.out.println(obstacles);
             addObstacleEvent();
         } catch (Exception e) {
             e.printStackTrace();
