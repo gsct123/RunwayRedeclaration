@@ -10,6 +10,7 @@ class CalculatorTest {
 
     LogicalRunway lR09L = new LogicalRunway("09L",3902,3902,3902,3595);
     LogicalRunway lR27R = new LogicalRunway("27R",3884,3962,3884,3884);
+    LogicalRunway lR27L = new LogicalRunway("27L", 3660, 3660, 3660, 3660);
     Obstacle obstacle1 = new Obstacle("obstacle1",12,0,0,-50);
     Obstacle obstacle2 = new Obstacle("obstacle2",12,0,0,3646);
 
@@ -83,14 +84,69 @@ class CalculatorTest {
 
     @Test
     void ldaBreakdownChoice(){
+        assertEquals(3, Calculator.ldaBreakdownChoice(obstacle1));
     }
 
     @Test
     void toraBreakdownChoice(){
+        assertEquals(2, Calculator.toraBreakdownChoice(obstacle2));
+        Obstacle obstacle3 = new Obstacle("obs3", 20, 0, 20, 3546);
+        assertEquals(2, Calculator.toraBreakdownChoice(obstacle3));
     }
 
     @Test
     void printCalculationBreakdownT(){
+
+        assertEquals("TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced Threshold\n" +
+                "         = 3902.0 - 300.0 - -50.0 - 307.0\n" +
+                "         = 3345.0\n" +
+                "\n" +
+                "ASDA = (R) TORA + STOPWAY\n" +
+                "         = 3345.0 + 0.0\n" +
+                "         = 3345.0\n" +
+                "\n" +
+                "TODA = (R) TORA + CLEARWAY\n" +
+                "         = 3345.0 + 0.0\n" +
+                "         = 3345.0\n" +
+                "\n" +
+                "LDA  = Original LDA - Distance from threshold - Strip End - Slope Calculation\n" +
+                "        = 3595.0 - -50.0 - 60.0 - 12.0*50.0\n" +
+                "        = 2985.0\n\n\n",Calculator.getCalculationBreakdownT(obstacle1, lR09L));
+
+        Obstacle obstacle2 = new Obstacle("obs1", 25, 0, 20, 500);
+        assertEquals("TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced Threshold\n" +
+                "         = 3660.0 - 300.0 - 500.0 - 0.0\n" +
+                "         = 2860.0\n" +
+                "\n" +
+                "ASDA = (R) TORA + STOPWAY\n" +
+                "         = 2860.0 + 0.0\n" +
+                "         = 2860.0\n" +
+                "\n" +
+                "TODA = (R) TORA + CLEARWAY\n" +
+                "         = 2860.0 + 0.0\n" +
+                "         = 2860.0\n" +
+                "\n" +
+                "LDA  = Original LDA - Distance from threshold - Strip End - Slope Calculation\n" +
+                "        = 3660.0 - 500.0 - 60.0 - 25.0*50.0\n" +
+                "        = 1850.0\n\n\n", Calculator.getCalculationBreakdownT(obstacle2, lR27L));
+
+        Obstacle obstacle3 = new Obstacle("obs3", 20, 0, 20, 50);
+        assertEquals("TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced Threshold\n" +
+                "         = 3884.0 - 300.0 - 50.0 - 0.0\n" +
+                "         = 3534.0\n" +
+                "\n" +
+                "ASDA = (R) TORA + STOPWAY\n" +
+                "         = 3534.0 + 0.0\n" +
+                "         = 3534.0\n" +
+                "\n" +
+                "TODA = (R) TORA + CLEARWAY\n" +
+                "         = 3534.0 + 78.0\n" +
+                "         = 3612.0\n" +
+                "\n" +
+                "LDA  = Original LDA - Distance from threshold - Strip End - Slope Calculation\n" +
+                "        = 3884.0 - 50.0 - 60.0 - 20.0*50.0\n" +
+                "        = 2774.0\n\n\n", Calculator.getCalculationBreakdownT(obstacle3, lR27R));
+
     }
 
     @Test

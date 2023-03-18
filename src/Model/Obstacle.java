@@ -6,7 +6,7 @@ public class Obstacle {
     private double width;
     private double distFCent;
     private double distFThreshold;
-    private final static double slopeRatio = 50;
+    public final static double slopeRatio = 50;
 
     public Obstacle(String name, double height, double width, double distFCent, double distFThreshold){
         this.name = name;
