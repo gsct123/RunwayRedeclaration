@@ -1,7 +1,11 @@
 package Controller;
 
 
-import Model.*;
+import Model.Airport;
+import Model.LogicalRunway;
+import Model.Obstacle;
+import Model.PhysicalRunway;
+import View.Handlers.PerformCalculationHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,7 +30,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -59,8 +62,8 @@ public class MainController implements Initializable {
     private Button performCalculationButton;
     @FXML
     private TextField clDistTextField;
-    @FXML
-    private MenuButton flightMethodMenu;
+//    @FXML
+//    private MenuButton flightMethodMenu;
     @FXML
     private Label originalToraLabel;
     @FXML
@@ -113,6 +116,7 @@ public class MainController implements Initializable {
         loadInfos();
         try {
             loadAirports("src/Data/airports.xml");
+            addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
             addObstacleEvent();
         } catch (Exception e) {
@@ -121,9 +125,46 @@ public class MainController implements Initializable {
     }
 
     //getters
-    public ObservableList<Obstacle> getObstacles(){
-        return this.obstacles;
-    }
+    public ObservableList<Obstacle> getObstacles(){return this.obstacles;}
+    public ObservableList<Airport> getAirports(){return this.airports;}
+    public ObservableList<String> getItems() {return items;}
+    public Airport getAirportSelected() {return airportSelected;}
+    public PhysicalRunway getPhysRunwaySelected() {return physRunwaySelected;}
+    public LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
+    public Obstacle getObstacleSelected() {return obstacleSelected;}
+    public double getDistFromThreshold() {return distFromThreshold;}
+    public double getDistFromCentreLine() {return distFromCentreLine;}
+    public String getFlightMethod() {return flightMethod;}
+    public MenuButton getAirportMenu() {return airportMenu;}
+    public MenuButton getPhysicalRunwayMenu() {return physicalRunwayMenu;}
+    public MenuButton getLogicalRunwayMenu() {return logicalRunwayMenu;}
+    public MenuButton getObstacleMenu() {return obstacleMenu;}
+    public Label getObstacleHeightLabel() {return obstacleHeightLabel;}
+    public Label getObstacleWidthLabel() {return obstacleWidthLabel;}
+    public TextField getDistanceThresholdTextField() {return distanceThresholdTextField;}
+    public Button getPerformCalculationButton() {return performCalculationButton;}
+    public TextField getClDistTextField() {return clDistTextField;}
+    public Label getOriginalToraLabel() {return originalToraLabel;}
+    public Label getOriginalTodaLabel() {return originalTodaLabel;}
+    public Label getOriginalAsdaLabel() {return originalAsdaLabel;}
+    public Label getOriginalLdaLabel() {return originalLdaLabel;}
+    public Label getNewToraLabel() {return newToraLabel;}
+    public Label getNewTodaLabel() {return newTodaLabel;}
+    public Label getNewAsdaLabel() {return newAsdaLabel;}
+    public Label getNewLdaLabel() {return newLdaLabel;}
+    public Label getRevisedRunwayTitle() {return revisedRunwayTitle;}
+    public Label getEditToBeginLabel() {return editToBeginLabel;}
+    public Label getNoCalcPerformedLabel() {return noCalcPerformedLabel;}
+    public Label getBreakdownLabel() {return breakdownLabel;}
+    public MenuItem getAboutProject() {return aboutProject;}
+    public Button getOldToraInfo() {return oldToraInfo;}
+    public Button getOldTodaInfo() {return oldTodaInfo;}
+    public Button getOldAsdaInfo() {return oldAsdaInfo;}
+    public Button getOldLdaInfo() {return oldLdaInfo;}
+    public Label getOldToraInfoLabel() {return oldToraInfoLabel;}
+    public Label getOldTodaInfoLabel() {return oldTodaInfoLabel;}
+    public Label getOldAsdaInfoLabel() {return oldAsdaInfoLabel;}
+    public Label getOldLdaInfoLabel() {return oldLdaInfoLabel;}
 
     //method to load information such as documentation and desription of parameters
     public void loadInfos() {
@@ -163,70 +204,55 @@ public class MainController implements Initializable {
 
             if (airportNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element airportElement = (Element) airportNode;
-
                 // Get the airport name
                 String airportName = airportElement.getElementsByTagName("name").item(0).getTextContent();
-
                 // Create a list to hold the physical runways
                 ObservableList<PhysicalRunway> physicalRunways = FXCollections.observableArrayList();
-
                 // Get a NodeList of all physical runway elements for the current airport
                 NodeList physRunwayElements = airportElement.getElementsByTagName("physicalRunway");
-
                 // Loop over each physical runway element and create a PhysicalRunway object
                 for (int j = 0; j < physRunwayElements.getLength(); j++) {
                     Node physRunwayNode = physRunwayElements.item(j);
 
                     if (physRunwayNode.getNodeType() == Node.ELEMENT_NODE) {
                         Element physRunwayElement = (Element) physRunwayNode;
-
                         // Get the physical runway name
                         String physRunwayName = physRunwayElement.getAttribute("name");
-
                         // Create a list to hold the logical runways
                         ObservableList<LogicalRunway> logicalRunways = FXCollections.observableArrayList();
-
                         // Get a NodeList of all logical runway elements for the current physical runway
                         NodeList logRunwayElements = physRunwayElement.getElementsByTagName("logicalRunway");
-
                         // Loop over each logical runway element and create a LogicalRunway object
                         for (int k = 0; k < logRunwayElements.getLength(); k++) {
                             Node logRunwayNode = logRunwayElements.item(k);
-
                             if (logRunwayNode.getNodeType() == Node.ELEMENT_NODE) {
                                 Element logRunwayElement = (Element) logRunwayNode;
-
                                 // Get the logical runway designator and dimensions
                                 String designator = logRunwayElement.getAttribute("designator");
                                 double tora = Double.parseDouble(logRunwayElement.getAttribute("tora"));
                                 double toda = Double.parseDouble(logRunwayElement.getAttribute("toda"));
                                 double asda = Double.parseDouble(logRunwayElement.getAttribute("asda"));
                                 double lda = Double.parseDouble(logRunwayElement.getAttribute("lda"));
-
                                 // Create a new LogicalRunway object and add it to the list of logical runways
                                 LogicalRunway logicalRunway = new LogicalRunway(designator, tora, toda, asda, lda);
                                 logicalRunways.add(logicalRunway);
                             }
                         }
-
                         // Create a new PhysicalRunway object with the logical runways and add it to the list of physical runways
                         PhysicalRunway physicalRunway = new PhysicalRunway(physRunwayName, logicalRunways);
                         physicalRunways.add(physicalRunway);
                     }
                 }
-
                 // Create a new Airport object with the physical runways and add it to the list of airports
                 Airport airport = new Airport(airportName, physicalRunways);
-                airports.add(airport);
+                getAirports().add(airport);
             }
         }
-        airports.sort(new Comparator<Airport>() {
-            @Override
-            public int compare(Airport o1, Airport o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
-        for(Airport airport: airports){
+        airports.sort(Comparator.comparing(Airport::getName));
+    }
+
+    public void addAirportEvent() {
+        for(Airport airport: getAirports()){
             MenuItem airportMenuItem = new MenuItem(airport.getName());
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             airportMenuItem.setOnAction(e -> {
@@ -277,29 +303,22 @@ public class MainController implements Initializable {
         // Create a DocumentBuilder
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
         // Parse the XML file into a Document
         Document doc = docBuilder.parse(file);
-
         // Get a NodeList of all obstacle elements
         NodeList obstacleElements = doc.getElementsByTagName("obstacle");
-
         // Create a list to hold the obstacles
         ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
-
         // Loop over each obstacle element and create an Obstacle object
         for (int i = 0; i < obstacleElements.getLength(); i++) {
             Node obstacleNode = obstacleElements.item(i);
 
             if (obstacleNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element obstacleElement = (Element) obstacleNode;
-
                 // Get the obstacle name, height and width
                 String obstacleName = obstacleElement.getElementsByTagName("name").item(0).getTextContent();
                 double height = Double.parseDouble(obstacleElement.getElementsByTagName("height").item(0).getTextContent());
                 double width = Double.parseDouble(obstacleElement.getElementsByTagName("width").item(0).getTextContent());
-
-
                 // Create a new Obstacle object with the physical runways and add it to the list of airports
                 Obstacle obstacle = new Obstacle(obstacleName, height, width, 0, 0);
                 getObstacles().add(obstacle);
@@ -313,160 +332,88 @@ public class MainController implements Initializable {
             MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
             obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             obstacleMenuItem.setOnAction(e -> {
-                performCalculationButton.setDisable(true);
-                flightMethodMenu.setText("Select Flight Method");
-                flightMethodMenu.setDisable(false);
-                loadFlightMenu();
+                performCalculationButton.setDisable(false);
                 obstacleSelected = obstacle;
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
-                distanceThresholdTextField.setOnAction(actionEvent -> {
-                    String disThreshold = distanceThresholdTextField.getText().trim();
-                    try {
-                        distFromThreshold = Double.parseDouble(disThreshold);
-                        obstacle.setDistFThreshold(distFromThreshold);
-                        loadFlightMenu();
-                        performCalculationButton.setDisable(true);
-                    } catch (NumberFormatException exception) {
-                        //display error message
-                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                        errorAlert.setTitle("Error Message");
-                        errorAlert.setHeaderText("ERROR");
-                        errorAlert.setContentText("Invalid input for distance from threshold\nHint: please input a numerical value");
-                        errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
-                        Optional<ButtonType> result = errorAlert.showAndWait();
-
-                        if(result.isPresent() && result.get() == ButtonType.OK){
-                            distanceThresholdTextField.setText("0");
-                            performCalculationButton.setDisable(true);
-                            errorAlert.close();
-                        }
-
-                        Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
-                        okButton.setOnAction(event -> {
-                            distanceThresholdTextField.setText("0");
-                            performCalculationButton.setDisable(true);
-                            errorAlert.close();
-                        });
-                    }
-
-                    clDistTextField.setOnAction(actionEvent2 -> {
-                        String clDistance = clDistTextField.getText();
-                        try{
-                            distFromCentreLine = Double.parseDouble(clDistance);
-                            if(distFromCentreLine < 0){
-                                throw new NumberFormatException();
-                            }
-                            obstacle.setDistFCent(distFromCentreLine);
-                            loadFlightMenu();
-                            performCalculationButton.setDisable(true);
-                        } catch (NumberFormatException exception){
-                            //display error message
-                            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                            errorAlert.setTitle("Error Message");
-                            errorAlert.setHeaderText("ERROR");
-                            errorAlert.setContentText("Invalid input for distance from centre line\nHint: please input a numerical value greater or equal to 0");
-                            errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
-                            Optional<ButtonType> result = errorAlert.showAndWait();
-
-                            if(result.isPresent() && result.get() == ButtonType.OK){
-                                clDistTextField.setText("0");
-                                performCalculationButton.setDisable(true);
-                                errorAlert.close();
-                            }
-
-                            Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
-                            okButton.setOnAction(event -> {
-                                clDistTextField.setText("0");
-                                performCalculationButton.setDisable(true);
-                                errorAlert.close();
-                            });
-                        }
-                    });
-                });
+                performCalculationButton.setOnAction(actionEvent -> new PerformCalculationHandler().handlingCalcPerformation(getClass()));
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }
     }
 
-    public void loadFlightMenu(){
-        flightMethodMenu.getItems().clear();
-        flightMethodMenu.setText("Select Flight Method");
-        ObservableList<MenuItem> methods = FXCollections.observableArrayList();
-        if(distFromThreshold <= logRunwaySelected.getTora()/2){
-            MenuItem takeOffAway = new MenuItem("Take Off Away");
-            MenuItem landOver = new MenuItem("Landing Over");
-            flightMethodMenu.getItems().add(takeOffAway);
-            flightMethodMenu.getItems().add(landOver);
-            methods.add(takeOffAway);
-            methods.add(landOver);
-        }
-        if(distFromThreshold >= logRunwaySelected.getTora()/2){
-            MenuItem takeOffTowards = new MenuItem("Take Off Towards");
-            MenuItem landTowards = new MenuItem("Landing Towards");
-            flightMethodMenu.getItems().add(takeOffTowards);
-            flightMethodMenu.getItems().add(landTowards);
-            methods.add(takeOffTowards);
-            methods.add(landTowards);
-        }
-
-        for(MenuItem method: methods){
-            method.setOnAction(actionEvent -> {
-                flightMethodMenu.setText(method.getText());
-                flightMethod = method.getText();
-                performCalculationButton.setDisable(false);
-                performCalculationButton.setOnAction(actionEvent1 -> {
-                    if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
-                        performCalculation();
-                        newToraLabel.setText("TORA  =  "+logRunwaySelected.getNewTora());
-                        newTodaLabel.setText("TODA  =  "+logRunwaySelected.getNewToda());
-                        newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getNewAsda());
-                        newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda());
-                        editToBeginLabel.setVisible(false);
-                        noCalcPerformedLabel.setVisible(false);
-                        //start breaking down
-                        breakdownLabel.setText(Calculator.getCalculationBreakdownT(obstacleSelected, logRunwaySelected));
-                        breakdownLabel.setVisible(true);
-                        //edit this to show the correct breakdown message
-                    } else{
-                        breakdownLabel.setVisible(false);
-                        //check needRedeclare function (clarify)
-                        editToBeginLabel.setVisible(true);
-                        noCalcPerformedLabel.setVisible(true);
-                        editToBeginLabel.setText("No runway redeclation needed");
-                        noCalcPerformedLabel.setText("Original runway parameters can be used");
-
-                        newToraLabel.setText("TORA  =  "+logRunwaySelected.getTora());
-                        newTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda());
-                        newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda());
-                        newLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda());
-
-                        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
-                        infoAlert.setTitle("Information");
-                        infoAlert.setHeaderText("INFO");
-                        infoAlert.setContentText("No runway redeclaration needed\nOriginal runway parameters can be used");
-                        infoAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
-                        Optional<ButtonType> result = infoAlert.showAndWait();
-
-                        if(result.isPresent() && result.get() == ButtonType.OK){
-                            infoAlert.close();
-                        }
-
-                        Button okButton = (Button) infoAlert.getDialogPane().lookupButton(ButtonType.OK);
-                        okButton.setOnAction(event -> {
-                            infoAlert.close();
-                        });
-                    }
-                });
-            });
-        }
-    }
-
-    public void performCalculation(){
-        Calculator.calcTora(obstacleSelected, logRunwaySelected);
-        Calculator.calcAsda(obstacleSelected, logRunwaySelected);
-        Calculator.calcToda(obstacleSelected, logRunwaySelected);
-        Calculator.calcLda(obstacleSelected, logRunwaySelected);
-    }
+//    //load flight menu
+//    public void loadFlightMenu(){
+//        flightMethodMenu.getItems().clear();
+//        flightMethodMenu.setText("Select Flight Method");
+//        ObservableList<MenuItem> methods = FXCollections.observableArrayList();
+//        if(distFromThreshold <= logRunwaySelected.getTora()/2){
+//            MenuItem takeOffAway = new MenuItem("Take Off Away");
+//            MenuItem landOver = new MenuItem("Landing Over");
+//            flightMethodMenu.getItems().add(takeOffAway);
+//            flightMethodMenu.getItems().add(landOver);
+//            methods.add(takeOffAway);
+//            methods.add(landOver);
+//        }
+//        if(distFromThreshold >= logRunwaySelected.getTora()/2){
+//            MenuItem takeOffTowards = new MenuItem("Take Off Towards");
+//            MenuItem landTowards = new MenuItem("Landing Towards");
+//            flightMethodMenu.getItems().add(takeOffTowards);
+//            flightMethodMenu.getItems().add(landTowards);
+//            methods.add(takeOffTowards);
+//            methods.add(landTowards);
+//        }
+//
+//        for(MenuItem method: methods){
+//            method.setOnAction(actionEvent -> {
+//                flightMethodMenu.setText(method.getText());
+//                flightMethod = method.getText();
+//                performCalculationButton.setDisable(false);
+//                performCalculationButton.setOnAction(actionEvent1 -> {
+//                    if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
+//                        performCalculation();
+//                        newToraLabel.setText("TORA  =  "+logRunwaySelected.getNewTora());
+//                        newTodaLabel.setText("TODA  =  "+logRunwaySelected.getNewToda());
+//                        newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getNewAsda());
+//                        newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda());
+//                        editToBeginLabel.setVisible(false);
+//                        noCalcPerformedLabel.setVisible(false);
+//                        //start breaking down
+//                        breakdownLabel.setText(Calculator.getCalculationBreakdownT(obstacleSelected, logRunwaySelected));
+//                        breakdownLabel.setVisible(true);
+//                        //edit this to show the correct breakdown message
+//                    } else{
+//                        breakdownLabel.setVisible(false);
+//                        //check needRedeclare function (clarify)
+//                        editToBeginLabel.setVisible(true);
+//                        noCalcPerformedLabel.setVisible(true);
+//                        editToBeginLabel.setText("No runway redeclation needed");
+//                        noCalcPerformedLabel.setText("Original runway parameters can be used");
+//
+//                        newToraLabel.setText("TORA  =  "+logRunwaySelected.getTora());
+//                        newTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda());
+//                        newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda());
+//                        newLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda());
+//
+//                        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+//                        infoAlert.setTitle("Information");
+//                        infoAlert.setHeaderText("INFO");
+//                        infoAlert.setContentText("No runway redeclaration needed\nOriginal runway parameters can be used");
+//                        infoAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
+//                        Optional<ButtonType> result = infoAlert.showAndWait();
+//
+//                        if(result.isPresent() && result.get() == ButtonType.OK){
+//                            infoAlert.close();
+//                        }
+//
+//                        Button okButton = (Button) infoAlert.getDialogPane().lookupButton(ButtonType.OK);
+//                        okButton.setOnAction(event -> {
+//                            infoAlert.close();
+//                        });
+//                    }
+//                });
+//            });
+//        }
+//    }
 }
