@@ -1,6 +1,12 @@
 package Model;
 
 public class Calculator {
+
+    public static final double resa = 240;
+    public static final double blastProtection = 300;
+    public static final double stripEnd = 60;
+    public static final double minCGArea = 75;
+
     //empty constructor
     public Calculator() {}
 
@@ -11,6 +17,8 @@ public class Calculator {
     public static void main(String[] args) {
         LogicalRunway runway = new LogicalRunway("09l", 3902, 3902, 3902, 3595);
         Obstacle obstacle = new Obstacle("obs1", 12, 0, 0, 50);
+
+        getCalculationBreakdownT(obstacle, runway, Calculator.getFlightMethod(obstacle, runway));
         System.out.println(getCalculationBreakdownT(obstacle, runway));
     }
 
@@ -74,12 +82,19 @@ public class Calculator {
         double newTora = runway.getNewTora();
         double clearway = runway.getClearway();
 
+
         // Calculate TODA
         if (flightMethod.equals(talo)){
             newToda =  newTora + clearway;
         }else {
             newToda = newTora;
         }
+        runway.setNewAsda(newToda);
+        return newToda;
+    }
+
+    public static double getDisplacedLandingThreshold(double alsTocs, String flightMethod){
+        double displacedLandingThreshold;
         runway.setNewToda(newToda);
         return newToda;
     }
@@ -108,6 +123,7 @@ public class Calculator {
     //check if the obstacle is within the strip end, or minimum clear graded area
     //the declaration needs to be redeclare if true.
     public static boolean needRedeclare(Obstacle obstacle, LogicalRunway logicalRunway){
+
         double stripEnd = PhysicalRunway.stripEnd;
         double minCGArea = PhysicalRunway.minCGArea;
         boolean withinStripEnd = obstacle.getDistFThreshold() <= logicalRunway.getTora() + stripEnd && obstacle.getDistFThreshold() >= -stripEnd;
@@ -140,6 +156,7 @@ public class Calculator {
         }
         return choice;
     }
+
 
     public static int toraBreakdownChoice(Obstacle obstacle){
         int choice;
@@ -186,6 +203,7 @@ public class Calculator {
             result += "TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced Threshold\n";
             result += "         = " + originalTora + " - " + blastProtection + " - " + distanceFromThreshold + " - " + displacedThreshold + "\n         = " + newTora + "\n\n";
             result += "ASDA = (R) TORA + STOPWAY\n";
+
             result += "         = " + newTora + " + " + stopway + "\n         = " + newAsda + "\n\n";
             result += "TODA = (R) TORA + CLEARWAY\n";
             result += "         = " + newTora + " + " + clearway + "\n         = " + newToda + "\n\n";
@@ -213,6 +231,7 @@ public class Calculator {
                 result += "         = " + distanceFromThreshold + " + " + displacedThreshold + " - " + slopeCalculation + " - " + stripEnd + "\n         = " + newTora + "\n\n";
             }
             result += "ASDA = (R) TORA\n";
+
             result += "         = " + newAsda + "\n\n";
             result += "TODA = (R) TORA\n";
             result += "         = " + newToda + "\n\n";

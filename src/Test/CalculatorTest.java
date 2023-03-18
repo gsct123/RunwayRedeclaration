@@ -13,6 +13,7 @@ class CalculatorTest {
     LogicalRunway lR27L = new LogicalRunway("27L", 3660, 3660, 3660, 3660);
     Obstacle obstacle1 = new Obstacle("obstacle1",12,0,0,-50);
     Obstacle obstacle2 = new Obstacle("obstacle2",12,0,0,3646);
+
     @Test
     @DisplayName("Test calculation of Tora for Takeoff Away")
     void calcTora_TA() {
@@ -82,13 +83,6 @@ class CalculatorTest {
     }
 
     @Test
-    @DisplayName("Test if a right choice was given between TALO and TTLT")
-    void getCalculationBreakdown(){
-        assertEquals("Take-Off Away Landing Over",Calculator.getFlightMethod(obstacle1,lR09L));
-        assertEquals("Take-Off Towards Landing Towards",Calculator.getFlightMethod(obstacle2,lR27R));
-    }
-
-    @Test
     void ldaBreakdownChoice(){
         assertEquals(3, Calculator.ldaBreakdownChoice(obstacle1));
     }
@@ -153,6 +147,12 @@ class CalculatorTest {
                 "        = 3884.0 - 50.0 - 60.0 - 20.0*50.0\n" +
                 "        = 2774.0\n\n\n", Calculator.getCalculationBreakdownT(obstacle3, lR27R));
 
+    }
+
+    @Test
+    void getFlightMethod(){
+        assertEquals(Calculator.talo,Calculator.getFlightMethod(obstacle1,lR09L));
+        assertEquals(Calculator.ttlt,Calculator.getFlightMethod(obstacle2,lR27R));
     }
 
     @Test

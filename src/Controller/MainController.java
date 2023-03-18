@@ -489,4 +489,11 @@ public class MainController implements Initializable {
 
     //event handler for reset button
 
+
+    public void performCalculation(){
+        Calculator.calcTora(obstacleSelected,logRunwaySelected);
+        Calculator.calcAsda(obstacleSelected,logRunwaySelected);
+        Calculator.calcToda(obstacleSelected,logRunwaySelected);
+        Calculator.calcLda(obstacleSelected,logRunwaySelected);
+    }
 }
