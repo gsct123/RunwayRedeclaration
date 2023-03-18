@@ -16,13 +16,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Help">
           <items>
-            <MenuItem fx:id="aboutProject" mnemonicParsing="false" text="About runway project" />
+            <MenuItem fx:id="aboutProject" mnemonicParsing="false" text="About runway project" onAction="#loadAboutProject"/>
           </items>
         </Menu>
       </menus>
@@ -35,7 +35,7 @@
             <Insets bottom="10.0" top="10.0" />
          </padding>
       </Label>
-      <SplitPane dividerPositions="0.2981974921630094, 0.697884012539185" prefHeight="676.0" prefWidth="1327.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
+      <SplitPane dividerPositions="0.3083855799373041, 0.7065047021943573" prefHeight="676.0" prefWidth="1327.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
          <items>
             <AnchorPane prefHeight="616.0" prefWidth="376.0">
                <children>
@@ -51,7 +51,7 @@
                         <Font name="Verdana" size="16.0" />
                      </font>
                   </MenuButton>
-                  <MenuButton fx:id="obstacleMenu" disable="true" layoutX="27.0" layoutY="264.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="320.0" text="Select an Obstacle">
+                  <MenuButton fx:id="obstacleMenu" disable="true" layoutX="28.0" layoutY="264.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="320.0" text="Select an Obstacle">
                      <font>
                         <Font name="Verdana" size="16.0" />
                      </font>
@@ -101,7 +101,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="clDistTextField" layoutX="250.0" layoutY="438.0" prefHeight="9.0" prefWidth="92.0" text="0" />
-                  <Button fx:id="performCalculationButton" disable="true" layoutX="89.0" layoutY="482.0" mnemonicParsing="false" text="Perform Recalculation">
+                  <Button fx:id="performCalculationButton" disable="true" layoutX="89.0" layoutY="482.0" mnemonicParsing="false" text="Perform Recalculation" onAction="#performCalculation">
                      <font>
                         <Font name="Verdana" size="16.0" />
                      </font>
@@ -122,48 +122,13 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Button fx:id="resetButton" layoutX="158.0" layoutY="529.0" mnemonicParsing="false" text="Reset">
+                  <Button fx:id="resetButton" layoutX="158.0" layoutY="529.0" mnemonicParsing="false" text="Reset" onAction="#handleReset">
                      <font>
                         <Font name="Verdana" size="16.0" />
                      </font>
                   </Button>
                </children>
             </AnchorPane>
-<!--            <AnchorPane prefHeight="200.0" prefWidth="200.0">-->
-<!--               <children>-->
-<!--                  <Label layoutX="125.0" layoutY="13.0" text="CALCULATION BREAKDOWN">-->
-<!--                     <font>-->
-<!--                        <Font name="Verdana Bold" size="20.0" />-->
-<!--                     </font>-->
-<!--                     <padding>-->
-<!--                        <Insets bottom="5.0" top="5.0" />-->
-<!--                     </padding>-->
-<!--                  </Label>-->
-<!--                  <Label layoutX="24.0" layoutY="100.0" text="Physical runway (Take off, Landing)" />-->
-<!--                  <Label layoutX="23.0" layoutY="120.0" text="TORA = Original TORA - Blast Protection - Distance from Threshold - Displaced threshold">-->
-<!--                     <font>-->
-<!--                        <Font size="12.5" />-->
-<!--                     </font>-->
-<!--                     <padding>-->
-<!--                        <Insets bottom="30.0" />-->
-<!--                     </padding>-->
-<!--                  </Label>-->
-<!--                  <Label layoutX="24.0" layoutY="160.0" text="ASDA = (R) TORA + stopway ">-->
-<!--                     <padding>-->
-<!--                        <Insets bottom="30.0" />-->
-<!--                     </padding>-->
-<!--                  </Label>-->
-<!--                  <Label layoutX="24.0" layoutY="200.0" text="TODA = (R) TORA + clearway">-->
-<!--                     <padding>-->
-<!--                        <Insets bottom="30.0" />-->
-<!--                     </padding>-->
-<!--                  </Label>-->
-<!--                  <Label layoutX="24.0" layoutY="240.0" text="LDA = Original LDA - Distance from Threshold - Strip End - Slope Calculation">-->
-<!--                     <padding>-->
-<!--                        <Insets bottom="30.0" />-->
-<!--                     </padding>-->
-<!--                  </Label>-->
-<!--               </children></AnchorPane>-->
              <AnchorPane prefHeight="200.0" prefWidth="200.0">
                  <children>
                   <AnchorPane fx:id="breakdownPane" layoutX="-1.0" layoutY="58.0" prefHeight="516.0" prefWidth="501.0">

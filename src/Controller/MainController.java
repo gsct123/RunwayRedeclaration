@@ -1,24 +1,25 @@
 package Controller;
 
-
-import Model.Airport;
-import Model.LogicalRunway;
-import Model.Obstacle;
-import Model.PhysicalRunway;
-import View.Handlers.PerformCalculationHandler;
-import View.Handlers.ResetHandler;
+import Model.*;
+import View.ErrorPopUp.InvalidDistanceFromCentreline;
+import View.ErrorPopUp.InvalidDistanceThreshold;
 import View.Main;
+import View.OtherPopUp.NoRedeclarationNeeded;
+import View.OtherPopUp.ResetConfirmation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -123,7 +124,6 @@ public class MainController implements Initializable {
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
             addObstacleEvent();
-            handleReset();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,10 +137,8 @@ public class MainController implements Initializable {
     public PhysicalRunway getPhysRunwaySelected() {return physRunwaySelected;}
     public LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
     public Obstacle getObstacleSelected() {return obstacleSelected;}
-    public double getDistFromThreshold() {
-        return 0;}
-    public double getDistFromCentreLine() {
-        return 0;}
+    public double getDistFromThreshold() {return 0;}
+    public double getDistFromCentreLine() {return 0;}
     public String getFlightMethod() {return flightMethod;}
     public MenuButton getAirportMenu() {return airportMenu;}
     public MenuButton getPhysicalRunwayMenu() {return physicalRunwayMenu;}
@@ -173,13 +171,80 @@ public class MainController implements Initializable {
     public Label getOldAsdaInfoLabel() {return oldAsdaInfoLabel;}
     public Label getOldLdaInfoLabel() {return oldLdaInfoLabel;}
 
-    //method to load information such as documentation and desription of parameters
+    //event handlers
+    @FXML
+    public void loadAboutProject(ActionEvent event){
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
+        } catch (IOException | URISyntaxException ignored) {}
+    }
+    @FXML
+    public void handleReset(ActionEvent event) throws IOException {
+        boolean flag = new ResetConfirmation().confirmReset();
+        if(flag) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/Main.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+
+            Stage stage = Main.getStage();
+            stage.setTitle("SEG Runway Project");
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+    @FXML
+    public void performCalculation(ActionEvent event){
+        if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
+            Calculator.calcTora(obstacleSelected, logRunwaySelected);
+            Calculator.calcAsda(obstacleSelected, logRunwaySelected);
+            Calculator.calcToda(obstacleSelected, logRunwaySelected);
+            Calculator.calcLda(obstacleSelected, logRunwaySelected);
+            newToraLabel.setText("TORA  =  "+logRunwaySelected.getNewTora());
+            newTodaLabel.setText("TODA  =  "+logRunwaySelected.getNewToda());
+            newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getNewAsda());
+            newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda());
+            editToBeginLabel.setVisible(false);
+            noCalcPerformedLabel.setVisible(false);
+            breakdownLabel.setText(Calculator.getCalculationBreakdownT(obstacleSelected, logRunwaySelected));
+            breakdownLabel.setVisible(true);
+        } else{
+            breakdownLabel.setVisible(false);
+            editToBeginLabel.setVisible(true);
+            noCalcPerformedLabel.setVisible(true);
+            editToBeginLabel.setText("No runway redeclation needed");
+            noCalcPerformedLabel.setText("Original runway parameters can be used");
+
+            newToraLabel.setText("TORA  =  "+logRunwaySelected.getTora());
+            newTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda());
+            newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda());
+            newLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda());
+
+            new NoRedeclarationNeeded().showNoRedeclarationNeeded();
+        }
+
+        String disThreshold = distanceThresholdTextField.getText().trim();
+        try {
+            double distFromThreshold = Double.parseDouble(disThreshold);
+            obstacleSelected.setDistFThreshold(distFromThreshold);
+        } catch (NumberFormatException exception) {
+            //display error message
+            new InvalidDistanceThreshold().showDisThresholdError(distanceThresholdTextField);
+        }
+
+        String clDistance = clDistTextField.getText();
+        try{
+            double distFromCentreLine = Double.parseDouble(clDistance);
+            if(distFromCentreLine < 0){
+                throw new NumberFormatException();
+            }
+            obstacleSelected.setDistFCent(distFromCentreLine);
+        } catch (NumberFormatException exception){
+            //display error message
+            new InvalidDistanceFromCentreline().showDisFromCentreError(clDistTextField);
+        }
+    }
+    //method to load information such as documentation and description of parameters
     public void loadInfos() {
-        aboutProject.setOnAction(e -> {
-            try {
-                Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
-            } catch (IOException | URISyntaxException ignored) {}
-        });
         oldToraInfo.setOnMouseEntered(mouseEvent -> oldToraInfoLabel.setVisible(true));
         oldToraInfo.setOnMouseExited(mouseEvent -> oldToraInfoLabel.setVisible(false));
         oldTodaInfo.setOnMouseEntered(mouseEvent -> oldTodaInfoLabel.setVisible(true));
@@ -319,7 +384,6 @@ public class MainController implements Initializable {
         // Loop over each obstacle element and create an Obstacle object
         for (int i = 0; i < obstacleElements.getLength(); i++) {
             Node obstacleNode = obstacleElements.item(i);
-
             if (obstacleNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element obstacleElement = (Element) obstacleNode;
                 // Get the obstacle name, height and width
@@ -344,7 +408,6 @@ public class MainController implements Initializable {
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
-                performCalculationButton.setOnAction(actionEvent -> new PerformCalculationHandler().handlingCalcPerformation(obstacleSelected, logRunwaySelected, newToraLabel, newTodaLabel, newAsdaLabel, newLdaLabel, editToBeginLabel, noCalcPerformedLabel, breakdownLabel, distanceThresholdTextField, clDistTextField));
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }
@@ -424,16 +487,6 @@ public class MainController implements Initializable {
 //        }
 //    }
 
-    public void handleReset(){
-        resetButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    new ResetHandler().reset(Main.getStage());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+    //event handler for reset button
+
 }
