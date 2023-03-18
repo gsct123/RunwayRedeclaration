@@ -3,6 +3,11 @@ package Model;
 import javafx.collections.ObservableList;
 
 public class PhysicalRunway{
+    public static final double blastProtection = 300;
+    public static final double resa = 240;
+    public static final double stripEnd = 60;
+    public static final double minCGArea = 75;
+    public static final double maxCGArea = 150;
     private String name;
     private ObservableList<LogicalRunway> logicalRunways;
 

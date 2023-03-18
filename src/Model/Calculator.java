@@ -1,13 +1,9 @@
 package Model;
 
 public class Calculator {
-    public static final double resa = 240;
-    public static final double blastProtection = 300;
-    public static final double stripEnd = 60;
-    public static final double minCGArea = 75;
     //empty constructor
     public Calculator() {}
-    public static final double maxCGArea = 150;
+
     public static final String talo = "Take-Off Away Landing Over";
     public static final String ttlt = "Take-Off Towards Landing Towards";
 
@@ -21,6 +17,7 @@ public class Calculator {
     public static double calcTora(Obstacle obstacle,LogicalRunway runway){
         String flightMethod = getFlightMethod(obstacle,runway);
         double originalTora = runway.getTora();
+        double blastProtection = PhysicalRunway.blastProtection;
         double newTora;
         double distanceFromThreshold = obstacle.getDistFThreshold();
         double displacedThreshold = runway.getDisplacedThreshold();
@@ -41,6 +38,8 @@ public class Calculator {
         double originalLda = runway.getLda();
         double distanceFromThreshold = obstacle.getDistFThreshold();
         double newLda;
+        double resa = PhysicalRunway.resa;
+        double stripEnd = PhysicalRunway.stripEnd;
         double displacedLandingThreshold = getDisplacedLandingThreshold(obstacle.getAlsTocs(),talo);
 
         // Calculate LDA
@@ -91,6 +90,10 @@ public class Calculator {
     // When either (resa + strip) or (alsTocs + strip end) is less than blast protection value, we need to add blast protection value into Displaced Landing Threshold.
     public static double getDisplacedLandingThreshold(double alsTocs, String flightMethod){
         double displacedLandingThreshold;
+        double blastProtection = PhysicalRunway.blastProtection;
+        double resa = PhysicalRunway.resa;
+        double stripEnd = PhysicalRunway.stripEnd;
+
         if (alsTocs < resa){
             displacedLandingThreshold = resa + stripEnd;
         }else {
@@ -105,6 +108,8 @@ public class Calculator {
     //check if the obstacle is within the strip end, or minimum clear graded area
     //the declaration needs to be redeclare if true.
     public static boolean needRedeclare(Obstacle obstacle, LogicalRunway logicalRunway){
+        double stripEnd = PhysicalRunway.stripEnd;
+        double minCGArea = PhysicalRunway.minCGArea;
         boolean withinStripEnd = obstacle.getDistFThreshold() <= logicalRunway.getTora() + stripEnd && obstacle.getDistFThreshold() >= -stripEnd;
         boolean withinCentreline = obstacle.getDistFCent() <= minCGArea && obstacle.getDistFCent() >= -minCGArea;
         return withinStripEnd && withinCentreline;
@@ -122,7 +127,10 @@ public class Calculator {
 
     public static int ldaBreakdownChoice(Obstacle obstacle){
         int choice;
+        double resa = PhysicalRunway.resa;
         double alsTocs = obstacle.getAlsTocs();
+        double stripEnd = PhysicalRunway.stripEnd;
+        double blastProtection = PhysicalRunway.blastProtection;
         if (resa > obstacle.getAlsTocs()){
             choice = 1;
         } else if (blastProtection >= alsTocs + stripEnd) {
@@ -135,6 +143,7 @@ public class Calculator {
 
     public static int toraBreakdownChoice(Obstacle obstacle){
         int choice;
+        double resa = PhysicalRunway.resa;
         if (resa > obstacle.getAlsTocs()){
             choice = 1;
         }else {
@@ -159,6 +168,9 @@ public class Calculator {
         double displacedThreshold = runway.getDisplacedThreshold();
         double stopway = runway.getStopway();
         double clearway = runway.getClearway();
+        double blastProtection = PhysicalRunway.blastProtection;
+        double resa = PhysicalRunway.resa;
+        double stripEnd = PhysicalRunway.stripEnd;
 
         //Obstacle variables
         double distanceFromThreshold = obstacle.getDistFThreshold();
