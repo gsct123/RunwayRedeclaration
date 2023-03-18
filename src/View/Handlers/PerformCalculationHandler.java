@@ -5,17 +5,24 @@ import Model.LogicalRunway;
 import Model.Obstacle;
 import View.ErrorPopUp.InvalidDistanceThreshold;
 import View.OtherPopUp.NoRedeclarationNeeded;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import java.util.Optional;
 
 public class PerformCalculationHandler {
+
     public PerformCalculationHandler() {}
-    //havent completed
-    public void handlingCalcPerformation(){
+    public void handlingCalcPerformation(Obstacle obstacleSelected,
+                                         LogicalRunway logRunwaySelected,
+                                         Label newToraLabel,
+                                         Label newTodaLabel,
+                                         Label newAsdaLabel,
+                                         Label newLdaLabel,
+                                         Label editToBeginLabel,
+                                         Label noCalcPerformedLabel,
+                                         Label breakdownLabel,
+                                         TextField distanceThresholdTextField,
+                                         TextField clDistTextField){
         if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
             Calculator.calcTora(obstacleSelected, logRunwaySelected);
             Calculator.calcAsda(obstacleSelected, logRunwaySelected);
@@ -46,7 +53,7 @@ public class PerformCalculationHandler {
 
         String disThreshold = distanceThresholdTextField.getText().trim();
         try {
-            distFromThreshold = Double.parseDouble(disThreshold);
+            double distFromThreshold = Double.parseDouble(disThreshold);
             obstacleSelected.setDistFThreshold(distFromThreshold);
         } catch (NumberFormatException exception) {
             //display error message
@@ -55,12 +62,11 @@ public class PerformCalculationHandler {
 
         String clDistance = clDistTextField.getText();
         try{
-            distFromCentreLine = Double.parseDouble(clDistance);
+            double distFromCentreLine = Double.parseDouble(clDistance);
             if(distFromCentreLine < 0){
                 throw new NumberFormatException();
             }
             obstacleSelected.setDistFCent(distFromCentreLine);
-            performCalculationButton.setDisable(true);
         } catch (NumberFormatException exception){
             //display error message
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);

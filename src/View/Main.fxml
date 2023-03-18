@@ -122,6 +122,11 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
+                  <Button fx:id="resetButton" layoutX="158.0" layoutY="529.0" mnemonicParsing="false" text="Reset">
+                     <font>
+                        <Font name="Verdana" size="16.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
 <!--            <AnchorPane prefHeight="200.0" prefWidth="200.0">-->

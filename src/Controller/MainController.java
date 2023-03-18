@@ -6,8 +6,12 @@ import Model.LogicalRunway;
 import Model.Obstacle;
 import Model.PhysicalRunway;
 import View.Handlers.PerformCalculationHandler;
+import View.Handlers.ResetHandler;
+import View.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -38,9 +42,7 @@ public class MainController implements Initializable {
     private Airport airportSelected = null;
     private PhysicalRunway physRunwaySelected = null;
     private LogicalRunway logRunwaySelected = null;
-    private Obstacle obstacleSelected = null;
-    private double distFromThreshold = 0;
-    private double distFromCentreLine = 0;
+    public Obstacle obstacleSelected = null;
     private String flightMethod = "";
 
     //fxml elements
@@ -73,7 +75,7 @@ public class MainController implements Initializable {
     @FXML
     private Label originalLdaLabel;
     @FXML
-    private Label newToraLabel;
+    public Label newToraLabel;
     @FXML
     private Label newTodaLabel;
     @FXML
@@ -106,6 +108,8 @@ public class MainController implements Initializable {
     private Label oldAsdaInfoLabel;
     @FXML
     private Label oldLdaInfoLabel;
+    @FXML
+    private Button resetButton;
 
     //list of airports and obstacles from files
     ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -119,6 +123,7 @@ public class MainController implements Initializable {
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
             addObstacleEvent();
+            handleReset();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,8 +137,10 @@ public class MainController implements Initializable {
     public PhysicalRunway getPhysRunwaySelected() {return physRunwaySelected;}
     public LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
     public Obstacle getObstacleSelected() {return obstacleSelected;}
-    public double getDistFromThreshold() {return distFromThreshold;}
-    public double getDistFromCentreLine() {return distFromCentreLine;}
+    public double getDistFromThreshold() {
+        return 0;}
+    public double getDistFromCentreLine() {
+        return 0;}
     public String getFlightMethod() {return flightMethod;}
     public MenuButton getAirportMenu() {return airportMenu;}
     public MenuButton getPhysicalRunwayMenu() {return physicalRunwayMenu;}
@@ -337,7 +344,7 @@ public class MainController implements Initializable {
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
-                performCalculationButton.setOnAction(actionEvent -> new PerformCalculationHandler().handlingCalcPerformation(getClass()));
+                performCalculationButton.setOnAction(actionEvent -> new PerformCalculationHandler().handlingCalcPerformation(obstacleSelected, logRunwaySelected, newToraLabel, newTodaLabel, newAsdaLabel, newLdaLabel, editToBeginLabel, noCalcPerformedLabel, breakdownLabel, distanceThresholdTextField, clDistTextField));
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }
@@ -416,4 +423,17 @@ public class MainController implements Initializable {
 //            });
 //        }
 //    }
+
+    public void handleReset(){
+        resetButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    new ResetHandler().reset(Main.getStage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 }
