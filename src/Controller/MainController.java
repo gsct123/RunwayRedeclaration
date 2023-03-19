@@ -1,8 +1,10 @@
 package Controller;
 
 import Model.*;
+import View.ErrorPopUp.InvalidBlastProtection;
 import View.ErrorPopUp.InvalidDistanceFromCentreline;
 import View.ErrorPopUp.InvalidDistanceThreshold;
+import View.ErrorPopUp.InvalidStripEnd;
 import View.Main;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
@@ -26,6 +28,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -111,6 +114,20 @@ public class MainController implements Initializable {
     private Label oldLdaInfoLabel;
     @FXML
     private Button resetButton;
+    @FXML
+    private TextField stripEndTextField;
+    @FXML
+    private TextField blastProtectionField;
+    @FXML
+    private Label stripEndInfoLabel;
+    @FXML
+    private Label blastProtectionInfoLabel;
+    @FXML
+    private Button stripEndInfo;
+    @FXML
+    private Button blastProtectionInfo;
+    @FXML
+    private Button calculationBreakdown;
 
     //list of airports and obstacles from files
     ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -192,21 +209,45 @@ public class MainController implements Initializable {
             stage.show();
         }
     }
+
+    @FXML
+    public void checkDistFromThreshold(ActionEvent event){
+        try {
+            double distFromThreshold = Double.parseDouble(distanceThresholdTextField.getText().trim());
+            obstacleSelected.setDistFThreshold(distFromThreshold);
+        } catch (NumberFormatException exception) {
+            //display error message
+            new InvalidDistanceThreshold().showDisThresholdError(distanceThresholdTextField);
+        }
+    }
+
+    @FXML
+    public void checkDistFromCentreLine(ActionEvent event){
+        try{
+            double distFromCentreLine = Double.parseDouble(clDistTextField.getText().trim());
+            if(distFromCentreLine < 0){throw new NumberFormatException();}
+            obstacleSelected.setDistFCent(distFromCentreLine);
+        } catch (NumberFormatException exception){
+            new InvalidDistanceFromCentreline().showDisFromCentreError(clDistTextField);
+        }
+    }
+
     @FXML
     public void performCalculation(ActionEvent event){
+        checkDistFromThreshold(new ActionEvent());
+        checkDistFromCentreLine(new ActionEvent());
+        setStripEnd(new ActionEvent());
+        setBlastProtection(new ActionEvent());
         if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
             Calculator.calcTora(obstacleSelected, logRunwaySelected);
             Calculator.calcAsda(obstacleSelected, logRunwaySelected);
             Calculator.calcToda(obstacleSelected, logRunwaySelected);
             Calculator.calcLda(obstacleSelected, logRunwaySelected);
-            newToraLabel.setText("TORA  =  "+logRunwaySelected.getNewTora());
-            newTodaLabel.setText("TODA  =  "+logRunwaySelected.getNewToda());
-            newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getNewAsda());
-            newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda());
-            editToBeginLabel.setVisible(false);
-            noCalcPerformedLabel.setVisible(false);
-            breakdownLabel.setText(Calculator.getCalculationBreakdownT(obstacleSelected, logRunwaySelected));
-            breakdownLabel.setVisible(true);
+            newToraLabel.setText("TORA  =  "+logRunwaySelected.getNewTora() + " m");
+            newTodaLabel.setText("TODA  =  "+logRunwaySelected.getNewToda() + " m");
+            newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getNewAsda() + " m");
+            newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda() + " m");
+            //no view yet all set to invisible
         } else{
             breakdownLabel.setVisible(false);
             editToBeginLabel.setVisible(true);
@@ -214,35 +255,53 @@ public class MainController implements Initializable {
             editToBeginLabel.setText("No runway redeclation needed");
             noCalcPerformedLabel.setText("Original runway parameters can be used");
 
-            newToraLabel.setText("TORA  =  "+logRunwaySelected.getTora());
-            newTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda());
-            newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda());
-            newLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda());
+            newToraLabel.setText("TORA  =  "+logRunwaySelected.getTora() + " m");
+            newTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda() + " m");
+            newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda() + " m");
+            newLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda() + " m");
 
             new NoRedeclarationNeeded().showNoRedeclarationNeeded();
         }
+        calculationBreakdown.setDisable(false);
+    }
 
-        String disThreshold = distanceThresholdTextField.getText().trim();
-        try {
-            double distFromThreshold = Double.parseDouble(disThreshold);
-            obstacleSelected.setDistFThreshold(distFromThreshold);
-        } catch (NumberFormatException exception) {
-            //display error message
-            new InvalidDistanceThreshold().showDisThresholdError(distanceThresholdTextField);
-        }
-
-        String clDistance = clDistTextField.getText();
+    @FXML
+    public void setStripEnd(ActionEvent event){
         try{
-            double distFromCentreLine = Double.parseDouble(clDistance);
-            if(distFromCentreLine < 0){
-                throw new NumberFormatException();
-            }
-            obstacleSelected.setDistFCent(distFromCentreLine);
-        } catch (NumberFormatException exception){
-            //display error message
-            new InvalidDistanceFromCentreline().showDisFromCentreError(clDistTextField);
+            double stripEnd = Double.parseDouble(stripEndTextField.getText().trim());
+            if(stripEnd < 0){throw new NumberFormatException();}
+            PhysicalRunway.setStripEnd(stripEnd);
+        } catch (NumberFormatException e){
+            new InvalidStripEnd().showError(stripEndTextField);
         }
     }
+
+    @FXML
+    public void setBlastProtection(ActionEvent event){
+        try{
+            double blastProtection = Double.parseDouble(blastProtectionField.getText().trim());
+            if(blastProtection < 300){
+                throw new NumberFormatException();
+            }
+            PhysicalRunway.setBlastProtection(blastProtection);
+        } catch (NumberFormatException e){
+            new InvalidBlastProtection().showError(blastProtectionField);
+        }
+    }
+
+    @FXML
+    public void showCalculationBreakdown(Action event) throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CalculationBreakdown.fxml"));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+
+        stage.setTitle("Calculation Breakdown");
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
     //method to load information such as documentation and description of parameters
     public void loadInfos() {
         oldToraInfo.setOnMouseEntered(mouseEvent -> oldToraInfoLabel.setVisible(true));
@@ -253,6 +312,10 @@ public class MainController implements Initializable {
         oldAsdaInfo.setOnMouseExited(mouseEvent -> oldAsdaInfoLabel.setVisible(false));
         oldLdaInfo.setOnMouseEntered(mouseEvent -> oldLdaInfoLabel.setVisible(true));
         oldLdaInfo.setOnMouseExited(mouseEvent -> oldLdaInfoLabel.setVisible(false));
+        stripEndInfo.setOnMouseEntered(mouseEvent -> stripEndInfoLabel.setVisible(true));
+        stripEndInfo.setOnMouseExited(mouseEvent -> stripEndInfoLabel.setVisible(false));
+        blastProtectionInfo.setOnMouseEntered(mouseEvent -> blastProtectionInfoLabel.setVisible(true));
+        blastProtectionInfo.setOnMouseExited(mouseEvent -> blastProtectionInfoLabel.setVisible(false));
     }
 
     //this function read from a xml file and instantiate list of airports available
@@ -343,6 +406,10 @@ public class MainController implements Initializable {
                         physRunwaySelected = runway;
                         logicalRunwayMenu.getItems().clear();
                         physicalRunwayMenu.setText(runway.getName());
+                        stripEndTextField.setText(String.valueOf(PhysicalRunway.stripEnd));
+                        blastProtectionField.setText(String.valueOf(PhysicalRunway.blastProtection));
+                        stripEndTextField.setDisable(false);
+                        blastProtectionField.setDisable(false);
                         logicalRunwayMenu.setText("Select Logical Runway");
                         logRunwaySelected = null;
                         performCalculationButton.setDisable(true);
@@ -353,10 +420,10 @@ public class MainController implements Initializable {
                                 logRunwaySelected = logicalRunway;
                                 logicalRunwayMenu.setText(logicalRunway.getDesignator());
                                 obstacleMenu.setDisable(false);
-                                originalToraLabel.setText("TORA  =  "+logRunwaySelected.getTora());
-                                originalTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda());
-                                originalAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda());
-                                originalLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda());
+                                originalToraLabel.setText("TORA  =  "+logRunwaySelected.getTora() + " m");
+                                originalTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda() + " m");
+                                originalAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda() + " m");
+                                originalLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda() + " m");
                             });
                             lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                             logicalRunwayMenu.getItems().add(lRunwayMenuItem);
@@ -489,11 +556,4 @@ public class MainController implements Initializable {
 
     //event handler for reset button
 
-
-    public void performCalculation(){
-        Calculator.calcTora(obstacleSelected,logRunwaySelected);
-        Calculator.calcAsda(obstacleSelected,logRunwaySelected);
-        Calculator.calcToda(obstacleSelected,logRunwaySelected);
-        Calculator.calcLda(obstacleSelected,logRunwaySelected);
-    }
 }

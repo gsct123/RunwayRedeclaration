@@ -10,7 +10,7 @@ import java.util.Optional;
 public class InvalidDistanceThreshold {
     public InvalidDistanceThreshold() {}
 
-    public Alert showDisThresholdError(TextField distanceThresholdTextField){
+    public void showDisThresholdError(TextField distanceThresholdTextField){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setTitle("Error Message");
         errorAlert.setHeaderText("ERROR");
@@ -28,6 +28,5 @@ public class InvalidDistanceThreshold {
             distanceThresholdTextField.setText("0");
             errorAlert.close();
         });
-        return errorAlert;
     }
 }

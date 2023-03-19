@@ -18,7 +18,7 @@ public class Calculator {
         LogicalRunway runway = new LogicalRunway("09l", 3902, 3902, 3902, 3595);
         Obstacle obstacle = new Obstacle("obs1", 12, 0, 0, 50);
 
-        getCalculationBreakdownT(obstacle, runway, Calculator.getFlightMethod(obstacle, runway));
+//        getCalculationBreakdownT(obstacle, runway, Calculator.getFlightMethod(obstacle, runway));
         System.out.println(getCalculationBreakdownT(obstacle, runway));
     }
 
@@ -90,12 +90,6 @@ public class Calculator {
             newToda = newTora;
         }
         runway.setNewAsda(newToda);
-        return newToda;
-    }
-
-    public static double getDisplacedLandingThreshold(double alsTocs, String flightMethod){
-        double displacedLandingThreshold;
-        runway.setNewToda(newToda);
         return newToda;
     }
 
