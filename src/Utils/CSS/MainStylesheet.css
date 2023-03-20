@@ -12,3 +12,7 @@
     -fx-font-size: 14px;
     -fx-text-fill: red;
 }
+
+#visualPane  {
+    -fx-background-color: white;
+}

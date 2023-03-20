@@ -37,7 +37,7 @@
             <Insets bottom="10.0" top="10.0" />
          </padding>
       </Label>
-      <SplitPane dividerPositions="0.2238538681948424, 0.7474928366762178" prefHeight="936.0" prefWidth="1920.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
+      <SplitPane dividerPositions="0.2239, 0.78" prefHeight="936.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
          <items>
             <AnchorPane prefHeight="691.0" prefWidth="285.0">
                <children>
@@ -81,7 +81,7 @@
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font></TextField>
-                  <Label layoutX="30.0" layoutY="457.0" text="L/R from Centre Line: ">
+                  <Label layoutX="29.0" layoutY="457.0" text="L/R from Centre Line: ">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
@@ -103,7 +103,7 @@
                         </RadioButton>
                      </toggles>
                   </ToggleButtonGroup>
-                  <Label layoutX="30.0" layoutY="492.0" text="Distance from Centre Line (m): ">
+                  <Label layoutX="29.0" layoutY="492.0" text="Distance from Centre Line (m): ">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
@@ -112,7 +112,7 @@
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font></TextField>
-                  <Button fx:id="performCalculationButton" disable="true" layoutX="67.0" layoutY="542.0" mnemonicParsing="false" onAction="#performCalculation" prefHeight="35.0" text="Perform Recalculation">
+                  <Button fx:id="performCalculationButton" disable="true" layoutX="57.0" layoutY="542.0" mnemonicParsing="false" onAction="#performCalculation" prefHeight="35.0" text="Perform Recalculation">
                      <font>
                         <Font name="Verdana" size="16.0" />
                      </font>
@@ -133,7 +133,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Button fx:id="resetButton" layoutX="137.0" layoutY="596.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" text="Reset">
+                  <Button fx:id="resetButton" layoutX="119.0" layoutY="596.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" text="Reset">
                      <font>
                         <Font name="Verdana" size="16.0" />
                      </font>
@@ -142,7 +142,7 @@
             </AnchorPane>
              <AnchorPane prefHeight="691.0" prefWidth="726.0">
                <children>
-                  <TabPane layoutX="4.0" layoutY="-5.0" prefHeight="695.0" prefWidth="783.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane fx:id="visualPane" layoutX="4.0" layoutY="-5.0" prefHeight="638.0" prefWidth="816.0" stylesheets="@../Utils/CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                       <Tab text="Untitled Tab 1" />
                       <Tab text="Untitled Tab 2" />
@@ -151,12 +151,12 @@
                </children></AnchorPane>
             <AnchorPane fx:id="stripEndLabel" maxWidth="-Infinity" prefHeight="625.0" prefWidth="348.0">
                <children>
-                  <Label fx:id="originalToraLabel" layoutX="37.0" layoutY="276.0" text="TORA  =">
+                  <Label fx:id="originalToraLabel" layoutX="5.0" layoutY="276.0" text="TORA  =">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="29.0" layoutY="212.0" prefHeight="56.0" prefWidth="258.0" text="ORIGINAL PARAMETERS">
+                  <Label layoutX="12.0" layoutY="212.0" prefHeight="56.0" prefWidth="258.0" text="ORIGINAL PARAMETERS">
                      <font>
                         <Font name="Verdana Bold" size="18.0" />
                      </font>
@@ -164,42 +164,42 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="originalAsdaLabel" layoutX="39.0" layoutY="350.0" text="ASDA  =">
+                  <Label fx:id="originalAsdaLabel" layoutX="5.0" layoutY="350.0" text="ASDA  =">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="originalLdaLabel" layoutX="41.0" layoutY="389.0" text="LDA    =">
+                  <Label fx:id="originalLdaLabel" layoutX="5.0" layoutY="389.0" text="LDA    =">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="originalTodaLabel" layoutX="37.0" layoutY="313.0" text="TODA  =">
+                  <Label fx:id="originalTodaLabel" layoutX="5.0" layoutY="313.0" text="TODA  =">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="oldToraInfo" layoutX="10.0" layoutY="64.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
+                  <Button fx:id="oldToraInfo" layoutX="5.0" layoutY="64.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                      <font>
                         <Font name="Verdana" size="10.0" />
                      </font>
                   </Button>
-                  <Button fx:id="oldTodaInfo" layoutX="10.0" layoutY="104.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
+                  <Button fx:id="oldTodaInfo" layoutX="5.0" layoutY="104.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                      <font>
                         <Font name="Verdana" size="10.0" />
                      </font>
                   </Button>
-                  <Button fx:id="oldAsdaInfo" layoutX="10.0" layoutY="143.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
+                  <Button fx:id="oldAsdaInfo" layoutX="5.0" layoutY="143.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                      <font>
                         <Font name="Verdana" size="10.0" />
                      </font>
                   </Button>
-                  <Button fx:id="oldLdaInfo" layoutX="10.0" layoutY="180.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
+                  <Button fx:id="oldLdaInfo" layoutX="5.0" layoutY="180.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                      <font>
                         <Font name="Verdana" size="10.0" />
                      </font>
                   </Button>
-                  <Label fx:id="otherDetails" layoutX="73.0" layoutY="417.0" prefHeight="56.0" prefWidth="187.0" text="OTHER DETAILS">
+                  <Label fx:id="otherDetails" layoutX="55.0" layoutY="417.0" prefHeight="56.0" prefWidth="164.0" text="OTHER DETAILS">
                      <font>
                         <Font name="Verdana Bold" size="18.0" />
                      </font>
@@ -207,22 +207,22 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="newToraLabel1" layoutX="37.0" layoutY="485.0" text="Strip End (m)          = ">
+                  <Label fx:id="newToraLabel1" layoutX="36.0" layoutY="485.0" text="Strip End (m)          = ">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="blastProtectionLabel" layoutX="37.0" layoutY="533.0" text="Blast Protection (m) = ">
+                  <Label fx:id="blastProtectionLabel" layoutX="36.0" layoutY="533.0" text="Blast Protection (m) = ">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="newToraLabel" layoutX="39.0" layoutY="66.0" text="TORA  =">
+                  <Label fx:id="newToraLabel" layoutX="35.0" layoutY="66.0" text="TORA  =">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="revisedRunwayTitle" layoutX="40.0" layoutY="5.0" prefHeight="56.0" prefWidth="245.0" text="REVISED PARAMETERS">
+                  <Label fx:id="revisedRunwayTitle" layoutX="20.0" layoutY="5.0" prefHeight="56.0" prefWidth="245.0" text="REVISED PARAMETERS">
                      <font>
                         <Font name="Verdana Bold" size="18.0" />
                      </font>
@@ -230,47 +230,47 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="newAsdaLabel" layoutX="40.0" layoutY="144.0" text="ASDA  =">
+                  <Label fx:id="newAsdaLabel" layoutX="35.0" layoutY="144.0" text="ASDA  =">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="newLdaLabel" layoutX="42.0" layoutY="180.0" text="LDA    =">
+                  <Label fx:id="newLdaLabel" layoutX="35.0" layoutY="180.0" text="LDA    =">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="newTodaLabel" layoutX="38.0" layoutY="106.0" text="TODA  =">
+                  <Label fx:id="newTodaLabel" layoutX="35.0" layoutY="106.0" text="TODA  =">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="stripEndTextField" disable="true" layoutX="204.0" layoutY="479.0" onAction="#setStripEnd" prefHeight="31.0" prefWidth="86.0" text="0">
+                  <TextField fx:id="stripEndTextField" disable="true" layoutX="200.0" layoutY="479.0" onAction="#setStripEnd" prefHeight="31.0" prefWidth="60.0" text="0">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="blastProtectionField" disable="true" layoutX="205.0" layoutY="529.0" onAction="#setBlastProtection" prefHeight="31.0" prefWidth="86.0" text="0">
+                  <TextField fx:id="blastProtectionField" disable="true" layoutX="201.0" layoutY="529.0" onAction="#setBlastProtection" prefHeight="31.0" prefWidth="60.0" text="0">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="calculationBreakdown" disable="true" layoutX="67.0" layoutY="585.0" mnemonicParsing="false" onAction="#showCalculationBreakdown" prefHeight="35.0" prefWidth="189.0" text="Calculation Breakdown">
+                  <Button fx:id="calculationBreakdown" disable="true" layoutX="40.0" layoutY="585.0" mnemonicParsing="false" onAction="#showCalculationBreakdown" prefHeight="35.0" prefWidth="189.0" text="Calculation Breakdown">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="stripEndInfo" layoutX="8.0" layoutY="486.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
+                  <Button fx:id="stripEndInfo" layoutX="6.0" layoutY="486.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                      <font>
                         <Font name="Verdana" size="10.0" />
                      </font>
                   </Button>
-                  <Button fx:id="blastProtectionInfo" layoutX="8.0" layoutY="530.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
+                  <Button fx:id="blastProtectionInfo" layoutX="6.0" layoutY="530.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                      <font>
                         <Font name="Verdana" size="10.0" />
                      </font>
                   </Button>
-                  <Label fx:id="stripEndInfoLabel" layoutX="33.0" layoutY="485.0" prefHeight="86.0" prefWidth="260.0" style="-fx-background-color: white; -fx-border-color: black;" text="Strip end - An area between the end of runway and the end of the runway strip." textAlignment="JUSTIFY" visible="false" wrapText="true">
+                  <Label fx:id="stripEndInfoLabel" layoutX="29.0" layoutY="485.0" prefHeight="86.0" prefWidth="218.0" style="-fx-background-color: white; -fx-border-color: black;" text="Strip end - An area between the end of runway and the end of the runway strip." textAlignment="JUSTIFY" visible="false" wrapText="true">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -278,7 +278,7 @@
                         <Font name="Verdana" size="13.0" />
                      </font>
                   </Label>
-                  <Label fx:id="blastProtectionInfoLabel" layoutX="34.0" layoutY="524.0" prefHeight="133.0" prefWidth="254.0" style="-fx-background-color: white; -fx-border-color: black;" text="Blast protection - A safety area behind an aircraft to prevent the engine blast from affecting any obstacles located behind it." textAlignment="JUSTIFY" visible="false" wrapText="true">
+                  <Label fx:id="blastProtectionInfoLabel" layoutX="30.0" layoutY="524.0" prefHeight="133.0" prefWidth="218.0" style="-fx-background-color: white; -fx-border-color: black;" text="Blast protection - A safety area behind an aircraft to prevent the engine blast from affecting any obstacles located behind it." textAlignment="JUSTIFY" visible="false" wrapText="true">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -286,7 +286,7 @@
                         <Font name="Verdana" size="13.0" />
                      </font>
                   </Label>
-                  <Label fx:id="oldToraInfoLabel" layoutX="7.0" layoutY="89.0" prefHeight="186.0" prefWidth="275.0" style="-fx-background-color: white; -fx-border-color: black;" text="Take-Off Run Available - the length of the runway available for take-off. This is the total distance from the point where an aircraft can commence its take-off to the point where the runway can no loger support the weight of the aircraft under normal conditions (and where it should have left the runway during a normal take-off)." textAlignment="JUSTIFY" visible="false" wrapText="true">
+                  <Label fx:id="oldToraInfoLabel" layoutX="5.0" layoutY="89.0" prefHeight="208.0" prefWidth="245.0" style="-fx-background-color: white; -fx-border-color: black;" text="Take-Off Run Available - the length of the runway available for take-off. This is the total distance from the point where an aircraft can commence its take-off to the point where the runway can no loger support the weight of the aircraft under normal conditions (and where it should have left the runway during a normal take-off)." textAlignment="JUSTIFY" visible="false" wrapText="true">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -294,7 +294,7 @@
                         <Font name="Verdana" size="13.0" />
                      </font>
                   </Label>
-                  <Label fx:id="oldTodaInfoLabel" layoutX="8.0" layoutY="132.0" prefHeight="142.0" prefWidth="275.0" style="-fx-background-color: white; -fx-border-color: black;" text="Take-Off Distance Available (TODA) - the length of the runway (TORA) plus any Clearway (area beyond the runway that is considered free from obstructions). This is the total distance an aircraft can safely utilise for its take-off and initial ascent." textAlignment="JUSTIFY" visible="false" wrapText="true">
+                  <Label fx:id="oldTodaInfoLabel" layoutX="5.0" layoutY="132.0" prefHeight="186.0" prefWidth="245.0" style="-fx-background-color: white; -fx-border-color: black;" text="Take-Off Distance Available (TODA) - the length of the runway (TORA) plus any Clearway (area beyond the runway that is considered free from obstructions). This is the total distance an aircraft can safely utilise for its take-off and initial ascent." textAlignment="JUSTIFY" visible="false" wrapText="true">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -302,7 +302,7 @@
                         <Font name="Verdana" size="13.0" />
                      </font>
                   </Label>
-                  <Label fx:id="oldAsdaInfoLabel" layoutX="10.0" layoutY="171.0" prefHeight="162.0" prefWidth="275.0" style="-fx-background-color: white; -fx-border-color: black;" text="Accelerate-Stop Distance Available (ASDA) - the length of the runway (TORA) plus any Stopway (area that is not part of the TORA, but that can be used to safely stop an aircraft in an emergency). This is the total distance available to the aircraft in case of an aborted take-off." textAlignment="JUSTIFY" visible="false" wrapText="true">
+                  <Label fx:id="oldAsdaInfoLabel" layoutX="5.0" layoutY="171.0" prefHeight="175.0" prefWidth="245.0" style="-fx-background-color: white; -fx-border-color: black;" text="Accelerate-Stop Distance Available (ASDA) - the length of the runway (TORA) plus any Stopway (area that is not part of the TORA, but that can be used to safely stop an aircraft in an emergency). This is the total distance available to the aircraft in case of an aborted take-off." textAlignment="JUSTIFY" visible="false" wrapText="true">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -310,7 +310,7 @@
                         <Font name="Verdana" size="13.0" />
                      </font>
                   </Label>
-                  <Label fx:id="oldLdaInfoLabel" layoutX="10.0" layoutY="207.0" prefHeight="182.0" prefWidth="275.0" style="-fx-background-color: white; -fx-border-color: black;" text="Landing Distance Available (LDA) - the length of the runway available for landing. The start of this is called the threshold and is typically the same as the start of the TORA. A threshold may be displaced for operational reasons or because of a temporary obstacle, in which case LDA and TORA can differ." textAlignment="JUSTIFY" visible="false" wrapText="true">
+                  <Label fx:id="oldLdaInfoLabel" layoutX="5.0" layoutY="207.0" prefHeight="186.0" prefWidth="245.0" style="-fx-background-color: white; -fx-border-color: black;" text="Landing Distance Available (LDA) - the length of the runway available for landing. The start of this is called the threshold and is typically the same as the start of the TORA. A threshold may be displaced for operational reasons or because of a temporary obstacle, in which case LDA and TORA can differ." textAlignment="JUSTIFY" visible="false" wrapText="true">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>

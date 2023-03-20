@@ -47,6 +47,7 @@ public class MainController implements Initializable {
     public static LogicalRunway logRunwaySelected = null;
     public Obstacle obstacleSelected = null;
     private String flightMethod = "";
+    private static boolean needRedeclare = true;
 
     //fxml elements
     @FXML
@@ -152,6 +153,7 @@ public class MainController implements Initializable {
     public Airport getAirportSelected() {return airportSelected;}
     public static PhysicalRunway getPhysRunwaySelected() {return physRunwaySelected;}
     public static LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
+    public static boolean needRedeclare(){return needRedeclare;}
     public Obstacle getObstacleSelected() {return obstacleSelected;}
     public double getDistFromThreshold() {return 0;}
     public double getDistFromCentreLine() {return 0;}
@@ -238,6 +240,7 @@ public class MainController implements Initializable {
         setStripEnd(new ActionEvent());
         setBlastProtection(new ActionEvent());
         if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
+            needRedeclare = true;
             Calculator.performCalc(obstacleSelected, logRunwaySelected);
             newToraLabel.setText("TORA  =  "+logRunwaySelected.getNewTora() + " m");
             newTodaLabel.setText("TODA  =  "+logRunwaySelected.getNewToda() + " m");
@@ -245,6 +248,7 @@ public class MainController implements Initializable {
             newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda() + " m");
             //no view yet all set to invisible
         } else{
+            needRedeclare = false;
             newToraLabel.setText("TORA  =  "+logRunwaySelected.getTora() + " m");
             newTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda() + " m");
             newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda() + " m");
