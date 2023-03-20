@@ -35,6 +35,18 @@ public class PhysicalRunway{
         return logicalRunways;
     }
 
+    public static double getBlastProtection() {
+        return blastProtection;
+    }
+
+    public static double getResa() {
+        return resa;
+    }
+
+    public static double getStripEnd() {
+        return stripEnd;
+    }
+
     public void setLogicalRunways(ObservableList<LogicalRunway> logicalRunways) {
         this.logicalRunways = logicalRunways;
     }
