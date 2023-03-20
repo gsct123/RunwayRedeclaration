@@ -82,14 +82,13 @@ public class Calculator {
         double newTora = runway.getNewTora();
         double clearway = runway.getClearway();
 
-
         // Calculate TODA
         if (flightMethod.equals(talo)){
             newToda =  newTora + clearway;
         }else {
             newToda = newTora;
         }
-        runway.setNewAsda(newToda);
+        runway.setNewToda(newToda);
         return newToda;
     }
 
@@ -211,7 +210,7 @@ public class Calculator {
             }
             else {
                 result += "LDA  = Original LDA - Distance from threshold - Strip End - Slope Calculation\n";
-                result += "        = " + originalLda + " - " + distanceFromThreshold + " - " + stripEnd + " - " + slopeCalculation + "\n        = " + newLda + "\n\n";
+                result += " rd       = " + originalLda + " - " + distanceFromThreshold + " - " + stripEnd + " - " + slopeCalculation + "\n        = " + newLda + "\n\n";
             }
         }
         else {
