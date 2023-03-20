@@ -144,8 +144,12 @@
                <children>
                   <TabPane fx:id="visualPane" layoutX="4.0" layoutY="-5.0" prefHeight="638.0" prefWidth="816.0" stylesheets="@../Utils/CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab text="Untitled Tab 1" />
-                      <Tab text="Untitled Tab 2" />
+                      <Tab style="-fx-font-family: Verdana;" text="Side-on View">
+<!--                         <fx:include fx:id="firstTab" source="FirstModule.fxml"/>-->
+                      </Tab>
+                      <Tab style="-fx-font-family: Verdana;" text="Top-down View">
+                         <fx:include fx:id="firstTab" source="FirstModule.fxml"/>
+                      </Tab>
                     </tabs>
                   </TabPane>
                </children></AnchorPane>

@@ -45,7 +45,7 @@ public class MainController implements Initializable {
     private Airport airportSelected = null;
     private static PhysicalRunway physRunwaySelected = null;
     public static LogicalRunway logRunwaySelected = null;
-    public Obstacle obstacleSelected = null;
+    public static Obstacle obstacleSelected = null;
     private String flightMethod = "";
     private static boolean needRedeclare = true;
 
@@ -154,7 +154,7 @@ public class MainController implements Initializable {
     public static PhysicalRunway getPhysRunwaySelected() {return physRunwaySelected;}
     public static LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
     public static boolean needRedeclare(){return needRedeclare;}
-    public Obstacle getObstacleSelected() {return obstacleSelected;}
+    public static Obstacle getObstacleSelected() {return obstacleSelected;}
     public double getDistFromThreshold() {return 0;}
     public double getDistFromCentreLine() {return 0;}
     public String getFlightMethod() {return flightMethod;}
@@ -418,6 +418,9 @@ public class MainController implements Initializable {
                                 originalTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda() + " m");
                                 originalAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda() + " m");
                                 originalLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda() + " m");
+                                if(obstacleSelected != null){
+                                    performCalculationButton.setDisable(false);
+                                }
                             });
                             lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                             logicalRunwayMenu.getItems().add(lRunwayMenuItem);

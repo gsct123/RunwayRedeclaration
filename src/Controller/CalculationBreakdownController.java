@@ -1,6 +1,8 @@
 package Controller;
 
+import Model.Calculator;
 import Model.LogicalRunway;
+import Model.Obstacle;
 import Model.PhysicalRunway;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,6 +41,8 @@ public class CalculationBreakdownController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         LogicalRunway runway = MainController.getLogRunwaySelected();
+        Obstacle obstacle = MainController.getObstacleSelected();
+
         originalToda.setText("=  "+runway.getToda()+"  m");
         originalTora.setText("=  "+runway.getTora()+"  m");
         originalAsda.setText("=  "+runway.getAsda()+"  m");
@@ -47,7 +51,10 @@ public class CalculationBreakdownController implements Initializable {
         stripEnd.setText("=  "+ PhysicalRunway.getStripEnd()+"  m");
         blastProtection.setText("=  "+PhysicalRunway.getBlastProtection()+"  m");
         if(MainController.needRedeclare()){
-            //label changin
+            toraBreakdown.setText(Calculator.toraBreakdown(obstacle, runway));
+            todaBreakdown.setText(Calculator.todaBreakdown(obstacle, runway));
+            ldaBreakdown.setText(Calculator.ldaBreakdown(obstacle, runway));
+            asdaBreakdown.setText(Calculator.asdaBreakdown(obstacle, runway));
         } else{
             String s = """
                     No redeclaration needed, no calculation performed.
