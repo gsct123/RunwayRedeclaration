@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="View.CalculationBreakdown"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="527.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CalculationBreakdownController">
+   <children>
+      <Label layoutX="91.0" layoutY="28.0" text="Calculation Breakdown">
+         <font>
+            <Font name="Verdana Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="26.0" layoutY="65.0" text="Runway Details" underline="true">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font>
+      </Label>
+      <TabPane fx:id="breakdownPane" layoutX="21.0" layoutY="257.0" prefHeight="251.0" prefWidth="376.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab style="-fx-font-family: Verdana;" text="TORA" />
+          <Tab style="-fx-font-family: Verdana;" text="TODA" />
+            <Tab style="-fx-font-family: Verdana;" text="ASDA" />
+            <Tab style="-fx-font-family: Verdana;" text="LDA" />
+        </tabs>
+      </TabPane>
+      <Label layoutX="27.0" layoutY="90.0" text="Original TORA" />
+      <Label layoutX="27.0" layoutY="112.0" text="Original TODA" />
+      <Label layoutX="27.0" layoutY="134.0" text="Original ASDA" />
+      <Label layoutX="27.0" layoutY="157.0" text="Original LDA" />
+      <Label layoutX="27.0" layoutY="180.0" text="RESA" />
+      <Label layoutX="27.0" layoutY="202.0" text="Strip end" />
+      <Label layoutX="28.0" layoutY="225.0" text="Blast protection" />
+      <Label fx:id="originalTora" layoutX="154.0" layoutY="90.0" text="Label" />
+      <Label fx:id="originalToda" layoutX="154.0" layoutY="112.0" text="Label" />
+      <Label fx:id="originalAsda" layoutX="154.0" layoutY="134.0" text="Label" />
+      <Label fx:id="originalLda" layoutX="154.0" layoutY="157.0" text="Label" />
+      <Label fx:id="resa" layoutX="154.0" layoutY="180.0" text="Label" />
+      <Label fx:id="stripEnd" layoutX="154.0" layoutY="202.0" text="Label" />
+      <Label fx:id="blastProtection" layoutX="154.0" layoutY="225.0" text="Label" />
+   </children>
 </AnchorPane>

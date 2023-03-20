@@ -1,6 +1,7 @@
 package Model;
 
-public class LogicalRunway {
+public class
+LogicalRunway {
     private String designator;
     private double tora;
     private double toda;

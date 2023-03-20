@@ -255,7 +255,7 @@
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="calculationBreakdown" disable="true" layoutX="67.0" layoutY="585.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" text="Calculation Breakdown">
+                  <Button fx:id="calculationBreakdown" disable="true" layoutX="67.0" layoutY="585.0" mnemonicParsing="false" onAction="#showCalculationBreakdown" prefHeight="35.0" prefWidth="189.0" text="Calculation Breakdown">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>

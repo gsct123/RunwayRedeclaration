@@ -28,7 +28,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -44,8 +43,8 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
     private Airport airportSelected = null;
-    private PhysicalRunway physRunwaySelected = null;
-    private LogicalRunway logRunwaySelected = null;
+    private static PhysicalRunway physRunwaySelected = null;
+    public static LogicalRunway logRunwaySelected = null;
     public Obstacle obstacleSelected = null;
     private String flightMethod = "";
 
@@ -151,8 +150,8 @@ public class MainController implements Initializable {
     public ObservableList<Airport> getAirports(){return this.airports;}
     public ObservableList<String> getItems() {return items;}
     public Airport getAirportSelected() {return airportSelected;}
-    public PhysicalRunway getPhysRunwaySelected() {return physRunwaySelected;}
-    public LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
+    public static PhysicalRunway getPhysRunwaySelected() {return physRunwaySelected;}
+    public static LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
     public Obstacle getObstacleSelected() {return obstacleSelected;}
     public double getDistFromThreshold() {return 0;}
     public double getDistFromCentreLine() {return 0;}
@@ -239,22 +238,13 @@ public class MainController implements Initializable {
         setStripEnd(new ActionEvent());
         setBlastProtection(new ActionEvent());
         if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
-            Calculator.calcTora(obstacleSelected, logRunwaySelected);
-            Calculator.calcAsda(obstacleSelected, logRunwaySelected);
-            Calculator.calcToda(obstacleSelected, logRunwaySelected);
-            Calculator.calcLda(obstacleSelected, logRunwaySelected);
+            Calculator.performCalc(obstacleSelected, logRunwaySelected);
             newToraLabel.setText("TORA  =  "+logRunwaySelected.getNewTora() + " m");
             newTodaLabel.setText("TODA  =  "+logRunwaySelected.getNewToda() + " m");
             newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getNewAsda() + " m");
             newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda() + " m");
             //no view yet all set to invisible
         } else{
-            breakdownLabel.setVisible(false);
-            editToBeginLabel.setVisible(true);
-            noCalcPerformedLabel.setVisible(true);
-            editToBeginLabel.setText("No runway redeclation needed");
-            noCalcPerformedLabel.setText("Original runway parameters can be used");
-
             newToraLabel.setText("TORA  =  "+logRunwaySelected.getTora() + " m");
             newTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda() + " m");
             newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda() + " m");
@@ -290,9 +280,9 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void showCalculationBreakdown(Action event) throws IOException {
+    public void showCalculationBreakdown(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("CalculationBreakdown.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/CalculationBreakdown.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
@@ -406,8 +396,8 @@ public class MainController implements Initializable {
                         physRunwaySelected = runway;
                         logicalRunwayMenu.getItems().clear();
                         physicalRunwayMenu.setText(runway.getName());
-                        stripEndTextField.setText(String.valueOf(PhysicalRunway.stripEnd));
-                        blastProtectionField.setText(String.valueOf(PhysicalRunway.blastProtection));
+                        stripEndTextField.setText(String.valueOf(PhysicalRunway.getStripEnd()));
+                        blastProtectionField.setText(String.valueOf(PhysicalRunway.getBlastProtection()));
                         stripEndTextField.setDisable(false);
                         blastProtectionField.setDisable(false);
                         logicalRunwayMenu.setText("Select Logical Runway");
