@@ -1,11 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.shape.Rectangle?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="606.5" prefWidth="816.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="188.0" layoutX="244.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="340.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d8d0ee" height="421.0" layoutX="25.0" layoutY="91.0" stroke="TRANSPARENT" strokeType="INSIDE" width="769.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6190bf" height="200.0" layoutX="25.0" layoutY="204.0" stroke="TRANSPARENT" strokeType="INSIDE" width="769.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6190bf" height="281.0" layoutX="190.0" layoutY="163.0" stroke="TRANSPARENT" strokeType="INSIDE" width="438.0" />
+      <Polyline fill="#6190bf" layoutX="678.0" layoutY="220.0" points="7.5, -56.30442810058594, 7.5, -41.0, 7.5, -14.410964965820312, -51.20524597167969, -56.304412841796875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f0f0f" height="59.0" layoutX="67.0" layoutY="268.0" stroke="TRANSPARENT" strokeType="INSIDE" width="681.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="278.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="282.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="286.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="290.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="294.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="298.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="302.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="306.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="310.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="314.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-55.08058547973633" layoutX="198.0" layoutY="318.0" startX="-100.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="278.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="282.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="286.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="290.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="294.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="298.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="302.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="306.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="310.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="314.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="455.0805854797363" layoutX="224.0" layoutY="318.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Label layoutX="151.0" layoutY="282.0" rotate="90.0" text="09" textFill="WHITE" underline="true">
+         <font>
+            <Font name="Verdana Bold" size="25.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#609bd100" height="95.0" layoutX="652.0" layoutY="250.0" stroke="#6cff40" strokeType="INSIDE" strokeWidth="2.0" width="98.0" />
+      <Line endX="312.1231689453125" layoutX="308.0" layoutY="298.0" startX="-109.85165405273438" stroke="WHITE" strokeWidth="0.5" />
+      <Label layoutX="318.0" layoutY="384.0" text="Cleared and Graded Area" textFill="#6f3e21">
+         <font>
+            <Font name="Verdana Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Line endX="-99.99998474121094" endY="-122.43132019042969" layoutX="166.0" layoutY="245.0" startX="-99.99996948242188" startY="-5.12054443359375" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Line endX="-99.99998474121094" endY="-122.43132019042969" layoutX="849.0" layoutY="244.0" startX="-100.0" startY="-5.4134674072265625" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Line endX="566.7530517578125" endY="-70.64114379882812" layoutX="180.0" layoutY="209.0" startX="-112.7271728515625" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Label layoutX="636.0" layoutY="282.0" rotate="270.0" text="09" textFill="WHITE" underline="true">
+         <font>
+            <Font name="Verdana Bold" size="25.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#609bd100" height="59.0" layoutX="652.0" layoutY="268.0" stroke="#ffd542" strokeType="INSIDE" strokeWidth="2.0" width="78.0" />
+      <Line endX="-99.99996948242188" endY="-79.0" layoutX="126.0" layoutY="346.0" startX="-99.9999771118164" startY="-19.760635375976562" stroke="#0f0f0f" strokeWidth="1.8" />
+      <Line endX="421.0" endY="-69.5" layoutX="-354.0" layoutY="367.0" startX="381.2728271484375" startY="-69.5" stroke="#0f0f0f" strokeWidth="1.8" />
+      <Polyline fill="BLACK" layoutX="58.0" layoutY="346.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" strokeType="INSIDE" strokeWidth="1.8" />
+      <Polyline fill="BLACK" layoutX="25.0" layoutY="346.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 2.832866668701172, -48.5" rotate="180.0" strokeType="INSIDE" strokeWidth="1.8" />
+      <Label layoutX="36.0" layoutY="280.0" style="-fx-text-fill: black;" text="60m">
+         <font>
+            <Font name="Verdana" size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="760.0" layoutY="280.0" style="-fx-text-fill: black;" text="60m">
+         <font>
+            <Font name="Verdana" size="10.0" />
+         </font>
+      </Label>
+      <Line endX="421.0" endY="-69.5" layoutX="370.0" layoutY="367.0" startX="381.2728271484375" startY="-69.5" stroke="#0f0f0f" strokeWidth="1.8" />
+      <Polyline fill="BLACK" layoutX="783.0" layoutY="346.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" strokeType="INSIDE" strokeWidth="1.8" />
+      <Polyline fill="BLACK" layoutX="748.0" layoutY="346.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 2.832866668701172, -48.5" rotate="180.0" strokeType="INSIDE" strokeWidth="1.8" />
+      <Polyline fill="#6190bf" layoutX="183.0" layoutY="221.0" points="7.5, -56.30442810058594, 7.5, -41.0, 7.5, -14.410964965820312, -51.20524597167969, -56.304412841796875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE">
+         <rotationAxis>
+            <Point3D x="1.0" />
+         </rotationAxis>
+      </Polyline>
+      <Line endX="-99.99996948242188" endY="-79.0" layoutX="893.0" layoutY="345.0" startX="-99.9999771118164" startY="-19.760635375976562" stroke="#0f0f0f" strokeWidth="1.8" />
+      <Polyline fill="BLACK" layoutX="739.0" layoutY="187.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 2.832866668701172, -48.5" strokeType="INSIDE" strokeWidth="1.8" />
+      <Polyline fill="BLACK" layoutX="65.0" layoutY="187.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" rotate="180.0" strokeType="INSIDE" strokeWidth="1.8" />
+      <Label layoutX="395.0" layoutY="113.0" style="-fx-text-fill: black;" text="TODA 3959m">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font>
+      </Label>
+      <Line endX="-99.99993896484375" endY="-109.59095764160156" layoutX="829.0" layoutY="258.0" startX="-99.99993896484375" startY="-18.12054443359375" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Line endX="544.4517822265625" endY="-70.64114379882812" layoutX="181.0" layoutY="240.0" startX="-112.7271728515625" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Polyline fill="BLACK" layoutX="719.0" layoutY="218.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 2.832866668701172, -48.5" strokeType="INSIDE" strokeWidth="1.8" />
+      <Polyline fill="BLACK" layoutX="66.0" layoutY="218.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" rotate="180.0" strokeType="INSIDE" strokeWidth="1.8" />
+      <Label layoutX="399.0" layoutY="145.0" style="-fx-text-fill: black;" text="ASDA">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font>
+      </Label>
+      <Line endX="-99.99993896484375" endY="-91.44235229492188" layoutX="754.0" layoutY="270.0" startX="-99.99993896484375" startY="-28.827606201171875" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Line endX="470.94342041015625" endY="-70.64114379882812" layoutX="182.0" layoutY="269.0" startX="-112.7271728515625" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Polyline fill="BLACK" layoutX="644.0" layoutY="247.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 2.832866668701172, -48.5" strokeType="INSIDE" strokeWidth="1.8" />
+      <Polyline fill="BLACK" layoutX="66.0" layoutY="247.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" rotate="180.0" strokeType="INSIDE" strokeWidth="1.8" />
+      <Label layoutX="400.0" layoutY="175.0" style="-fx-text-fill: black;" text="TORA">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font>
+      </Label>
+      <Line endX="-99.99994659423828" endY="-84.83280944824219" layoutX="209.0" layoutY="293.0" startX="-99.99993896484375" startY="-51.827606201171875" stroke="#0f0f0f" strokeWidth="1.8" />
+      <Line endX="409.669189453125" endY="-70.64114379882812" layoutX="243.0" layoutY="299.0" startX="-133.3045654296875" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Label layoutX="401.0" layoutY="206.0" style="-fx-text-fill: black;" text="LDA">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font>
+      </Label>
+      <Polyline fill="BLACK" layoutX="109.0" layoutY="277.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" rotate="180.0" strokeType="INSIDE" strokeWidth="1.8" />
+      <Polyline fill="BLACK" layoutX="644.0" layoutY="277.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 2.832866668701172, -48.5" strokeType="INSIDE" strokeWidth="1.8" />
+      <Polyline fill="#6190bf" layoutX="676.0" layoutY="459.0" points="7.5, -56.30442810058594, 7.5, -41.0, 7.5, -14.410964965820312, -51.20524597167969, -56.304412841796875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE">
+         <rotationAxis>
+            <Point3D y="1.0" />
+         </rotationAxis>
+      </Polyline>
+      <Polyline fill="#6190bf" layoutX="183.0" layoutY="458.0" points="7.5, -56.30442810058594, 7.5, -41.0, 7.5, -14.410964965820312, -51.20524597167969, -56.304412841796875" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Line endX="-99.99990844726562" endY="-126.05978393554688" layoutX="351.0" layoutY="428.0" startX="-99.99990844726562" startY="11.754547119140625" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Line endX="-99.99990844726562" endY="-130.5" layoutX="351.0" layoutY="429.0" startX="-99.99990844726562" startY="-102.0" stroke="WHITE" strokeWidth="1.5" />
+      <Polyline fill="BLACK" layoutX="245.0" layoutY="351.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 2.832866668701172, -48.5" rotate="270.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="1.8" />
+      <Polyline fill="BLACK" layoutX="245.0" layoutY="488.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 2.832866668701172, -48.5" rotate="90.0" strokeType="INSIDE" strokeWidth="1.8" />
+      <Label layoutX="256.0" layoutY="361.0" style="-fx-text-fill: black;" text="105m">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font>
+      </Label>
+      <Line endX="-99.99990844726562" endY="-130.5" layoutX="299.0" layoutY="429.0" startX="-99.99990844726562" startY="-102.0" stroke="WHITE" strokeWidth="1.5" />
+      <Polyline fill="BLACK" layoutX="193.0" layoutY="351.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 2.832866668701172, -48.5" rotate="270.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="1.8" />
+      <Line endX="-100.74992370605469" endY="-110.25" layoutX="299.0" layoutY="438.0" startX="-100.74992370605469" startY="-34.668853759765625" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Polyline fill="BLACK" layoutX="192.0" layoutY="448.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 2.832866668701172, -48.5" rotate="90.0" strokeType="INSIDE" strokeWidth="1.8" />
+      <Line endX="-173.86659240722656" endY="-43.8609619140625" layoutX="309.0" layoutY="448.0" startX="-111.65953063964844" startY="-43.8609619140625" stroke="#0f0f0f" strokeWidth="1.5" />
+      <Label layoutX="210.0" layoutY="361.0" style="-fx-text-fill: black;" text="75m">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="309.0" layoutY="471.0" text="Landing/Taking Off Direction">
+         <font>
+            <Font name="Verdana Bold" size="15.0" />
+         </font>
+      </Label>
+      <Polygon fill="#0f0f0f" layoutX="642.0" layoutY="500.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Line endX="539.4921875" endY="-70.64114379882812" layoutX="138.0" layoutY="550.0" startX="428.303466796875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Line endX="470.94342041015625" endY="-70.64114379882812" layoutX="-176.0" layoutY="551.0" startX="310.3302307128906" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffdd1c" height="12.0" layoutX="735.0" layoutY="356.0" stroke="#ffe01c" strokeType="INSIDE" strokeWidth="2.0" width="12.0" />
+      <Label layoutX="681.0" layoutY="356.0" style="-fx-text-fill: black;" text="Stopway">
+         <font>
+            <Font name="Verdana" size="10.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6cff40" height="12.0" layoutX="735.0" layoutY="378.0" stroke="#6cff40" strokeType="INSIDE" strokeWidth="2.0" width="12.0" />
+      <Label layoutX="679.0" layoutY="378.0" style="-fx-text-fill: black;" text="Clearway">
+         <font>
+            <Font name="Verdana" size="10.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

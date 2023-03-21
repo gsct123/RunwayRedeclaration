@@ -77,7 +77,7 @@
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font></Label>
-                  <TextField fx:id="distanceThresholdTextField" layoutX="215.0" layoutY="418.0" onAction="#checkDistFromThreshold" prefHeight="31.0" prefWidth="72.0" text="0">
+                  <TextField fx:id="distanceThresholdTextField" disable="true" layoutX="215.0" layoutY="418.0" onAction="#checkDistFromThreshold" prefHeight="31.0" prefWidth="72.0" text="0">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font></TextField>
@@ -108,7 +108,7 @@
                         <Font name="Verdana" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="clDistTextField" layoutX="226.0" layoutY="487.0" prefHeight="31.0" prefWidth="60.0" text="0">
+                  <TextField fx:id="clDistTextField" disable="true" layoutX="226.0" layoutY="487.0" prefHeight="31.0" prefWidth="60.0" text="0">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font></TextField>
@@ -144,11 +144,23 @@
                <children>
                   <TabPane fx:id="visualPane" layoutX="4.0" layoutY="-5.0" prefHeight="638.0" prefWidth="816.0" stylesheets="@../Utils/CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab style="-fx-font-family: Verdana;" text="Side-on View">
-<!--                         <fx:include fx:id="firstTab" source="FirstModule.fxml"/>-->
+                      <Tab fx:id="topViewTab" style="-fx-font-family: Verdana;" text="Top-down View">
+                         <content>
+                            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                               <children>
+                                  <AnchorPane prefHeight="606.5" prefWidth="816.0" />
+                               </children>
+                            </AnchorPane>
+                         </content>
                       </Tab>
-                      <Tab style="-fx-font-family: Verdana;" text="Top-down View">
-                         <fx:include fx:id="firstTab" source="FirstModule.fxml"/>
+                      <Tab style="-fx-font-family: Verdana;" text="Side-on View">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <AnchorPane prefHeight="606.5" prefWidth="816.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
                       </Tab>
                     </tabs>
                   </TabPane>

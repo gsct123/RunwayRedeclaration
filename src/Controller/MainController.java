@@ -128,6 +128,8 @@ public class MainController implements Initializable {
     private Button blastProtectionInfo;
     @FXML
     private Button calculationBreakdown;
+    @FXML
+    private Tab topViewTab;
 
     //list of airports and obstacles from files
     ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -137,6 +139,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadInfos();
         try {
+            topViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/TopView.fxml")));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
@@ -468,6 +471,8 @@ public class MainController implements Initializable {
             obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             obstacleMenuItem.setOnAction(e -> {
                 performCalculationButton.setDisable(false);
+                distanceThresholdTextField.setDisable(false);
+                clDistTextField.setDisable(false);
                 obstacleSelected = obstacle;
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
