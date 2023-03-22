@@ -122,10 +122,10 @@ public class SideViewController {
         //setUpLogicalRunway(selectedLogRunway);
         alsSlope.setVisible(false);
         tocsSlope.setVisible(false);
-        blastProtectionStart.setVisible(false);
-        blastProtectionEnd.setVisible(false);
-        blastProtectionLength.setVisible(false);
-        blastProtectionLabel.setVisible(false);
+        //blastProtectionStart.setVisible(false);
+        //blastProtectionEnd.setVisible(false);
+        //blastProtectionLength.setVisible(false);
+        //blastProtectionLabel.setVisible(false);
 
     }
     @FXML
