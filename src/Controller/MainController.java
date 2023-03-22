@@ -132,6 +132,8 @@ public class MainController implements Initializable {
     private Button calculationBreakdown;
     @FXML
     private Tab topViewTab;
+    @FXML
+    private Tab sideViewTab;
 
     private static StringProperty logRunwayItem = new SimpleStringProperty();
 
@@ -149,6 +151,7 @@ public class MainController implements Initializable {
         loadInfos();
         try {
             topViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/TopView.fxml")));
+            sideViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/SideView.fxml")));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
