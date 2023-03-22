@@ -38,7 +38,7 @@
       <Line endX="455.0805854797363" layoutX="224.0" layoutY="310.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
       <Line endX="455.0805854797363" layoutX="224.0" layoutY="314.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
       <Line endX="455.0805854797363" layoutX="224.0" layoutY="318.0" startX="500.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Label fx:id="leftDesignator" layoutX="150.0" layoutY="286.0" rotate="90.0" text="09L" textFill="WHITE" underline="true">
+      <Label fx:id="leftDesignator" layoutX="150.0" layoutY="286.0" rotate="90.0" text="___" textFill="WHITE" underline="true">
          <font>
             <Font name="Verdana Bold" size="20.0" />
          </font>
@@ -53,7 +53,7 @@
       <Line endX="-99.99998474121094" endY="-122.43132019042969" layoutX="166.0" layoutY="245.0" startX="-99.99996948242188" startY="-5.12054443359375" stroke="#0f0f0f" strokeWidth="1.5" />
       <Line endX="-99.99998474121094" endY="-122.43132019042969" layoutX="849.0" layoutY="244.0" startX="-100.0" startY="-2.11834716796875" stroke="#0f0f0f" strokeWidth="1.5" />
       <Line endX="566.7530517578125" endY="-70.64114379882812" layoutX="180.0" layoutY="209.0" startX="-112.7271728515625" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="1.5" />
-      <Label fx:id="rightDesignator" layoutX="626.0" layoutY="285.0" rotate="270.0" text="27R" textFill="WHITE" underline="true">
+      <Label fx:id="rightDesignator" layoutX="626.0" layoutY="285.0" rotate="270.0" text="___" textFill="WHITE" underline="true">
          <font>
             <Font name="Verdana Bold" size="20.0" />
          </font>

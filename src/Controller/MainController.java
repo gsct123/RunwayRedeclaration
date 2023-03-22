@@ -46,8 +46,8 @@ public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
     private Airport airportSelected = null;
     private static PhysicalRunway physRunwaySelected = null;
-    public static LogicalRunway logRunwaySelected = null;
-    public static Obstacle obstacleSelected = null;
+    private static LogicalRunway logRunwaySelected = null;
+    private static Obstacle obstacleSelected = null;
     private String flightMethod = "";
     private static boolean needRedeclare = true;
 
@@ -133,10 +133,10 @@ public class MainController implements Initializable {
     @FXML
     private Tab topViewTab;
 
-    private static StringProperty physicalRunwayItem = new SimpleStringProperty();
+    private static StringProperty logRunwayItem = new SimpleStringProperty();
 
-    public static StringProperty physicalRunwayItem() {
-        return physicalRunwayItem;
+    public static StringProperty logRunwayItem() {
+        return logRunwayItem;
     }
 
 
@@ -167,39 +167,6 @@ public class MainController implements Initializable {
     public static LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
     public static boolean needRedeclare(){return needRedeclare;}
     public static Obstacle getObstacleSelected() {return obstacleSelected;}
-    public double getDistFromThreshold() {return 0;}
-    public double getDistFromCentreLine() {return 0;}
-    public String getFlightMethod() {return flightMethod;}
-    public MenuButton getAirportMenu() {return airportMenu;}
-    public MenuButton getPhysicalRunwayMenu() {return physicalRunwayMenu;}
-    public MenuButton getLogicalRunwayMenu() {return logicalRunwayMenu;}
-    public MenuButton getObstacleMenu() {return obstacleMenu;}
-    public Label getObstacleHeightLabel() {return obstacleHeightLabel;}
-    public Label getObstacleWidthLabel() {return obstacleWidthLabel;}
-    public TextField getDistanceThresholdTextField() {return distanceThresholdTextField;}
-    public Button getPerformCalculationButton() {return performCalculationButton;}
-    public TextField getClDistTextField() {return clDistTextField;}
-    public Label getOriginalToraLabel() {return originalToraLabel;}
-    public Label getOriginalTodaLabel() {return originalTodaLabel;}
-    public Label getOriginalAsdaLabel() {return originalAsdaLabel;}
-    public Label getOriginalLdaLabel() {return originalLdaLabel;}
-    public Label getNewToraLabel() {return newToraLabel;}
-    public Label getNewTodaLabel() {return newTodaLabel;}
-    public Label getNewAsdaLabel() {return newAsdaLabel;}
-    public Label getNewLdaLabel() {return newLdaLabel;}
-    public Label getRevisedRunwayTitle() {return revisedRunwayTitle;}
-    public Label getEditToBeginLabel() {return editToBeginLabel;}
-    public Label getNoCalcPerformedLabel() {return noCalcPerformedLabel;}
-    public Label getBreakdownLabel() {return breakdownLabel;}
-    public MenuItem getAboutProject() {return aboutProject;}
-    public Button getOldToraInfo() {return oldToraInfo;}
-    public Button getOldTodaInfo() {return oldTodaInfo;}
-    public Button getOldAsdaInfo() {return oldAsdaInfo;}
-    public Button getOldLdaInfo() {return oldLdaInfo;}
-    public Label getOldToraInfoLabel() {return oldToraInfoLabel;}
-    public Label getOldTodaInfoLabel() {return oldTodaInfoLabel;}
-    public Label getOldAsdaInfoLabel() {return oldAsdaInfoLabel;}
-    public Label getOldLdaInfoLabel() {return oldLdaInfoLabel;}
 
     //event handlers
     @FXML
@@ -433,10 +400,11 @@ public class MainController implements Initializable {
                                 if(obstacleSelected != null){
                                     performCalculationButton.setDisable(false);
                                 }
+                                logRunwayItem.set(logRunwaySelected.getDesignator()+"/"+physRunwaySelected.getName());
+
                             });
                             lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                             logicalRunwayMenu.getItems().add(lRunwayMenuItem);
-                            new TopViewController().designatorSetter(new ActionEvent());
                         }
                     });
                     runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
