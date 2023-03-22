@@ -8,6 +8,8 @@ import View.ErrorPopUp.InvalidStripEnd;
 import View.Main;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -130,6 +132,13 @@ public class MainController implements Initializable {
     private Button calculationBreakdown;
     @FXML
     private Tab topViewTab;
+
+    private static StringProperty physicalRunwayItem = new SimpleStringProperty();
+
+    public static StringProperty physicalRunwayItem() {
+        return physicalRunwayItem;
+    }
+
 
     //list of airports and obstacles from files
     ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -427,6 +436,7 @@ public class MainController implements Initializable {
                             });
                             lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                             logicalRunwayMenu.getItems().add(lRunwayMenuItem);
+                            new TopViewController().designatorSetter(new ActionEvent());
                         }
                     });
                     runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
