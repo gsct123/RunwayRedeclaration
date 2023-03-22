@@ -41,7 +41,6 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
     private Airport airportSelected = null;
@@ -131,13 +130,15 @@ public class MainController implements Initializable {
     @FXML
     private Button calculationBreakdown;
     @FXML
-    private Tab topViewTab;
+    public Tab topViewTab;
 
+    //property to be used in Visualisation classes
+    private static StringProperty physRunwayItem = new SimpleStringProperty();
+    public static StringProperty physRunwayItem() {return physRunwayItem;}
     private static StringProperty logRunwayItem = new SimpleStringProperty();
-
-    public static StringProperty logRunwayItem() {
-        return logRunwayItem;
-    }
+    public static StringProperty logRunwayItem() {return logRunwayItem;}
+    private static StringProperty airportItem = new SimpleStringProperty();
+    public static StringProperty airportItem() {return airportItem;}
 
 
     //list of airports and obstacles from files
@@ -148,11 +149,17 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadInfos();
         try {
-            topViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/TopView.fxml")));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
             addObstacleEvent();
+
+            TopViewController topViewController = new TopViewController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/TopView.fxml"));
+            Parent root = loader.load();
+            loader.setController(topViewController);
+            topViewTab.setContent(root);
+            topViewController.setMainController(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -167,6 +174,7 @@ public class MainController implements Initializable {
     public static LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
     public static boolean needRedeclare(){return needRedeclare;}
     public static Obstacle getObstacleSelected() {return obstacleSelected;}
+    public MenuButton getAirportMenu() {return this.airportMenu;}
 
     //event handlers
     @FXML
@@ -365,8 +373,9 @@ public class MainController implements Initializable {
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             airportMenuItem.setOnAction(e -> {
                 airportSelected = airport;
+                airportItem.set(airportSelected.getName());
                 physicalRunwayMenu.getItems().clear();
-                airportMenu.setText(airport.getName());
+                getAirportMenu().setText(airport.getName());
                 physicalRunwayMenu.setText("Select Physical Runway");
                 physicalRunwayMenu.setDisable(false);
                 physRunwaySelected = null;
@@ -406,12 +415,13 @@ public class MainController implements Initializable {
                             lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                             logicalRunwayMenu.getItems().add(lRunwayMenuItem);
                         }
+                        physRunwayItem.set(physRunwaySelected.getName());
                     });
                     runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                     physicalRunwayMenu.getItems().add(runwayMenuItem);
                 }
             });
-            airportMenu.getItems().add(airportMenuItem);
+            getAirportMenu().getItems().add(airportMenuItem);
         }
     }
 
