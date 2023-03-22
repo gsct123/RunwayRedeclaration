@@ -2,29 +2,84 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="612.0" prefWidth="882.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SideViewController">
+<AnchorPane prefHeight="606.5" prefWidth="816.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SideViewController">
    <children>
-      <Button id="executeButton" fx:id="executeButton" layoutX="413.0" layoutY="517.0" mnemonicParsing="false" onAction="#handleExecuteButtonClick" text="Execute" />
-      <TextField id="lineLength" fx:id="lineLength" disable="true" layoutX="109.0" layoutY="272.0" onAction="#getLength" promptText="not in use" />
-      <Text disable="true" layoutX="14.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="change in tora : " />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="133.0" layoutX="147.0" layoutY="107.0" stroke="BLACK" strokeType="INSIDE" width="72.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="133.0" layoutX="665.0" layoutY="107.0" stroke="BLACK" strokeType="INSIDE" width="72.0" />
-      
-      <Line id="start" fx:id="start" endX="-100.0" endY="30.0" layoutX="319.0" layoutY="59.0" startX="-100.0" />
-      <Line id="middle" fx:id="middle" endX="373.0" endY="0.5" layoutX="291.0" layoutY="75.0" startX="-71.0" />
-      <Polygon id="head" fx:id="head" layoutX="666.0" layoutY="43.0" points="-12.75, 35.75, -3.0, 32.0, -12.75, 28.5" stroke="BLACK" strokeType="INSIDE" />
-      <Line id="end" fx:id="end" endX="-100.0" endY="30.0" layoutX="764.0" layoutY="60.0" startX="-100.0" />
-      <Rectangle id="pavement" fx:id="pavement" arcHeight="5.0" arcWidth="5.0" fill="#373b40" height="133.0" layoutX="219.0" layoutY="107.0" stroke="BLACK" strokeType="INSIDE" width="446.0" />
-      <Label id="toraLabel" fx:id="toraLabel" layoutX="427.0" layoutY="59.0" text="TORA=" />
-      <Label fx:id="obstacleLabel" layoutX="14.0" layoutY="338.0" prefHeight="53.0" prefWidth="757.0" text="Obstacle =  " />
-      <Label fx:id="lRLabel" layoutX="18.0" layoutY="407.0" prefHeight="53.0" prefWidth="818.0" text="Logical Runway = " />
-      <Label fx:id="mppLabel" layoutX="14.0" layoutY="493.0" text="Meter/Px = " />
+      <Rectangle id="clearwayR" fx:id="clearwayR" arcWidth="5.0" fill="#1fff42" height="50.0" layoutX="700.0" layoutY="247.0" stroke="#1fff3d" strokeType="INSIDE" width="50.0" />
+      <Rectangle id="clearwayL" fx:id="clearwayL" arcWidth="5.0" fill="#1fff3d" height="50.0" layoutX="50.0" layoutY="247.0" stroke="#1fff3d" strokeType="INSIDE" width="50.0" />
+      <Rectangle id="phyRunway" fx:id="phyRunway" arcWidth="5.0" height="50.0" layoutX="100.0" layoutY="247.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Line id="displacedThresholdR" fx:id="displacedThresholdR" endY="50.0" fill="BLUE" layoutX="575.0" layoutY="247.0" scaleX="3.0" stroke="BLUE" />
+      <Line id="displacedThresholdL" fx:id="displacedThresholdL" endY="50.0" fill="BLUE" layoutX="232.0" layoutY="247.0" scaleX="3.0" stroke="BLUE" />
+      <Rectangle id="stopwayR" fx:id="stopwayR" arcWidth="5.0" fill="YELLOW" height="50.0" layoutX="700.0" layoutY="247.0" stroke="YELLOW" strokeType="INSIDE" width="25.0" />
+      <Rectangle id="stopwayL" fx:id="stopwayL" arcWidth="5.0" fill="YELLOW" height="50.0" layoutX="75.0" layoutY="247.0" stroke="YELLOW" strokeType="INSIDE" width="25.0" />
+      <Label id="designatorL" fx:id="designatorL" layoutX="107.0" layoutY="262.0" text="09R" textFill="WHITE">
+         <font>
+            <Font name="Verdana Bold" size="15.0" />
+         </font>
+      </Label>
+      <Line id="thresholdL" fx:id="thresholdL" endY="50.0" fill="#f4f4f4" layoutX="189.0" layoutY="247.0" scaleX="3.0" stroke="#f4f4f4" />
+      <Label id="designatorR" fx:id="designatorR" layoutX="662.0" layoutY="262.0" text="27L" textFill="WHITE">
+         <font>
+            <Font name="Verdana Bold" size="15.0" />
+         </font>
+      </Label>
+      <Line id="toraEnd" fx:id="toraEnd" endY="25.0" layoutX="639.0" layoutY="297.0" />
+      <Line id="thresholdR" fx:id="thresholdR" endY="50.0" fill="#f4f4f4" layoutX="639.0" layoutY="247.0" scaleX="3.0" stroke="#f4f4f4" />
+      <Line id="ldaStart" fx:id="ldaStart" endY="25.0" layoutX="254.0" layoutY="322.0" />
+      <Line id="asdaStart" fx:id="asdaStart" endY="25.0" layoutX="189.0" layoutY="347.0" />
+      <Line id="ldaEnd" fx:id="ldaEnd" endY="25.0" layoutX="639.0" layoutY="322.0" />
+      <Line id="asdaEnd" fx:id="asdaEnd" endY="25.0" layoutX="699.0" layoutY="347.0" />
+      <Line id="toraStart" fx:id="toraStart" endY="25.0" layoutX="189.0" layoutY="297.0" />
+      <Line id="todaStart" fx:id="todaStart" endY="25.0" layoutX="189.0" layoutY="372.0" />
+      <Line id="todaEnd" fx:id="todaEnd" endY="25.0" layoutX="759.0" layoutY="372.0" />
+      <Line id="toraLength" fx:id="toraLength" endX="450.0" layoutX="189.0" layoutY="310.0" />
+      <Line id="ldaLength" fx:id="ldaLength" endX="385.0" layoutX="254.0" layoutY="335.0" />
+      <Line id="asdaLength" fx:id="asdaLength" endX="510.0" layoutX="189.0" layoutY="360.0" />
+      <Line id="toraLength" fx:id="todaLength" endX="570.0" layoutX="189.0" layoutY="385.0" />
+      <Label id="ldaLabel" fx:id="ldaLabel" layoutX="380.0" layoutY="325.0" style="-fx-background-color: #f4f4f4;" text=" LDA  =   ">
+         <font>
+            <Font name="Verdana Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="toraLabel" fx:id="toraLabel" layoutX="380.0" layoutY="301.0" style="-fx-background-color: #f4f4f4;" text=" TORA = ">
+         <font>
+            <Font name="Verdana Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="asdaLabel" fx:id="asdaLabel" layoutX="381.0" layoutY="351.0" style="-fx-background-color: #f4f4f4;" text=" ASDA = ">
+         <font>
+            <Font name="Verdana Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="todaLabel" fx:id="todaLabel" layoutX="380.0" layoutY="375.0" style="-fx-background-color: #f4f4f4;" text=" TODA = ">
+         <font>
+            <Font name="Verdana Bold" size="12.0" />
+         </font>
+      </Label>
+      <Polygon id="tocsSlope" fx:id="tocsSlope" fill="RED" layoutX="693.0" layoutY="247.0" points="-52.5, 0.0, 3.0, -21.666671752929688, 3.0, 0.0" stroke="RED" strokeType="INSIDE" />
+      <Polygon id="alsSlope" fx:id="alsSlope" fill="RED" layoutX="189.0" layoutY="247.0" points="46.33332824707031, 0.0, 1.0, -10.333328247070312, 1.0, 0.0" stroke="RED" strokeType="INSIDE" />
+      <Button id="button" fx:id="button" layoutX="388.0" layoutY="534.0" mnemonicParsing="false" onAction="#handleExecuteButtonClick" text="Button" />
+      <Line endX="424.0" endY="-0.0017338693141937256" layoutX="97.0" layoutY="102.0" scaleY="2.0" startX="-5.3333282470703125" startY="-0.0016004741191864014" />
+      <Polyline fill="BLACK" layoutX="546.0" layoutY="78.0" points="-33.25, 14.25, -7.0, 23.99939727783203, -33.25, 33.5, -25.9595947265625, 23.99939727783203" strokeType="INSIDE" />
+      <Label layoutX="182.0" layoutY="92.0" style="-fx-background-color: f4f4f4;" text=" Landing/Takeing Off Direction ">
+         <font>
+            <Font name="Verdana Bold" size="12.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="15.0" layoutX="662.0" layoutY="27.0" stroke="BLUE" strokeType="INSIDE" width="15.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="15.0" layoutX="662.0" layoutY="57.0" stroke="YELLOW" strokeType="INSIDE" width="15.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fff3d" height="15.0" layoutX="662.0" layoutY="87.0" stroke="#1fff3d" strokeType="INSIDE" width="15.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="15.0" layoutX="662.0" layoutY="115.0" stroke="RED" strokeType="INSIDE" width="15.0" />
+      <Text layoutX="687.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displaced Threshold" />
+      <Text layoutX="687.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stopway" />
+      <Text layoutX="687.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clearway" />
+      <Text layoutX="687.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Obstacle Slope" />
    </children>
 </AnchorPane>
