@@ -83,7 +83,7 @@ LogicalRunway {
     }
 
     public double getStopway() {
-        return getTora() - getAsda();
+        return getAsda() - getTora();
     }
 
     public double getDisplacedThreshold() {
