@@ -8,8 +8,8 @@ import View.ErrorPopUp.InvalidStripEnd;
 import View.Main;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,7 +40,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
-
 
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
@@ -131,15 +130,19 @@ public class MainController implements Initializable {
     @FXML
     private Button calculationBreakdown;
     @FXML
-    private Tab topViewTab;
+    public Tab topViewTab;
     @FXML
     private Tab sideViewTab;
 
-    private static StringProperty logRunwayItem = new SimpleStringProperty();
-
-    public static StringProperty logRunwayItem() {
-        return logRunwayItem;
-    }
+    //property to be used in Visualisation classes
+    private static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
+    public static ObjectProperty<PhysicalRunway> physRunwayItem() {return physRunwayItem;}
+    private static ObjectProperty<LogicalRunway> logRunwayItem = new SimpleObjectProperty<>();
+    public static ObjectProperty<LogicalRunway> logRunwayItem() {return logRunwayItem;}
+    private static ObjectProperty<Airport> airportItem = new SimpleObjectProperty();
+    public static ObjectProperty<Airport> airportItem() {return airportItem;}
+    public static ObjectProperty<Obstacle> obstacleProperty = new SimpleObjectProperty<>();
+    public static ObjectProperty<Obstacle> obstacleProperty() {return obstacleProperty;}
 
 
     //list of airports and obstacles from files
@@ -156,6 +159,13 @@ public class MainController implements Initializable {
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
             addObstacleEvent();
+
+            TopViewController topViewController = new TopViewController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/TopView.fxml"));
+            Parent root = loader.load();
+            loader.setController(topViewController);
+            topViewTab.setContent(root);
+            topViewController.setMainController(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -170,6 +180,7 @@ public class MainController implements Initializable {
     public static LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
     public static boolean needRedeclare(){return needRedeclare;}
     public static Obstacle getObstacleSelected() {return obstacleSelected;}
+    public MenuButton getAirportMenu() {return this.airportMenu;}
 
     //event handlers
     @FXML
@@ -368,8 +379,9 @@ public class MainController implements Initializable {
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             airportMenuItem.setOnAction(e -> {
                 airportSelected = airport;
+                airportItem.set(airportSelected);
                 physicalRunwayMenu.getItems().clear();
-                airportMenu.setText(airport.getName());
+                getAirportMenu().setText(airport.getName());
                 physicalRunwayMenu.setText("Select Physical Runway");
                 physicalRunwayMenu.setDisable(false);
                 physRunwaySelected = null;
@@ -403,18 +415,19 @@ public class MainController implements Initializable {
                                 if(obstacleSelected != null){
                                     performCalculationButton.setDisable(false);
                                 }
-                                logRunwayItem.set(logRunwaySelected.getDesignator()+"/"+physRunwaySelected.getName());
+                                logRunwayItem.set(logRunwaySelected);
 
                             });
                             lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                             logicalRunwayMenu.getItems().add(lRunwayMenuItem);
                         }
+                        physRunwayItem.set(physRunwaySelected);
                     });
                     runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                     physicalRunwayMenu.getItems().add(runwayMenuItem);
                 }
             });
-            airportMenu.getItems().add(airportMenuItem);
+            getAirportMenu().getItems().add(airportMenuItem);
         }
     }
 
@@ -458,6 +471,7 @@ public class MainController implements Initializable {
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
+                obstacleProperty().set(obstacle);
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }
