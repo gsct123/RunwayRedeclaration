@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Calculator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -43,12 +44,14 @@ public class TopViewController implements Initializable {
             double runwayStartX = runwayStrip.getX();
             double runwayStartY = runwayStrip.getY();
             double runwayLength = runwayStrip.getWidth();
+            double tora;
 
-            if()
-
-            double centreY = centreLine.getEndY();
-            obstacleBlock.setVisible(true);
-            obstacleBlock.relocate(runwayStartX + (newValue.getDistFThreshold()/runwayLength), centreY);
+            if(MainController.logRunwayItem() != null){
+                tora = MainController.logRunwayItem().get().getTora();
+                if(Calculator.needRedeclare(MainController.obstacleProperty().get(), MainController.logRunwayItem().get())){
+                    //relocate obstacle
+                }
+            }
         });
     }
 

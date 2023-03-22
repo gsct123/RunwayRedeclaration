@@ -20,7 +20,7 @@
     <orderEntry type="library" exported="" name="sun.xml.bind.jaxb.impl" level="project" />
     <orderEntry type="library" exported="" name="charm-glisten-4.4.1" level="project" />
     <orderEntry type="library" exported="" name="lib" level="project" />
-    <orderEntry type="library" exported="" name="charm-glisten-6.0.2" level="project" />
+    <orderEntry type="library" name="charm-glisten-6.0.2" level="project" />
     <orderEntry type="library" exported="" name="junit.jupiter" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
