@@ -35,14 +35,14 @@
       <Line id="ldaStart" fx:id="ldaStart" endY="25.0" layoutX="254.0" layoutY="322.0" />
       <Line id="asdaStart" fx:id="asdaStart" endY="25.0" layoutX="189.0" layoutY="347.0" />
       <Line id="ldaEnd" fx:id="ldaEnd" endY="25.0" layoutX="639.0" layoutY="322.0" />
-      <Line id="asdaEnd" fx:id="asdaEnd" endY="25.0" layoutX="699.0" layoutY="347.0" />
+      <Line id="asdaEnd" fx:id="asdaEnd" endY="25.0" layoutX="700.0" layoutY="347.0" />
       <Line id="toraStart" fx:id="toraStart" endY="25.0" layoutX="189.0" layoutY="297.0" />
       <Line id="todaStart" fx:id="todaStart" endY="25.0" layoutX="189.0" layoutY="372.0" />
-      <Line id="todaEnd" fx:id="todaEnd" endY="25.0" layoutX="759.0" layoutY="372.0" />
+      <Line id="todaEnd" fx:id="todaEnd" endY="25.0" layoutX="750.0" layoutY="372.0" />
       <Line id="toraLength" fx:id="toraLength" endX="450.0" layoutX="189.0" layoutY="310.0" />
       <Line id="ldaLength" fx:id="ldaLength" endX="385.0" layoutX="254.0" layoutY="335.0" />
-      <Line id="asdaLength" fx:id="asdaLength" endX="510.0" layoutX="189.0" layoutY="360.0" />
-      <Line id="toraLength" fx:id="todaLength" endX="570.0" layoutX="189.0" layoutY="385.0" />
+      <Line id="asdaLength" fx:id="asdaLength" endX="511.0" layoutX="189.0" layoutY="360.0" />
+      <Line id="toraLength" fx:id="todaLength" endX="561.0" layoutX="189.0" layoutY="385.0" />
       <Label id="ldaLabel" fx:id="ldaLabel" layoutX="380.0" layoutY="325.0" style="-fx-background-color: #f4f4f4;" text=" LDA  =   ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
@@ -66,9 +66,9 @@
       <Polygon id="tocsSlope" fx:id="tocsSlope" fill="RED" layoutX="693.0" layoutY="247.0" points="-52.5, 0.0, 3.0, -21.666671752929688, 3.0, 0.0" stroke="RED" strokeType="INSIDE" />
       <Polygon id="alsSlope" fx:id="alsSlope" fill="RED" layoutX="189.0" layoutY="247.0" points="46.33332824707031, 0.0, 1.0, -10.333328247070312, 1.0, 0.0" stroke="RED" strokeType="INSIDE" />
       <Button id="button" fx:id="button" layoutX="388.0" layoutY="534.0" mnemonicParsing="false" onAction="#handleExecuteButtonClick" text="Button" />
-      <Line endX="424.0" endY="-0.0017338693141937256" layoutX="97.0" layoutY="102.0" scaleY="2.0" startX="-5.3333282470703125" startY="-0.0016004741191864014" />
-      <Polyline fill="BLACK" layoutX="546.0" layoutY="78.0" points="-33.25, 14.25, -7.0, 23.99939727783203, -33.25, 33.5, -25.9595947265625, 23.99939727783203" strokeType="INSIDE" />
-      <Label layoutX="182.0" layoutY="92.0" style="-fx-background-color: f4f4f4;" text=" Landing/Takeing Off Direction ">
+      <Line endX="424.0" endY="-0.0017338693141937256" layoutX="56.0" layoutY="102.0" scaleY="2.0" startX="-5.3333282470703125" startY="-0.0016004741191864014" />
+      <Polyline fill="BLACK" layoutX="505.0" layoutY="78.0" points="-33.25, 14.25, -7.0, 23.99939727783203, -33.25, 33.5, -25.9595947265625, 23.99939727783203" strokeType="INSIDE" />
+      <Label layoutX="141.0" layoutY="92.0" style="-fx-background-color: f4f4f4;" text=" Landing/Takeing Off Direction ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>

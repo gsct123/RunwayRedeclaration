@@ -4,7 +4,6 @@ import Model.Calculator;
 import Model.LogicalRunway;
 import Model.Obstacle;
 import Model.PhysicalRunway;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,48 +13,81 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
-import java.util.List;
-
 public class SideViewController {
 
-    public Rectangle clearwayL;
-    public Rectangle stopwayL;
-    public Rectangle phyRunway;
-    public Rectangle clearwayR;
-    public Label designatorL;
-    public Line thresholdL;
-    public Label designatorR;
-    public Line toraEnd;
-    public Line thresholdR;
-    public Line ldaStart;
-    public Line asdaStart;
-    public Line ldaEnd;
-    public Line asdaEnd;
-    public Line toraStart;
-    public Line todaStart;
-    public Line todaEnd;
-    public Line toraLength;
-    public Line ldaLength;
-    public Line asdaLength;
-    public Line todaLength;
-    public Line displacedThresholdL;
-    public Label ldaLabel;
-    public Label toraLabel;
-    public Label asdaLabel;
-    public Label todaLabel;
-    public Polygon tocsSlope;
-    public Rectangle stopwayR;
-    public Polygon alsSlope;
-    public Line displacedThresholdR;
-    public Button button;
+    @FXML
+    protected Line blastProtectionStart;
+    @FXML
+    protected Line blastProtectionLength;
+    @FXML
+    protected Line blastProtectionEnd;
+    @FXML
+    protected Label blastProtectionLabel;
+    @FXML
+    protected Rectangle clearwayL;
+    @FXML
+    protected Rectangle stopwayL;
+    @FXML
+    protected Rectangle phyRunway;
+    @FXML
+    protected Rectangle clearwayR;
+    @FXML
+    protected Label designatorL;
+    @FXML
+    protected Line thresholdL;
+    @FXML
+    protected Label designatorR;
+    @FXML
+    protected Line toraEnd;
+    @FXML
+    protected Line thresholdR;
+    @FXML
+    protected Line ldaStart;
+    @FXML
+    protected Line asdaStart;
+    @FXML
+    protected Line ldaEnd;
+    @FXML
+    protected Line asdaEnd;
+    @FXML
+    protected Line toraStart;
+    @FXML
+    protected Line todaStart;
+    @FXML
+    protected Line todaEnd;
+    @FXML
+    protected Line toraLength;
+    @FXML
+    protected Line ldaLength;
+    @FXML
+    protected Line asdaLength;
+    @FXML
+    protected Line todaLength;
+    @FXML
+    protected Line displacedThresholdL;
+    @FXML
+    protected Label ldaLabel;
+    @FXML
+    protected Label toraLabel;
+    @FXML
+    protected Label asdaLabel;
+    @FXML
+    protected Label todaLabel;
+    @FXML
+    protected Polygon tocsSlope;
+    @FXML
+    protected Rectangle stopwayR;
+    @FXML
+    protected Polygon alsSlope;
+    @FXML
+    protected Line displacedThresholdR;
+    @FXML
+    protected static Button button;
 
 
-    LogicalRunway lR09L = new LogicalRunway("09L",3902,3902,3902,3595);
-    //LogicalRunway lR09L = new LogicalRunway("09L",2400,2800,2600,2200);
-    LogicalRunway lR27R = new LogicalRunway("27R",3884,3962,3884,3884);
-    Obstacle obstacle = new Obstacle("obstacle1",12,10,0,-50);
-    ObservableList<LogicalRunway> logicalRunways = FXCollections.observableArrayList(List.of(lR09L,lR27R));
-    PhysicalRunway physicalRunway = new PhysicalRunway("Runway1",logicalRunways);
+    PhysicalRunway selectedPhyRunway = MainController.getPhysRunwaySelected();
+    LogicalRunway selectedLogRunway = MainController.getLogRunwaySelected();
+    Obstacle selectedObstacle = MainController.getObstacleSelected();
 
     private void setNewTora(Obstacle obstacle,LogicalRunway logicalRunway){
         double oriTora = logicalRunway.getTora();
@@ -63,22 +95,38 @@ public class SideViewController {
 
         double newToraStartPx = getNumberOfPx(oriTora - newTora,logicalRunway);
         //double newToraEndPx = thresholdR.getLayoutX();
-        double newLength = getNumberOfPx(newTora,logicalRunway);
+
+        double labelLayout = toraStart.getLayoutX() + (toraLength.getEndX()/2 - toraLabel.getWidth()/4);
 
         toraStart.setLayoutX(toraStart.getLayoutX() + newToraStartPx);
         toraLength.setLayoutX(toraLength.getLayoutX() + newToraStartPx);
         toraLength.setEndX(toraLength.getEndX() - newToraStartPx);
+        toraLabel.setText(" TORA = " + newTora + " ");
+        toraLabel.setLayoutX(labelLayout);
 
+    }
 
+    private void resetValues(){
+        PhysicalRunway selectedPhyRunway = MainController.getPhysRunwaySelected();
+        LogicalRunway selectedLogRunway = MainController.getLogRunwaySelected();
+        Obstacle selectedObstacle = MainController.getObstacleSelected();
+        setUpPhyRunway(selectedPhyRunway);
+        setUpStopwayAndClearway(selectedPhyRunway);
+        setUpLogicalRunway(selectedLogRunway);
     }
 
     @FXML
     private void initialize() {
-        setUpPhyRunway(physicalRunway);
-        setUpStopwayAndClearway(physicalRunway);
-        setUpLogicalRunway(lR09L);
+        //setUpPhyRunway(selectedPhyRunway);
+        //setUpStopwayAndClearway(selectedPhyRunway);
+        //setUpLogicalRunway(selectedLogRunway);
         alsSlope.setVisible(false);
         tocsSlope.setVisible(false);
+        //blastProtectionStart.setVisible(false);
+        //blastProtectionEnd.setVisible(false);
+        //blastProtectionLength.setVisible(false);
+        //blastProtectionLabel.setVisible(false);
+
     }
     @FXML
     private void setUpLogicalRunway(LogicalRunway logicalRunway){
@@ -90,9 +138,13 @@ public class SideViewController {
 
     @FXML
     private void handleExecuteButtonClick(ActionEvent event){
-        Calculator.performCalc(obstacle,lR09L);
-        setUpAlsTocs(obstacle,lR09L);
-        setNewTora(obstacle,lR09L);
+        resetValues();
+        PhysicalRunway selectedPhyRunway = MainController.getPhysRunwaySelected();
+        LogicalRunway selectedLogRunway = MainController.getLogRunwaySelected();
+        Obstacle selectedObstacle = MainController.getObstacleSelected();
+        Calculator.performCalc(selectedObstacle,selectedLogRunway);
+        setUpAlsTocs(selectedObstacle,selectedLogRunway);
+        setNewTora(selectedObstacle,selectedLogRunway);
     }
 
     private void setUpTora(LogicalRunway logicalRunway){
@@ -164,6 +216,7 @@ public class SideViewController {
     private void setUpPhyRunway(PhysicalRunway physicalRunway){
         LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
         LogicalRunway rLogicalRunway = physicalRunway.getLogicalRunways().get(1);
+        LogicalRunway selectedLogRunway = MainController.getLogRunwaySelected();
 
         //Set Up Threshold
         thresholdL.setLayoutX(phyRunway.getLayoutX());
@@ -172,8 +225,15 @@ public class SideViewController {
         //Set Up Designator
         String lDesignator = lLogicalRunway.getDesignator();
         String rDesignator = rLogicalRunway.getDesignator();
-        designatorL.setText(lDesignator);
-        designatorR.setText(rDesignator);
+
+        if (selectedLogRunway.getDesignator().equals(lDesignator)){
+            designatorL.setText(lDesignator);
+            designatorR.setText(rDesignator);
+        }else {
+            designatorL.setText(rDesignator);
+            designatorR.setText(lDesignator);
+        }
+
 
         //Set Up DisplacedThreshold
         double lDisplacedThreshold = lLogicalRunway.getDisplacedThreshold();

@@ -131,6 +131,8 @@ public class MainController implements Initializable {
     private Button calculationBreakdown;
     @FXML
     public Tab topViewTab;
+    @FXML
+    private Tab sideViewTab;
 
     //property to be used in Visualisation classes
     private static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -151,6 +153,8 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadInfos();
         try {
+            topViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/TopView.fxml")));
+            sideViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/SideView.fxml")));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
