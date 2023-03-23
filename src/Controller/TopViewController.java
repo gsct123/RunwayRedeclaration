@@ -1,6 +1,9 @@
 package Controller;
 
 import Model.Calculator;
+import Model.LogicalRunway;
+import Model.Obstacle;
+import Model.PhysicalRunway;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -41,15 +44,31 @@ public class TopViewController implements Initializable {
             rightDesignator.setText("___");
         });
         MainController.obstacleProperty().addListener((observable, oldValue, newValue) -> {
+            Obstacle obstacle = MainController.obstacleProperty().get();
+            LogicalRunway logRunway;
             double runwayStartX = runwayStrip.getX();
             double runwayStartY = runwayStrip.getY();
             double runwayLength = runwayStrip.getWidth();
+            double centre = centreLine.getEndY();
+            double disFromThreshold = newValue.getDistFThreshold();
             double tora;
+            double stripEnd;
 
             if(MainController.logRunwayItem() != null){
+                logRunway = MainController.logRunwayItem().get();
                 tora = MainController.logRunwayItem().get().getTora();
-                if(Calculator.needRedeclare(MainController.obstacleProperty().get(), MainController.logRunwayItem().get())){
-                    //relocate obstacle
+                stripEnd = PhysicalRunway.getStripEnd();
+                if(Calculator.needRedeclare(obstacle, logRunway)){
+                    if(disFromThreshold < 0 || disFromThreshold > tora + stripEnd){
+                        //show label instead of obstacle
+                    } else{
+                        //obstacle x depends on value of distFromThreshold
+                        if(Calculator.getFlightMethod(obstacle, logRunway).equals("talo")){
+
+                        } else{
+                            obstacleBlock.relocate();
+                        }
+                    }
                 }
             }
         });

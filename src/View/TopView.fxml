@@ -155,12 +155,5 @@
          </font>
       </Label>
       <Line fx:id="ldaEndingBar" endX="-99.99993896484375" endY="-91.44235229492188" layoutX="759.0" layoutY="270.0" startX="-99.99993896484375" startY="-28.827606201171875" stroke="#0f0f0f" strokeWidth="1.5" />
-      <Label fx:id="obstacleLabel" layoutX="47.0" layoutY="357.0" text="Obstacle is __ before threshold" textFill="WHITE" visible="false">
-         <font>
-            <Font name="Verdana" size="13.0" />
-         </font>
-      </Label>
-      <Line fx:id="obstacleLine" endX="391.22967529296875" endY="-22.590789794921875" layoutX="-343.0" layoutY="377.0" startX="391.22967529296875" startY="-63.03790283203125" stroke="WHITE" visible="false" />
-      <Polyline fx:id="obstaclePointer" fill="BLACK" layoutX="42.0" layoutY="360.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" rotate="270.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="1.8" visible="false" />
    </children>
 </AnchorPane>

@@ -18,6 +18,8 @@ public class PhysicalRunway{
                 "\nlogicalRunways=" + logicalRunways + '}';
     }
 
+    public PhysicalRunway(){};
+
     public PhysicalRunway(String name, ObservableList<LogicalRunway> logicalRunways){
         this.name = name;
         this.logicalRunways = logicalRunways;
