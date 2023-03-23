@@ -8,8 +8,8 @@ import View.ErrorPopUp.InvalidStripEnd;
 import View.Main;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -131,14 +131,18 @@ public class MainController implements Initializable {
     private Button calculationBreakdown;
     @FXML
     public Tab topViewTab;
+    @FXML
+    private Tab sideViewTab;
 
     //property to be used in Visualisation classes
-    private static StringProperty physRunwayItem = new SimpleStringProperty();
-    public static StringProperty physRunwayItem() {return physRunwayItem;}
-    private static StringProperty logRunwayItem = new SimpleStringProperty();
-    public static StringProperty logRunwayItem() {return logRunwayItem;}
-    private static StringProperty airportItem = new SimpleStringProperty();
-    public static StringProperty airportItem() {return airportItem;}
+    private static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
+    public static ObjectProperty<PhysicalRunway> physRunwayItem() {return physRunwayItem;}
+    private static ObjectProperty<LogicalRunway> logRunwayItem = new SimpleObjectProperty<>();
+    public static ObjectProperty<LogicalRunway> logRunwayItem() {return logRunwayItem;}
+    private static ObjectProperty<Airport> airportItem = new SimpleObjectProperty();
+    public static ObjectProperty<Airport> airportItem() {return airportItem;}
+    public static ObjectProperty<Obstacle> obstacleProperty = new SimpleObjectProperty<>();
+    public static ObjectProperty<Obstacle> obstacleProperty() {return obstacleProperty;}
 
 
     //list of airports and obstacles from files
@@ -149,6 +153,8 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadInfos();
         try {
+            topViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/TopView.fxml")));
+            sideViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/SideView.fxml")));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
@@ -373,7 +379,7 @@ public class MainController implements Initializable {
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             airportMenuItem.setOnAction(e -> {
                 airportSelected = airport;
-                airportItem.set(airportSelected.getName());
+                airportItem.set(airportSelected);
                 physicalRunwayMenu.getItems().clear();
                 getAirportMenu().setText(airport.getName());
                 physicalRunwayMenu.setText("Select Physical Runway");
@@ -409,13 +415,13 @@ public class MainController implements Initializable {
                                 if(obstacleSelected != null){
                                     performCalculationButton.setDisable(false);
                                 }
-                                logRunwayItem.set(logRunwaySelected.getDesignator()+"/"+physRunwaySelected.getName());
+                                logRunwayItem.set(logRunwaySelected);
 
                             });
                             lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                             logicalRunwayMenu.getItems().add(lRunwayMenuItem);
                         }
-                        physRunwayItem.set(physRunwaySelected.getName());
+                        physRunwayItem.set(physRunwaySelected);
                     });
                     runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                     physicalRunwayMenu.getItems().add(runwayMenuItem);
@@ -465,6 +471,7 @@ public class MainController implements Initializable {
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
+                obstacleProperty().set(obstacle);
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }
