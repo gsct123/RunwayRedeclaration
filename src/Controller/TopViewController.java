@@ -80,7 +80,6 @@ public class TopViewController implements Initializable {
 
         if(MainController.logRunwayItem() != null){
             logRunway = MainController.logRunwayItem().get();
-            physRunway = MainController.physRunwayItem().get();
             tora = MainController.logRunwayItem().get().getTora();
             stripEnd = PhysicalRunway.getStripEnd();
             if(Calculator.needRedeclare(obstacle, logRunway)){

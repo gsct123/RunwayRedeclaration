@@ -133,14 +133,6 @@
             <Font name="Verdana Bold Italic" size="15.0" />
          </font>
       </Label>
-      <Line fx:id="ldaLine1" endX="-27.744918823242188" endY="-9.643768310546875" layoutX="252.0" layoutY="309.0" startX="-27.744903564453125" startY="-64.39091491699219" stroke="WHITE" />
-      <Polyline fill="WHITE" layoutX="219.0" layoutY="291.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" rotate="270.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="1.8" />
-      <Polyline fill="WHITE" layoutX="219.0" layoutY="342.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" rotate="90.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="1.8" />
-      <Label layoutX="235.0" layoutY="277.0" style="-fx-text-fill: white;" text="60m" textFill="WHITE">
-         <font>
-            <Font name="Verdana" size="10.0" />
-         </font>
-      </Label>
       <Line fx:id="gradedAreaLine" endX="-90.22988891601562" endY="-52.469329833984375" layoutX="137.0" layoutY="356.0" startX="-89.86357116699219" startY="84.01272583007812" stroke="#0f0f0f" strokeWidth="1.8" />
       <Polyline fill="BLACK" layoutX="41.0" layoutY="352.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" rotate="270.0" strokeType="INSIDE" strokeWidth="1.8" />
       <Polyline fill="BLACK" layoutX="41.0" layoutY="431.0" points="0.640228271484375, -51.457122802734375, 10.899986267089844, -48.5, 0.640228271484375, -45.481536865234375, 3.7310523986816406, -48.5" rotate="90.0" strokeType="INSIDE" strokeWidth="1.8" />
