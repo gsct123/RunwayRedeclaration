@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -86,14 +86,14 @@
                         <Font name="Verdana" size="12.0" />
                      </font>
                   </Label>
-                  <ToggleButtonGroup fx:id="lrButtonGroup" layoutX="169.0" layoutY="458.0" selectionType="SINGLE">
+                  <ToggleButtonGroup fx:id="lrButtonGroup" disable="true" layoutX="169.0" layoutY="458.0" selectionType="SINGLE">
                      <toggles>
-                        <RadioButton mnemonicParsing="false" selected="true" text="Left">
+                        <RadioButton fx:id="leftDirButton" mnemonicParsing="false" onAction="#setLeftRightDirection" selected="true" text="Left">
                            <font>
                               <Font name="Verdana" size="12.0" />
                            </font>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Right">
+                        <RadioButton fx:id="rightDirButton" mnemonicParsing="false" onAction="#setLeftRightDirection" text="Right">
                            <font>
                               <Font name="Verdana" size="12.0" />
                            </font>
@@ -108,7 +108,7 @@
                         <Font name="Verdana" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="clDistTextField" disable="true" layoutX="226.0" layoutY="487.0" prefHeight="31.0" prefWidth="60.0" text="0">
+                  <TextField fx:id="clDistTextField" disable="true" layoutX="226.0" layoutY="487.0" onAction="#checkDistFromCentreLine" prefHeight="31.0" prefWidth="60.0" text="0">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font></TextField>

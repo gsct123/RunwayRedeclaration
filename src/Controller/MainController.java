@@ -8,8 +8,8 @@ import View.ErrorPopUp.InvalidStripEnd;
 import View.Main;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -133,6 +133,12 @@ public class MainController implements Initializable {
     public Tab topViewTab;
     @FXML
     private Tab sideViewTab;
+    @FXML
+    private ToggleButtonGroup lrButtonGroup;
+    @FXML
+    private RadioButton leftDirButton;
+    @FXML
+    private RadioButton rightDirButton;
 
     //property to be used in Visualisation classes
     private static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -142,7 +148,9 @@ public class MainController implements Initializable {
     private static ObjectProperty<Airport> airportItem = new SimpleObjectProperty();
     public static ObjectProperty<Airport> airportItem() {return airportItem;}
     public static ObjectProperty<Obstacle> obstacleProperty = new SimpleObjectProperty<>();
-    public static ObjectProperty<Obstacle> obstacleProperty() {return obstacleProperty;}
+    public static DoubleProperty disFromThreshold = new SimpleDoubleProperty();
+    public static DoubleProperty disFromCentre = new SimpleDoubleProperty();
+    public static StringProperty dirFromCentre = new SimpleStringProperty();
 
 
     //list of airports and obstacles from files
@@ -209,6 +217,7 @@ public class MainController implements Initializable {
         try {
             double distFromThreshold = Double.parseDouble(distanceThresholdTextField.getText().trim());
             obstacleSelected.setDistFThreshold(distFromThreshold);
+            disFromThreshold.set(distFromThreshold);
         } catch (NumberFormatException exception) {
             //display error message
             new InvalidDistanceThreshold().showDisThresholdError(distanceThresholdTextField);
@@ -221,6 +230,7 @@ public class MainController implements Initializable {
             double distFromCentreLine = Double.parseDouble(clDistTextField.getText().trim());
             if(distFromCentreLine < 0){throw new NumberFormatException();}
             obstacleSelected.setDistFCent(distFromCentreLine);
+            disFromCentre.set(distFromCentreLine);
         } catch (NumberFormatException exception){
             new InvalidDistanceFromCentreline().showDisFromCentreError(clDistTextField);
         }
@@ -287,6 +297,17 @@ public class MainController implements Initializable {
         stage.setTitle("Calculation Breakdown");
         stage.setScene(scene);
         stage.showAndWait();
+    }
+
+    @FXML
+    public void setLeftRightDirection(ActionEvent event){
+        if(leftDirButton.isSelected()){
+            obstacleSelected.setDirFromCentre("L");
+            dirFromCentre.set("L");
+        } else{
+            obstacleSelected.setDirFromCentre("R");
+            dirFromCentre.set("R");
+        }
     }
 
     //method to load information such as documentation and description of parameters
@@ -466,12 +487,13 @@ public class MainController implements Initializable {
             obstacleMenuItem.setOnAction(e -> {
                 performCalculationButton.setDisable(false);
                 distanceThresholdTextField.setDisable(false);
+                lrButtonGroup.setDisable(false);
                 clDistTextField.setDisable(false);
                 obstacleSelected = obstacle;
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
-                obstacleProperty().set(obstacle);
+                obstacleProperty.set(obstacle);
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }

@@ -6,6 +6,7 @@ public class Obstacle {
     private double width;
     private double distFCent;
     private double distFThreshold;
+    private String dirFromCentre;
     public final static double slopeRatio = 50;
 
     public Obstacle(String name, double height, double width, double distFCent, double distFThreshold){
@@ -15,6 +16,7 @@ public class Obstacle {
         this.distFCent = distFCent;
         //from the point of obstacle closest to the threshold we are calculating
         this.distFThreshold = distFThreshold;
+        this.dirFromCentre = "L";
     }
 
     @Override
@@ -70,5 +72,12 @@ public class Obstacle {
 
     public void setWidth(double width) {
         this.width = width;
+    }
+
+    public void setDirFromCentre(String dir){
+        this.dirFromCentre = dir;
+    }
+    public String getDirFromCentre(){
+        return this.dirFromCentre;
     }
 }
