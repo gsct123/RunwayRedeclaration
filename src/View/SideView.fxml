@@ -81,5 +81,12 @@
       <Text layoutX="687.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stopway" />
       <Text layoutX="687.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clearway" />
       <Text layoutX="687.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Obstacle Slope" />
+      <Line id="blastProtectionStart" fx:id="blastProtectionStart" endY="25.0" layoutX="120.0" layoutY="297.0" />
+      <Line id="blastProtectionEnd" fx:id="blastProtectionEnd" endY="25.0" layoutX="189.0" layoutY="297.0" />
+      <Line id="blastProtectionLength" fx:id="blastProtectionLength" endX="10.0" layoutX="116.0" layoutY="309.0" />
+      <Label id="blastProtectionLabel" fx:id="blastProtectionLabel" layoutX="137.0" layoutY="301.0" style="-fx-background-color: f4f4f4;" text=" label ">
+         <font>
+            <Font name="Verdana" size="12.0" />
+         </font></Label>
    </children>
 </AnchorPane>
