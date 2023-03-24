@@ -37,7 +37,7 @@
             <Insets bottom="10.0" top="10.0" />
          </padding>
       </Label>
-      <SplitPane dividerPositions="0.21310888252148996, 0.8026504297994269" prefHeight="936.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
+      <SplitPane dividerPositions="0.21310888252148996, 0.8026504297994269" prefHeight="638.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
          <items>
             <AnchorPane prefHeight="691.0" prefWidth="285.0">
                <children>
@@ -140,7 +140,7 @@
                   </Button>
                </children>
             </AnchorPane>
-             <AnchorPane prefHeight="691.0" prefWidth="726.0">
+             <AnchorPane prefHeight="621.0" prefWidth="814.0">
                <children>
                   <TabPane fx:id="visualPane" layoutX="4.0" layoutY="-5.0" prefHeight="638.0" prefWidth="810.0" stylesheets="@../Utils/CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
@@ -337,10 +337,13 @@
                </children></AnchorPane>
          </items>
       </SplitPane>
-    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+    <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="1400.0" spacing="5.0" VBox.vgrow="NEVER">
       <padding>
         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
       </padding>
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+         </children>
     </HBox>
   </children>
 </VBox>
