@@ -12,13 +12,13 @@
 <AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
    <children>
       <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#abd2fc8f" height="426.0" layoutY="90.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
-      <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#aeaeae" height="176.0" layoutX="61.0" layoutY="212.0" stroke="TRANSPARENT" strokeType="INSIDE" width="680.0" />
+      <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#aeaeae" height="176.0" layoutX="64.0" layoutY="212.0" stroke="TRANSPARENT" strokeType="INSIDE" width="676.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#aeaeae" height="279.0" layoutX="187.0" layoutY="158.0" stroke="TRANSPARENT" strokeType="INSIDE" width="411.0" />
-      <Rectangle fx:id="runway" arcHeight="5.0" fill="#0f0f0f" height="93.0" layoutX="77.0" layoutY="252.0" stroke="TRANSPARENT" strokeType="INSIDE" width="650.0" />
       <Rectangle fx:id="clearwayR" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="726.0" layoutY="252.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="67.0" />
-      <Rectangle fx:id="clearwayL" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="12.0" layoutY="252.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="65.0" />
+      <Rectangle fx:id="clearwayL" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="14.0" layoutY="252.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="64.0" />
       <Rectangle fx:id="stopwayR" arcHeight="5.0" fill="#fcf347" height="93.0" layoutX="726.0" layoutY="252.0" stroke="#ffdd5400" strokeType="INSIDE" width="33.0" />
       <Rectangle fx:id="stopwayL" arcHeight="5.0" fill="#fcf347" height="93.0" layoutX="45.0" layoutY="252.0" stroke="#ffff0000" strokeType="INSIDE" width="32.0" />
+      <Rectangle fx:id="runway" arcHeight="5.0" fill="#0f0f0f" height="93.0" layoutX="77.0" layoutY="252.0" stroke="TRANSPARENT" strokeType="INSIDE" width="650.0" />
       <Polyline fill="#aeaeae" layoutX="175.0" layoutY="450.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Line endX="-100.43783569335938" layoutX="291.0" layoutY="298.0" startX="-109.85165405273438" stroke="WHITE" />
       <Line endX="-100.43783569335938" layoutX="312.0" layoutY="298.0" startX="-109.85165405273438" stroke="WHITE" />
