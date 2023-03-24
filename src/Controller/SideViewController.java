@@ -85,7 +85,7 @@ public class SideViewController {
     protected Button button;
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         alsSlope.setVisible(false);
         tocsSlope.setVisible(false);
         blastProtectionStart.setVisible(false);
@@ -96,7 +96,7 @@ public class SideViewController {
     }
 
     @FXML
-    private void handleExecuteButtonClick(ActionEvent event){
+    protected void handleExecuteButtonClick(ActionEvent event){
         PhysicalRunway selectedPhyRunway = MainController.getPhysRunwaySelected();
         LogicalRunway selectedLogRunway = MainController.getLogRunwaySelected();
         Obstacle selectedObstacle = MainController.getObstacleSelected();
@@ -169,13 +169,13 @@ public class SideViewController {
         }
     }
 
-    private void resetValues(PhysicalRunway physicalRunway, LogicalRunway logicalRunway){
+    protected void resetValues(PhysicalRunway physicalRunway, LogicalRunway logicalRunway){
         setUpPhyRunway(physicalRunway,logicalRunway);
         setUpStopwayAndClearway(physicalRunway,logicalRunway);
         setUpLogicalRunway(logicalRunway);
     }
 
-    private void setUpTora(LogicalRunway logicalRunway){
+    protected void setUpTora(LogicalRunway logicalRunway){
         double originalStartX = thresholdL.getLayoutX();
         double originalEndX = thresholdR.getLayoutX();
         double tora = logicalRunway.getTora();
@@ -187,7 +187,7 @@ public class SideViewController {
         toraLabel.setText(" TORA = " + tora);
     }
 
-    private void setUpLda(LogicalRunway logicalRunway){
+    protected void setUpLda(LogicalRunway logicalRunway){
         double originalStartX;
         double originalEndX = thresholdR.getLayoutX();
         double lda = logicalRunway.getLda();
@@ -206,7 +206,7 @@ public class SideViewController {
         ldaLabel.setText(" LDA = " + lda);
     }
 
-    private void setUpAsda(LogicalRunway logicalRunway){
+    protected void setUpAsda(LogicalRunway logicalRunway){
         //Set Up Variables
         double originalStartX = thresholdL.getLayoutX();
         double originalEndX;
@@ -224,7 +224,7 @@ public class SideViewController {
         asdaLabel.setText(" ASDA = " + asda);
     }
 
-    private void setUpToda(LogicalRunway logicalRunway){
+    protected void setUpToda(LogicalRunway logicalRunway){
         //Set Up Variables
         double originalStartX = thresholdL.getLayoutX();
         double originalEndX;
@@ -242,14 +242,14 @@ public class SideViewController {
         todaLabel.setText(" TODA = " + toda);
     }
 
-    private void setUpLogicalRunway(LogicalRunway logicalRunway){
+    protected void setUpLogicalRunway(LogicalRunway logicalRunway){
         setUpTora(logicalRunway);
         setUpLda(logicalRunway);
         setUpAsda(logicalRunway);
         setUpToda(logicalRunway);
     }
 
-    private void setUpPhyRunway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
+    protected void setUpPhyRunway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
         LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
         LogicalRunway rLogicalRunway = physicalRunway.getLogicalRunways().get(1);
 
@@ -283,7 +283,7 @@ public class SideViewController {
         displacedThresholdR.setLayoutX(rDisplacedThresholdX);
     }
 
-    private void setUpStopwayAndClearway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
+    protected void setUpStopwayAndClearway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
         LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
         LogicalRunway rLogicalRunway = physicalRunway.getLogicalRunways().get(1);
         if (lLogicalRunway.getDesignator().equals(selectedLogRunway.getDesignator())){
@@ -295,7 +295,7 @@ public class SideViewController {
         }
     }
 
-    private void setStopClearway(LogicalRunway logicalRunway,String leftOrRightWay){
+    protected void setStopClearway(LogicalRunway logicalRunway,String leftOrRightWay){
         //Set Up  Variable
         double stopwayLength = logicalRunway.getStopway();
         double stopwayWidthPx = getNumberOfPx(stopwayLength,logicalRunway);
@@ -324,7 +324,7 @@ public class SideViewController {
         setStopClearwayValue(clearway,clearwayLength,clearwayWidthPx,oriClearwayX);
     }
 
-    private void setStopClearwayValue(Rectangle way,double length, double widthPx, double oriWayX){
+    protected void setStopClearwayValue(Rectangle way,double length, double widthPx, double oriWayX){
         if (length != 0 ){
             way.setWidth(widthPx);
             way.setLayoutX(oriWayX);
@@ -333,7 +333,7 @@ public class SideViewController {
         }
     }
 
-    private void setUpAlsTocs(Obstacle obstacle, LogicalRunway logicalRunway){
+    protected void setUpAlsTocs(Obstacle obstacle, LogicalRunway logicalRunway){
         double obsHeight = obstacle.getHeight();
         double slopeWidth = obstacle.getAlsTocs();
         double distanceFromThreshold = obstacle.getDistFThreshold();
@@ -366,11 +366,11 @@ public class SideViewController {
         }
     }
 
-    private double getMeterPerPx(LogicalRunway logicalRunway){
+    protected double getMeterPerPx(LogicalRunway logicalRunway){
         return logicalRunway.getTora()/ phyRunway.getWidth();
     }
 
-    private double getNumberOfPx(double length,LogicalRunway logicalRunway){
+    protected double getNumberOfPx(double length,LogicalRunway logicalRunway){
         return length/getMeterPerPx(logicalRunway);
     }
 
