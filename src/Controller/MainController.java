@@ -151,6 +151,9 @@ public class MainController implements Initializable {
     public static DoubleProperty disFromThreshold = new SimpleDoubleProperty();
     public static DoubleProperty disFromCentre = new SimpleDoubleProperty();
     public static StringProperty dirFromCentre = new SimpleStringProperty();
+    public static DoubleProperty valueChanged = new SimpleDoubleProperty();
+
+    public Button getCalculationButton() {return performCalculationButton;}
 
 
     //list of airports and obstacles from files
@@ -260,6 +263,7 @@ public class MainController implements Initializable {
             new NoRedeclarationNeeded().showNoRedeclarationNeeded();
         }
         calculationBreakdown.setDisable(false);
+        valueChanged.set(valueChanged.doubleValue() == 1? 0: 1);
     }
 
     @FXML
@@ -409,6 +413,7 @@ public class MainController implements Initializable {
                 logicalRunwayMenu.setText("Select Logical Runway");
                 logRunwaySelected = null;
                 performCalculationButton.setDisable(true);
+                obstaclesEditing(true);
                 for(PhysicalRunway runway: airport.getPhysicalRunways()){
                     MenuItem runwayMenuItem = new MenuItem(runway.getName());
                     runwayMenuItem.setOnAction(f -> {
@@ -423,9 +428,11 @@ public class MainController implements Initializable {
                         logRunwaySelected = null;
                         performCalculationButton.setDisable(true);
                         logicalRunwayMenu.setDisable(false);
+                        obstaclesEditing(true);
                         for(LogicalRunway logicalRunway: runway.getLogicalRunways()){
                             MenuItem lRunwayMenuItem = new MenuItem(logicalRunway.getDesignator());
                             lRunwayMenuItem.setOnAction(g -> {
+                                obstaclesEditing(false);
                                 logRunwaySelected = logicalRunway;
                                 logicalRunwayMenu.setText(logicalRunway.getDesignator());
                                 obstacleMenu.setDisable(false);
@@ -497,6 +504,15 @@ public class MainController implements Initializable {
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }
+    }
+
+    public void obstaclesEditing(boolean notAllowed){
+            obstacleMenu.setDisable(notAllowed);
+            if(MainController.obstacleSelected != null){
+                lrButtonGroup.setDisable(notAllowed);
+                distanceThresholdTextField.setDisable(notAllowed);
+                clDistTextField.setDisable(notAllowed);
+            }
     }
 
 //    //load flight menu

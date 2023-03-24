@@ -392,5 +392,4 @@ public class SideViewController {
         label.setVisible(b);
     }
 
-
 }
