@@ -19,13 +19,13 @@
       <Line id="displacedThresholdL" fx:id="displacedThresholdL" endY="50.0" fill="BLUE" layoutX="232.0" layoutY="247.0" scaleX="3.0" stroke="BLUE" />
       <Rectangle id="stopwayR" fx:id="stopwayR" arcWidth="5.0" fill="YELLOW" height="50.0" layoutX="700.0" layoutY="247.0" stroke="YELLOW" strokeType="INSIDE" width="25.0" />
       <Rectangle id="stopwayL" fx:id="stopwayL" arcWidth="5.0" fill="YELLOW" height="50.0" layoutX="75.0" layoutY="247.0" stroke="YELLOW" strokeType="INSIDE" width="25.0" />
-      <Label id="designatorL" fx:id="designatorL" layoutX="107.0" layoutY="262.0" text="09R" textFill="WHITE">
+      <Label id="designatorL" fx:id="designatorL" layoutX="108.0" layoutY="262.0" text="09R" textFill="WHITE">
          <font>
             <Font name="Verdana Bold" size="15.0" />
          </font>
       </Label>
       <Line id="thresholdL" fx:id="thresholdL" endY="50.0" fill="#f4f4f4" layoutX="189.0" layoutY="247.0" scaleX="3.0" stroke="#f4f4f4" />
-      <Label id="designatorR" fx:id="designatorR" layoutX="662.0" layoutY="262.0" text="27L" textFill="WHITE">
+      <Label id="designatorR" fx:id="designatorR" layoutX="661.0" layoutY="262.0" text="27L" textFill="WHITE">
          <font>
             <Font name="Verdana Bold" size="15.0" />
          </font>
@@ -68,19 +68,31 @@
       <Button id="button" fx:id="button" layoutX="388.0" layoutY="534.0" mnemonicParsing="false" onAction="#handleExecuteButtonClick" text="Button" />
       <Line endX="424.0" endY="-0.0017338693141937256" layoutX="56.0" layoutY="102.0" scaleY="2.0" startX="-5.3333282470703125" startY="-0.0016004741191864014" />
       <Polyline fill="BLACK" layoutX="505.0" layoutY="78.0" points="-33.25, 14.25, -7.0, 23.99939727783203, -33.25, 33.5, -25.9595947265625, 23.99939727783203" strokeType="INSIDE" />
-      <Label layoutX="141.0" layoutY="92.0" style="-fx-background-color: f4f4f4;" text=" Landing/Takeing Off Direction ">
+      <Label layoutX="141.0" layoutY="92.0" style="-fx-background-color: f4f4f4;" text=" Landing/Taking Off Direction ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="15.0" layoutX="662.0" layoutY="27.0" stroke="BLUE" strokeType="INSIDE" width="15.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="15.0" layoutX="662.0" layoutY="57.0" stroke="YELLOW" strokeType="INSIDE" width="15.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fff3d" height="15.0" layoutX="662.0" layoutY="87.0" stroke="#1fff3d" strokeType="INSIDE" width="15.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="15.0" layoutX="662.0" layoutY="115.0" stroke="RED" strokeType="INSIDE" width="15.0" />
-      <Text layoutX="687.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displaced Threshold" />
-      <Text layoutX="687.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stopway" />
-      <Text layoutX="687.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clearway" />
-      <Text layoutX="687.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Obstacle Slope" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="15.0" layoutX="640.0" layoutY="27.0" stroke="BLUE" strokeType="INSIDE" width="15.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="15.0" layoutX="640.0" layoutY="57.0" stroke="YELLOW" strokeType="INSIDE" width="15.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fff3d" height="15.0" layoutX="640.0" layoutY="87.0" stroke="#1fff3d" strokeType="INSIDE" width="15.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="15.0" layoutX="640.0" layoutY="115.0" stroke="RED" strokeType="INSIDE" width="15.0" />
+      <Text layoutX="665.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displaced Threshold">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font></Text>
+      <Text layoutX="665.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stopway">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font></Text>
+      <Text layoutX="665.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clearway">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font></Text>
+      <Text layoutX="665.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Obstacle Slope">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font></Text>
       <Line id="blastProtectionStart" fx:id="blastProtectionStart" endY="25.0" layoutX="120.0" layoutY="297.0" />
       <Line id="blastProtectionEnd" fx:id="blastProtectionEnd" endY="25.0" layoutX="189.0" layoutY="297.0" />
       <Line id="blastProtectionLength" fx:id="blastProtectionLength" endX="10.0" layoutX="116.0" layoutY="309.0" />
