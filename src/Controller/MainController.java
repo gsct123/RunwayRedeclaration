@@ -46,10 +46,6 @@ import java.time.LocalDateTime;
 
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
-    private Airport airportSelected = null;
-    private static PhysicalRunway physRunwaySelected = null;
-    private static LogicalRunway logRunwaySelected = null;
-    private static Obstacle obstacleSelected = null;
     private String flightMethod = "";
     private static boolean needRedeclare = true;
 
@@ -146,12 +142,9 @@ public class MainController implements Initializable {
     private Label notificationLabel;
 
     //property to be used in Visualisation classes
-    private static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
-    public static ObjectProperty<PhysicalRunway> physRunwayItem() {return physRunwayItem;}
-    private static ObjectProperty<LogicalRunway> logRunwayItem = new SimpleObjectProperty<>();
-    public static ObjectProperty<LogicalRunway> logRunwayItem() {return logRunwayItem;}
-    private static ObjectProperty<Airport> airportItem = new SimpleObjectProperty();
-    public static ObjectProperty<Airport> airportItem() {return airportItem;}
+    public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
+    public static ObjectProperty<LogicalRunway> logRunwayItem = new SimpleObjectProperty<>();
+    public static ObjectProperty<Airport> airportItem = new SimpleObjectProperty();
     public static ObjectProperty<Obstacle> obstacleProperty = new SimpleObjectProperty<>();
     public static DoubleProperty disFromThreshold = new SimpleDoubleProperty();
     public static DoubleProperty disFromCentre = new SimpleDoubleProperty();
@@ -190,12 +183,10 @@ public class MainController implements Initializable {
     //getters
     public ObservableList<Obstacle> getObstacles(){return this.obstacles;}
     public ObservableList<Airport> getAirports(){return this.airports;}
-    public ObservableList<String> getItems() {return items;}
-    public Airport getAirportSelected() {return airportSelected;}
-    public static PhysicalRunway getPhysRunwaySelected() {return physRunwaySelected;}
-    public static LogicalRunway getLogRunwaySelected() {return logRunwaySelected;}
+    public static PhysicalRunway getPhysRunwaySelected() {return physRunwayItem.get();}
+    public static LogicalRunway getLogRunwaySelected() {return logRunwayItem.get();}
     public static boolean needRedeclare(){return needRedeclare;}
-    public static Obstacle getObstacleSelected() {return obstacleSelected;}
+    public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
     public MenuButton getAirportMenu() {return this.airportMenu;}
 
     //event handlers
@@ -226,7 +217,7 @@ public class MainController implements Initializable {
     public void checkDistFromThreshold(ActionEvent event){
         try {
             double distFromThreshold = Double.parseDouble(distanceThresholdTextField.getText().trim());
-            obstacleSelected.setDistFThreshold(distFromThreshold);
+            getObstacleSelected().setDistFThreshold(distFromThreshold);
             disFromThreshold.set(distFromThreshold);
         } catch (NumberFormatException exception) {
             //display error message
@@ -239,7 +230,7 @@ public class MainController implements Initializable {
         try{
             double distFromCentreLine = Double.parseDouble(clDistTextField.getText().trim());
             if(distFromCentreLine < 0){throw new NumberFormatException();}
-            obstacleSelected.setDistFCent(distFromCentreLine);
+            getObstacleSelected().setDistFCent(distFromCentreLine);
             disFromCentre.set(distFromCentreLine);
         } catch (NumberFormatException exception){
             new InvalidDistanceFromCentreline().showDisFromCentreError(clDistTextField);
@@ -252,20 +243,20 @@ public class MainController implements Initializable {
         checkDistFromCentreLine(new ActionEvent());
         setStripEnd(new ActionEvent());
         setBlastProtection(new ActionEvent());
-        if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
+        if(Calculator.needRedeclare(getObstacleSelected(), getLogRunwaySelected())){
             needRedeclare = true;
-            Calculator.performCalc(obstacleSelected, logRunwaySelected);
-            newToraLabel.setText("TORA  =  "+logRunwaySelected.getNewTora() + " m");
-            newTodaLabel.setText("TODA  =  "+logRunwaySelected.getNewToda() + " m");
-            newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getNewAsda() + " m");
-            newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda() + " m");
+            Calculator.performCalc(getObstacleSelected(), getLogRunwaySelected());
+            newToraLabel.setText("TORA  =  "+getLogRunwaySelected().getNewTora() + " m");
+            newTodaLabel.setText("TODA  =  "+getLogRunwaySelected().getNewToda() + " m");
+            newAsdaLabel.setText("ASDA  =  "+getLogRunwaySelected().getNewAsda() + " m");
+            newLdaLabel.setText("LDA     =  "+getLogRunwaySelected().getNewLda() + " m");
             //no view yet all set to invisible
         } else{
             needRedeclare = false;
-            newToraLabel.setText("TORA  =  "+logRunwaySelected.getTora() + " m");
-            newTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda() + " m");
-            newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda() + " m");
-            newLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda() + " m");
+            newToraLabel.setText("TORA  =  "+getLogRunwaySelected().getTora() + " m");
+            newTodaLabel.setText("TODA  =  "+getLogRunwaySelected().getToda() + " m");
+            newAsdaLabel.setText("ASDA  =  "+getLogRunwaySelected().getAsda() + " m");
+            newLdaLabel.setText("LDA     =  "+getLogRunwaySelected().getLda() + " m");
 
             new NoRedeclarationNeeded().showNoRedeclarationNeeded();
         }
@@ -320,10 +311,10 @@ public class MainController implements Initializable {
     @FXML
     public void setLeftRightDirection(ActionEvent event){
         if(leftDirButton.isSelected()){
-            obstacleSelected.setDirFromCentre("L");
+            getObstacleSelected().setDirFromCentre("L");
             dirFromCentre.set("L");
         } else{
-            obstacleSelected.setDirFromCentre("R");
+            getObstacleSelected().setDirFromCentre("R");
             dirFromCentre.set("R");
         }
     }
@@ -417,21 +408,18 @@ public class MainController implements Initializable {
             MenuItem airportMenuItem = new MenuItem(airport.getName());
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             airportMenuItem.setOnAction(e -> {
-                airportSelected = airport;
-                airportItem.set(airportSelected);
+                airportItem.set(airport);
                 physicalRunwayMenu.getItems().clear();
                 getAirportMenu().setText(airport.getName());
                 physicalRunwayMenu.setText("Select Physical Runway");
                 physicalRunwayMenu.setDisable(false);
-                physRunwaySelected = null;
                 logicalRunwayMenu.setText("Select Logical Runway");
-                logRunwaySelected = null;
                 performCalculationButton.setDisable(true);
                 obstaclesEditing(true);
                 for(PhysicalRunway runway: airport.getPhysicalRunways()){
                     MenuItem runwayMenuItem = new MenuItem(runway.getName());
                     runwayMenuItem.setOnAction(f -> {
-                        physRunwaySelected = runway;
+                        physRunwayItem.set(runway);
                         logicalRunwayMenu.getItems().clear();
                         physicalRunwayMenu.setText(runway.getName());
                         stripEndTextField.setText(String.valueOf(PhysicalRunway.getStripEnd()));
@@ -439,7 +427,6 @@ public class MainController implements Initializable {
                         stripEndTextField.setDisable(false);
                         blastProtectionField.setDisable(false);
                         logicalRunwayMenu.setText("Select Logical Runway");
-                        logRunwaySelected = null;
                         performCalculationButton.setDisable(true);
                         logicalRunwayMenu.setDisable(false);
                         obstaclesEditing(true);
@@ -447,23 +434,21 @@ public class MainController implements Initializable {
                             MenuItem lRunwayMenuItem = new MenuItem(logicalRunway.getDesignator());
                             lRunwayMenuItem.setOnAction(g -> {
                                 obstaclesEditing(false);
-                                logRunwaySelected = logicalRunway;
+                                logRunwayItem.set(logicalRunway);
                                 logicalRunwayMenu.setText(logicalRunway.getDesignator());
                                 obstacleMenu.setDisable(false);
-                                originalToraLabel.setText("TORA  =  "+logRunwaySelected.getTora() + " m");
-                                originalTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda() + " m");
-                                originalAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda() + " m");
-                                originalLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda() + " m");
-                                if(obstacleSelected != null){
+                                originalToraLabel.setText("TORA  =  "+getLogRunwaySelected().getTora() + " m");
+                                originalTodaLabel.setText("TODA  =  "+getLogRunwaySelected().getToda() + " m");
+                                originalAsdaLabel.setText("ASDA  =  "+getLogRunwaySelected().getAsda() + " m");
+                                originalLdaLabel.setText("LDA     =  "+getLogRunwaySelected().getLda() + " m");
+                                if(getObstacleSelected() != null){
                                     performCalculationButton.setDisable(false);
                                 }
-                                logRunwayItem.set(logRunwaySelected);
 
                             });
                             lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                             logicalRunwayMenu.getItems().add(lRunwayMenuItem);
                         }
-                        physRunwayItem.set(physRunwaySelected);
                     });
                     runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                     physicalRunwayMenu.getItems().add(runwayMenuItem);
@@ -510,7 +495,7 @@ public class MainController implements Initializable {
                 distanceThresholdTextField.setDisable(false);
                 lrButtonGroup.setDisable(false);
                 clDistTextField.setDisable(false);
-                obstacleSelected = obstacle;
+                obstacleProperty.set(obstacle);
                 obstacleMenu.setText(obstacle.getName());
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
@@ -522,7 +507,7 @@ public class MainController implements Initializable {
 
     public void obstaclesEditing(boolean notAllowed){
             obstacleMenu.setDisable(notAllowed);
-            if(MainController.obstacleSelected != null){
+            if(MainController.getObstacleSelected() != null){
                 lrButtonGroup.setDisable(notAllowed);
                 distanceThresholdTextField.setDisable(notAllowed);
                 clDistTextField.setDisable(notAllowed);

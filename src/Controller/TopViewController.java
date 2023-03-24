@@ -108,17 +108,17 @@ public class TopViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        MainController.airportItem().addListener((observable, oldValue, newValue) -> {
+        MainController.airportItem.addListener((observable, oldValue, newValue) -> {
             leftDesignator.setText("___");
             rightDesignator.setText("___");
         });
-        MainController.logRunwayItem().addListener((observable, oldValue, newValue) -> {
-            String[] split = (newValue.getDesignator()+"/"+MainController.physRunwayItem().get().getName()).split("/");
+        MainController.logRunwayItem.addListener((observable, oldValue, newValue) -> {
+            String[] split = (newValue.getDesignator()+"/"+MainController.physRunwayItem.get().getName()).split("/");
             leftDesignator.setText(split[0]);
             rightDesignator.setText(split[0].equals(split[1])? split[2]: split[1]);
             showOriginalParameters();
         });
-        MainController.physRunwayItem().addListener((observable, oldValue, newValue) -> {
+        MainController.physRunwayItem.addListener((observable, oldValue, newValue) -> {
             leftDesignator.setText("___");
             rightDesignator.setText("___");
         });
@@ -136,7 +136,7 @@ public class TopViewController implements Initializable {
     }
 
     public void updateLabel(){
-        LogicalRunway logRunway = MainController.logRunwayItem().get();
+        LogicalRunway logRunway = MainController.logRunwayItem.get();
         Obstacle obstacle = MainController.obstacleProperty.get();
         showOriginalParameters();
         setNewLine("TORA",logRunway,obstacle,toraStart,toraLength,toraEnd,toraLabel);
@@ -199,8 +199,8 @@ public class TopViewController implements Initializable {
         double stripEnd;
         double obsBlockWidth = obstacleBlock.getHeight();
 
-        logRunway = MainController.logRunwayItem().get();
-        tora = MainController.logRunwayItem().get().getTora();
+        logRunway = MainController.logRunwayItem.get();
+        tora = MainController.logRunwayItem.get().getTora();
         stripEnd = PhysicalRunway.getStripEnd();
         double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistFCent()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2: (obstacle.getDistFCent()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2;
         if(displacedFromCentre < background.getHeight()/2 && displacedFromCentre > -background.getHeight()/2){
@@ -224,7 +224,7 @@ public class TopViewController implements Initializable {
     }
 
     public void showOriginalParameters(){
-        LogicalRunway logRunway = MainController.logRunwayItem().get();
+        LogicalRunway logRunway = MainController.logRunwayItem.get();
         LogicalRunway lLogicalRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(0);
         LogicalRunway rLogicalRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(1);
         double lDisplacedThreshold = lLogicalRunway.getDisplacedThreshold();
