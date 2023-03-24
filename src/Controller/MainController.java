@@ -41,6 +41,9 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
     private Airport airportSelected = null;
@@ -139,6 +142,8 @@ public class MainController implements Initializable {
     private RadioButton leftDirButton;
     @FXML
     private RadioButton rightDirButton;
+    @FXML
+    private Label notificationLabel;
 
     //property to be used in Visualisation classes
     private static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -212,6 +217,8 @@ public class MainController implements Initializable {
             stage.setTitle("SEG Runway Project");
             stage.setScene(scene);
             stage.show();
+            notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
+
         }
     }
 
@@ -264,6 +271,13 @@ public class MainController implements Initializable {
         }
         calculationBreakdown.setDisable(false);
         valueChanged.set(valueChanged.doubleValue() == 1? 0: 1);
+        notificationLabel.setText("Status: Calculation performed\t " + getDateTimeNow());
+    }
+
+    public String getDateTimeNow(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return  dtf.format(now);
     }
 
     @FXML
