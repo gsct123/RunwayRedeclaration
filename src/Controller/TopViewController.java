@@ -148,8 +148,6 @@ public class TopViewController implements Initializable {
     protected void setNewLine(String type, LogicalRunway logicalRunway,Obstacle obstacle,Line start,Line length,Line end,Label label){
         double originalValue = 0;
         double newValue = 0;
-        double labelLayout = start.getLayoutX() + (length.getEndX()-length.getStartX())/2 - label.getWidth()/2;
-        System.out.println(labelLayout);
         switch (type) {
             case "TORA" -> {
                 originalValue = logicalRunway.getTora();
@@ -176,14 +174,13 @@ public class TopViewController implements Initializable {
             start.setLayoutX(start.getLayoutX() + differenceInPx);
             length.setLayoutX(length.getLayoutX() + differenceInPx);
             length.setEndX(length.getEndX() - differenceInPx);
-            label.setText(" " + type +" = " + newValue + " ");
-            label.setLayoutX(labelLayout);
         } else if (flightMethod.equals(ttlt)) {
             end.setLayoutX(end.getLayoutX() - differenceInPx);
             length.setEndX(length.getEndX() - differenceInPx);
-            label.setText(" " + type +" = " + newValue + " ");
-            label.setLayoutX(labelLayout);
         }
+        double labelLayout = start.getLayoutX() + (end.getLayoutX()-start.getLayoutX())/2-label.getWidth()/2;
+        label.setText(" " + type +" = " + newValue + " ");
+        label.setLayoutX(labelLayout);
     }
 
     public void setMainController(MainController mainController){

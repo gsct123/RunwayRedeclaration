@@ -113,7 +113,6 @@ public class SideViewController {
     protected void setNewLine(String type, LogicalRunway logicalRunway,Obstacle obstacle,Line start,Line length,Line end,Label label){
         double originalValue = 0;
         double newValue = 0;
-        double labelLayout = getLabelLayout(start,length,label);
         switch (type) {
             case "TORA" -> {
                 originalValue = logicalRunway.getTora();
@@ -140,14 +139,13 @@ public class SideViewController {
             start.setLayoutX(start.getLayoutX() + differenceInPx);
             length.setLayoutX(length.getLayoutX() + differenceInPx);
             length.setEndX(length.getEndX() - differenceInPx);
-            label.setText(" " + type +" = " + newValue + " ");
-            label.setLayoutX(labelLayout);
         } else if (flightMethod.equals(ttlt)) {
             end.setLayoutX(end.getLayoutX() - differenceInPx);
             length.setEndX(length.getEndX() - differenceInPx);
-            label.setText(" " + type +" = " + newValue + " ");
-            label.setLayoutX(labelLayout);
         }
+        double labelLayout = getLabelLayout(start,length,label);
+        label.setText(" " + type +" = " + newValue + " ");
+        label.setLayoutX(labelLayout);
     }
 
     protected void setBlastProtection(String LandingOrTakeoff, LogicalRunway logicalRunway){
