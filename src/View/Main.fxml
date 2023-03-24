@@ -37,7 +37,7 @@
             <Insets bottom="10.0" top="10.0" />
          </padding>
       </Label>
-      <SplitPane dividerPositions="0.2239, 0.78" prefHeight="936.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
+      <SplitPane dividerPositions="0.21310888252148996, 0.8026504297994269" prefHeight="936.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
          <items>
             <AnchorPane prefHeight="691.0" prefWidth="285.0">
                <children>
@@ -142,8 +142,17 @@
             </AnchorPane>
              <AnchorPane prefHeight="691.0" prefWidth="726.0">
                <children>
-                  <TabPane fx:id="visualPane" layoutX="4.0" layoutY="-5.0" prefHeight="638.0" prefWidth="816.0" stylesheets="@../Utils/CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane fx:id="visualPane" layoutX="4.0" layoutY="-5.0" prefHeight="638.0" prefWidth="810.0" stylesheets="@../Utils/CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
+                      <Tab fx:id="sideViewTab" style="-fx-font-family: Verdana;" text="Side-on View">
+                           <content>
+                              <AnchorPane prefHeight="607.0" prefWidth="774.0">
+                                 <children>
+                                    <AnchorPane layoutX="6.0" prefHeight="607.0" prefWidth="804.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                      </Tab>
                       <Tab fx:id="topViewTab" style="-fx-font-family: Verdana;" text="Top-down View">
                          <content>
                             <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -152,15 +161,6 @@
                                </children>
                             </AnchorPane>
                          </content>
-                      </Tab>
-                      <Tab fx:id="sideViewTab" style="-fx-font-family: Verdana;" text="Side-on View">
-                           <content>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <AnchorPane prefHeight="606.5" prefWidth="816.0" />
-                                 </children>
-                              </AnchorPane>
-                           </content>
                       </Tab>
                     </tabs>
                   </TabPane>

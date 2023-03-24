@@ -22,7 +22,7 @@ public class TopViewController implements Initializable {
     @FXML
     private Label rightDesignator;
     @FXML
-    private Rectangle runwayStrip;
+    private Rectangle runway;
     @FXML
     private Rectangle obstacleBlock;
     @FXML
@@ -66,11 +66,12 @@ public class TopViewController implements Initializable {
     }
 
     public void relocateObstacle(){
+        obstacleBlock.setVisible(true);
         Obstacle obstacle = MainController.obstacleProperty.get();
         LogicalRunway logRunway;
         PhysicalRunway physRunway;
-        double runwayStartX = runwayStrip.getLayoutX();
-        double runwayLength = runwayStrip.getWidth();
+        double runwayStartX = runway.getLayoutX();
+        double runwayLength = runway.getWidth();
         double centre = centreLine.getLayoutY();
         double disFromThreshold = obstacle.getDistFThreshold();
         double tora;
@@ -83,20 +84,36 @@ public class TopViewController implements Initializable {
             tora = MainController.logRunwayItem().get().getTora();
             stripEnd = PhysicalRunway.getStripEnd();
             if(Calculator.needRedeclare(obstacle, logRunway)){
-                if(disFromThreshold < 0 || disFromThreshold > tora + stripEnd){
-                    //show label instead of obstacle
+                double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistFCent()*(minCGArea.getHeight()/2)/75)-obsBlockWidth/2: (obstacle.getDistFCent()*(minCGArea.getHeight()/2)/75)-obsBlockLength/2;
+                if(disFromThreshold < 0 || disFromThreshold > tora){
+                    if(Calculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
+                        obstacleBlock.relocate(runwayStartX+(disFromThreshold*((minCGArea.getWidth()-runway.getWidth())/2)/stripEnd)-obsBlockWidth, centre+displacedFromCentre);
+                    } else{
+                        obstacleBlock.relocate(runwayStartX+runwayLength+((disFromThreshold-tora)*((minCGArea.getWidth()-runway.getWidth())/2)/stripEnd), centre+displacedFromCentre);
+                    }
                 } else{
-                    double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistFCent()*(minCGArea.getHeight()/2)/75)-obsBlockWidth/2: (obstacle.getDistFCent()*(minCGArea.getHeight()/2)/75)-obsBlockLength/2;
                     //obstacle x depends on value of distFromThreshold
                     if(Calculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
                         obstacleBlock.relocate(runwayStartX+(disFromThreshold*(runwayLength-logRunway.getClearway())/tora)-obsBlockLength, centre+displacedFromCentre);
                     } else{
                         obstacleBlock.relocate(runwayStartX+(disFromThreshold*(runwayLength-logRunway.getClearway())/tora), centre+(displacedFromCentre));
                     }
-                    System.out.println(disFromThreshold);
-                    System.out.println(runwayStartX);
-                    System.out.println(runwayStartX+(disFromThreshold/runwayLength));
-                    System.out.println(obstacleBlock.getLayoutX());
+                }
+            } else{
+                double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistFCent()*(minCGArea.getHeight()/2)/75)-obsBlockWidth/2: (obstacle.getDistFCent()*(minCGArea.getHeight()/2)/75)-obsBlockLength/2;
+                if(disFromThreshold < 0 || disFromThreshold > tora){
+                    if(Calculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
+                        obstacleBlock.relocate(runwayStartX+(disFromThreshold*((minCGArea.getWidth()-runway.getWidth())/2)/stripEnd)-obsBlockWidth, centre+displacedFromCentre);
+                    } else{
+                        obstacleBlock.relocate(runwayStartX+runwayLength+((disFromThreshold-tora)*((minCGArea.getWidth()-runway.getWidth())/2)/stripEnd), centre+displacedFromCentre);
+                    }
+                } else{
+                    //obstacle x depends on value of distFromThreshold
+                    if(Calculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
+                        obstacleBlock.relocate(runwayStartX+(disFromThreshold*(runwayLength-logRunway.getClearway())/tora)-obsBlockLength, centre+displacedFromCentre);
+                    } else{
+                        obstacleBlock.relocate(runwayStartX+(disFromThreshold*(runwayLength-logRunway.getClearway())/tora), centre+(displacedFromCentre));
+                    }
                 }
             }
         }
