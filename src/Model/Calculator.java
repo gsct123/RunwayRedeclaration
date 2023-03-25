@@ -219,11 +219,20 @@ public class Calculator {
         return result;
     }
 
-    public static void performCalc(Obstacle obstacle, LogicalRunway runway){
-        calcTora(obstacle, runway);
-        calcLda(obstacle, runway);
-        calcToda(obstacle, runway);
-        calcAsda(obstacle, runway);
+    public static void performCalc(Obstacle obstacle, PhysicalRunway runway){
+        //calculate for both runways
+        calcTora(obstacle, runway.getLogicalRunways().get(0));
+        calcLda(obstacle, runway.getLogicalRunways().get(0));
+        calcToda(obstacle, runway.getLogicalRunways().get(0));
+        calcAsda(obstacle, runway.getLogicalRunways().get(0));
+
+        //obstacle distance from the other end
+        double distThreshold = runway.getLogicalRunways().get(0).getLda()-obstacle.getDistFThreshold();
+        Obstacle tempObs = new Obstacle(obstacle.getName(), obstacle.getHeight(), obstacle.getWidth(), obstacle.getDistFCent(), distThreshold);
+        calcTora(tempObs, runway.getLogicalRunways().get(1));
+        calcLda(tempObs, runway.getLogicalRunways().get(1));
+        calcToda(tempObs, runway.getLogicalRunways().get(1));
+        calcAsda(tempObs, runway.getLogicalRunways().get(1));
     }
 
     public static String toraBreakdown(Obstacle obstacle, LogicalRunway runway) {
