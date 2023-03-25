@@ -8,15 +8,6 @@ public class Calculator {
     public static final String talo = "Take-Off Away Landing Over";
     public static final String ttlt = "Take-Off Towards Landing Towards";
 
-    //testing only
-    public static void main(String[] args) {
-        LogicalRunway runway = new LogicalRunway("09l", 3902, 3902, 3902, 3595);
-        Obstacle obstacle = new Obstacle("obs1", 12, 0, 0, 50);
-
-//        getCalculationBreakdownT(obstacle, runway, Calculator.getFlightMethod(obstacle, runway));
-        System.out.println(getCalculationBreakdownT(obstacle, runway));
-    }
-
     public static double calcTora(Obstacle obstacle,LogicalRunway runway){
         String flightMethod = getFlightMethod(obstacle,runway);
         double originalTora = runway.getTora();
@@ -114,7 +105,7 @@ public class Calculator {
 
         double stripEnd = PhysicalRunway.stripEnd;
         double minCGArea = PhysicalRunway.minCGArea;
-        boolean withinStripEnd = obstacle.getDistFThreshold() <= logicalRunway.getTora() + stripEnd && obstacle.getDistFThreshold() >= -stripEnd;
+        boolean withinStripEnd = obstacle.getDistFThreshold() <= logicalRunway.getTora() + stripEnd - logicalRunway.getDisplacedThreshold() && obstacle.getDistFThreshold()  >= -stripEnd - logicalRunway.getDisplacedThreshold();
         boolean withinCentreline = obstacle.getDistFCent() <= minCGArea && obstacle.getDistFCent() >= -minCGArea;
         return withinStripEnd && withinCentreline;
     }
@@ -135,7 +126,7 @@ public class Calculator {
         double alsTocs = obstacle.getAlsTocs();
         double stripEnd = PhysicalRunway.stripEnd;
         double blastProtection = PhysicalRunway.blastProtection;
-        if (resa > obstacle.getAlsTocs()){
+        if (resa > alsTocs){
             choice = 1;
         } else if (blastProtection >= alsTocs + stripEnd) {
             choice = 2;
