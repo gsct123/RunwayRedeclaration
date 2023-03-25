@@ -153,14 +153,7 @@
                            <content>
                               <AnchorPane prefHeight="607.0" prefWidth="774.0">
                                  <children>
-                                    <AnchorPane layoutX="6.0" prefHeight="627.0" prefWidth="804.0">
-                                       <children>
-                                          <MenuButton fx:id="logicalRunwayMenu" disable="true" layoutX="48.0" layoutY="231.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="260.0" text="Select Logical Runway">
-                                             <font>
-                                                <Font name="Verdana" size="16.0" />
-                                             </font>
-                                          </MenuButton>
-                                       </children></AnchorPane>
+                                    <AnchorPane layoutX="6.0" prefHeight="627.0" prefWidth="804.0" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -259,22 +252,22 @@
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="oldToraInfo" layoutX="2.0" layoutY="110.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="17.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
+                  <Button fx:id="oldToraInfo" layoutX="2.0" layoutY="110.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="17.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?" visible="false">
                      <font>
                         <Font name="Verdana" size="8.0" />
                      </font>
                   </Button>
-                  <Button fx:id="oldTodaInfo" layoutX="2.0" layoutY="136.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
+                  <Button fx:id="oldTodaInfo" layoutX="2.0" layoutY="136.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?" visible="false">
                      <font>
                         <Font name="Verdana" size="8.0" />
                      </font>
                   </Button>
-                  <Button fx:id="oldAsdaInfo" layoutX="2.0" layoutY="162.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
+                  <Button fx:id="oldAsdaInfo" layoutX="2.0" layoutY="162.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?" visible="false">
                      <font>
                         <Font name="Verdana" size="8.0" />
                      </font>
                   </Button>
-                  <Button fx:id="oldLdaInfo" layoutX="2.0" layoutY="185.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
+                  <Button fx:id="oldLdaInfo" layoutX="2.0" layoutY="185.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?" visible="false">
                      <font>
                         <Font name="Verdana" size="8.0" />
                      </font>
