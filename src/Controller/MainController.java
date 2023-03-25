@@ -39,6 +39,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -65,34 +66,6 @@ public class MainController implements Initializable {
     private Button performCalculationButton;
     @FXML
     private TextField clDistTextField;
-//    @FXML
-//    private MenuButton flightMethodMenu;
-    @FXML
-    private Label originalToraLabel;
-    @FXML
-    private Label originalTodaLabel;
-    @FXML
-    private Label originalAsdaLabel;
-    @FXML
-    private Label originalLdaLabel;
-    @FXML
-    public Label newToraLabel;
-    @FXML
-    private Label newTodaLabel;
-    @FXML
-    private Label newAsdaLabel;
-    @FXML
-    private Label newLdaLabel;
-    @FXML
-    private Label revisedRunwayTitle;
-    @FXML
-    private Label editToBeginLabel;
-    @FXML
-    private Label noCalcPerformedLabel;
-    @FXML
-    private Label breakdownLabel;
-    @FXML
-    private MenuItem aboutProject;
     @FXML
     private Button oldToraInfo;
     @FXML
@@ -172,8 +145,6 @@ public class MainController implements Initializable {
     public static StringProperty dirFromCentre = new SimpleStringProperty();
     public static DoubleProperty valueChanged = new SimpleDoubleProperty();
 
-    public Button getCalculationButton() {return performCalculationButton;}
-
 
     //list of airports and obstacles from files
     ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -183,7 +154,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadInfos();
         try {
-            topViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/TopView.fxml")));
+            topViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("../View/TopView.fxml"))));
 //            sideViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/SideView.fxml")));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
@@ -591,81 +562,4 @@ public class MainController implements Initializable {
                 clDistTextField.setDisable(notAllowed);
             }
     }
-
-//    //load flight menu
-//    public void loadFlightMenu(){
-//        flightMethodMenu.getItems().clear();
-//        flightMethodMenu.setText("Select Flight Method");
-//        ObservableList<MenuItem> methods = FXCollections.observableArrayList();
-//        if(distFromThreshold <= logRunwaySelected.getTora()/2){
-//            MenuItem takeOffAway = new MenuItem("Take Off Away");
-//            MenuItem landOver = new MenuItem("Landing Over");
-//            flightMethodMenu.getItems().add(takeOffAway);
-//            flightMethodMenu.getItems().add(landOver);
-//            methods.add(takeOffAway);
-//            methods.add(landOver);
-//        }
-//        if(distFromThreshold >= logRunwaySelected.getTora()/2){
-//            MenuItem takeOffTowards = new MenuItem("Take Off Towards");
-//            MenuItem landTowards = new MenuItem("Landing Towards");
-//            flightMethodMenu.getItems().add(takeOffTowards);
-//            flightMethodMenu.getItems().add(landTowards);
-//            methods.add(takeOffTowards);
-//            methods.add(landTowards);
-//        }
-//
-//        for(MenuItem method: methods){
-//            method.setOnAction(actionEvent -> {
-//                flightMethodMenu.setText(method.getText());
-//                flightMethod = method.getText();
-//                performCalculationButton.setDisable(false);
-//                performCalculationButton.setOnAction(actionEvent1 -> {
-//                    if(Calculator.needRedeclare(obstacleSelected, logRunwaySelected)){
-//                        performCalculation();
-//                        newToraLabel.setText("TORA  =  "+logRunwaySelected.getNewTora());
-//                        newTodaLabel.setText("TODA  =  "+logRunwaySelected.getNewToda());
-//                        newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getNewAsda());
-//                        newLdaLabel.setText("LDA     =  "+logRunwaySelected.getNewLda());
-//                        editToBeginLabel.setVisible(false);
-//                        noCalcPerformedLabel.setVisible(false);
-//                        //start breaking down
-//                        breakdownLabel.setText(Calculator.getCalculationBreakdownT(obstacleSelected, logRunwaySelected));
-//                        breakdownLabel.setVisible(true);
-//                        //edit this to show the correct breakdown message
-//                    } else{
-//                        breakdownLabel.setVisible(false);
-//                        //check needRedeclare function (clarify)
-//                        editToBeginLabel.setVisible(true);
-//                        noCalcPerformedLabel.setVisible(true);
-//                        editToBeginLabel.setText("No runway redeclation needed");
-//                        noCalcPerformedLabel.setText("Original runway parameters can be used");
-//
-//                        newToraLabel.setText("TORA  =  "+logRunwaySelected.getTora());
-//                        newTodaLabel.setText("TODA  =  "+logRunwaySelected.getToda());
-//                        newAsdaLabel.setText("ASDA  =  "+logRunwaySelected.getAsda());
-//                        newLdaLabel.setText("LDA     =  "+logRunwaySelected.getLda());
-//
-//                        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
-//                        infoAlert.setTitle("Information");
-//                        infoAlert.setHeaderText("INFO");
-//                        infoAlert.setContentText("No runway redeclaration needed\nOriginal runway parameters can be used");
-//                        infoAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
-//                        Optional<ButtonType> result = infoAlert.showAndWait();
-//
-//                        if(result.isPresent() && result.get() == ButtonType.OK){
-//                            infoAlert.close();
-//                        }
-//
-//                        Button okButton = (Button) infoAlert.getDialogPane().lookupButton(ButtonType.OK);
-//                        okButton.setOnAction(event -> {
-//                            infoAlert.close();
-//                        });
-//                    }
-//                });
-//            });
-//        }
-//    }
-
-    //event handler for reset button
-
 }
