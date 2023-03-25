@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -117,6 +117,7 @@
                         <Font name="Verdana" size="16.0" />
                      </font>
                   </Button>
+                  <Label fx:id="notificationLabel" layoutX="8.0" layoutY="674.0" prefHeight="18.0" prefWidth="304.0" />
                   <Label alignment="CENTER" layoutX="17.0" layoutY="8.0" prefHeight="42.0" prefWidth="260.0" text="AIRPORT AND RUNWAYS">
                      <font>
                         <Font name="Verdana Bold" size="18.0" />
