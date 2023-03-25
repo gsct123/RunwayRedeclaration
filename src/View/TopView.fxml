@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
    <children>
-      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#abd2fc8f" height="426.0" layoutY="90.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
+      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#abd2fc8f" height="607.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
       <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#aeaeae" height="176.0" layoutY="212.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#aeaeae" height="279.0" layoutX="187.0" layoutY="158.0" stroke="TRANSPARENT" strokeType="INSIDE" width="411.0" />
       <Rectangle fx:id="clearwayR" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="726.0" layoutY="252.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="67.0" />
@@ -89,28 +89,28 @@
       </Label>
       <Rectangle fx:id="obstacleBlock" arcHeight="5.0" fill="#f53e3e" height="32.0" layoutX="46.0" layoutY="282.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="32.0" />
       <Line id="toraEnd" fx:id="toraEnd" endY="25.0" layoutX="726.0" layoutY="197.0" />
-      <Label layoutX="277.0" layoutY="470.0" text="Landing/Taking Off Direction">
+      <Label layoutX="149.0" layoutY="50.0" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="15.0" />
          </font>
       </Label>
-      <Polygon fill="#0f0f0f" layoutX="614.0" layoutY="500.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <Line endX="539.4921875" endY="-70.64114379882812" layoutX="110.0" layoutY="550.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
-      <Line endX="468.92669677734375" endY="-70.64117431640625" layoutX="-208.0" layoutY="551.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcf347" height="12.0" layoutX="21.0" layoutY="417.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Label layoutX="45.0" layoutY="417.0" style="-fx-text-fill: black;" text="Stopway">
+      <Polygon fill="#0f0f0f" layoutX="494.0" layoutY="82.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Line endX="539.4921875" endY="-70.64114379882812" layoutX="-10.0" layoutY="132.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Line endX="468.92669677734375" endY="-70.64117431640625" layoutX="-339.0" layoutY="132.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcf347" height="12.0" layoutX="652.0" layoutY="28.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Label layoutX="678.0" layoutY="27.0" style="-fx-text-fill: black;" text="Stopway">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5ff552" height="12.0" layoutX="21.0" layoutY="439.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Label layoutX="45.0" layoutY="439.0" style="-fx-text-fill: black;" text="Clearway">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5ff552" height="12.0" layoutX="652.0" layoutY="51.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Label layoutX="678.0" layoutY="49.0" style="-fx-text-fill: black;" text="Clearway">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f53e3e" height="12.0" layoutX="21.0" layoutY="461.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Label layoutX="45.0" layoutY="460.0" style="-fx-text-fill: black;" text="Obstacle">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f53e3e" height="12.0" layoutX="652.0" layoutY="72.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Label layoutX="677.0" layoutY="72.0" style="-fx-text-fill: black;" text="Obstacle">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
@@ -147,8 +147,8 @@
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="12.0" layoutX="21.0" layoutY="483.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Label layoutX="45.0" layoutY="483.0" prefHeight="12.0" prefWidth="108.0" style="-fx-text-fill: black;" text="Displaced Threshold" wrapText="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="12.0" layoutX="652.0" layoutY="93.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Label layoutX="677.0" layoutY="93.0" prefHeight="12.0" prefWidth="108.0" style="-fx-text-fill: black;" text="Displaced Threshold" wrapText="true">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
@@ -176,5 +176,13 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
+      <Label layoutX="378.0" layoutY="545.0" text="Landing/Taking Off Direction">
+         <font>
+            <Font name="Verdana Bold" size="15.0" />
+         </font>
+      </Label>
+      <Polygon fill="#0f0f0f" layoutX="233.0" layoutY="577.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Line endX="539.4921875" endY="-70.64114379882812" layoutX="212.0" layoutY="626.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Line endX="468.92669677734375" endY="-70.64117431640625" layoutX="-110.0" layoutY="627.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
    </children>
 </AnchorPane>

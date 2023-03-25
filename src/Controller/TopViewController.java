@@ -146,7 +146,7 @@ public class TopViewController implements Initializable {
         blastProtectionLabel.setVisible(bool);
         blastProtectionLength.setVisible(bool);
         blastProtectionStart.setVisible(bool);
-        blastProtectionStart.setLayoutX(toraStart.getLayoutX()-(PhysicalRunway.getBlastProtection()*runway.getWidth()/MainController.getLogRunwaySelected().getTora()));
+        blastProtectionStart.setLayoutX(toraStart.getLayoutX()-(PhysicalRunway.getBlastProtection()*runway.getWidth()/MainController.getPhysRunwaySelected().getLogicalRunways().get(0).getTora()));
         blastProtectionLength.setLayoutX(blastProtectionStart.getLayoutX());
         blastProtectionLength.setEndX(toraStart.getLayoutX());
         blastProtectionLabel.setText("Blast protection" +
@@ -214,9 +214,9 @@ public class TopViewController implements Initializable {
         double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistFCent()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2: (obstacle.getDistFCent()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2;
         if(displacedFromCentre < background.getHeight()/2 && displacedFromCentre > -background.getHeight()/2){
             if(Calculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
-                obstacleBlock.relocate(runwayStartX+(disFromThreshold*(runwayLength-logRunway.getClearway())/tora)-obsBlockWidth, centre+displacedFromCentre);
+                obstacleBlock.relocate(runwayStartX+((disFromThreshold+logRunway.getDisplacedThreshold())*(runwayLength-logRunway.getClearway())/tora)-obsBlockWidth, centre+displacedFromCentre);
             } else{
-                obstacleBlock.relocate(runwayStartX+(disFromThreshold*(runwayLength-logRunway.getClearway())/tora), centre+(displacedFromCentre));
+                obstacleBlock.relocate(runwayStartX+((disFromThreshold+logRunway.getDisplacedThreshold())*(runwayLength-logRunway.getClearway())/tora), centre+(displacedFromCentre));
             }
         }else{
             obstacleBlock.setVisible(false);
