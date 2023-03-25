@@ -169,14 +169,15 @@ public class SideViewController {
         resetValues(selectedPhyRunway);
 
         setUpAlsTocs(selectedObstacle,lLogicalRunway);
-        //setNewLine("TORA","Left",selectedPhyRunway,selectedObstacle,toraStart,toraLength,toraEnd,toraLabel);
-        //setNewLine("LDA","Left",selectedPhyRunway,selectedObstacle,ldaStart,ldaLength,ldaEnd,ldaLabel);
-        //setNewLine("ASDA","Left",selectedPhyRunway,selectedObstacle,asdaStart,asdaLength,asdaEnd,asdaLabel);
-        //setNewLine("TODA","Left",selectedPhyRunway,selectedObstacle,todaStart,todaLength,todaEnd,todaLabel);
-        //setNewLine("TORA","Right",selectedPhyRunway,selectedObstacle,rToraStart,rToraLength,rToraEnd,rToraLabel);
-        //setNewLine("LDA","Right",selectedPhyRunway,selectedObstacle,rLdaStart,rLdaLength,rLdaEnd,rLdaLabel);
-        //setNewLine("ASDA","Right",selectedPhyRunway,selectedObstacle,rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel);
-        //setNewLine("TODA","Right",selectedPhyRunway,selectedObstacle,rTodaStart,rTodaLength,rTodaEnd,rTodaLabel);
+        setNewLine("TORA","Left",selectedPhyRunway,selectedObstacle,toraStart,toraLength,toraEnd,toraLabel);
+        setNewLine("LDA","Left",selectedPhyRunway,selectedObstacle,ldaStart,ldaLength,ldaEnd,ldaLabel);
+        setNewLine("ASDA","Left",selectedPhyRunway,selectedObstacle,asdaStart,asdaLength,asdaEnd,asdaLabel);
+        setNewLine("TODA","Left",selectedPhyRunway,selectedObstacle,todaStart,todaLength,todaEnd,todaLabel);
+        setNewLine("TORA","Right",selectedPhyRunway,selectedObstacle,rToraStart,rToraLength,rToraEnd,rToraLabel);
+        setNewLine("LDA","Right",selectedPhyRunway,selectedObstacle,rLdaStart,rLdaLength,rLdaEnd,rLdaLabel);
+        setNewLine("ASDA","Right",selectedPhyRunway,selectedObstacle,rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel);
+        setNewLine("TODA","Right",selectedPhyRunway,selectedObstacle,rTodaStart,rTodaLength,rTodaEnd,rTodaLabel);
+
         //setOtherLines(selectedLogRunway,selectedObstacle,blastProtectionStart,blastProtectionLength,blastProtectionEnd,blastProtectionLabel,PhysicalRunway.getBlastProtection(),"TORA","blastProtection");
         //setOtherLines(selectedLogRunway,selectedObstacle,toraStripEndStart,toraStripEndLength,toraStripEndEnd,toraStripEndLabel,PhysicalRunway.getStripEnd(),"TORA","stripEnd");
     }
@@ -194,6 +195,7 @@ public class SideViewController {
         double newValue = oldAndNewValue(type,logicalRunway)[1];
         double difference = originalValue - newValue;
         double differenceInPx = getNumberOfPx(difference,logicalRunway);
+        double labelLayout;
 
         String flightMethod = Calculator.getFlightMethod(obstacle,logicalRunway);
         String talo = Calculator.talo;
@@ -208,41 +210,47 @@ public class SideViewController {
                 end.setLayoutX(end.getLayoutX() - differenceInPx);
                 length.setEndX(length.getEndX() - differenceInPx);
             }
+            labelLayout = getLabelLayout(start,length,label);
         }else {
-            if (flightMethod.equals(talo)){
+            //when flightMethod for left runway is ttlt, the flightmethod for right runway will be talo, vice versa
+            if (flightMethod.equals(ttlt)){
+                //for flightmethod talo
                 start.setLayoutX(start.getLayoutX() - differenceInPx);
-                length.setLayoutX(length.getLayoutX() - differenceInPx);
-                length.setEndX(length.getEndX() + differenceInPx);
-            } else if (flightMethod.equals(ttlt)) {
+                length.setLayoutX(end.getLayoutX());
+                length.setEndX(length.getEndX() - differenceInPx);
+            } else if (flightMethod.equals(talo)) {
+                //for flightmethod ttlt
                 end.setLayoutX(end.getLayoutX() + differenceInPx);
-                length.setEndX(length.getEndX() + differenceInPx);
+                length.setLayoutX(end.getLayoutX());
+                length.setEndX(length.getEndX() - differenceInPx);
+                System.out.println(type + " " + LeftorRight + " = \n" + end.getLayoutX()+ "\n" +length.getStartX() + "\n" + length.getEndX() + "\n");
             }
+            labelLayout = getLabelLayout(end,length,label);
         }
 
-        double labelLayout = getLabelLayout(start,length,label);
         label.setText(" " + type +" = " + newValue + " ");
         label.setLayoutX(labelLayout);
     }
 
-    protected void setBlastProtection(String LandingOrTakeoff, LogicalRunway logicalRunway){
-        double bPLengthPx = getNumberOfPx(PhysicalRunway.getBlastProtection(),logicalRunway);
-
-        setLineVisibility(true,blastProtectionStart,blastProtectionLength,blastProtectionEnd,blastProtectionLabel);
-        if (LandingOrTakeoff.equals("Takeoff")){
-            //
-            blastProtectionLabel.setText(String.valueOf(PhysicalRunway.getBlastProtection()));
-            // Set X
-            blastProtectionLength.setEndX(bPLengthPx);
-            blastProtectionLength.setLayoutX(toraStart.getLayoutX()-bPLengthPx);
-            blastProtectionEnd.setLayoutX(toraStart.getLayoutX());
-            blastProtectionStart.setLayoutX(toraStart.getLayoutX()-bPLengthPx);
-            blastProtectionLabel.setLayoutX(getLabelLayout(blastProtectionStart,blastProtectionLength,blastProtectionLabel));
-            // Set Y
-            setAllLayoutY(toraLength.getLayoutY(),blastProtectionStart,blastProtectionLength,blastProtectionEnd,blastProtectionLabel);
-        }else {
-
-        }
-    }
+    //protected void setBlastProtection(String LandingOrTakeoff, LogicalRunway logicalRunway){
+    //    double bPLengthPx = getNumberOfPx(PhysicalRunway.getBlastProtection(),logicalRunway);
+//
+    //    setLineVisibility(true,blastProtectionStart,blastProtectionLength,blastProtectionEnd,blastProtectionLabel);
+    //    if (LandingOrTakeoff.equals("Takeoff")){
+    //        //
+    //        blastProtectionLabel.setText(String.valueOf(PhysicalRunway.getBlastProtection()));
+    //        // Set X
+    //        blastProtectionLength.setEndX(bPLengthPx);
+    //        blastProtectionLength.setLayoutX(toraStart.getLayoutX()-bPLengthPx);
+    //        blastProtectionEnd.setLayoutX(toraStart.getLayoutX());
+    //        blastProtectionStart.setLayoutX(toraStart.getLayoutX()-bPLengthPx);
+    //        blastProtectionLabel.setLayoutX(getLabelLayout(blastProtectionStart,blastProtectionLength,blastProtectionLabel));
+    //        // Set Y
+    //        setAllLayoutY(toraLength.getLayoutY(),blastProtectionStart,blastProtectionLength,blastProtectionEnd,blastProtectionLabel);
+    //    }else {
+//
+    //    }
+    //}
 
     protected void setOtherLines(LogicalRunway logicalRunway, Obstacle obstacle, Line  start,Line length,Line end,Label label,double value,String type,String result){
         double distanceFromThreshold = obstacle.getDistFThreshold();
@@ -340,14 +348,14 @@ public class SideViewController {
         setUpLogicalRunway(physicalRunway);
     }
     protected void setUpLogicalRunway(PhysicalRunway physicalRunway){
-        setUpValue("TORA","Left",physicalRunway,toraStart,toraLength,toraEnd,toraLabel);
-        setUpValue("LDA","Left",physicalRunway,ldaStart,ldaLength,ldaEnd,ldaLabel);
-        setUpValue("ASDA","Left",physicalRunway,asdaStart,asdaLength,asdaEnd,asdaLabel);
-        setUpValue("TODA","Left",physicalRunway,todaStart,todaLength,todaEnd,todaLabel);
-        setUpValue("TORA","Right",physicalRunway,rToraStart,rToraLength,rToraEnd,rToraLabel);
-        setUpValue("LDA","Right",physicalRunway,rLdaStart,rLdaLength,rLdaEnd,rLdaLabel);
-        setUpValue("ASDA","Right",physicalRunway,rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel);
-        setUpValue("TODA","Right",physicalRunway,rTodaStart,rTodaLength,rTodaEnd,rTodaLabel);
+        setUpLine("TORA","Left",physicalRunway,toraStart,toraLength,toraEnd,toraLabel);
+        setUpLine("LDA","Left",physicalRunway,ldaStart,ldaLength,ldaEnd,ldaLabel);
+        setUpLine("ASDA","Left",physicalRunway,asdaStart,asdaLength,asdaEnd,asdaLabel);
+        setUpLine("TODA","Left",physicalRunway,todaStart,todaLength,todaEnd,todaLabel);
+        setUpLine("TORA","Right",physicalRunway,rToraStart,rToraLength,rToraEnd,rToraLabel);
+        setUpLine("LDA","Right",physicalRunway,rLdaStart,rLdaLength,rLdaEnd,rLdaLabel);
+        setUpLine("ASDA","Right",physicalRunway,rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel);
+        setUpLine("TODA","Right",physicalRunway,rTodaStart,rTodaLength,rTodaEnd,rTodaLabel);
     }
 
     //protected void setUpTora(PhysicalRunway physicalRunway){
@@ -384,7 +392,7 @@ public class SideViewController {
     //    ldaLabel.setText(" LDA = " + lda);
     //}
 
-    protected void setUpValue(String type,String LeftorRight, PhysicalRunway physicalRunway, Line start, Line length, Line end, Label label){
+    protected void setUpLine(String type,String LeftorRight, PhysicalRunway physicalRunway, Line start, Line length, Line end, Label label){
         LogicalRunway logicalRunway = null;
         double originalStartX;
         double originalEndX;
@@ -418,14 +426,13 @@ public class SideViewController {
         //condition for defining end
         if (LeftorRight.equals("Left")){
             if (type.equals("ASDA")){
-                originalEndX = stopway.getLayoutX() +stopway.getWidth();
+                originalEndX = stopway.getLayoutX() + stopway.getWidth();
             }else if (type.equals("TODA")){
                 originalEndX = clearway.getLayoutX() + clearway.getWidth();
             }
         }else {
             if (type.equals("ASDA")){
                 originalEndX = stopway.getLayoutX();
-                System.out.println(stopway.getLayoutX());
             }else if (type.equals("TODA")){
                 originalEndX = clearway.getLayoutX() ;
             }
@@ -435,8 +442,6 @@ public class SideViewController {
 
         start.setLayoutX(originalStartX);
         end.setLayoutX(originalEndX);
-        //length.setLayoutX(originalStartX);
-        //length.setEndX(originalEndX-originalStartX);
         label.setText(" " + type + " = " + originalValue + " " );
         if (LeftorRight.equals("Left")){
             length.setLayoutX(originalStartX);
@@ -445,7 +450,7 @@ public class SideViewController {
         }
         double difference = Math.abs(originalEndX-originalStartX);
         length.setEndX(difference);
-
+        System.out.println(type + " " + LeftorRight + " = \n" + end.getLayoutX()+ "\n" +length.getStartX() + "\n" + length.getEndX() + "\n");
     }
 
     protected double[] oldAndNewValue(String type, LogicalRunway logicalRunway){
