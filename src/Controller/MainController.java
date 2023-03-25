@@ -1,10 +1,7 @@
 package Controller;
 
 import Model.*;
-import View.ErrorPopUp.InvalidBlastProtection;
-import View.ErrorPopUp.InvalidDistanceFromCentreline;
-import View.ErrorPopUp.InvalidDistanceThreshold;
-import View.ErrorPopUp.InvalidStripEnd;
+import View.ErrorPopUp.*;
 import View.Main;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
@@ -23,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,11 +36,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.ResourceBundle;
-
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 
 public class MainController implements Initializable {
     private ObservableList<String> items = FXCollections.observableArrayList();
@@ -119,6 +116,8 @@ public class MainController implements Initializable {
     @FXML
     private TextField blastProtectionField;
     @FXML
+    private TextField resaTextField;
+    @FXML
     private Label stripEndInfoLabel;
     @FXML
     private Label blastProtectionInfoLabel;
@@ -140,6 +139,24 @@ public class MainController implements Initializable {
     private RadioButton rightDirButton;
     @FXML
     private Label notificationLabel;
+
+    //table
+    @FXML
+    private TableView<Parameter> leftTableView;
+    @FXML
+    private TableView<Parameter> rightTableView;
+    @FXML
+    private TableColumn<Parameter, String> parColumn1;
+    @FXML
+    private TableColumn<Parameter, String> originalCol1;
+    @FXML
+    private TableColumn<Parameter, String> revisedCol1;
+    @FXML
+    private TableColumn<Parameter, String> parColumn2;
+    @FXML
+    private TableColumn<Parameter, String> originalCol2;
+    @FXML
+    private TableColumn<Parameter, String> revisedCol2;
 
     //property to be used in Visualisation classes
     public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -184,7 +201,6 @@ public class MainController implements Initializable {
     public ObservableList<Obstacle> getObstacles(){return this.obstacles;}
     public ObservableList<Airport> getAirports(){return this.airports;}
     public static PhysicalRunway getPhysRunwaySelected() {return physRunwayItem.get();}
-    public static LogicalRunway getLogRunwaySelected() {return logRunwayItem.get();}
     public static boolean needRedeclare(){return needRedeclare;}
     public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
     public MenuButton getAirportMenu() {return this.airportMenu;}
@@ -241,23 +257,16 @@ public class MainController implements Initializable {
     public void performCalculation(ActionEvent event){
         checkDistFromThreshold(new ActionEvent());
         checkDistFromCentreLine(new ActionEvent());
+        setRESA(new ActionEvent());
         setStripEnd(new ActionEvent());
         setBlastProtection(new ActionEvent());
-        if(Calculator.needRedeclare(getObstacleSelected(), getLogRunwaySelected())){
+        if(Calculator.needRedeclare(getObstacleSelected(), getPhysRunwaySelected().getLogicalRunways().get(0))){
             needRedeclare = true;
-            Calculator.performCalc(getObstacleSelected(), getLogRunwaySelected());
-            newToraLabel.setText("TORA  =  "+getLogRunwaySelected().getNewTora() + " m");
-            newTodaLabel.setText("TODA  =  "+getLogRunwaySelected().getNewToda() + " m");
-            newAsdaLabel.setText("ASDA  =  "+getLogRunwaySelected().getNewAsda() + " m");
-            newLdaLabel.setText("LDA     =  "+getLogRunwaySelected().getNewLda() + " m");
-            //no view yet all set to invisible
+            Calculator.performCalc(getObstacleSelected(), getPhysRunwaySelected());
+            showTable(false);
         } else{
             needRedeclare = false;
-            newToraLabel.setText("TORA  =  "+getLogRunwaySelected().getTora() + " m");
-            newTodaLabel.setText("TODA  =  "+getLogRunwaySelected().getToda() + " m");
-            newAsdaLabel.setText("ASDA  =  "+getLogRunwaySelected().getAsda() + " m");
-            newLdaLabel.setText("LDA     =  "+getLogRunwaySelected().getLda() + " m");
-
+            showTable(false);
             new NoRedeclarationNeeded().showNoRedeclarationNeeded();
         }
         calculationBreakdown.setDisable(false);
@@ -292,6 +301,19 @@ public class MainController implements Initializable {
             PhysicalRunway.setBlastProtection(blastProtection);
         } catch (NumberFormatException e){
             new InvalidBlastProtection().showError(blastProtectionField);
+        }
+    }
+
+    @FXML
+    public void setRESA(ActionEvent event){
+        try{
+            double resa = Double.parseDouble(resaTextField.getText().trim());
+            if(resa < 240){
+                throw new NumberFormatException();
+            }
+            PhysicalRunway.setResa(resa);
+        } catch (NumberFormatException e){
+            new InvalidRESA().showError(resaTextField);
         }
     }
 
@@ -413,42 +435,20 @@ public class MainController implements Initializable {
                 getAirportMenu().setText(airport.getName());
                 physicalRunwayMenu.setText("Select Physical Runway");
                 physicalRunwayMenu.setDisable(false);
-                logicalRunwayMenu.setText("Select Logical Runway");
                 performCalculationButton.setDisable(true);
                 obstaclesEditing(true);
                 for(PhysicalRunway runway: airport.getPhysicalRunways()){
                     MenuItem runwayMenuItem = new MenuItem(runway.getName());
                     runwayMenuItem.setOnAction(f -> {
                         physRunwayItem.set(runway);
-                        logicalRunwayMenu.getItems().clear();
                         physicalRunwayMenu.setText(runway.getName());
                         stripEndTextField.setText(String.valueOf(PhysicalRunway.getStripEnd()));
                         blastProtectionField.setText(String.valueOf(PhysicalRunway.getBlastProtection()));
                         stripEndTextField.setDisable(false);
                         blastProtectionField.setDisable(false);
-                        logicalRunwayMenu.setText("Select Logical Runway");
-                        performCalculationButton.setDisable(true);
-                        logicalRunwayMenu.setDisable(false);
-                        obstaclesEditing(true);
-                        for(LogicalRunway logicalRunway: runway.getLogicalRunways()){
-                            MenuItem lRunwayMenuItem = new MenuItem(logicalRunway.getDesignator());
-                            lRunwayMenuItem.setOnAction(g -> {
-                                obstaclesEditing(false);
-                                logRunwayItem.set(logicalRunway);
-                                logicalRunwayMenu.setText(logicalRunway.getDesignator());
-                                obstacleMenu.setDisable(false);
-                                originalToraLabel.setText("TORA  =  "+getLogRunwaySelected().getTora() + " m");
-                                originalTodaLabel.setText("TODA  =  "+getLogRunwaySelected().getToda() + " m");
-                                originalAsdaLabel.setText("ASDA  =  "+getLogRunwaySelected().getAsda() + " m");
-                                originalLdaLabel.setText("LDA     =  "+getLogRunwaySelected().getLda() + " m");
-                                if(getObstacleSelected() != null){
-                                    performCalculationButton.setDisable(false);
-                                }
-
-                            });
-                            lRunwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
-                            logicalRunwayMenu.getItems().add(lRunwayMenuItem);
-                        }
+                        performCalculationButton.setDisable(false);
+                        obstaclesEditing(false);
+                        showTable(true);
                     });
                     runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
                     physicalRunwayMenu.getItems().add(runwayMenuItem);
@@ -456,6 +456,72 @@ public class MainController implements Initializable {
             });
             getAirportMenu().getItems().add(airportMenuItem);
         }
+    }
+
+    public void showTable(boolean beforeCalc){
+        ObservableList<Parameter> data1 = FXCollections.observableArrayList();
+        LogicalRunway logRunway1 = getPhysRunwaySelected().getLogicalRunways().get(0);
+        ObservableList<Parameter> data2 = FXCollections.observableArrayList();
+        LogicalRunway logRunway2 = getPhysRunwaySelected().getLogicalRunways().get(1);
+        //display original values
+        // Define the columns of the table
+        parColumn1.setCellValueFactory(new PropertyValueFactory<>("name"));
+        parColumn1.setText(logRunway1.getDesignator());
+        originalCol1.setCellValueFactory(new PropertyValueFactory<>("originalValue"));
+        revisedCol1.setCellValueFactory(new PropertyValueFactory<>("newValue"));
+        editColumn(parColumn1);
+        editColumn(originalCol1);
+        editColumn(revisedCol1);
+
+        parColumn2.setCellValueFactory(new PropertyValueFactory<>("name"));
+        parColumn2.setText(logRunway2.getDesignator());
+        originalCol2.setCellValueFactory(new PropertyValueFactory<>("originalValue"));
+        revisedCol2.setCellValueFactory(new PropertyValueFactory<>("newValue"));
+        editColumn(parColumn2);
+        editColumn(originalCol2);
+        editColumn(revisedCol2);
+
+        if(beforeCalc){
+            data1.add(new Parameter("TORA (m)", String.valueOf(logRunway1.getTora()), "-"));
+            data1.add(new Parameter("TODA (m)", String.valueOf(logRunway1.getToda()), "-"));
+            data1.add(new Parameter("ASDA (m)", String.valueOf(logRunway1.getAsda()), "-"));
+            data1.add(new Parameter("LDA (m)", String.valueOf(logRunway1.getLda()), "-"));
+
+            data2.add(new Parameter("TORA (m)", String.valueOf(logRunway2.getTora()), "-"));
+            data2.add(new Parameter("TODA (m)", String.valueOf(logRunway2.getToda()), "-"));
+            data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), "-"));
+            data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), "-"));
+        } else{
+            data1.add(new Parameter("TORA (m)", String.valueOf(logRunway1.getTora()), String.valueOf(needRedeclare? logRunway1.getNewTora(): logRunway1.getTora())));
+            data1.add(new Parameter("TODA (m)", String.valueOf(logRunway1.getToda()), String.valueOf(needRedeclare? logRunway1.getNewToda(): logRunway1.getToda())));
+            data1.add(new Parameter("ASDA (m)", String.valueOf(logRunway1.getAsda()), String.valueOf(needRedeclare? logRunway1.getNewAsda(): logRunway1.getAsda())));
+            data1.add(new Parameter("LDA (m)", String.valueOf(logRunway1.getLda()), String.valueOf(needRedeclare? logRunway1.getNewLda(): logRunway1.getLda())));
+
+            data2.add(new Parameter("TORA (m)", String.valueOf(logRunway2.getTora()), String.valueOf(needRedeclare? logRunway2.getNewTora(): logRunway1.getTora())));
+            data2.add(new Parameter("TODA (m)", String.valueOf(logRunway2.getToda()), String.valueOf(needRedeclare? logRunway2.getNewToda(): logRunway1.getToda())));
+            data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), String.valueOf(needRedeclare? logRunway2.getNewAsda(): logRunway1.getAsda())));
+            data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), String.valueOf(needRedeclare? logRunway2.getNewLda(): logRunway1.getLda())));
+        }
+
+        leftTableView.setItems(data1);
+        rightTableView.setItems(data2);
+    }
+
+    private void editColumn(TableColumn<Parameter, String> tableColumn){
+        tableColumn.setResizable(false);
+        tableColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    this.setStyle("-fx-background-color: rgb(244,244,244); -fx-alignment: CENTER;-fx-font-family: Verdana; -fx-padding: 7 0 0 0");
+                    // Set the text of the cell to the item
+                    setText(item);
+                } else {
+                    setText(null);
+                }
+            }
+        });
     }
 
     //functions to load obstacles from xml files and displayed in the menu selection
