@@ -14,6 +14,10 @@ import java.util.ResourceBundle;
 
 public class CalculationBreakdownController implements Initializable {
     @FXML
+    private Label leftDesignator;
+    @FXML
+    private Label rightDesignator;
+    @FXML
     private Label originalToda;
     @FXML
     private Label originalTora;
@@ -37,24 +41,39 @@ public class CalculationBreakdownController implements Initializable {
     private Label todaBreakdown;
     @FXML
     private Label asdaBreakdown;
+    @FXML
+    private Label ldaBreakdown1;
+    @FXML
+    private Label toraBreakdown1;
+    @FXML
+    private Label todaBreakdown1;
+    @FXML
+    private Label asdaBreakdown1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        LogicalRunway runway = MainController.getLogRunwaySelected();
+        PhysicalRunway runway = MainController.getPhysRunwaySelected();
         Obstacle obstacle = MainController.getObstacleSelected();
 
-        originalToda.setText("=  "+runway.getToda()+"  m");
-        originalTora.setText("=  "+runway.getTora()+"  m");
-        originalAsda.setText("=  "+runway.getAsda()+"  m");
-        originalLda.setText("=  "+runway.getLda()+"  m");
+        leftDesignator.setText(runway.getLogicalRunways().get(0).getDesignator());
+        rightDesignator.setText(runway.getLogicalRunways().get(1).getDesignator());
+
         resa.setText("=  "+PhysicalRunway.getResa()+"  m");
         stripEnd.setText("=  "+ PhysicalRunway.getStripEnd()+"  m");
         blastProtection.setText("=  "+PhysicalRunway.getBlastProtection()+"  m");
+
+
         if(MainController.needRedeclare()){
-            toraBreakdown.setText(Calculator.toraBreakdown(obstacle, runway));
-            todaBreakdown.setText(Calculator.todaBreakdown(obstacle, runway));
-            ldaBreakdown.setText(Calculator.ldaBreakdown(obstacle, runway));
-            asdaBreakdown.setText(Calculator.asdaBreakdown(obstacle, runway));
+            LogicalRunway logRunway1 = runway.getLogicalRunways().get(0);
+            LogicalRunway logRunway2 = runway.getLogicalRunways().get(1);
+            toraBreakdown.setText(Calculator.toraBreakdown(obstacle, logRunway1));
+            todaBreakdown.setText(Calculator.todaBreakdown(obstacle, logRunway1));
+            ldaBreakdown.setText(Calculator.ldaBreakdown(obstacle, logRunway1));
+            asdaBreakdown.setText(Calculator.asdaBreakdown(obstacle, logRunway1));
+            toraBreakdown1.setText(Calculator.toraBreakdown(obstacle, logRunway2));
+            todaBreakdown1.setText(Calculator.todaBreakdown(obstacle, logRunway2));
+            ldaBreakdown1.setText(Calculator.ldaBreakdown(obstacle, logRunway2));
+            asdaBreakdown1.setText(Calculator.asdaBreakdown(obstacle, logRunway2));
         } else{
             String s = """
                     No redeclaration needed, no calculation performed.
@@ -64,6 +83,10 @@ public class CalculationBreakdownController implements Initializable {
             toraBreakdown.setText(s);
             todaBreakdown.setText(s);
             asdaBreakdown.setText(s);
+            ldaBreakdown1.setText(s);
+            toraBreakdown1.setText(s);
+            todaBreakdown1.setText(s);
+            asdaBreakdown1.setText(s);
         }
     }
 

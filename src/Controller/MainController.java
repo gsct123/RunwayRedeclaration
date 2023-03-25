@@ -122,9 +122,13 @@ public class MainController implements Initializable {
     @FXML
     private Label blastProtectionInfoLabel;
     @FXML
+    private Label resaInfoLabel;
+    @FXML
     private Button stripEndInfo;
     @FXML
     private Button blastProtectionInfo;
+    @FXML
+    private Button resaInfo;
     @FXML
     private Button calculationBreakdown;
     @FXML
@@ -180,7 +184,7 @@ public class MainController implements Initializable {
         loadInfos();
         try {
             topViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/TopView.fxml")));
-            sideViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/SideView.fxml")));
+//            sideViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/SideView.fxml")));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
@@ -355,6 +359,8 @@ public class MainController implements Initializable {
         stripEndInfo.setOnMouseExited(mouseEvent -> stripEndInfoLabel.setVisible(false));
         blastProtectionInfo.setOnMouseEntered(mouseEvent -> blastProtectionInfoLabel.setVisible(true));
         blastProtectionInfo.setOnMouseExited(mouseEvent -> blastProtectionInfoLabel.setVisible(false));
+        resaInfo.setOnMouseEntered(mouseEvent -> resaInfoLabel.setVisible(true));
+        resaInfo.setOnMouseExited(mouseEvent -> resaInfoLabel.setVisible(false));
     }
 
     //this function read from a xml file and instantiate list of airports available
@@ -440,12 +446,18 @@ public class MainController implements Initializable {
                 for(PhysicalRunway runway: airport.getPhysicalRunways()){
                     MenuItem runwayMenuItem = new MenuItem(runway.getName());
                     runwayMenuItem.setOnAction(f -> {
+                        oldToraInfo.setVisible(true);
+                        oldTodaInfo.setVisible(true);
+                        oldLdaInfo.setVisible(true);
+                        oldAsdaInfo.setVisible(true);
                         physRunwayItem.set(runway);
                         physicalRunwayMenu.setText(runway.getName());
                         stripEndTextField.setText(String.valueOf(PhysicalRunway.getStripEnd()));
                         blastProtectionField.setText(String.valueOf(PhysicalRunway.getBlastProtection()));
+                        resaTextField.setText(String.valueOf(PhysicalRunway.getResa()));
                         stripEndTextField.setDisable(false);
                         blastProtectionField.setDisable(false);
+                        resaTextField.setDisable(false);
                         performCalculationButton.setDisable(false);
                         obstaclesEditing(false);
                         showTable(true);

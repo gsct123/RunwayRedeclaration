@@ -152,7 +152,7 @@ public class Calculator {
         int ldaOrToraChoice;
         String result = "";
         String flightMethod = getFlightMethod(obstacle,runway);
-        performCalc(obstacle,runway);
+//        performCalc(obstacle,runway);
 
         //Runway variables
         double originalTora = runway.getTora();
