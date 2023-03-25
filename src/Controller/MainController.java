@@ -39,7 +39,6 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -154,7 +153,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadInfos();
         try {
-            topViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("../View/TopView.fxml"))));
+            topViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/TopView.fxml")));
 //            sideViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/SideView.fxml")));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
