@@ -172,7 +172,7 @@
                </children></AnchorPane>
             <AnchorPane fx:id="stripEndLabel" maxWidth="-Infinity" prefHeight="655.0" prefWidth="294.0">
                <children>
-                  <Label fx:id="otherDetails" alignment="CENTER" layoutX="3.0" layoutY="387.0" prefHeight="56.0" prefWidth="271.0" text="OTHER DETAILS">
+                  <Label fx:id="otherDetails" alignment="CENTER" layoutX="7.0" layoutY="387.0" prefHeight="56.0" prefWidth="271.0" text="OTHER DETAILS">
                      <font>
                         <Font name="Verdana Bold" size="16.0" />
                      </font>
@@ -200,7 +200,7 @@
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="calculationBreakdown" disable="true" layoutX="35.0" layoutY="592.0" mnemonicParsing="false" onAction="#showCalculationBreakdown" prefHeight="35.0" prefWidth="219.0" text="Calculation Breakdown">
+                  <Button fx:id="calculationBreakdown" disable="true" layoutX="34.0" layoutY="592.0" mnemonicParsing="false" onAction="#showCalculationBreakdown" prefHeight="35.0" prefWidth="219.0" text="Calculation Breakdown">
                      <font>
                         <Font name="Verdana" size="16.0" />
                      </font>
@@ -229,7 +229,7 @@
                         <TableColumn fx:id="revisedCol2" editable="false" prefWidth="88.63623046875" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Revised" />
                      </columns>
                   </TableView>
-                  <Label alignment="CENTER" layoutX="5.0" layoutY="16.0" prefHeight="42.0" prefWidth="268.0" text="CALCULATION">
+                  <Label alignment="CENTER" layoutX="11.0" layoutY="16.0" prefHeight="42.0" prefWidth="268.0" text="CALCULATION">
                      <font>
                         <Font name="Verdana Bold" size="16.0" />
                      </font>
@@ -252,22 +252,22 @@
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="oldToraInfo" layoutX="2.0" layoutY="110.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="17.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?" visible="false">
+                  <Button fx:id="oldToraInfo" layoutX="2.0" layoutY="110.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="17.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                      <font>
                         <Font name="Verdana" size="8.0" />
                      </font>
                   </Button>
-                  <Button fx:id="oldTodaInfo" layoutX="2.0" layoutY="136.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?" visible="false">
+                  <Button fx:id="oldTodaInfo" layoutX="2.0" layoutY="134.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                      <font>
                         <Font name="Verdana" size="8.0" />
                      </font>
                   </Button>
-                  <Button fx:id="oldAsdaInfo" layoutX="2.0" layoutY="162.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?" visible="false">
+                  <Button fx:id="oldAsdaInfo" layoutX="2.0" layoutY="160.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                      <font>
                         <Font name="Verdana" size="8.0" />
                      </font>
                   </Button>
-                  <Button fx:id="oldLdaInfo" layoutX="2.0" layoutY="185.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?" visible="false">
+                  <Button fx:id="oldLdaInfo" layoutX="2.0" layoutY="184.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                      <font>
                         <Font name="Verdana" size="8.0" />
                      </font>

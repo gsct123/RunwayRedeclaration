@@ -42,8 +42,6 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    private ObservableList<String> items = FXCollections.observableArrayList();
-    private String flightMethod = "";
     private static boolean needRedeclare = true;
 
     //fxml elements
@@ -51,8 +49,6 @@ public class MainController implements Initializable {
     private MenuButton airportMenu;
     @FXML
     private MenuButton physicalRunwayMenu;
-    @FXML
-    private MenuButton logicalRunwayMenu;
     @FXML
     private MenuButton obstacleMenu;
     @FXML
@@ -115,6 +111,7 @@ public class MainController implements Initializable {
     private RadioButton rightDirButton;
     @FXML
     private Label notificationLabel;
+    private boolean reset = false;
 
     //table
     @FXML
@@ -166,6 +163,9 @@ public class MainController implements Initializable {
             loader.setController(topViewController);
             topViewTab.setContent(root);
             topViewController.setMainController(this);
+            if(Status.isReset()){
+                notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -189,6 +189,7 @@ public class MainController implements Initializable {
     @FXML
     public void handleReset(ActionEvent event) throws IOException {
         boolean flag = new ResetConfirmation().confirmReset();
+        Status.setReset(true);
         if(flag) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/Main.fxml"));
             Parent root = loader.load();
@@ -198,8 +199,6 @@ public class MainController implements Initializable {
             stage.setTitle("SEG Runway Project");
             stage.setScene(scene);
             stage.show();
-            notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
-
         }
     }
 
