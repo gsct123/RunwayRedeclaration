@@ -193,9 +193,9 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Line fx:id="blastProtectionLength1" endX="32.0" endY="0.10369873046875" layoutX="733.0" layoutY="404.0" nodeOrientation="LEFT_TO_RIGHT" startY="0.10369873046875" visible="false" />
-      <Line id="ldaStart" fx:id="blastProtectionStart1" endY="25.0" layoutX="765.0" layoutY="390.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
-      <Label id="toraLabel" fx:id="blastProtectionLabel1" layoutX="666.0" layoutY="365.0" nodeOrientation="LEFT_TO_RIGHT" text="Blast protection" visible="false">
+      <Line fx:id="blastProtectionLength1" endX="32.0" layoutX="727.0" layoutY="404.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
+      <Line id="ldaStart" fx:id="blastProtectionEnd" endY="25.0" layoutX="759.0" layoutY="390.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
+      <Label id="toraLabel" fx:id="blastProtectionLabel1" layoutX="659.0" layoutY="365.0" nodeOrientation="LEFT_TO_RIGHT" text="Blast protection" visible="false">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
@@ -212,17 +212,17 @@
       <Line id="asdaLength" fx:id="asdaLength" endX="680.0" layoutX="79.0" layoutY="175.0" />
       <Line id="toraLength" fx:id="todaLength" endX="713.0" layoutX="79.0" layoutY="149.0" />
       <Line id="blastProtectionEnd" fx:id="toraStart" endY="27.0" layoutX="79.0" layoutY="214.0" />
-      <Line id="toraEnd" fx:id="toraEnd1" endY="25.0" layoutX="723.0" layoutY="391.0" />
+      <Line id="toraEnd" fx:id="toraEnd1" endY="25.0" layoutX="727.0" layoutY="391.0" />
       <Line id="ldaStart" fx:id="ldaStart1" endY="25.0" layoutX="78.0" layoutY="416.0" />
-      <Line id="asdaStart" fx:id="asdaStart1" endY="25.0" layoutX="44.0" layoutY="442.0" />
+      <Line id="asdaStart" fx:id="asdaStart1" endY="25.0" layoutX="45.0" layoutY="442.0" />
       <Line id="ldaEnd" fx:id="ldaEnd1" endY="25.0" layoutX="661.0" layoutY="416.0" />
-      <Line id="asdaEnd" fx:id="asdaEnd1" endY="25.0" layoutX="723.0" layoutY="441.0" />
+      <Line id="asdaEnd" fx:id="asdaEnd1" endY="25.0" layoutX="727.0" layoutY="441.0" />
       <Line id="toraStart" fx:id="toraStart1" endY="25.0" layoutX="78.0" layoutY="391.0" />
-      <Line id="todaStart" fx:id="todaStart1" endY="25.0" layoutX="13.0" layoutY="466.0" />
-      <Line id="todaEnd" fx:id="todaEnd1" endY="25.0" layoutX="723.0" layoutY="466.0" />
-      <Line id="toraLength" fx:id="toraLength1" endX="645.0" layoutX="78.0" layoutY="404.0" />
+      <Line id="todaStart" fx:id="todaStart1" endY="25.0" layoutX="14.0" layoutY="466.0" />
+      <Line id="todaEnd" fx:id="todaEnd1" endY="25.0" layoutX="727.0" layoutY="466.0" />
+      <Line id="toraLength" fx:id="toraLength1" endX="649.0" layoutX="78.0" layoutY="404.0" />
       <Line id="ldaLength" fx:id="ldaLength1" endX="583.0" layoutX="78.0" layoutY="429.0" />
-      <Line id="asdaLength" fx:id="asdaLength1" endX="679.0" layoutX="44.0" layoutY="454.0" />
-      <Line id="toraLength" fx:id="todaLength1" endX="710.0" layoutX="13.0" layoutY="479.0" />
+      <Line id="asdaLength" fx:id="asdaLength1" endX="682.0" layoutX="45.0" layoutY="454.0" />
+      <Line id="toraLength" fx:id="todaLength1" endX="713.0" layoutX="14.0" layoutY="479.0" />
    </children>
 </AnchorPane>

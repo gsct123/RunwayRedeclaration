@@ -115,6 +115,12 @@ public class TopViewController implements Initializable {
     private Line blastProtectionStart;
     @FXML
     private Label blastProtectionLabel;
+    @FXML
+    private Line blastProtectionLength1;
+    @FXML
+    private Line blastProtectionEnd;
+    @FXML
+    private Label blastProtectionLabel1;
 
     @FXML
     private Rectangle clearwayL;
@@ -160,7 +166,7 @@ public class TopViewController implements Initializable {
         Obstacle obstacle = MainController.obstacleProperty.get();
         showOriginalParameters();
         setNewLine("TORA",llogRunway,obstacle,toraStart,toraLength,toraEnd,toraLabel);
-        setUpBlastProtection(Calculator.needRedeclare(obstacle, llogRunway) && Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo));
+        setUpBlastProtection(Calculator.needRedeclare(obstacle, llogRunway) && Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, blastProtectionLabel, blastProtectionLength, blastProtectionStart, toraStart);
         setNewLine("LDA",llogRunway,obstacle,ldaStart,ldaLength,ldaEnd,ldaLabel);
         setNewLine("ASDA",llogRunway,obstacle,asdaStart,asdaLength,asdaEnd,asdaLabel);
         setNewLine("TODA",llogRunway,obstacle,todaStart,todaLength,todaEnd,todaLabel);
@@ -171,22 +177,26 @@ public class TopViewController implements Initializable {
         setInvertedNewLine("LDA",rlogRunway,tempObs,ldaStart1,ldaLength1,ldaEnd1,ldaLabel1);
         setInvertedNewLine("ASDA",rlogRunway,tempObs,asdaStart1,asdaLength1,asdaEnd1,asdaLabel1);
         setInvertedNewLine("TODA",rlogRunway,tempObs,todaStart1,todaLength1,todaEnd1,todaLabel1);
-//        setUpBlastProtection(Calculator.needRedeclare(obstacle, llogRunway) && Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo));
-//        setNewLine("LDA",llogRunway,obstacle,ldaStart,ldaLength,ldaEnd,ldaLabel);
-//        setNewLine("ASDA",llogRunway,obstacle,asdaStart,asdaLength,asdaEnd,asdaLabel);
-//        setNewLine("TODA",llogRunway,obstacle,todaStart,todaLength,todaEnd,todaLabel);
+        setUpBlastProtection(Calculator.needRedeclare(obstacle, llogRunway) && Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.ttlt), true, blastProtectionLabel1, blastProtectionLength1, blastProtectionEnd, toraEnd1);
     }
 
-    protected void setUpBlastProtection(boolean bool){
-        blastProtectionLabel.setVisible(bool);
-        blastProtectionLength.setVisible(bool);
-        blastProtectionStart.setVisible(bool);
-        blastProtectionStart.setLayoutX(toraStart.getLayoutX()-(PhysicalRunway.getBlastProtection()*runway.getWidth()/MainController.getPhysRunwaySelected().getLogicalRunways().get(0).getTora()));
-        blastProtectionLength.setLayoutX(blastProtectionStart.getLayoutX());
-        blastProtectionLength.setEndX(toraStart.getLayoutX());
-        blastProtectionLabel.setText("Blast protection" +
+    protected void setUpBlastProtection(boolean bool, boolean lower, Label label, Line length, Line startEnd, Line toraRef){
+        label.setVisible(bool);
+        length.setVisible(bool);
+        startEnd.setVisible(bool);
+        label.setText("Blast protection" +
                 "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
-        blastProtectionLabel.setLayoutX(blastProtectionStart.getLayoutX()+(toraStart.getLayoutX()-blastProtectionStart.getLayoutX())/2-blastProtectionLabel.getWidth()/2);
+        if(lower){
+            startEnd.setLayoutX(toraRef.getLayoutX()+(PhysicalRunway.getBlastProtection()*runway.getWidth()/MainController.getPhysRunwaySelected().getLogicalRunways().get(0).getTora()));
+            length.setLayoutX(toraRef.getLayoutX());
+            length.setEndX(startEnd.getLayoutX()-toraRef.getLayoutX());
+            label.setLayoutX(toraRef.getLayoutX()-(toraRef.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+        } else{
+            startEnd.setLayoutX(toraRef.getLayoutX()-(PhysicalRunway.getBlastProtection()*runway.getWidth()/MainController.getPhysRunwaySelected().getLogicalRunways().get(0).getTora()));
+            length.setLayoutX(startEnd.getLayoutX());
+            length.setEndX(toraRef.getLayoutX()-startEnd.getLayoutX());
+            label.setLayoutX(startEnd.getLayoutX()+(toraRef.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+        }
     }
 
     protected void setNewLine(String type, LogicalRunway logicalRunway,Obstacle obstacle,Line start,Line length,Line end,Label label){
@@ -360,21 +370,22 @@ public class TopViewController implements Initializable {
     private void setUpTora(PhysicalRunway physRunway){
         LogicalRunway llogRunway = physRunway.getLogicalRunways().get(0);
         LogicalRunway rlogRunway = physRunway.getLogicalRunways().get(1);
-        double originalStartX = thresholdL.getLayoutX();
-        double originalEndX = thresholdR.getLayoutX();
+        double loriginalStartX = thresholdL.getLayoutX();
+        double loriginalEndX = thresholdR.getLayoutX();
         double ltora = llogRunway.getTora();
         double rtora = rlogRunway.getTora();
         //Reset the starting line
-        toraStart.setLayoutX(originalStartX);
-        toraEnd.setLayoutX(originalEndX);
-        toraLength.setLayoutX(originalStartX);
-        toraLength.setEndX(originalEndX - originalStartX);
+        toraStart.setLayoutX(loriginalStartX);
+        toraEnd.setLayoutX(loriginalEndX);
+        toraLength.setLayoutX(loriginalStartX);
+        toraLength.setEndX(loriginalEndX - loriginalStartX);
         toraLabel.setText(" TORA = " + ltora);
 
-        toraStart1.setLayoutX(originalEndX);
-        toraEnd1.setLayoutX(originalStartX - (rtora-ltora)*runway.getWidth()/ltora);
-        toraLength1.setLayoutX(toraEnd1.getLayoutX());
-        toraLength1.setEndX(toraLength1.getStartX() + toraStart1.getLayoutX()-toraEnd1.getLayoutX());
+
+        toraEnd1.setLayoutX(loriginalEndX);
+        toraStart1.setLayoutX(loriginalStartX - (rtora-ltora)*runway.getWidth()/ltora);
+        toraLength1.setLayoutX(loriginalStartX - (rtora-ltora)*runway.getWidth()/ltora);
+        toraLength1.setEndX(toraLength1.getStartX() + toraEnd1.getLayoutX()-toraStart1.getLayoutX());
         toraLabel1.setText(" TORA = " + rtora);
     }
 
@@ -477,7 +488,7 @@ public class TopViewController implements Initializable {
         todaStart1.setLayoutX(roriginalStartX - (rlogRunway.getTora()- llogRunway.getTora())*runway.getWidth()/llogRunway.getTora());
         todaEnd1.setLayoutX(roriginalEndX);
         todaLength1.setLayoutX(todaStart1.getLayoutX());
-        todaLength1.setEndX(roriginalEndX-roriginalStartX);
+        todaLength1.setEndX(todaEnd1.getLayoutX()-todaStart1.getLayoutX());
         todaLabel1.setText(" TODA = " + rtoda);
     }
 }
