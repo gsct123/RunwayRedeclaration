@@ -12,7 +12,7 @@
 <AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
    <children>
       <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#abd2fc8f" height="426.0" layoutY="90.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
-      <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#aeaeae" height="176.0" layoutX="64.0" layoutY="212.0" stroke="TRANSPARENT" strokeType="INSIDE" width="676.0" />
+      <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#aeaeae" height="176.0" layoutY="212.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#aeaeae" height="279.0" layoutX="187.0" layoutY="158.0" stroke="TRANSPARENT" strokeType="INSIDE" width="411.0" />
       <Rectangle fx:id="clearwayR" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="726.0" layoutY="252.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="67.0" />
       <Rectangle fx:id="clearwayL" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="14.0" layoutY="252.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="64.0" />
@@ -49,8 +49,8 @@
             <Point3D y="1.0" />
          </rotationAxis>
       </Polyline>
-      <Line id="asdaStart" fx:id="asdaStart" endX="0.5" endY="76.557373046875" layoutX="79.0" layoutY="149.0" />
-      <Line id="asdaEnd" fx:id="asdaEnd" endY="72.87033081054688" layoutX="726.0" layoutY="149.0" />
+      <Line id="asdaStart" fx:id="asdaStart" endX="0.5" endY="76.557373046875" layoutX="79.0" layoutY="146.0" />
+      <Line id="asdaEnd" fx:id="asdaEnd" endY="72.87033081054688" layoutX="759.0" layoutY="150.0" />
       <Line id="thresholdL" fx:id="thresholdL" endX="-7.62939453125E-6" endY="89.99996948242188" fill="TRANSPARENT" layoutX="78.0" layoutY="253.0" startX="-1.52587890625E-5" startY="0.4836578369140625" stroke="#f2f2f200" strokeWidth="3.0" />
       <Line id="thresholdR" fx:id="thresholdR" endX="-1.0" endY="92.0" fill="#f2f2f200" layoutX="727.0" layoutY="253.0" startY="-1.0" stroke="#f2f2f200" strokeWidth="3.0" />
       <Line endX="-55.08058547973633" layoutX="189.0" layoutY="278.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
@@ -88,7 +88,7 @@
          </font>
       </Label>
       <Rectangle fx:id="obstacleBlock" arcHeight="5.0" fill="#f53e3e" height="32.0" layoutX="46.0" layoutY="282.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="32.0" />
-      <Line id="toraEnd" fx:id="toraEnd" endY="25.0" layoutX="726.0" layoutY="200.0" />
+      <Line id="toraEnd" fx:id="toraEnd" endY="25.0" layoutX="726.0" layoutY="197.0" />
       <Label layoutX="277.0" layoutY="470.0" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="15.0" />
@@ -120,8 +120,8 @@
             <Font name="Verdana Bold" size="15.0" />
          </font>
       </Label>
-      <Line fx:id="gradedAreaLine" endX="-92.00144958496094" endY="-58.5" layoutX="832.0" layoutY="356.0" startX="-92.00144958496094" startY="80.49996948242188" stroke="#0f0f0f" />
-      <Line endX="567.6531372070312" endY="-70.00003051757812" layoutX="193.0" layoutY="506.0" startX="404.6456298828125" startY="-70.00003051757812" stroke="#0f0f0f" />
+      <Line fx:id="gradedAreaLine" endX="-92.00144958496094" endY="-58.5" layoutX="830.0" layoutY="356.0" startX="-92.00144958496094" startY="80.49996948242188" stroke="#0f0f0f" />
+      <Line endX="555.0" endY="-70.0" layoutX="193.0" layoutY="506.0" startX="404.6456298828125" startY="-70.00003051757812" stroke="#0f0f0f" />
       <Label layoutX="707.0" layoutY="357.0" style="-fx-text-fill: black;" text="75m">
          <font>
             <Font name="Verdana" size="10.0" />
@@ -132,17 +132,17 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Line endX="416.7256164550781" endY="-69.5" layoutX="335.0" layoutY="367.0" startX="393.271484375" startY="-69.5" stroke="#0f0f0f" />
-      <Line id="todaStart" fx:id="todaStart" endX="0.25" endY="102.72157287597656" layoutX="79.0" layoutY="124.0" />
-      <Line id="todaEnd" fx:id="todaEnd" endY="100.85025024414062" layoutX="726.0" layoutY="124.0" />
-      <Line id="asdaLength" fx:id="asdaLength" endX="646.5" layoutX="79.0" layoutY="162.0" />
-      <Line id="toraLength" fx:id="todaLength" endX="645.98046875" layoutX="79.0" layoutY="137.0" />
-      <Label id="asdaLabel" fx:id="asdaLabel" layoutX="387.0" layoutY="143.0" text="ASDA">
+      <Line endX="413.0" endY="-69.5" layoutX="335.0" layoutY="367.0" startX="393.271484375" startY="-69.5" stroke="#0f0f0f" />
+      <Line id="todaStart" fx:id="todaStart" endX="0.25" endY="102.72157287597656" layoutX="79.0" layoutY="121.0" />
+      <Line id="todaEnd" fx:id="todaEnd" endY="100.85025024414062" layoutX="793.0" layoutY="122.0" />
+      <Line id="asdaLength" fx:id="asdaLength" endX="679.7378540039062" layoutX="79.0" layoutY="159.0" />
+      <Line id="toraLength" fx:id="todaLength" endX="713.4813842773438" layoutX="79.0" layoutY="134.0" />
+      <Label id="asdaLabel" fx:id="asdaLabel" layoutX="387.0" layoutY="140.0" text="ASDA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="todaLabel" fx:id="todaLabel" layoutX="387.0" layoutY="117.0" text="TODA">
+      <Label id="todaLabel" fx:id="todaLabel" layoutX="387.0" layoutY="114.0" text="TODA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
@@ -153,21 +153,28 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Line id="toraStart" fx:id="toraStart" endX="0.125" endY="26.428680419921875" layoutX="79.0" layoutY="201.0" startX="0.25" startY="-1.600006103515625" />
-      <Line id="toraLength" fx:id="toraLength" endX="645.98046875" layoutX="79.0" layoutY="213.0" startX="0.25" startY="-0.189208984375" />
-      <Label id="toraLabel" fx:id="toraLabel" layoutX="384.0" layoutY="192.0" text=" TORA">
+      <Line id="toraStart" fx:id="toraStart" endX="0.125" endY="26.428680419921875" layoutX="79.0" layoutY="198.0" startX="0.25" startY="-1.600006103515625" />
+      <Line id="toraLength" fx:id="toraLength" endX="645.5" endY="-0.189208984375" layoutX="80.0" layoutY="212.0" startX="0.25" startY="-0.189208984375" />
+      <Label id="toraLabel" fx:id="toraLabel" layoutX="384.0" layoutY="189.0" text=" TORA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Line id="ldaStart" fx:id="ldaStart" endY="25.0" layoutX="143.0" layoutY="174.0" />
-      <Line id="ldaEnd" fx:id="ldaEnd" endY="50.5" layoutX="726.0" layoutY="175.0" />
-      <Line id="ldaLength" fx:id="ldaLength" endX="580.98046875" endY="1.52587890625E-5" layoutX="144.0" layoutY="187.0" />
-      <Label id="ldaLabel" fx:id="ldaLabel" layoutX="392.0" layoutY="166.0" text="LDA">
+      <Line id="ldaStart" fx:id="ldaStart" endY="25.0" layoutX="143.0" layoutY="171.0" />
+      <Line id="ldaEnd" fx:id="ldaEnd" endY="50.5" layoutX="726.0" layoutY="172.0" />
+      <Line id="ldaLength" fx:id="ldaLength" endX="580.98046875" endY="1.52587890625E-5" layoutX="144.0" layoutY="184.0" />
+      <Label id="ldaLabel" fx:id="ldaLabel" layoutX="392.0" layoutY="163.0" text="LDA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Line endX="416.7256164550781" endY="-69.5" layoutX="335.0" layoutY="457.0" startX="393.271484375" startY="-69.5" stroke="#0f0f0f" />
+      <Line endX="413.0" endY="-69.5" layoutX="335.0" layoutY="457.0" startX="393.271484375" startY="-69.5" stroke="#0f0f0f" />
+      <Line fx:id="blastProtectionLength" endX="32.0" endY="0.10369873046875" layoutX="47.0" layoutY="212.0" nodeOrientation="LEFT_TO_RIGHT" startY="0.10369873046875" visible="false" />
+      <Line id="ldaStart" fx:id="blastProtectionStart" endY="25.0" layoutX="46.0" layoutY="198.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
+      <Label id="toraLabel" fx:id="blastProtectionLabel" layoutX="46.0" layoutY="225.0" nodeOrientation="LEFT_TO_RIGHT" text="Blast protection">
+         <font>
+            <Font name="Verdana" size="10.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -37,9 +37,9 @@
             <Insets bottom="10.0" top="10.0" />
          </padding>
       </Label>
-      <SplitPane dividerPositions="0.21310888252148996, 0.8026504297994269" prefHeight="638.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
+      <SplitPane dividerPositions="0.21525787965616044, 0.8040830945558739" prefHeight="638.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../Utils/CSS/MainStylesheet.css">
          <items>
-            <AnchorPane prefHeight="691.0" prefWidth="285.0">
+            <AnchorPane prefHeight="692.0" prefWidth="261.0">
                <children>
                   <MenuButton id="airportMenu" fx:id="airportMenu" layoutX="23.0" layoutY="68.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="260.0" text="Select an Airport">
                     <items>
@@ -117,7 +117,6 @@
                         <Font name="Verdana" size="16.0" />
                      </font>
                   </Button>
-                  <Label fx:id="notificationLabel" layoutX="8.0" layoutY="674.0" prefHeight="18.0" prefWidth="304.0" />
                   <Label alignment="CENTER" layoutX="17.0" layoutY="8.0" prefHeight="42.0" prefWidth="260.0" text="AIRPORT AND RUNWAYS">
                      <font>
                         <Font name="Verdana Bold" size="18.0" />
@@ -143,13 +142,13 @@
             </AnchorPane>
              <AnchorPane prefHeight="621.0" prefWidth="814.0">
                <children>
-                  <TabPane fx:id="visualPane" layoutX="4.0" layoutY="-5.0" prefHeight="638.0" prefWidth="810.0" stylesheets="@../Utils/CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane fx:id="visualPane" layoutX="-1.0" layoutY="-1.0" prefHeight="656.0" prefWidth="814.0" stylesheets="@../Utils/CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                       <Tab fx:id="sideViewTab" style="-fx-font-family: Verdana;" text="Side-on View">
                            <content>
                               <AnchorPane prefHeight="607.0" prefWidth="774.0">
                                  <children>
-                                    <AnchorPane layoutX="6.0" prefHeight="607.0" prefWidth="804.0" />
+                                    <AnchorPane layoutX="-10.0" prefHeight="607.0" prefWidth="812.0" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -346,5 +345,13 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" />
          </children>
     </HBox>
+      <Label fx:id="notificationLabel" prefHeight="95.0" prefWidth="1400.0">
+         <VBox.margin>
+            <Insets bottom="2.0" />
+         </VBox.margin>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </Label>
   </children>
 </VBox>

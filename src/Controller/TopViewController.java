@@ -57,10 +57,6 @@ public class TopViewController implements Initializable {
     private Line todaStart;
     @FXML
     private Line todaEnd;
-//    @FXML
-//    private Polyline to;
-//    @FXML
-//    private Polyline toraRightArrow;
     @FXML
     private Label todaLabel;
     @FXML
@@ -70,10 +66,6 @@ public class TopViewController implements Initializable {
     private Line ldaStart;
     @FXML
     private Line ldaEnd;
-    //    @FXML
-//    private Polyline to;
-//    @FXML
-//    private Polyline toraRightArrow;
     @FXML
     private Label ldaLabel;
     @FXML
@@ -83,14 +75,18 @@ public class TopViewController implements Initializable {
     private Line asdaStart;
     @FXML
     private Line asdaEnd;
-    //    @FXML
-//    private Polyline to;
-//    @FXML
-//    private Polyline toraRightArrow;
     @FXML
     private Label asdaLabel;
     @FXML
     private Line asdaLength;
+
+    //other labels
+    @FXML
+    private Line blastProtectionLength;
+    @FXML
+    private Line blastProtectionStart;
+    @FXML
+    private Label blastProtectionLabel;
 
     @FXML
     private Rectangle clearwayL;
@@ -140,9 +136,22 @@ public class TopViewController implements Initializable {
         Obstacle obstacle = MainController.obstacleProperty.get();
         showOriginalParameters();
         setNewLine("TORA",logRunway,obstacle,toraStart,toraLength,toraEnd,toraLabel);
+        setUpBlastProtection(Calculator.needRedeclare(obstacle, logRunway) && Calculator.getFlightMethod(obstacle, logRunway).equals(Calculator.talo));
         setNewLine("LDA",logRunway,obstacle,ldaStart,ldaLength,ldaEnd,ldaLabel);
         setNewLine("ASDA",logRunway,obstacle,asdaStart,asdaLength,asdaEnd,asdaLabel);
         setNewLine("TODA",logRunway,obstacle,todaStart,todaLength,todaEnd,todaLabel);
+    }
+
+    protected void setUpBlastProtection(boolean bool){
+        blastProtectionLabel.setVisible(bool);
+        blastProtectionLength.setVisible(bool);
+        blastProtectionStart.setVisible(bool);
+        blastProtectionStart.setLayoutX(toraStart.getLayoutX()-(PhysicalRunway.getBlastProtection()*runway.getWidth()/MainController.getLogRunwaySelected().getTora()));
+        blastProtectionLength.setLayoutX(blastProtectionStart.getLayoutX());
+        blastProtectionLength.setEndX(toraStart.getLayoutX());
+        blastProtectionLabel.setText("Blast protection" +
+                "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+        blastProtectionLabel.setLayoutX(blastProtectionStart.getLayoutX()+(toraStart.getLayoutX()-blastProtectionStart.getLayoutX())/2-blastProtectionLabel.getWidth()/2);
     }
 
     protected void setNewLine(String type, LogicalRunway logicalRunway,Obstacle obstacle,Line start,Line length,Line end,Label label){
@@ -179,7 +188,7 @@ public class TopViewController implements Initializable {
             length.setEndX(length.getEndX() - differenceInPx);
         }
         double labelLayout = start.getLayoutX() + (end.getLayoutX()-start.getLayoutX())/2-label.getWidth()/2;
-        label.setText(" " + type +" = " + newValue + " ");
+        label.setText(" " + type +" = " + newValue + "m ");
         label.setLayoutX(labelLayout);
     }
 
@@ -204,19 +213,10 @@ public class TopViewController implements Initializable {
         stripEnd = PhysicalRunway.getStripEnd();
         double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistFCent()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2: (obstacle.getDistFCent()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2;
         if(displacedFromCentre < background.getHeight()/2 && displacedFromCentre > -background.getHeight()/2){
-            if(disFromThreshold < 0 || disFromThreshold > tora){
-                if(Calculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
-                    obstacleBlock.relocate(runwayStartX+(disFromThreshold*((minCGArea.getWidth()-runway.getWidth())/2)/stripEnd)-obsBlockWidth, centre+displacedFromCentre);
-                } else{
-                    obstacleBlock.relocate(runwayStartX+runwayLength+((disFromThreshold-tora)*((minCGArea.getWidth()-runway.getWidth())/2)/stripEnd), centre+displacedFromCentre);
-                }
+            if(Calculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
+                obstacleBlock.relocate(runwayStartX+(disFromThreshold*(runwayLength-logRunway.getClearway())/tora)-obsBlockWidth, centre+displacedFromCentre);
             } else{
-                //obstacle x depends on value of distFromThreshold
-                if(Calculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
-                    obstacleBlock.relocate(runwayStartX+(disFromThreshold*(runwayLength-logRunway.getClearway())/tora)-obsBlockWidth, centre+displacedFromCentre);
-                } else{
-                    obstacleBlock.relocate(runwayStartX+(disFromThreshold*(runwayLength-logRunway.getClearway())/tora), centre+(displacedFromCentre));
-                }
+                obstacleBlock.relocate(runwayStartX+(disFromThreshold*(runwayLength-logRunway.getClearway())/tora), centre+(displacedFromCentre));
             }
         }else{
             obstacleBlock.setVisible(false);
