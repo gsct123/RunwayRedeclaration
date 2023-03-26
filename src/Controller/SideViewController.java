@@ -4,6 +4,7 @@ import Model.Calculator;
 import Model.LogicalRunway;
 import Model.Obstacle;
 import Model.PhysicalRunway;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -142,6 +143,29 @@ public class SideViewController {
 
     @FXML
     private void initialize() {
+        initialiseVisibility();
+
+//        MainController.airportItem.addListener((observable, oldValue, newValue) -> {
+//            leftDesignator.setText("___");
+//            rightDesignator.setText("___");
+//        });
+        MainController.physRunwayItem.addListener((observable, oldValue, newValue) -> {
+            PhysicalRunway runway = MainController.getPhysRunwaySelected();
+            resetValues(runway);
+            setUpLogicalRunway(runway);
+
+        });
+        MainController.obstacleProperty.addListener(((ObservableValue<? extends Obstacle> observable, Obstacle oldValue, Obstacle newValue) -> {
+            setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
+        }));
+        MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
+            setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
+        });
+        MainController.valueChanged.addListener((observable, oldValue, newValue) -> handleExecuteButtonClick(new ActionEvent()));
+    }
+
+    @FXML
+    protected void initialiseVisibility(){
         alsSlope.setVisible(false);
         tocsSlope.setVisible(false);
         blastProtectionStart.setVisible(false);
@@ -156,7 +180,6 @@ public class SideViewController {
         toraStripEndLength.setVisible(false);
         toraStripEndEnd.setVisible(false);
         toraStripEndLabel.setVisible(false);
-
     }
 
     @FXML
