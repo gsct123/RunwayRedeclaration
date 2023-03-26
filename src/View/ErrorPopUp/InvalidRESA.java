@@ -14,7 +14,7 @@ public class InvalidRESA {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setTitle("Error Message");
         errorAlert.setHeaderText("ERROR");
-        errorAlert.setContentText("Invalid input for RESA\nHint: please input a numerical value greater or equal to 240 (for safety purpose)");
+        errorAlert.setContentText("Invalid input for RESA\nHint: please input a numerical value within this range 240-500 (for safety purpose)");
         errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
         Optional<ButtonType> result = errorAlert.showAndWait();
 

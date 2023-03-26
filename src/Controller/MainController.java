@@ -256,7 +256,7 @@ public class MainController implements Initializable {
     public void setStripEnd(ActionEvent event){
         try{
             double stripEnd = Double.parseDouble(stripEndTextField.getText().trim());
-            if(stripEnd < 0){throw new NumberFormatException();}
+            if(stripEnd < 0 || stripEnd > 100){throw new NumberFormatException();}
             PhysicalRunway.setStripEnd(stripEnd);
         } catch (NumberFormatException e){
             new InvalidStripEnd().showError(stripEndTextField);
@@ -267,7 +267,7 @@ public class MainController implements Initializable {
     public void setBlastProtection(ActionEvent event){
         try{
             double blastProtection = Double.parseDouble(blastProtectionField.getText().trim());
-            if(blastProtection < 300){
+            if(blastProtection < 300 || blastProtection > 500){
                 throw new NumberFormatException();
             }
             PhysicalRunway.setBlastProtection(blastProtection);
@@ -280,7 +280,7 @@ public class MainController implements Initializable {
     public void setRESA(ActionEvent event){
         try{
             double resa = Double.parseDouble(resaTextField.getText().trim());
-            if(resa < 240){
+            if(resa < 240 || resa > 500){
                 throw new NumberFormatException();
             }
             PhysicalRunway.setResa(resa);

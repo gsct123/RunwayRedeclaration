@@ -14,7 +14,7 @@ public class InvalidStripEnd {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setTitle("Error Message");
         errorAlert.setHeaderText("ERROR");
-        errorAlert.setContentText("Invalid input for strip end \nHint: please input a numerical value > 0");
+        errorAlert.setContentText("Invalid input for strip end \nHint: please input a numerical value within this range 0-100");
         errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
         Optional<ButtonType> result = errorAlert.showAndWait();
 
