@@ -8,10 +8,19 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-    public static Stage classStage;
+    private static Stage classStage;
+    private static boolean status;
 
     public static Stage getStage(){
         return classStage;
+    }
+
+    public static boolean isReset(){
+        return status;
+    }
+
+    public static void setReset(boolean reset){
+        status = reset;
     }
 
     @Override

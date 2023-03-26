@@ -111,7 +111,6 @@ public class MainController implements Initializable {
     private RadioButton rightDirButton;
     @FXML
     private Label notificationLabel;
-    private boolean reset = false;
 
     //table
     @FXML
@@ -163,7 +162,7 @@ public class MainController implements Initializable {
             loader.setController(topViewController);
             topViewTab.setContent(root);
             topViewController.setMainController(this);
-            if(Status.isReset()){
+            if(Main.isReset()){
                 notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
             }
         } catch (Exception e) {
@@ -189,7 +188,7 @@ public class MainController implements Initializable {
     @FXML
     public void handleReset(ActionEvent event) throws IOException {
         boolean flag = new ResetConfirmation().confirmReset();
-        Status.setReset(true);
+        Main.setReset(true);
         if(flag) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/Main.fxml"));
             Parent root = loader.load();
