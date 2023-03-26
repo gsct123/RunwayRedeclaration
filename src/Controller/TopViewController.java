@@ -298,7 +298,7 @@ public class TopViewController implements Initializable {
         tora = logRunway.getTora();
         stripEnd = PhysicalRunway.getStripEnd();
         double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistFCent()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2: (obstacle.getDistFCent()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2;
-        if(displacedFromCentre < background.getHeight()/2 && displacedFromCentre > -background.getHeight()/2){
+        if(Calculator.needRedeclare(obstacle, logRunway)){
             if(Calculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
                 obstacleBlock.relocate(runwayStartX+((disFromThreshold+logRunway.getDisplacedThreshold())*(runwayLength-logRunway.getClearway())/tora)-obsBlockWidth, centre+displacedFromCentre);
             } else{
