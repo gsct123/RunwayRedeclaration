@@ -426,7 +426,7 @@ public class MainController implements Initializable {
                         stripEndTextField.setDisable(false);
                         blastProtectionField.setDisable(false);
                         resaTextField.setDisable(false);
-                        performCalculationButton.setDisable(false);
+                        performCalculationButton.setDisable(obstacleProperty.get() == null);
                         obstaclesEditing(false);
                         showTable(true);
                     });
