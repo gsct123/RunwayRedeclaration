@@ -426,7 +426,7 @@ public class MainController implements Initializable {
                         stripEndTextField.setDisable(false);
                         blastProtectionField.setDisable(false);
                         resaTextField.setDisable(false);
-                        performCalculationButton.setDisable(false);
+                        performCalculationButton.setDisable(obstacleProperty.get() == null);
                         obstaclesEditing(false);
                         showTable(true);
                     });
@@ -546,6 +546,8 @@ public class MainController implements Initializable {
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
                 obstacleProperty.set(obstacle);
+                checkDistFromThreshold(new ActionEvent());
+                checkDistFromThreshold(new ActionEvent());
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }

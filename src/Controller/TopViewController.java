@@ -4,7 +4,6 @@ import Model.Calculator;
 import Model.LogicalRunway;
 import Model.Obstacle;
 import Model.PhysicalRunway;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -150,9 +149,14 @@ public class TopViewController implements Initializable {
                 relocateObstacle();
             }
         });
-        MainController.obstacleProperty.addListener(((ObservableValue<? extends Obstacle> observable, Obstacle oldValue, Obstacle newValue) -> {
+        MainController.obstacleProperty.addListener((observable, oldValue, newValue) -> {
+            if(oldValue != null){
+                oldValue.setDistFThreshold(0);
+                oldValue.setDistFCent(0);
+            }
+            newValue.setDistFThreshold(MainController.disFromThreshold.get());
             relocateObstacle();
-        }));
+        });
         MainController.dirFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
             relocateObstacle();
@@ -164,6 +168,7 @@ public class TopViewController implements Initializable {
     }
 
     public void updateLabel(){
+        relocateObstacle();
         LogicalRunway llogRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(0);
         LogicalRunway rlogRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(1);
         Obstacle obstacle = MainController.obstacleProperty.get();
@@ -284,7 +289,7 @@ public class TopViewController implements Initializable {
 
     public void relocateObstacle(){
         obstacleBlock.setVisible(true);
-        Obstacle obstacle = MainController.obstacleProperty.get();
+        Obstacle obstacle = MainController.getObstacleSelected();
         LogicalRunway logRunway;
         double runwayStartX = runway.getLayoutX();
         double runwayLength = runway.getWidth();
