@@ -156,7 +156,12 @@ public class SideViewController {
 
         });
         MainController.obstacleProperty.addListener(((ObservableValue<? extends Obstacle> observable, Obstacle oldValue, Obstacle newValue) -> {
-            setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
+            if(oldValue != null){
+                oldValue.setDistFThreshold(0);
+                oldValue.setDistFCent(0);
+            }
+            newValue.setDistFThreshold(MainController.disFromThreshold.get());
+            setUpAlsTocs(newValue,MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
         }));
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
             setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));

@@ -546,6 +546,8 @@ public class MainController implements Initializable {
                 obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
                 obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
                 obstacleProperty.set(obstacle);
+                checkDistFromThreshold(new ActionEvent());
+                checkDistFromThreshold(new ActionEvent());
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }
