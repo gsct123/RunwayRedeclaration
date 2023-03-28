@@ -9,9 +9,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
+<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
    <children>
-      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#b6c6e1" height="627.0" layoutX="-1.0" stroke="#00000008" strokeType="INSIDE" width="816.0" />
+      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#b6c6e1" height="627.0" stroke="#00000008" strokeType="INSIDE" width="816.0" />
       <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#9a9898" height="176.0" layoutY="228.0" stroke="TRANSPARENT" strokeType="INSIDE" width="816.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9a9898" height="279.0" layoutX="193.0" layoutY="174.0" stroke="TRANSPARENT" strokeType="INSIDE" width="411.0" />
       <Rectangle fx:id="clearwayR" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="732.0" layoutY="268.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="67.0" />
@@ -224,5 +224,13 @@
       <Line id="ldaLength" fx:id="ldaLength1" endX="583.0" layoutX="84.0" layoutY="429.0" />
       <Line id="asdaLength" fx:id="asdaLength1" endX="682.0" layoutX="51.0" layoutY="454.0" />
       <Line id="toraLength" fx:id="todaLength1" endX="713.0" layoutX="20.0" layoutY="479.0" />
+      <Polygon fx:id="toraArrow" layoutX="733.0" layoutY="214.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="ldaArrow" layoutX="733.0" layoutY="187.0" points="-11.25, 16.0, 0.5, 12.0, -11.25, 8.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="asdaArrow" layoutX="765.0" layoutY="161.0" points="-9.75, 17.5, 0.0, 14.0, -9.75, 10.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="todaArrow" layoutX="798.0" layoutY="136.0" points="-10.0, 16.75, 0.5, 13.0, -10.0, 8.75" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="toraArrow1" layoutX="84.0" layoutY="391.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="ldaArrow1" layoutX="84.0" layoutY="416.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="asdaArrow1" layoutX="51.0" layoutY="442.0" points="10.5, 15.75, -0.5, 12.0, 10.5, 8.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="todaArrow1" layoutX="20.0" layoutY="466.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </AnchorPane>
