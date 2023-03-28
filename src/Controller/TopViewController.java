@@ -109,17 +109,29 @@ public class TopViewController implements Initializable {
 
     //other labels
     @FXML
-    private Line blastProtectionLength;
+    private Line toraOtherLineLength;
     @FXML
-    private Line blastProtectionStart;
+    private Line toraOtherLineStart;
     @FXML
-    private Label blastProtectionLabel;
+    private Label toraOtherLineLabel;
     @FXML
-    private Line blastProtectionLength1;
+    private Line toraOtherLineLength1;
     @FXML
-    private Line blastProtectionEnd;
+    private Line toraOtherLineEnd;
     @FXML
-    private Label blastProtectionLabel1;
+    private Label toraOtherLineLabel1;
+    @FXML
+    private Line ldaOtherLineLength;
+    @FXML
+    private Line ldaOtherLineStart;
+    @FXML
+    private Label ldaOtherLineLabel;
+    @FXML
+    private Line ldaOtherLineLength1;
+    @FXML
+    private Line ldaOtherLineEnd;
+    @FXML
+    private Label ldaOtherLineLabel1;
 
     @FXML
     private Rectangle clearwayL;
@@ -174,10 +186,12 @@ public class TopViewController implements Initializable {
         Obstacle obstacle = MainController.obstacleProperty.get();
         showOriginalParameters();
         setNewLine("TORA",llogRunway,obstacle,toraStart,toraLength,toraEnd,toraLabel);
-        setUpBlastProtection(Calculator.needRedeclare(obstacle, llogRunway) && Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, blastProtectionLabel, blastProtectionLength, blastProtectionStart, toraStart);
         setNewLine("LDA",llogRunway,obstacle,ldaStart,ldaLength,ldaEnd,ldaLabel);
         setNewLine("ASDA",llogRunway,obstacle,asdaStart,asdaLength,asdaEnd,asdaLabel);
         setNewLine("TODA",llogRunway,obstacle,todaStart,todaLength,todaEnd,todaLabel);
+        setToraOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, toraOtherLineLabel, toraOtherLineLength, toraOtherLineStart);
+        setLdaOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, ldaOtherLineLabel, ldaOtherLineLength, ldaOtherLineStart);
+
 
         double distThreshold = llogRunway.getLda()-obstacle.getDistFThreshold();
         Obstacle tempObs = new Obstacle(obstacle.getName(), obstacle.getHeight(), obstacle.getWidth(), obstacle.getDistFCent(), distThreshold);
@@ -185,7 +199,151 @@ public class TopViewController implements Initializable {
         setInvertedNewLine("LDA",rlogRunway,tempObs,ldaStart1,ldaLength1,ldaEnd1,ldaLabel1);
         setInvertedNewLine("ASDA",rlogRunway,tempObs,asdaStart1,asdaLength1,asdaEnd1,asdaLabel1);
         setInvertedNewLine("TODA",rlogRunway,tempObs,todaStart1,todaLength1,todaEnd1,todaLabel1);
-        setUpBlastProtection(Calculator.needRedeclare(obstacle, llogRunway) && Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.ttlt), true, blastProtectionLabel1, blastProtectionLength1, blastProtectionEnd, toraEnd1);
+        setToraOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), true, toraOtherLineLabel1, toraOtherLineLength1, toraOtherLineEnd);
+        setLdaOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), true, ldaOtherLineLabel1, ldaOtherLineLength1, ldaOtherLineEnd);
+
+    }
+
+    public void setLdaOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd){
+        label.setVisible(bool);
+        length.setVisible(bool);
+        startEnd.setVisible(bool);
+
+        if(bool){
+            Obstacle obstacle = MainController.getObstacleSelected();
+
+            double stripEnd = PhysicalRunway.getStripEnd();
+            double resa = PhysicalRunway.getResa();
+            double alsTocs = obstacle.getAlsTocs();
+            double blastProtection = PhysicalRunway.getBlastProtection();
+            double change;
+            Line reference;
+            if(isTALO){
+                if(lower){
+                    reference = ldaStart1;
+                } else{
+                    reference = ldaStart;
+                }
+            } else {
+                if(lower){
+                    reference = ldaEnd1;
+                } else{
+                    reference = ldaEnd;
+                }
+            }
+
+            if(isTALO && !lower || !isTALO && lower){
+                label.setText("RESA + Strip End" +
+                        "\n"+"= "+resa+"m + "+stripEnd+"m");
+                change = PhysicalRunway.getBlastProtection();
+            } else{
+                //ttlt
+                if(alsTocs < resa){
+                    if(resa + stripEnd >= blastProtection){
+                        label.setText("Blast protection" +
+                                "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+                        change = blastProtection;
+                    } else{
+                        label.setText("RESA + Strip End" +
+                                "\n"+"= "+resa+"m + "+stripEnd+"m");
+                        change = resa + stripEnd;
+                    }
+                } else{
+                    if(alsTocs + stripEnd >= blastProtection){
+                        label.setText("Blast protection" +
+                                "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+                        change = blastProtection;
+                    } else{
+                        label.setText("ALS + Strip End" +
+                                "\n"+"= "+alsTocs+"m + "+stripEnd+"m");
+                        change = alsTocs + stripEnd;
+                    }
+                }
+            }
+
+            if(!isTALO){
+                startEnd.setLayoutX(reference.getLayoutX()+(change*meterPerPx()));
+                length.setLayoutX(reference.getLayoutX());
+                length.setEndX(startEnd.getLayoutX()-reference.getLayoutX());
+                label.setLayoutX(reference.getLayoutX()-(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+            } else{
+                startEnd.setLayoutX(reference.getLayoutX()-(change*meterPerPx()));
+                length.setLayoutX(startEnd.getLayoutX());
+                length.setEndX(reference.getLayoutX()-startEnd.getLayoutX());
+                label.setLayoutX(startEnd.getLayoutX()+(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+            }
+        }
+    }
+
+    public void setToraOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd){
+        label.setVisible(bool);
+        length.setVisible(bool);
+        startEnd.setVisible(bool);
+
+        if(bool){
+            Obstacle obstacle = MainController.getObstacleSelected();
+
+            double stripEnd = PhysicalRunway.getStripEnd();
+            double resa = PhysicalRunway.getResa();
+            double alsTocs = obstacle.getAlsTocs();
+            double blastProtection = PhysicalRunway.getBlastProtection();
+            double change;
+            Line reference;
+            if(isTALO){
+                if(lower){
+                    reference = toraStart1;
+                } else{
+                    reference = toraStart;
+                }
+            } else{
+                if(lower) {
+                    reference = toraEnd1;
+                } else{
+                    reference = toraEnd;
+                }
+            }
+
+            if(isTALO && !lower || (!isTALO && lower)){
+                label.setText("Blast protection" +
+                        "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+                change = PhysicalRunway.getBlastProtection();
+            } else{
+                //ttlt
+                if(alsTocs < resa){
+                    if(resa + stripEnd < blastProtection){
+                        label.setText("Blast protection" +
+                                "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+                        change = blastProtection;
+                    } else{
+                        label.setText("   RESA + Strip End" +
+                                "\n"+"= "+resa+"m + "+stripEnd+"m");
+                        change = resa + stripEnd;
+                    }
+                } else{
+                    if(alsTocs + stripEnd < blastProtection){
+                        label.setText("Blast protection" +
+                                "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+                        change = blastProtection;
+                    } else{
+                        label.setText("    TOCS + Strip End" +
+                                "\n"+"= "+alsTocs+"m + "+stripEnd+"m");
+                        change = alsTocs + stripEnd;
+                    }
+                }
+            }
+
+            if(!isTALO){
+                startEnd.setLayoutX(reference.getLayoutX()+(change*meterPerPx()));
+                length.setLayoutX(reference.getLayoutX());
+                length.setEndX(startEnd.getLayoutX()-reference.getLayoutX());
+                label.setLayoutX(reference.getLayoutX()-(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+            } else{
+                startEnd.setLayoutX(reference.getLayoutX()-(change*meterPerPx()));
+                length.setLayoutX(startEnd.getLayoutX());
+                length.setEndX(reference.getLayoutX()-startEnd.getLayoutX());
+                label.setLayoutX(startEnd.getLayoutX()+(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+            }
+        }
     }
 
     protected void setUpBlastProtection(boolean bool, boolean lower, Label label, Line length, Line startEnd, Line toraRef){
