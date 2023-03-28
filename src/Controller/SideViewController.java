@@ -105,37 +105,30 @@ public class SideViewController {
 
     //others
     @FXML
-     Line toraStripEndStart;
+    private Line toraOtherLength;
     @FXML
-    private Line toraStripEndEnd;
+    private Line toraOtherLength1;
     @FXML
-    private Line toraStripEndLength;
+    private Line ldaOtherLength;
     @FXML
-    private Label toraStripEndLabel;
+    private Line ldaOtherLength1;
     @FXML
-    private Line ldaBlastProtectionStart;
+    private Label toraOtherLabel;
     @FXML
-    private Line ldaBlastProtectionEnd;
+    private Label toraOtherLabel1;
     @FXML
-    private Line ldBlastProtectionLength;
+    private Label ldaOtherLabel;
     @FXML
-    private Label ldaBlastProtectionLabel;
+    private Label ldaOtherLabel1;
     @FXML
-    private Line displacedTStart;
+    private Line toraOtherStart;
     @FXML
-    private Line displacedTEnd;
+    private Line ldaOtherStart;
     @FXML
-    private Line displacedTLength;
+    private Line ldaOtherEnd;
     @FXML
-    private Label displacedTLabel;
-    @FXML
-    private Line blastProtectionStart;
-    @FXML
-    private Line blastProtectionLength;
-    @FXML
-    private Line blastProtectionEnd;
-    @FXML
-    private Label blastProtectionLabel;
+    private Line toraOtherEnd;
+
     //clearway and stopway
     @FXML
     private Rectangle clearwayL;
@@ -173,10 +166,6 @@ public class SideViewController {
     private void initialize() {
         initialiseVisibility();
 
-        //MainController.airportItem.addListener((observable, oldValue, newValue) -> {
-        //    designatorL.setText("___");
-        //    designatorR.setText("___");
-        //});
         MainController.physRunwayItem.addListener((observable, oldValue, newValue) -> {
             PhysicalRunway runway = MainController.getPhysRunwaySelected();
             resetValues(runway);
@@ -199,22 +188,18 @@ public class SideViewController {
     protected void initialiseVisibility(){
         alsSlope.setVisible(false);
         tocsSlope.setVisible(false);
-        blastProtectionStart.setVisible(false);
-        blastProtectionEnd.setVisible(false);
-        blastProtectionLength.setVisible(false);
-        blastProtectionLabel.setVisible(false);
-        ldaBlastProtectionStart.setVisible(false);
-        ldaBlastProtectionEnd.setVisible(false);
-        ldaBlastProtectionLabel.setVisible(false);
-        ldBlastProtectionLength.setVisible(false);
-        toraStripEndStart.setVisible(false);
-        toraStripEndLength.setVisible(false);
-        toraStripEndEnd.setVisible(false);
-        toraStripEndLabel.setVisible(false);
-        displacedTStart.setVisible(false);
-        displacedTEnd.setVisible(false);
-        displacedTLength.setVisible(false);
-        displacedTLabel.setVisible(false);
+        toraOtherLength.setVisible(false);
+        toraOtherLength1.setVisible(false);
+        ldaOtherLength.setVisible(false);
+        ldaOtherLength1.setVisible(false);
+        toraOtherLabel.setVisible(false);
+        toraOtherLabel1.setVisible(false);
+        ldaOtherLabel.setVisible(false);
+        ldaOtherLabel1.setVisible(false);
+        toraOtherStart.setVisible(false);
+        ldaOtherStart.setVisible(false);
+        ldaOtherEnd.setVisible(false);
+        toraOtherEnd.setVisible(false);
     }
 
     @FXML
@@ -229,6 +214,18 @@ public class SideViewController {
             resetValues(selectedPhyRunway);
             setUpAlsTocs(selectedObstacle,lLogicalRunway);
 
+            setNewLine("TORA","Left",selectedPhyRunway,selectedObstacle,toraStart,toraLength,toraEnd,toraLabel,toraArrow);
+            setNewLine("LDA","Left",selectedPhyRunway,selectedObstacle,ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
+            setNewLine("ASDA","Left",selectedPhyRunway,selectedObstacle,asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
+            setNewLine("TODA","Left",selectedPhyRunway,selectedObstacle,todaStart,todaLength,todaEnd,todaLabel,todaArrow);
+            setNewLine("TORA","Right",selectedPhyRunway,selectedObstacle,rToraStart,rToraLength,rToraEnd,rToraLabel,rToraArrow);
+            setNewLine("LDA","Right",selectedPhyRunway,selectedObstacle,rLdaStart,rLdaLength,rLdaEnd,rLdaLabel,rLdaArrow);
+            setNewLine("ASDA","Right",selectedPhyRunway,selectedObstacle,rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel,rAsdaArrow);
+            setNewLine("TODA","Right",selectedPhyRunway,selectedObstacle,rTodaStart,rTodaLength,rTodaEnd,rTodaLabel,rTodaArrow);
+            setToraOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), false, toraOtherLabel, toraOtherLength, toraOtherStart);
+            setLdaOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), false, ldaOtherLabel, ldaOtherLength, ldaOtherStart);
+            setToraOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), true, toraOtherLabel1, toraOtherLength1, toraOtherEnd);
+            setLdaOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), true, ldaOtherLabel1, ldaOtherLength1, ldaOtherEnd);
             setNewLine("TORA","Left",selectedPhyRunway,selectedObstacle,toraStart,toraLength,toraEnd,toraLabel,toraArrow);
             setNewLine("LDA","Left",selectedPhyRunway,selectedObstacle,ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
             setNewLine("ASDA","Left",selectedPhyRunway,selectedObstacle,asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
@@ -297,92 +294,149 @@ public class SideViewController {
         arrowHead.setLayoutX(end.getLayoutX());
     }
 
-    protected void setOtherLines(LogicalRunway logicalRunway, Obstacle obstacle, Line  start,Line length,Line end,Label label,double value,String type,String result){
-        double distanceFromThreshold = obstacle.getDistFThreshold();
-        double resa = PhysicalRunway.getResa();
-        double stripEnd = PhysicalRunway.getStripEnd();
-        double alsTocs = obstacle.getAlsTocs();
-        double lengthInPx = getNumberOfPx(value,logicalRunway);
+    public void setLdaOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd){
+        label.setVisible(bool);
+        length.setVisible(bool);
+        startEnd.setVisible(bool);
 
-        boolean flightMethodIsTALO = Calculator.getFlightMethod(obstacle,logicalRunway).equals(Calculator.talo);
-        boolean resaGThanAlsTocs = resa > alsTocs;
+        if(bool){
+            Obstacle obstacle = MainController.getObstacleSelected();
 
-        if (value != 0){
-            //setLineVisibility(true,start,length,end,label);
-            //set value
-            label.setText(String.valueOf(value));
-            //set the length of the line
-            length.setEndX(lengthInPx);
-
-            //new variables
-            double lengthLayoutX=0;
-            double startLayoutX=0;
-            double endLayoutX=0;
-
-            if (type.equals("TORA")){
-                switch (result) {
-                    case "blastProtection" -> {
-                        if (flightMethodIsTALO){
-                            setLineVisibility(true,start,length,end,label);
-                            lengthLayoutX = toraStart.getLayoutX()-lengthInPx;
-                            startLayoutX = toraStart.getLayoutX()-lengthInPx;
-                            endLayoutX = toraStart.getLayoutX();
-                        }
-                    }
-                    case "stripEnd" -> {
-                        if (!flightMethodIsTALO){
-                            setLineVisibility(true,start,length,end,label);
-                            lengthLayoutX = toraEnd.getLayoutX();
-                            startLayoutX = toraEnd.getLayoutX();
-                            endLayoutX = toraEnd.getLayoutX()+lengthInPx;
-                            label.setVisible(false);
-                        }
-                    }
-                    case "resa" -> {
-                        if (resaGThanAlsTocs){
-
-                        }
-                    }
-                    case "slope" -> {
-                        if (flightMethodIsTALO){
-
-                        }else {
-
-                        }
-                    }
+            double stripEnd = PhysicalRunway.getStripEnd();
+            double resa = PhysicalRunway.getResa();
+            double alsTocs = obstacle.getAlsTocs();
+            double blastProtection = PhysicalRunway.getBlastProtection();
+            double change;
+            Line reference;
+            //some tweak here
+            if(isTALO){
+                if(lower){
+                    reference = rLdaEnd;
+                } else{
+                    reference = ldaStart;
                 }
-            } else if (type.equals("LDA")) {
-                switch (result) {
-                    case "blastProtection" -> {
-
-
-                    }
-                    case "stripEnd" -> {
-
-                    }
-                    case "resa" -> {
-
-                    }
-                    case "slope" -> {
-                        if (flightMethodIsTALO){
-
-                        }else {
-
-                        }
-                    }
+            } else {
+                if(lower){
+                    reference = rLdaStart;
+                } else{
+                    reference = ldaEnd;
                 }
             }
 
-            length.setLayoutX(lengthLayoutX);
-            start.setLayoutX (startLayoutX);
-            end.setLayoutX   (endLayoutX);
-            label.setLayoutX(getLabelLayout(start,length,label));
-
-            //setAllLayoutY    (layoutY,start,length,end,label);
-
+            if(!isTALO && !lower || isTALO && lower){
+                label.setText("  RESA + Strip End" +
+                        "\n"+"= "+resa+"m + "+stripEnd+"m");
+                change = PhysicalRunway.getBlastProtection();
+            } else{
+                //ttlt
+                if(alsTocs < resa){
+                    if(resa + stripEnd < blastProtection){
+                        label.setText("Blast protection" +
+                                "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+                        change = blastProtection;
+                    } else{
+                        label.setText("  RESA + Strip End" +
+                                "\n"+"= "+resa+"m + "+stripEnd+"m");
+                        change = resa + stripEnd;
+                    }
+                } else{
+                    if(alsTocs + stripEnd < blastProtection){
+                        label.setText("Blast protection" +
+                                "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+                        change = blastProtection;
+                    } else{
+                        label.setText("  ALS + Strip End" +
+                                "\n"+"= "+alsTocs+"m + "+stripEnd+"m");
+                        change = alsTocs + stripEnd;
+                    }
+                }
+            }
+            //some tweak here
+            double changePx = getNumberOfPx(change,MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
+            if(!isTALO){
+                startEnd.setLayoutX(reference.getLayoutX()+(changePx));
+                length.setLayoutX(reference.getLayoutX());
+                length.setEndX(startEnd.getLayoutX()-reference.getLayoutX());
+                label.setLayoutX(reference.getLayoutX()-(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+            } else{
+                startEnd.setLayoutX(reference.getLayoutX()-(changePx));
+                length.setLayoutX(startEnd.getLayoutX());
+                length.setEndX(reference.getLayoutX()-startEnd.getLayoutX());
+                label.setLayoutX(startEnd.getLayoutX()+(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+            }
         }
     }
 
+    public void setToraOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd){
+        label.setVisible(bool);
+        length.setVisible(bool);
+        startEnd.setVisible(bool);
+
+        if(bool){
+            Obstacle obstacle = MainController.getObstacleSelected();
+
+            double stripEnd = PhysicalRunway.getStripEnd();
+            double resa = PhysicalRunway.getResa();
+            double alsTocs = obstacle.getAlsTocs();
+            double blastProtection = PhysicalRunway.getBlastProtection();
+            double change;
+            Line reference;
+            if(isTALO){
+                if(lower){
+                    reference = rToraEnd;
+                } else{
+                    reference = toraStart;
+                }
+            } else{
+                if(lower) {
+                    reference = rTodaStart;
+                } else{
+                    reference = toraEnd;
+                }
+            }
+
+            if(isTALO && !lower || (!isTALO && lower)){
+                label.setText("Blast protection" +
+                        "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+                change = PhysicalRunway.getBlastProtection();
+            } else{
+                //ttlt
+                if(alsTocs < resa){
+                    if(resa + stripEnd < blastProtection){
+                        label.setText("Blast protection" +
+                                "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+                        change = blastProtection;
+                    } else{
+                        label.setText("   RESA + Strip End" +
+                                "\n"+"= "+resa+"m + "+stripEnd+"m");
+                        change = resa + stripEnd;
+                    }
+                } else{
+                    if(alsTocs + stripEnd < blastProtection){
+                        label.setText("Blast protection" +
+                                "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
+                        change = blastProtection;
+                    } else{
+                        label.setText("  TOCS + Strip End" +
+                                "\n"+"= "+alsTocs+"m + "+stripEnd+"m");
+                        change = alsTocs + stripEnd;
+                    }
+                }
+            }
+            double changePx = getNumberOfPx(change,MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
+            if(!isTALO){
+                startEnd.setLayoutX(reference.getLayoutX()+(changePx));
+                length.setLayoutX(reference.getLayoutX());
+                length.setEndX(startEnd.getLayoutX()-reference.getLayoutX());
+                label.setLayoutX(reference.getLayoutX()-(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+            } else{
+                startEnd.setLayoutX(reference.getLayoutX()-(changePx));
+                length.setLayoutX(startEnd.getLayoutX());
+                length.setEndX(reference.getLayoutX()-startEnd.getLayoutX());
+                label.setLayoutX(startEnd.getLayoutX()+(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+            }
+        }
+    }
     protected void resetValues(PhysicalRunway physicalRunway){
         LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
         setUpPhyRunway(physicalRunway,lLogicalRunway);
