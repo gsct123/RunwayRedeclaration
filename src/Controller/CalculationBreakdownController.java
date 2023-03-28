@@ -70,10 +70,14 @@ public class CalculationBreakdownController implements Initializable {
             todaBreakdown.setText(Calculator.todaBreakdown(obstacle, logRunway1));
             ldaBreakdown.setText(Calculator.ldaBreakdown(obstacle, logRunway1));
             asdaBreakdown.setText(Calculator.asdaBreakdown(obstacle, logRunway1));
-            toraBreakdown1.setText(Calculator.toraBreakdown(obstacle, logRunway2));
-            todaBreakdown1.setText(Calculator.todaBreakdown(obstacle, logRunway2));
-            ldaBreakdown1.setText(Calculator.ldaBreakdown(obstacle, logRunway2));
-            asdaBreakdown1.setText(Calculator.asdaBreakdown(obstacle, logRunway2));
+
+            Obstacle obstacle1 = MainController.getObstacleSelected();
+            obstacle1.setDistFThreshold(obstacle.getDistFThreshold());
+            obstacle1.setDistFThreshold(Calculator.getOppositeDistFThrehold(obstacle,runway));
+            toraBreakdown1.setText(Calculator.toraBreakdown(obstacle1, logRunway2));
+            todaBreakdown1.setText(Calculator.todaBreakdown(obstacle1, logRunway2));
+            ldaBreakdown1.setText(Calculator.ldaBreakdown(obstacle1, logRunway2));
+            asdaBreakdown1.setText(Calculator.asdaBreakdown(obstacle1, logRunway2));
         } else{
             String s = """
                     No redeclaration needed, no calculation performed.
