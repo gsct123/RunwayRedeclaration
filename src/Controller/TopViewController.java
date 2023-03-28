@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
@@ -146,6 +147,24 @@ public class TopViewController implements Initializable {
     @FXML
     private Line displacedThresholdR;
 
+    //arrows
+    @FXML
+    private Polygon todaArrow;
+    @FXML
+    private Polygon asdaArrow;
+    @FXML
+    private Polygon ldaArrow;
+    @FXML
+    private Polygon toraArrow;
+    @FXML
+    private Polygon todaArrow1;
+    @FXML
+    private Polygon ldaArrow1;
+    @FXML
+    private Polygon asdaArrow1;
+    @FXML
+    private Polygon toraArrow1;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -181,27 +200,186 @@ public class TopViewController implements Initializable {
 
     public void updateLabel(){
         relocateObstacle();
-        LogicalRunway llogRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(0);
-        LogicalRunway rlogRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(1);
-        Obstacle obstacle = MainController.obstacleProperty.get();
-        showOriginalParameters();
-        setNewLine("TORA",llogRunway,obstacle,toraStart,toraLength,toraEnd,toraLabel);
-        setNewLine("LDA",llogRunway,obstacle,ldaStart,ldaLength,ldaEnd,ldaLabel);
-        setNewLine("ASDA",llogRunway,obstacle,asdaStart,asdaLength,asdaEnd,asdaLabel);
-        setNewLine("TODA",llogRunway,obstacle,todaStart,todaLength,todaEnd,todaLabel);
+//        PhysicalRunway selectedPhyRunway = MainController.getPhysRunwaySelected();
+//        LogicalRunway llogRunway = selectedPhyRunway.getLogicalRunways().get(0);
+//        LogicalRunway rlogRunway = selectedPhyRunway.getLogicalRunways().get(1);
+//        Obstacle obstacle = MainController.obstacleProperty.get();
+//        showOriginalParameters();
+        PhysicalRunway selectedPhyRunway = MainController.getPhysRunwaySelected();
+        LogicalRunway llogRunway = selectedPhyRunway.getLogicalRunways().get(0);
+
+        Obstacle obstacle = MainController.getObstacleSelected();
+        Calculator.performCalc(obstacle,selectedPhyRunway);
+        resetValues(selectedPhyRunway);
+
+        setNewLine("TORA","Left",selectedPhyRunway,obstacle,toraStart,toraLength,toraEnd,toraLabel,toraArrow);
+        setNewLine("LDA","Left",selectedPhyRunway,obstacle,ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
+        setNewLine("ASDA","Left",selectedPhyRunway,obstacle,asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
+        setNewLine("TODA","Left",selectedPhyRunway,obstacle,todaStart,todaLength,todaEnd,todaLabel,todaArrow);
+        setNewLine("TORA","Right",selectedPhyRunway,obstacle,toraEnd1,toraLength1,toraStart1,toraLabel1,toraArrow1);
+        setNewLine("LDA","Right",selectedPhyRunway,obstacle,ldaEnd1,ldaLength1,ldaStart1,ldaLabel1,ldaArrow1);
+        setNewLine("ASDA","Right",selectedPhyRunway,obstacle,asdaEnd1,asdaLength1,asdaStart1,asdaLabel1,asdaArrow1);
+        setNewLine("TODA","Right",selectedPhyRunway,obstacle,todaEnd1,todaLength1,todaStart1,todaLabel1,todaArrow1);
+
         setToraOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, toraOtherLineLabel, toraOtherLineLength, toraOtherLineStart);
         setLdaOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, ldaOtherLineLabel, ldaOtherLineLength, ldaOtherLineStart);
 
-
-        double distThreshold = llogRunway.getLda()-obstacle.getDistFThreshold();
-        Obstacle tempObs = new Obstacle(obstacle.getName(), obstacle.getHeight(), obstacle.getWidth(), obstacle.getDistFCent(), distThreshold);
-        setInvertedNewLine("TORA",rlogRunway,tempObs,toraStart1,toraLength1,toraEnd1,toraLabel1);
-        setInvertedNewLine("LDA",rlogRunway,tempObs,ldaStart1,ldaLength1,ldaEnd1,ldaLabel1);
-        setInvertedNewLine("ASDA",rlogRunway,tempObs,asdaStart1,asdaLength1,asdaEnd1,asdaLabel1);
-        setInvertedNewLine("TODA",rlogRunway,tempObs,todaStart1,todaLength1,todaEnd1,todaLabel1);
         setToraOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), true, toraOtherLineLabel1, toraOtherLineLength1, toraOtherLineEnd);
         setLdaOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), true, ldaOtherLineLabel1, ldaOtherLineLength1, ldaOtherLineEnd);
 
+    }
+
+    protected void resetValues(PhysicalRunway physicalRunway){
+        toraOtherLineEnd.setVisible(false);
+        toraOtherLineStart.setVisible(false);
+        toraOtherLineLabel.setVisible(false);
+        toraOtherLineLabel1.setVisible(false);
+        toraOtherLineLength1.setVisible(false);
+        toraOtherLineLength.setVisible(false);
+
+        ldaOtherLineEnd.setVisible(false);
+        ldaOtherLineStart.setVisible(false);
+        ldaOtherLineLabel.setVisible(false);
+        ldaOtherLineLabel1.setVisible(false);
+        ldaOtherLineLength.setVisible(false);
+        ldaOtherLineLength1.setVisible(false);
+        LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
+        setUpPhyRunway(physicalRunway,lLogicalRunway);
+        setUpStopwayAndClearway(physicalRunway,lLogicalRunway);
+        setUpLogicalRunway(physicalRunway);
+    }
+
+    protected void setUpStopwayAndClearway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
+        LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
+        LogicalRunway rLogicalRunway = physicalRunway.getLogicalRunways().get(1);
+        //If the left Logical runway is the selected Logical runway
+        if (lLogicalRunway.getDesignator().equals(selectedLogRunway.getDesignator())){
+            //The stop/clearway for left runway will be on the right side, vice versa
+            setStopClearway(lLogicalRunway,"Right");
+            setStopClearway(rLogicalRunway,"Left");
+        }else {
+            setStopClearway(lLogicalRunway,"Left");
+            setStopClearway(rLogicalRunway,"Right");
+        }
+    }
+
+    protected void setUpPhyRunway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
+        LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
+        LogicalRunway rLogicalRunway = physicalRunway.getLogicalRunways().get(1);
+
+        //Set Up Threshold
+        thresholdL.setLayoutX(runway.getLayoutX());
+        thresholdR.setLayoutX(runway.getLayoutX()+runway.getWidth());
+
+        //Set Up Designator
+        String lDesignator = lLogicalRunway.getDesignator();
+        String rDesignator = rLogicalRunway.getDesignator();
+        //Set Up DisplacedThreshold
+        double lDisplacedThreshold = lLogicalRunway.getDisplacedThreshold();
+        double rDisplacedThreshold = rLogicalRunway.getDisplacedThreshold();
+        double lDisplacedThresholdX;
+        double rDisplacedThresholdX;
+
+        //change in designator and displacedThreshold as logical runway changes
+        if (selectedLogRunway.getDesignator().equals(lDesignator)){
+            leftDesignator.setText(lDesignator);
+            rightDesignator.setText(rDesignator);
+            lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(lDisplacedThreshold,lLogicalRunway);
+            rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(rDisplacedThreshold,rLogicalRunway);
+        }else {
+            leftDesignator.setText(rDesignator);
+            rightDesignator.setText(lDesignator);
+            lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(rDisplacedThreshold,lLogicalRunway);
+            rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(lDisplacedThreshold,rLogicalRunway);
+        }
+
+        displacedThresholdL.setLayoutX(lDisplacedThresholdX);
+        displacedThresholdR.setLayoutX(rDisplacedThresholdX);
+    }
+
+    protected void setNewLine(String type, String LeftorRight, PhysicalRunway physicalRunway, Obstacle obstacle, Line start, Line length, Line end, Label label, Polygon arrowHead){
+        LogicalRunway logicalRunway = null;
+        if (LeftorRight.equals("Left")){
+            logicalRunway = physicalRunway.getLogicalRunways().get(0);
+        }else {
+            logicalRunway = physicalRunway.getLogicalRunways().get(1);
+        }
+
+        double originalValue = oldAndNewValue(type,logicalRunway)[0];
+        double newValue = oldAndNewValue(type,logicalRunway)[1];
+        double difference = originalValue - newValue;
+        double differenceInPx = getNumberOfPx(difference,logicalRunway);
+        double labelLayout;
+
+        String flightMethod = Calculator.getFlightMethod(obstacle,logicalRunway);
+        String talo = Calculator.talo;
+        String ttlt = Calculator.ttlt;
+
+        if (LeftorRight.equals("Left")){
+            if (flightMethod.equals(talo)){
+                start.setLayoutX(start.getLayoutX() + differenceInPx);
+                length.setLayoutX(length.getLayoutX() + differenceInPx);
+                length.setEndX(length.getEndX() - differenceInPx);
+            } else if (flightMethod.equals(ttlt)) {
+                end.setLayoutX(end.getLayoutX() - differenceInPx);
+                length.setEndX(length.getEndX() - differenceInPx);
+            }
+        }else {
+            //when flightMethod for left runway is ttlt, the flightmethod for right runway will be talo, vice versa
+            if (flightMethod.equals(ttlt)){
+                //for flightmethod talo
+                start.setLayoutX(start.getLayoutX() - differenceInPx);
+                length.setLayoutX(end.getLayoutX());
+                length.setEndX(length.getEndX() - differenceInPx);
+            } else if (flightMethod.equals(talo)) {
+                //for flightmethod ttlt
+                end.setLayoutX(end.getLayoutX() + differenceInPx);
+                length.setLayoutX(end.getLayoutX());
+                length.setEndX(length.getEndX() - differenceInPx);
+                System.out.println(type + " " + LeftorRight + " = \n" + end.getLayoutX()+ "\n" +length.getStartX() + "\n" + length.getEndX() + "\n");
+            }
+        }
+
+        label.setText(" " + type +" = " + newValue + " ");
+        labelLayout = getLabelLayout(LeftorRight.equals("Left")? start: end,length,label);
+        label.setLayoutX(labelLayout);
+        arrowHead.setLayoutX(end.getLayoutX());
+    }
+
+    protected double getLabelLayout(Line start,Line length,Label label){
+        return start.getLayoutX() + (length.getEndX()/2 - label.getWidth()/2);
+    }
+
+    protected double[] oldAndNewValue(String type, LogicalRunway logicalRunway){
+        double originalValue = 0;
+        double newValue = 0;
+        switch (type) {
+            case "TORA" -> {
+                originalValue = logicalRunway.getTora();
+                newValue = logicalRunway.getNewTora();
+            }
+            case "LDA" -> {
+                originalValue = logicalRunway.getLda();
+                newValue = logicalRunway.getNewLda();
+            }
+            case "ASDA" -> {
+                originalValue = logicalRunway.getAsda();
+                newValue = logicalRunway.getNewAsda();
+            }
+            case "TODA" -> {
+                originalValue = logicalRunway.getToda();
+                newValue = logicalRunway.getNewToda();
+            }
+        }
+        return new double[]{originalValue,newValue};
+    }
+
+    protected double getNumberOfPx(double length,LogicalRunway logicalRunway){
+        return length/getMeterPerPx(logicalRunway);
+    }
+
+    protected double getMeterPerPx(LogicalRunway logicalRunway){
+        return logicalRunway.getTora()/ runway.getWidth();
     }
 
     public void setLdaOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd){
@@ -346,101 +524,6 @@ public class TopViewController implements Initializable {
         }
     }
 
-    protected void setUpBlastProtection(boolean bool, boolean lower, Label label, Line length, Line startEnd, Line toraRef){
-        label.setVisible(bool);
-        length.setVisible(bool);
-        startEnd.setVisible(bool);
-        label.setText("Blast protection" +
-                "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
-        if(lower){
-            startEnd.setLayoutX(toraRef.getLayoutX()+(PhysicalRunway.getBlastProtection()*meterPerPx()));
-            length.setLayoutX(toraRef.getLayoutX());
-            length.setEndX(startEnd.getLayoutX()-toraRef.getLayoutX());
-            label.setLayoutX(toraRef.getLayoutX()-(toraRef.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
-        } else{
-            startEnd.setLayoutX(toraRef.getLayoutX()-(PhysicalRunway.getBlastProtection()*meterPerPx()));
-            length.setLayoutX(startEnd.getLayoutX());
-            length.setEndX(toraRef.getLayoutX()-startEnd.getLayoutX());
-            label.setLayoutX(startEnd.getLayoutX()+(toraRef.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
-        }
-    }
-
-    protected void setNewLine(String type, LogicalRunway logicalRunway,Obstacle obstacle,Line start,Line length,Line end,Label label){
-        double originalValue = 0;
-        double newValue = 0;
-        switch (type) {
-            case "TORA" -> {
-                originalValue = logicalRunway.getTora();
-                newValue = logicalRunway.getNewTora();
-            }
-            case "LDA" -> {
-                originalValue = logicalRunway.getLda();
-                newValue = logicalRunway.getNewLda();
-            }
-            case "ASDA" -> {
-                originalValue = logicalRunway.getAsda();
-                newValue = logicalRunway.getNewAsda();
-            }
-            case "TODA" -> {
-                originalValue = logicalRunway.getToda();
-                newValue = logicalRunway.getNewToda();
-            }
-        }
-        double differenceInPx = (originalValue - newValue)*meterPerPx();
-        String flightMethod = Calculator.getFlightMethod(obstacle,logicalRunway);
-        String talo = Calculator.talo;
-        String ttlt = Calculator.ttlt;
-        if (flightMethod.equals(talo)){
-            start.setLayoutX(start.getLayoutX() + differenceInPx);
-            length.setLayoutX(length.getLayoutX() + differenceInPx);
-            length.setEndX(length.getEndX() - differenceInPx);
-        } else if (flightMethod.equals(ttlt)) {
-            end.setLayoutX(end.getLayoutX() - differenceInPx);
-            length.setEndX(length.getEndX() - differenceInPx);
-        }
-        double labelLayout = start.getLayoutX() + (end.getLayoutX()-start.getLayoutX())/2-label.getWidth()/2;
-        label.setText(" " + type +" = " + newValue + "m ");
-        label.setLayoutX(labelLayout);
-    }
-
-    protected void setInvertedNewLine(String type, LogicalRunway logicalRunway,Obstacle obstacle,Line start,Line length,Line end,Label label){
-        double originalValue = 0;
-        double newValue = 0;
-        switch (type) {
-            case "TORA" -> {
-                originalValue = logicalRunway.getTora();
-                newValue = logicalRunway.getNewTora();
-            }
-            case "LDA" -> {
-                originalValue = logicalRunway.getLda();
-                newValue = logicalRunway.getNewLda();
-            }
-            case "ASDA" -> {
-                originalValue = logicalRunway.getAsda();
-                newValue = logicalRunway.getNewAsda();
-            }
-            case "TODA" -> {
-                originalValue = logicalRunway.getToda();
-                newValue = logicalRunway.getNewToda();
-            }
-        }
-        double differenceInPx = (originalValue - newValue)*runway.getWidth()/logicalRunway.getTora();
-        String flightMethod = Calculator.getFlightMethod(obstacle,logicalRunway);
-        String talo = Calculator.talo;
-        String ttlt = Calculator.ttlt;
-        if (flightMethod.equals(ttlt)){
-            start.setLayoutX(start.getLayoutX() + differenceInPx);
-            length.setLayoutX(length.getLayoutX() + differenceInPx);
-            length.setEndX(length.getEndX() - differenceInPx);
-        } else if (flightMethod.equals(talo)) {
-            end.setLayoutX(end.getLayoutX() - differenceInPx);
-            length.setEndX(length.getEndX() - differenceInPx);
-        }
-        double labelLayout = start.getLayoutX() + (end.getLayoutX()-start.getLayoutX())/2-label.getWidth()/2;
-        label.setText(" " + type +" = " + newValue + "m ");
-        label.setLayoutX(labelLayout);
-    }
-
     public void setMainController(MainController mainController){
         this.mainController = mainController;
     }
@@ -489,10 +572,79 @@ public class TopViewController implements Initializable {
         setStopClearway(rLogicalRunway,"Left");
         setStopClearway(lLogicalRunway,"Right");
 
-        setUpTora(physRunway);
-        setUpLda(physRunway);
-        setUpToda(physRunway);
-        setUpAsda(physRunway);
+        setUpLogicalRunway(physRunway);
+    }
+
+    protected void setUpLogicalRunway(PhysicalRunway physicalRunway){
+        setUpLine("TORA","Left",physicalRunway,toraStart,toraLength,toraEnd,toraLabel,toraArrow);
+        setUpLine("LDA","Left",physicalRunway,ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
+        setUpLine("ASDA","Left",physicalRunway,asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
+        setUpLine("TODA","Left",physicalRunway,todaStart,todaLength,todaEnd,todaLabel,todaArrow);
+        setUpLine("TORA","Right",physicalRunway,toraEnd1,toraLength1,toraStart1,toraLabel1,toraArrow1);
+        setUpLine("LDA","Right",physicalRunway,ldaEnd1,ldaLength1,ldaStart1,ldaLabel1,ldaArrow1);
+        setUpLine("ASDA","Right",physicalRunway,asdaEnd1,asdaLength1,asdaStart1,asdaLabel1,asdaArrow1);
+        setUpLine("TODA","Right",physicalRunway,todaEnd1,todaLength1,todaStart1,todaLabel1,todaArrow1);
+    }
+
+    protected void setUpLine(String type,String LeftorRight, PhysicalRunway physicalRunway, Line start, Line length, Line end, Label label, Polygon arrowHead){
+        LogicalRunway logicalRunway = null;
+        double originalStartX;
+        double originalEndX;
+        double leftActualThresholdX = thresholdL.getLayoutX();
+        double rightActualThresholdX = thresholdR.getLayoutX();
+        double displacedThresholdLayoutX;
+        Rectangle stopway;
+        Rectangle clearway;
+
+        if (LeftorRight.equals("Left")){
+            logicalRunway = physicalRunway.getLogicalRunways().get(0);
+            displacedThresholdLayoutX = displacedThresholdL.getLayoutX();
+            stopway = stopwayR;
+            clearway = clearwayR;
+            originalStartX = leftActualThresholdX;
+            originalEndX = rightActualThresholdX;
+        }else {
+            logicalRunway = physicalRunway.getLogicalRunways().get(1);
+            displacedThresholdLayoutX = displacedThresholdR.getLayoutX();
+            stopway = stopwayL;
+            clearway = clearwayL;
+            originalStartX = rightActualThresholdX;
+            originalEndX = leftActualThresholdX;
+        }
+
+        //condition for defining start
+        if (type.equals("LDA")){
+            originalStartX = displacedThresholdLayoutX;
+        }
+
+        //condition for defining end
+        if (LeftorRight.equals("Left")){
+            if (type.equals("ASDA")){
+                originalEndX = stopway.getLayoutX() + stopway.getWidth();
+            }else if (type.equals("TODA")){
+                originalEndX = clearway.getLayoutX() + clearway.getWidth();
+            }
+        }else {
+            if (type.equals("ASDA")){
+                originalEndX = stopway.getLayoutX();
+            }else if (type.equals("TODA")){
+                originalEndX = clearway.getLayoutX() ;
+            }
+        }
+
+        double originalValue = oldAndNewValue(type,logicalRunway)[0];
+
+        start.setLayoutX(originalStartX);
+        end.setLayoutX(originalEndX);
+        label.setText(" " + type + " = " + originalValue + " " );
+        if (LeftorRight.equals("Left")){
+            length.setLayoutX(originalStartX);
+        }else {
+            length.setLayoutX(originalEndX);
+        }
+        double difference = Math.abs(originalEndX-originalStartX);
+        length.setEndX(difference);
+        arrowHead.setLayoutX(end.getLayoutX());
     }
 
     private double meterPerPx(){
@@ -535,130 +687,5 @@ public class TopViewController implements Initializable {
         }else {
             way.setWidth(0);
         }
-    }
-
-    private void setUpTora(PhysicalRunway physRunway){
-        LogicalRunway llogRunway = physRunway.getLogicalRunways().get(0);
-        LogicalRunway rlogRunway = physRunway.getLogicalRunways().get(1);
-        double loriginalStartX = thresholdL.getLayoutX();
-        double loriginalEndX = thresholdR.getLayoutX();
-        double ltora = llogRunway.getTora();
-        double rtora = rlogRunway.getTora();
-        //Reset the starting line
-        toraStart.setLayoutX(loriginalStartX);
-        toraEnd.setLayoutX(loriginalEndX);
-        toraLength.setLayoutX(loriginalStartX);
-        toraLength.setEndX(loriginalEndX - loriginalStartX);
-        toraLabel.setText(" TORA = " + ltora);
-
-
-        toraEnd1.setLayoutX(loriginalEndX);
-        toraStart1.setLayoutX(loriginalStartX - (rtora-ltora)*runway.getWidth()/ltora);
-        toraLength1.setLayoutX(loriginalStartX - (rtora-ltora)*runway.getWidth()/ltora);
-        toraLength1.setEndX(toraLength1.getStartX() + toraEnd1.getLayoutX()-toraStart1.getLayoutX());
-        toraLabel1.setText(" TORA = " + rtora);
-    }
-
-    private void setUpLda(PhysicalRunway physRunway){
-        LogicalRunway llogRunway = physRunway.getLogicalRunways().get(0);
-        LogicalRunway rlogRunway = physRunway.getLogicalRunways().get(1);
-        double loriginalStartX;
-        double loriginalEndX = thresholdR.getLayoutX();
-        double llda = llogRunway.getLda();
-        double rlda = rlogRunway.getLda();
-
-        //Make displacedThreshold the starting point if it exists
-        if (llogRunway.getDisplacedThreshold() != 0){
-            loriginalStartX = displacedThresholdL.getLayoutX();
-        }else {
-            loriginalStartX = thresholdL.getLayoutX();
-        }
-        //Reset the starting line
-        ldaStart.setLayoutX(loriginalStartX);
-        ldaEnd.setLayoutX(loriginalEndX);
-        ldaLength.setLayoutX(ldaStart.getLayoutX());
-        ldaLength.setEndX(loriginalEndX-loriginalStartX);
-        ldaLabel.setText(" LDA = " + llda);
-
-        double roriginalStartX = thresholdL.getLayoutX();
-        double roriginalEndX;
-        if(rlogRunway.getDisplacedThreshold() != 0){
-            roriginalEndX = displacedThresholdR.getLayoutX();
-        } else{
-            roriginalEndX = thresholdR.getLayoutX();
-        }
-
-        ldaEnd1.setLayoutX(roriginalEndX);
-        ldaStart1.setLayoutX(roriginalStartX - (rlogRunway.getTora()- llogRunway.getTora())*meterPerPx());
-        ldaLength1.setLayoutX(ldaStart1.getLayoutX());
-        ldaLength1.setEndX(ldaEnd1.getLayoutX()-ldaStart1.getLayoutX());
-        ldaLabel1.setText(" LDA = " + rlda);
-    }
-
-    private void setUpAsda(PhysicalRunway physRunway){
-        LogicalRunway llogRunway = physRunway.getLogicalRunways().get(0);
-        LogicalRunway rlogRunway = physRunway.getLogicalRunways().get(1);
-        //Set Up Variables
-        double loriginalStartX = thresholdL.getLayoutX();
-        double loriginalEndX;
-        double lasda = llogRunway.getAsda();
-        if (llogRunway.getStopway() != 0){
-            loriginalEndX = stopwayR.getLayoutX()+stopwayR.getWidth();
-        }else {
-            loriginalEndX = thresholdR.getLayoutX();
-        }
-        asdaStart.setLayoutX(loriginalStartX);
-        asdaEnd.setLayoutX(loriginalEndX);
-        asdaLength.setLayoutX(loriginalStartX);
-        asdaLength.setEndX(loriginalEndX - loriginalStartX);
-        asdaLabel.setText(" ASDA = " + lasda);
-
-        double roriginalStartX;
-        double roriginalEndX = thresholdR.getLayoutX();
-        double rasda = rlogRunway.getAsda();
-        if(rlogRunway.getStopway() != 0){
-            roriginalStartX = stopwayL.getLayoutX();
-        } else{
-            roriginalStartX = thresholdL.getLayoutX();
-        }
-        asdaStart1.setLayoutX(roriginalStartX - (rlogRunway.getTora()- llogRunway.getTora())*meterPerPx());
-        asdaEnd1.setLayoutX(roriginalEndX);
-        asdaLength1.setLayoutX(asdaStart1.getLayoutX());
-        asdaLength1.setEndX(asdaEnd1.getLayoutX()-asdaStart1.getLayoutX());
-        asdaLabel1.setText(" ASDA = " + rasda);
-    }
-
-    private void setUpToda(PhysicalRunway physRunway){
-        LogicalRunway llogRunway = physRunway.getLogicalRunways().get(0);
-        LogicalRunway rlogRunway = physRunway.getLogicalRunways().get(1);
-
-        //Set Up Variables
-        double loriginalStartX = thresholdL.getLayoutX();
-        double loriginalEndX;
-        double ltoda = llogRunway.getToda();
-        if (llogRunway.getClearway() != 0){
-            loriginalEndX = clearwayR.getLayoutX()+clearwayR.getWidth();
-        }else {
-            loriginalEndX = thresholdR.getLayoutX();
-        }
-        todaStart.setLayoutX(loriginalStartX);
-        todaEnd.setLayoutX(loriginalEndX);
-        todaLength.setLayoutX(loriginalStartX);
-        todaLength.setEndX(loriginalEndX - loriginalStartX);
-        todaLabel.setText(" TODA = " + ltoda);
-
-        double roriginalStartX;
-        double roriginalEndX = thresholdR.getLayoutX();
-        double rtoda = rlogRunway.getToda();
-        if(rlogRunway.getClearway() != 0){
-            roriginalStartX = clearwayL.getLayoutX();
-        } else{
-            roriginalStartX = thresholdL.getLayoutX();
-        }
-        todaStart1.setLayoutX(roriginalStartX - (rlogRunway.getTora()- llogRunway.getTora())*meterPerPx());
-        todaEnd1.setLayoutX(roriginalEndX);
-        todaLength1.setLayoutX(todaStart1.getLayoutX());
-        todaLength1.setEndX(todaEnd1.getLayoutX()-todaStart1.getLayoutX());
-        todaLabel1.setText(" TODA = " + rtoda);
     }
 }

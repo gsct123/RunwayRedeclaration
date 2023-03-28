@@ -426,7 +426,6 @@ public class MainController implements Initializable {
                         stripEndTextField.setDisable(false);
                         blastProtectionField.setDisable(false);
                         resaTextField.setDisable(false);
-                        performCalculationButton.setDisable(obstacleProperty.get() == null);
                         obstaclesEditing(false);
                         showTable(true);
                     });
@@ -559,6 +558,7 @@ public class MainController implements Initializable {
                 lrButtonGroup.setDisable(notAllowed);
                 distanceThresholdTextField.setDisable(notAllowed);
                 clDistTextField.setDisable(notAllowed);
+                performCalculationButton.setDisable(notAllowed);
             }
     }
 }

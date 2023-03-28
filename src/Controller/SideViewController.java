@@ -261,7 +261,6 @@ public class SideViewController {
                 end.setLayoutX(end.getLayoutX() - differenceInPx);
                 length.setEndX(length.getEndX() - differenceInPx);
             }
-            labelLayout = getLabelLayout(start,length,label);
         }else {
             //when flightMethod for left runway is ttlt, the flightmethod for right runway will be talo, vice versa
             if (flightMethod.equals(ttlt)){
@@ -275,9 +274,9 @@ public class SideViewController {
                 length.setLayoutX(end.getLayoutX());
                 length.setEndX(length.getEndX() - differenceInPx);
             }
-            labelLayout = getLabelLayout(end,length,label);
         }
         label.setText(" " + type +" = " + newValue + "m ");
+        labelLayout = getLabelLayout(LeftorRight.equals("Left")? start: end,length,label);
         label.setLayoutX(labelLayout);
         arrowHead.setLayoutX(end.getLayoutX());
     }
