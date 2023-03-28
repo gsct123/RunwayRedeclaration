@@ -7,7 +7,6 @@ import Model.PhysicalRunway;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,21 +17,11 @@ public class CalculationBreakdownController implements Initializable {
     @FXML
     private Label rightDesignator;
     @FXML
-    private Label originalToda;
-    @FXML
-    private Label originalTora;
-    @FXML
-    private Label originalLda;
-    @FXML
-    private Label originalAsda;
-    @FXML
     private Label resa;
     @FXML
     private Label stripEnd;
     @FXML
     private Label blastProtection;
-    @FXML
-    private TabPane breakdownPane;
     @FXML
     private Label ldaBreakdown;
     @FXML

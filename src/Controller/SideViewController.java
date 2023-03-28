@@ -180,8 +180,6 @@ public class SideViewController {
         MainController.physRunwayItem.addListener((observable, oldValue, newValue) -> {
             PhysicalRunway runway = MainController.getPhysRunwaySelected();
             resetValues(runway);
-            setUpLogicalRunway(runway);
-
         });
         MainController.obstacleProperty.addListener(((ObservableValue<? extends Obstacle> observable, Obstacle oldValue, Obstacle newValue) -> {
             if(oldValue != null){
@@ -225,18 +223,24 @@ public class SideViewController {
         LogicalRunway lLogicalRunway = selectedPhyRunway.getLogicalRunways().get(0);
 
         Obstacle selectedObstacle = MainController.getObstacleSelected();
-        Calculator.performCalc(selectedObstacle,selectedPhyRunway);
-        resetValues(selectedPhyRunway);
-        setUpAlsTocs(selectedObstacle,lLogicalRunway);
 
-        setNewLine("TORA","Left",selectedPhyRunway,selectedObstacle,toraStart,toraLength,toraEnd,toraLabel,toraArrow);
-        setNewLine("LDA","Left",selectedPhyRunway,selectedObstacle,ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
-        setNewLine("ASDA","Left",selectedPhyRunway,selectedObstacle,asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
-        setNewLine("TODA","Left",selectedPhyRunway,selectedObstacle,todaStart,todaLength,todaEnd,todaLabel,todaArrow);
-        setNewLine("TORA","Right",selectedPhyRunway,selectedObstacle,rToraStart,rToraLength,rToraEnd,rToraLabel,rToraArrow);
-        setNewLine("LDA","Right",selectedPhyRunway,selectedObstacle,rLdaStart,rLdaLength,rLdaEnd,rLdaLabel,rLdaArrow);
-        setNewLine("ASDA","Right",selectedPhyRunway,selectedObstacle,rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel,rAsdaArrow);
-        setNewLine("TODA","Right",selectedPhyRunway,selectedObstacle,rTodaStart,rTodaLength,rTodaEnd,rTodaLabel,rTodaArrow);
+        if(Calculator.needRedeclare(selectedObstacle, lLogicalRunway)){
+            Calculator.performCalc(selectedObstacle,selectedPhyRunway);
+            resetValues(selectedPhyRunway);
+            setUpAlsTocs(selectedObstacle,lLogicalRunway);
+
+            setNewLine("TORA","Left",selectedPhyRunway,selectedObstacle,toraStart,toraLength,toraEnd,toraLabel,toraArrow);
+            setNewLine("LDA","Left",selectedPhyRunway,selectedObstacle,ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
+            setNewLine("ASDA","Left",selectedPhyRunway,selectedObstacle,asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
+            setNewLine("TODA","Left",selectedPhyRunway,selectedObstacle,todaStart,todaLength,todaEnd,todaLabel,todaArrow);
+            setNewLine("TORA","Right",selectedPhyRunway,selectedObstacle,rToraStart,rToraLength,rToraEnd,rToraLabel,rToraArrow);
+            setNewLine("LDA","Right",selectedPhyRunway,selectedObstacle,rLdaStart,rLdaLength,rLdaEnd,rLdaLabel,rLdaArrow);
+            setNewLine("ASDA","Right",selectedPhyRunway,selectedObstacle,rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel,rAsdaArrow);
+            setNewLine("TODA","Right",selectedPhyRunway,selectedObstacle,rTodaStart,rTodaLength,rTodaEnd,rTodaLabel,rTodaArrow);
+
+        } else{
+            resetValues(selectedPhyRunway);
+        }
 
         //setOtherLines(selectedLogRunway,selectedObstacle,blastProtectionStart,blastProtectionLength,blastProtectionEnd,blastProtectionLabel,PhysicalRunway.getBlastProtection(),"TORA","blastProtection");
         //setOtherLines(selectedLogRunway,selectedObstacle,toraStripEndStart,toraStripEndLength,toraStripEndEnd,toraStripEndLabel,PhysicalRunway.getStripEnd(),"TORA","stripEnd");
@@ -559,11 +563,10 @@ public class SideViewController {
     protected void setStopClearwayValue(Rectangle way,double length, double widthPx, double oriWayX){
         if (length != 0 ){
             way.setWidth(widthPx);
-            way.setLayoutX(oriWayX);
         }else {
             way.setWidth(0);
-            way.setLayoutX(oriWayX);
         }
+        way.setLayoutX(oriWayX);
     }
 
     protected void setUpAlsTocs(Obstacle obstacle, LogicalRunway logicalRunway){
