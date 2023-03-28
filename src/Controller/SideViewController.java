@@ -181,7 +181,7 @@ public class SideViewController {
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
             setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
         });
-        MainController.valueChanged.addListener((observable, oldValue, newValue) -> handleExecuteButtonClick(new ActionEvent()));
+        MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel(new ActionEvent()));
     }
 
     @FXML
@@ -203,7 +203,7 @@ public class SideViewController {
     }
 
     @FXML
-    protected void handleExecuteButtonClick(ActionEvent event){
+    protected void updateLabel(ActionEvent event){
         PhysicalRunway selectedPhyRunway = MainController.getPhysRunwaySelected();
         LogicalRunway lLogicalRunway = selectedPhyRunway.getLogicalRunways().get(0);
 
@@ -226,21 +226,10 @@ public class SideViewController {
             setLdaOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), false, ldaOtherLabel, ldaOtherLength, ldaOtherStart);
             setToraOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), true, toraOtherLabel1, toraOtherLength1, toraOtherEnd);
             setLdaOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), true, ldaOtherLabel1, ldaOtherLength1, ldaOtherEnd);
-            setNewLine("TORA","Left",selectedPhyRunway,selectedObstacle,toraStart,toraLength,toraEnd,toraLabel,toraArrow);
-            setNewLine("LDA","Left",selectedPhyRunway,selectedObstacle,ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
-            setNewLine("ASDA","Left",selectedPhyRunway,selectedObstacle,asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
-            setNewLine("TODA","Left",selectedPhyRunway,selectedObstacle,todaStart,todaLength,todaEnd,todaLabel,todaArrow);
-            setNewLine("TORA","Right",selectedPhyRunway,selectedObstacle,rToraStart,rToraLength,rToraEnd,rToraLabel,rToraArrow);
-            setNewLine("LDA","Right",selectedPhyRunway,selectedObstacle,rLdaStart,rLdaLength,rLdaEnd,rLdaLabel,rLdaArrow);
-            setNewLine("ASDA","Right",selectedPhyRunway,selectedObstacle,rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel,rAsdaArrow);
-            setNewLine("TODA","Right",selectedPhyRunway,selectedObstacle,rTodaStart,rTodaLength,rTodaEnd,rTodaLabel,rTodaArrow);
 
         } else{
             resetValues(selectedPhyRunway);
         }
-
-        //setOtherLines(selectedLogRunway,selectedObstacle,blastProtectionStart,blastProtectionLength,blastProtectionEnd,blastProtectionLabel,PhysicalRunway.getBlastProtection(),"TORA","blastProtection");
-        //setOtherLines(selectedLogRunway,selectedObstacle,toraStripEndStart,toraStripEndLength,toraStripEndEnd,toraStripEndLabel,PhysicalRunway.getStripEnd(),"TORA","stripEnd");
     }
 
     //type is TORA, LDA ,TODA or ASDA
@@ -251,7 +240,6 @@ public class SideViewController {
         }else {
             logicalRunway = physicalRunway.getLogicalRunways().get(1);
         }
-
         //variables for calculation later
         double originalValue = oldAndNewValue(type,logicalRunway)[0];
         double newValue = oldAndNewValue(type,logicalRunway)[1];
@@ -442,6 +430,7 @@ public class SideViewController {
         setUpPhyRunway(physicalRunway,lLogicalRunway);
         setUpStopwayAndClearway(physicalRunway,lLogicalRunway);
         setUpLogicalRunway(physicalRunway);
+        initialiseVisibility();
     }
     protected void setUpLogicalRunway(PhysicalRunway physicalRunway){
         //left
@@ -666,20 +655,6 @@ public class SideViewController {
 
     protected double getLabelLayout(Line start,Line length,Label label){
         return start.getLayoutX() + (length.getEndX()/2 - label.getWidth()/2);
-    }
-
-    protected void setAllLayoutY(double layoutY,Line start, Line length, Line end, Label label){
-        start.setLayoutY(layoutY-start.getEndY()/2);
-        end.setLayoutY(layoutY - end.getEndY()/2);
-        length.setLayoutY(layoutY);
-        label.setLayoutY(layoutY - label.getHeight()/2);
-    }
-
-    protected void setLineVisibility(boolean b, Line start, Line length, Line end, Label label){
-        start.setVisible(b);
-        length.setVisible(b);
-        end.setVisible(b);
-        label.setVisible(b);
     }
 
 }
