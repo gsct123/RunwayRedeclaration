@@ -232,19 +232,19 @@
       <Polygon fx:id="ldaArrow1" layoutX="84.0" layoutY="497.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
       <Polygon fx:id="asdaArrow1" layoutX="51.0" layoutY="447.0" points="10.5, 15.75, -0.5, 12.0, 10.5, 8.25" stroke="BLACK" strokeType="INSIDE" />
       <Polygon fx:id="todaArrow1" layoutX="20.0" layoutY="471.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
-      <Line fx:id="ldaOtherLineLength1" endX="32.0" layoutX="667.0" layoutY="510.0" nodeOrientation="LEFT_TO_RIGHT" />
-      <Line id="ldaStart" fx:id="ldaOtherLineEnd" endY="25.0" layoutX="700.0" layoutY="496.0" nodeOrientation="LEFT_TO_RIGHT" />
-      <Label id="toraLabel" fx:id="ldaOtherLineLabel1" layoutX="646.0" layoutY="524.0" nodeOrientation="LEFT_TO_RIGHT" text="Blast protection">
+      <Line fx:id="ldaOtherLineLength1" endX="32.0" layoutX="667.0" layoutY="510.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
+      <Line id="ldaStart" fx:id="ldaOtherLineEnd" endY="25.0" layoutX="700.0" layoutY="496.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
+      <Label id="toraLabel" fx:id="ldaOtherLineLabel1" layoutX="646.0" layoutY="524.0" nodeOrientation="LEFT_TO_RIGHT" text="Blast protection" visible="false">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label id="toraLabel" fx:id="ldaOtherLineLabel" layoutX="116.0" layoutY="139.0" nodeOrientation="LEFT_TO_RIGHT" text="Blast protection">
+      <Label id="toraLabel" fx:id="ldaOtherLineLabel" layoutX="116.0" layoutY="139.0" nodeOrientation="LEFT_TO_RIGHT" text="Blast protection" visible="false">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Line fx:id="ldaOtherLineLength" endX="32.0" layoutX="142.0" layoutY="177.0" nodeOrientation="LEFT_TO_RIGHT" />
-      <Line id="ldaStart" fx:id="ldaOtherLineStart" endY="25.0" layoutX="142.0" layoutY="164.0" nodeOrientation="LEFT_TO_RIGHT" />
+      <Line fx:id="ldaOtherLineLength" endX="32.0" layoutX="142.0" layoutY="177.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
+      <Line id="ldaStart" fx:id="ldaOtherLineStart" endY="25.0" layoutX="142.0" layoutY="164.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
    </children>
 </AnchorPane>

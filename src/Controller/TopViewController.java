@@ -233,28 +233,28 @@ public class TopViewController implements Initializable {
             }
 
             if(!isTALO && !lower || isTALO && lower){
-                label.setText("RESA + Strip End" +
+                label.setText("  RESA + Strip End" +
                         "\n"+"= "+resa+"m + "+stripEnd+"m");
                 change = PhysicalRunway.getBlastProtection();
             } else{
                 //ttlt
                 if(alsTocs < resa){
-                    if(resa + stripEnd >= blastProtection){
+                    if(resa + stripEnd < blastProtection){
                         label.setText("Blast protection" +
                                 "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
                         change = blastProtection;
                     } else{
-                        label.setText("RESA + Strip End" +
+                        label.setText("  RESA + Strip End" +
                                 "\n"+"= "+resa+"m + "+stripEnd+"m");
                         change = resa + stripEnd;
                     }
                 } else{
-                    if(alsTocs + stripEnd >= blastProtection){
+                    if(alsTocs + stripEnd < blastProtection){
                         label.setText("Blast protection" +
                                 "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
                         change = blastProtection;
                     } else{
-                        label.setText("ALS + Strip End" +
+                        label.setText("  ALS + Strip End" +
                                 "\n"+"= "+alsTocs+"m + "+stripEnd+"m");
                         change = alsTocs + stripEnd;
                     }
@@ -325,7 +325,7 @@ public class TopViewController implements Initializable {
                                 "\n"+"    = "+PhysicalRunway.getBlastProtection()+"m");
                         change = blastProtection;
                     } else{
-                        label.setText("    TOCS + Strip End" +
+                        label.setText("  TOCS + Strip End" +
                                 "\n"+"= "+alsTocs+"m + "+stripEnd+"m");
                         change = alsTocs + stripEnd;
                     }
