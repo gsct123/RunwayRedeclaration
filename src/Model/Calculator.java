@@ -94,7 +94,7 @@ public class Calculator {
             displacedLandingThreshold = alsTocs + stripEnd;
         }
         if (displacedLandingThreshold <= blastProtection && flightMethod.equals(talo)){
-            displacedLandingThreshold += blastProtection;
+            displacedLandingThreshold = blastProtection;
         }
         return displacedLandingThreshold;
     }
@@ -227,12 +227,16 @@ public class Calculator {
         calcAsda(obstacle, runway.getLogicalRunways().get(0));
 
         //obstacle distance from the other end
-        double distThreshold = runway.getLogicalRunways().get(0).getLda()-obstacle.getDistFThreshold();
+        double distThreshold = getOppositeDistFThrehold(obstacle,runway);
         Obstacle tempObs = new Obstacle(obstacle.getName(), obstacle.getHeight(), obstacle.getWidth(), obstacle.getDistFCent(), distThreshold);
         calcTora(tempObs, runway.getLogicalRunways().get(1));
         calcLda(tempObs, runway.getLogicalRunways().get(1));
         calcToda(tempObs, runway.getLogicalRunways().get(1));
         calcAsda(tempObs, runway.getLogicalRunways().get(1));
+    }
+
+    public static double getOppositeDistFThrehold(Obstacle obstacle,PhysicalRunway runway){
+        return runway.getLogicalRunways().get(0).getLda()-obstacle.getDistFThreshold();
     }
 
     public static String toraBreakdown(Obstacle obstacle, LogicalRunway runway) {
@@ -278,7 +282,7 @@ public class Calculator {
             }
             else if (ldaOrToraChoice == 2){
 
-                return "LDA  = Original LDA - Distance from threshold\n        -Strip End - Slope Calculation - Blast Protection\n        = " + runway.getLda() + " - " + obstacle.getDistFThreshold() + " - " + PhysicalRunway.getStripEnd() + " - " + slopeCalculation + " - " + PhysicalRunway.getBlastProtection() +"\n        = " + runway.getNewLda() + "\n\n";
+                return "LDA  = Original LDA - Distance from threshold\n        - Blast Protection\n        = " + runway.getLda() + " - " + obstacle.getDistFThreshold() + " - " + PhysicalRunway.getBlastProtection() +"\n        = " + runway.getNewLda() + "\n\n";
             }
             else {
 
