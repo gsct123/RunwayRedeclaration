@@ -15,7 +15,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TopViewController implements Initializable {
-    private MainController mainController;
 
     @FXML
     private Label leftDesignator;
@@ -23,8 +22,6 @@ public class TopViewController implements Initializable {
     private Label rightDesignator;
     @FXML
     private Rectangle runway;
-    @FXML
-    private Rectangle background;
     @FXML
     private Rectangle obstacleBlock;
     @FXML
@@ -539,10 +536,6 @@ public class TopViewController implements Initializable {
         }
     }
 
-    public void setMainController(MainController mainController){
-        this.mainController = mainController;
-    }
-
     public void relocateObstacle(){
         obstacleBlock.setVisible(true);
         Obstacle obstacle = MainController.getObstacleSelected();
@@ -635,9 +628,7 @@ public class TopViewController implements Initializable {
 
         start.setLayoutX(originalStartX);
         end.setLayoutX(originalEndX);
-        label.setText(" " + type + " = " + originalValue + " " );
-//        double labelLayout = getLabelLayout(LeftorRight.equals("Left")? start: end,length,label);
-//        label.setLayoutX(labelLayout);
+        label.setText(" " + type + " = " + originalValue + "m " );
         if (LeftorRight.equals("Left")){
             length.setLayoutX(originalStartX);
         }else {
