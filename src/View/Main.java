@@ -33,6 +33,7 @@ public class Main extends Application {
 
         stage.setTitle("SEG Runway Project");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 }

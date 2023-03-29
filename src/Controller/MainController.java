@@ -156,12 +156,6 @@ public class MainController implements Initializable {
             loadObstacles("src/Data/obstacles.xml");
             addObstacleEvent();
 
-//            TopViewController topViewController = new TopViewController();
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/TopView.fxml"));
-//            Parent root = loader.load();
-//            loader.setController(topViewController);
-//            topViewTab.setContent(root);
-//            topViewController.setMainController(this);
             if(Main.isReset()){
                 notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
             }
@@ -299,6 +293,7 @@ public class MainController implements Initializable {
 
         stage.setTitle("Calculation Breakdown");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.showAndWait();
     }
 

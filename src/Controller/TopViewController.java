@@ -52,6 +52,7 @@ public class TopViewController implements Initializable {
     private Line toraLength1;
     @FXML
     private Label toraLabel1;
+
     //toda
     @FXML
     private Line todaStart;
@@ -69,6 +70,7 @@ public class TopViewController implements Initializable {
     private Label todaLabel1;
     @FXML
     private Line todaLength1;
+
     //lda
     @FXML
     private Line ldaStart;
@@ -194,9 +196,8 @@ public class TopViewController implements Initializable {
             relocateObstacle();
         });
         MainController.dirFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
-        MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
-            relocateObstacle();
-        });
+        MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> relocateObstacle());
+        MainController.disFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
     }
 
@@ -643,7 +644,7 @@ public class TopViewController implements Initializable {
         return runway.getWidth()/MainController.getPhysRunwaySelected().getLogicalRunways().get(0).getTora();
     }
 
-    private void setStopClearway(LogicalRunway logicalRunway,String leftOrRightWay){
+    protected void setStopClearway(LogicalRunway logicalRunway,String leftOrRightWay){
         //Set Up  Variable
         double stopwayLength = logicalRunway.getStopway();
         double stopwayWidthPx = stopwayLength*runway.getWidth()/logicalRunway.getTora();
@@ -670,10 +671,9 @@ public class TopViewController implements Initializable {
         // Set Values for both clearway and stopway
         setStopClearwayValue(stopway,stopwayLength,stopwayWidthPx,oriStopwayX);
         setStopClearwayValue(clearway,clearwayLength,clearwayWidthPx,oriClearwayX);
-        System.out.println("stopway length= "+stopwayLength);
     }
 
-    private void setStopClearwayValue(Rectangle way,double length, double widthPx, double oriWayX){
+    protected void setStopClearwayValue(Rectangle way,double length, double widthPx, double oriWayX){
         if (length != 0 ){
             way.setWidth(widthPx);
         }else {
