@@ -21,6 +21,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -294,6 +295,7 @@ public class MainController implements Initializable {
         stage.setTitle("Calculation Breakdown");
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
 
