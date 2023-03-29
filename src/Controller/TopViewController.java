@@ -402,7 +402,7 @@ public class TopViewController implements Initializable {
             if(!isTALO && !lower || isTALO && lower){
                 label.setText("  RESA + Strip End" +
                         "\n"+"= "+resa+"m + "+stripEnd+"m");
-                change = PhysicalRunway.getBlastProtection();
+                change = resa+stripEnd;
             } else{
                 //ttlt
                 if(alsTocs < resa){
