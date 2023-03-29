@@ -451,10 +451,22 @@ public class TopViewController implements Initializable {
                 label.setLayoutX(startEnd.getLayoutX()+(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
             }
 
+            boolean isTalo = Calculator.getFlightMethod(obstacle,MainController.getPhysRunwaySelected().getLogicalRunways().get(0)).equals(Calculator.talo);
             if(!lower){
-                arrow.setLayoutX(reference.getLayoutX());
+
+                if(isTalo){
+                    arrow.setLayoutX(reference.getLayoutX());
+                }else {
+                    arrow.setLayoutX(startEnd.getLayoutX());
+                }
+
             } else{
-                arrow.setLayoutX(startEnd.getLayoutX());
+                if(isTalo){
+                    arrow.setLayoutX(startEnd.getLayoutX());
+                }else {
+                    arrow.setLayoutX(reference.getLayoutX());
+                }
+
             }
         }
     }
@@ -529,10 +541,22 @@ public class TopViewController implements Initializable {
                 label.setLayoutX(startEnd.getLayoutX()+(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
             }
 
+            boolean isTalo = Calculator.getFlightMethod(obstacle,MainController.getPhysRunwaySelected().getLogicalRunways().get(0)).equals(Calculator.talo);
             if(!lower){
-                arrow.setLayoutX(reference.getLayoutX());
+
+                if(isTalo){
+                    arrow.setLayoutX(reference.getLayoutX());
+                }else {
+                    arrow.setLayoutX(startEnd.getLayoutX());
+                }
+
             } else{
-                arrow.setLayoutX(startEnd.getLayoutX());
+                if(isTalo){
+                    arrow.setLayoutX(startEnd.getLayoutX());
+                }else {
+                    arrow.setLayoutX(reference.getLayoutX());
+                }
+
             }
         }
     }
