@@ -128,6 +128,14 @@ public class SideViewController {
     private Line ldaOtherEnd;
     @FXML
     private Line toraOtherEnd;
+    @FXML
+    private Polygon toraOtherArrow;
+    @FXML
+    private Polygon toraOtherArrow1;
+    @FXML
+    private Polygon ldaOtherArrow;
+    @FXML
+    private Polygon ldaOtherArrow1;
 
     //clearway and stopway
     @FXML
@@ -200,6 +208,10 @@ public class SideViewController {
         ldaOtherStart.setVisible(false);
         ldaOtherEnd.setVisible(false);
         toraOtherEnd.setVisible(false);
+        toraOtherArrow.setVisible(false);
+        toraOtherArrow1.setVisible(false);
+        ldaOtherArrow.setVisible(false);
+        ldaOtherArrow1.setVisible(false);
     }
 
     @FXML
@@ -222,10 +234,10 @@ public class SideViewController {
             setNewLine("LDA","Right",selectedPhyRunway,selectedObstacle,rLdaStart,rLdaLength,rLdaEnd,rLdaLabel,rLdaArrow);
             setNewLine("ASDA","Right",selectedPhyRunway,selectedObstacle,rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel,rAsdaArrow);
             setNewLine("TODA","Right",selectedPhyRunway,selectedObstacle,rTodaStart,rTodaLength,rTodaEnd,rTodaLabel,rTodaArrow);
-            setToraOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), false, toraOtherLabel, toraOtherLength, toraOtherStart);
-            setLdaOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), false, ldaOtherLabel, ldaOtherLength, ldaOtherStart);
-            setToraOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), true, toraOtherLabel1, toraOtherLength1, toraOtherEnd);
-            setLdaOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), true, ldaOtherLabel1, ldaOtherLength1, ldaOtherEnd);
+            setToraOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), false, toraOtherLabel, toraOtherLength, toraOtherStart, toraOtherArrow);
+            setLdaOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), false, ldaOtherLabel, ldaOtherLength, ldaOtherStart, ldaOtherArrow);
+            setToraOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), true, toraOtherLabel1, toraOtherLength1, toraOtherEnd, toraOtherArrow1);
+            setLdaOtherLine(Calculator.needRedeclare(selectedObstacle, lLogicalRunway), Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo), true, ldaOtherLabel1, ldaOtherLength1, ldaOtherEnd, ldaOtherArrow1);
 
         } else{
             resetValues(selectedPhyRunway);
@@ -282,10 +294,11 @@ public class SideViewController {
         arrowHead.setLayoutX(end.getLayoutX());
     }
 
-    public void setLdaOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd){
+    public void setLdaOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd, Polygon arrow){
         label.setVisible(bool);
         length.setVisible(bool);
         startEnd.setVisible(bool);
+        arrow.setVisible(bool);
 
         if(bool){
             Obstacle obstacle = MainController.getObstacleSelected();
@@ -352,13 +365,20 @@ public class SideViewController {
                 length.setEndX(reference.getLayoutX()-startEnd.getLayoutX());
                 label.setLayoutX(startEnd.getLayoutX()+(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
             }
+
+            if(!lower){
+                arrow.setLayoutX(reference.getLayoutX());
+            } else{
+                arrow.setLayoutX(startEnd.getLayoutX());
+            }
         }
     }
 
-    public void setToraOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd){
+    public void setToraOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd, Polygon arrow){
         label.setVisible(bool);
         length.setVisible(bool);
         startEnd.setVisible(bool);
+        arrow.setVisible(bool);
 
         if(bool){
             Obstacle obstacle = MainController.getObstacleSelected();
@@ -422,6 +442,12 @@ public class SideViewController {
                 length.setLayoutX(startEnd.getLayoutX());
                 length.setEndX(reference.getLayoutX()-startEnd.getLayoutX());
                 label.setLayoutX(startEnd.getLayoutX()+(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+            }
+
+            if(!lower){
+                arrow.setLayoutX(reference.getLayoutX());
+            } else{
+                arrow.setLayoutX(startEnd.getLayoutX());
             }
         }
     }

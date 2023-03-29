@@ -241,7 +241,7 @@
       </Label>
       <Line fx:id="ldaOtherLineLength" endX="32.0" layoutX="134.0" layoutY="177.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
       <Line id="ldaStart" fx:id="ldaOtherLineStart" endY="25.0" layoutX="134.0" layoutY="164.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
-      <Polygon fx:id="ldaArrow2" layoutX="372.0" layoutY="175.0" points="-11.25, 16.0, 0.5, 12.0, -11.25, 8.25" rotate="270.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="ldaOtherArrow" layoutX="372.0" layoutY="165.0" points="-11.25, 16.0, 0.5, 12.0, -11.25, 8.25" rotate="360.0" stroke="BLACK" strokeType="INSIDE" />
       <Line id="thresholdL" fx:id="thresholdL" endX="-7.62939453125E-6" endY="89.99996948242188" fill="WHITE" layoutX="100.0" layoutY="299.0" startX="-1.52587890625E-5" startY="0.4836578369140625" stroke="WHITE" strokeWidth="3.0" />
       <Line id="thresholdR" fx:id="thresholdR" endY="91.0" fill="#f2f2f200" layoutX="700.0" layoutY="299.0" stroke="#f0f0f0" strokeWidth="3.0" />
       <Rectangle fx:id="obstacleBlock" arcHeight="5.0" fill="#f53e3e" height="32.0" layoutX="44.0" layoutY="328.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="32.0" />
@@ -251,5 +251,8 @@
       <Polygon layoutX="782.0" layoutY="413.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" rotate="90.0" stroke="BLACK" strokeType="INSIDE" />
       <Polygon layoutX="781.0" layoutY="338.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" rotate="270.0" stroke="BLACK" strokeType="INSIDE" />
       <Polygon layoutX="781.0" layoutY="426.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" rotate="270.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="toraOtherArrow" layoutX="382.0" layoutY="246.0" points="-11.25, 16.0, 0.5, 12.0, -11.25, 8.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="toraOtherArrow1" layoutX="110.0" layoutY="421.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="ldaOtherArrow1" layoutX="120.0" layoutY="497.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </AnchorPane>

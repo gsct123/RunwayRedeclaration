@@ -170,5 +170,9 @@
       <Line endX="539.4921875" endY="-70.64114379882812" layoutX="210.0" layoutY="652.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="468.92669677734375" endY="-70.64117431640625" layoutX="-112.0" layoutY="653.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="80.0" endY="-70.64117431640625" layoutX="45.0" layoutY="142.0" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Polygon fx:id="ldaOtherArrow" layoutX="710.0" layoutY="187.0" points="-9.0, -25.0, -9.0, -17.25, -0.75, -21.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="toraOtherArrow" layoutX="710.0" layoutY="263.0" points="-9.0, -25.0, -9.0, -17.25, -0.75, -21.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="toraOtherArrow1" layoutX="110.0" layoutY="428.0" points="8.25, -25.75, 8.25, -18.75, 0.5, -22.5" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="ldaOtherArrow1" layoutX="110.0" layoutY="503.0" points="9.25, -26.25, 9.25, -18.25, 0.5, -22.5" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </AnchorPane>

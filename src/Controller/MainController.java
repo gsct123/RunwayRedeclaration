@@ -39,6 +39,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -148,19 +149,19 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadInfos();
         try {
-            topViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/TopView.fxml")));
-            sideViewTab.setContent(FXMLLoader.load(this.getClass().getResource("../View/SideView.fxml")));
+            topViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/TopView.fxml"))));
+            sideViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/SideView.fxml"))));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
             addObstacleEvent();
 
-            TopViewController topViewController = new TopViewController();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/TopView.fxml"));
-            Parent root = loader.load();
-            loader.setController(topViewController);
-            topViewTab.setContent(root);
-            topViewController.setMainController(this);
+//            TopViewController topViewController = new TopViewController();
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/TopView.fxml"));
+//            Parent root = loader.load();
+//            loader.setController(topViewController);
+//            topViewTab.setContent(root);
+//            topViewController.setMainController(this);
             if(Main.isReset()){
                 notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
             }
@@ -291,7 +292,7 @@ public class MainController implements Initializable {
     @FXML
     public void showCalculationBreakdown(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/CalculationBreakdown.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CalculationBreakdown.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);

@@ -164,6 +164,14 @@ public class TopViewController implements Initializable {
     private Polygon asdaArrow1;
     @FXML
     private Polygon toraArrow1;
+    @FXML
+    private Polygon toraOtherArrow;
+    @FXML
+    private Polygon ldaOtherArrow;
+    @FXML
+    private Polygon toraOtherArrow1;
+    @FXML
+    private Polygon ldaOtherArrow1;
 
 
     @Override
@@ -213,11 +221,11 @@ public class TopViewController implements Initializable {
             setNewLine("ASDA","Right",selectedPhyRunway,obstacle,asdaEnd1,asdaLength1,asdaStart1,asdaLabel1,asdaArrow1);
             setNewLine("TODA","Right",selectedPhyRunway,obstacle,todaEnd1,todaLength1,todaStart1,todaLabel1,todaArrow1);
 
-            setToraOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, toraOtherLineLabel, toraOtherLineLength, toraOtherLineStart);
-            setLdaOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, ldaOtherLineLabel, ldaOtherLineLength, ldaOtherLineStart);
+            setToraOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, toraOtherLineLabel, toraOtherLineLength, toraOtherLineStart, toraOtherArrow);
+            setLdaOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, ldaOtherLineLabel, ldaOtherLineLength, ldaOtherLineStart, ldaOtherArrow);
 
-            setToraOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), true, toraOtherLineLabel1, toraOtherLineLength1, toraOtherLineEnd);
-            setLdaOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), true, ldaOtherLineLabel1, ldaOtherLineLength1, ldaOtherLineEnd);
+            setToraOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), true, toraOtherLineLabel1, toraOtherLineLength1, toraOtherLineEnd, toraOtherArrow1);
+            setLdaOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), true, ldaOtherLineLabel1, ldaOtherLineLength1, ldaOtherLineEnd, ldaOtherArrow1);
         } else{
             resetValues(selectedPhyRunway);
             setUpLogicalRunway(selectedPhyRunway);
@@ -231,6 +239,8 @@ public class TopViewController implements Initializable {
         toraOtherLineLabel1.setVisible(false);
         toraOtherLineLength1.setVisible(false);
         toraOtherLineLength.setVisible(false);
+        toraOtherArrow.setVisible(false);
+        toraOtherArrow1.setVisible(false);
 
         ldaOtherLineEnd.setVisible(false);
         ldaOtherLineStart.setVisible(false);
@@ -238,6 +248,8 @@ public class TopViewController implements Initializable {
         ldaOtherLineLabel1.setVisible(false);
         ldaOtherLineLength.setVisible(false);
         ldaOtherLineLength1.setVisible(false);
+        ldaOtherArrow.setVisible(false);
+        ldaOtherArrow1.setVisible(false);
         LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
         setUpPhyRunway(physicalRunway,lLogicalRunway);
         setUpStopwayAndClearway(physicalRunway,lLogicalRunway);
@@ -371,10 +383,11 @@ public class TopViewController implements Initializable {
         return logicalRunway.getTora()/ runway.getWidth();
     }
 
-    public void setLdaOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd){
+    public void setLdaOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd, Polygon arrow){
         label.setVisible(bool);
         length.setVisible(bool);
         startEnd.setVisible(bool);
+        arrow.setVisible(bool);
 
         if(bool){
             Obstacle obstacle = MainController.getObstacleSelected();
@@ -439,13 +452,20 @@ public class TopViewController implements Initializable {
                 length.setEndX(reference.getLayoutX()-startEnd.getLayoutX());
                 label.setLayoutX(startEnd.getLayoutX()+(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
             }
+
+            if(!lower){
+                arrow.setLayoutX(reference.getLayoutX());
+            } else{
+                arrow.setLayoutX(startEnd.getLayoutX());
+            }
         }
     }
 
-    public void setToraOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd){
+    public void setToraOtherLine(boolean bool, boolean isTALO, boolean lower, Label label, Line length, Line startEnd, Polygon arrow){
         label.setVisible(bool);
         length.setVisible(bool);
         startEnd.setVisible(bool);
+        arrow.setVisible(bool);
 
         if(bool){
             Obstacle obstacle = MainController.getObstacleSelected();
@@ -509,6 +529,12 @@ public class TopViewController implements Initializable {
                 length.setLayoutX(startEnd.getLayoutX());
                 length.setEndX(reference.getLayoutX()-startEnd.getLayoutX());
                 label.setLayoutX(startEnd.getLayoutX()+(reference.getLayoutX()-startEnd.getLayoutX())/2-label.getWidth()/2);
+            }
+
+            if(!lower){
+                arrow.setLayoutX(reference.getLayoutX());
+            } else{
+                arrow.setLayoutX(startEnd.getLayoutX());
             }
         }
     }

@@ -11,7 +11,7 @@ public class SideMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SideView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Resources/SideView.fxml"));
         //SideViewController sideViewController = new SideViewController();
         //loader.setController(sideViewController);
         Parent root = loader.load();
