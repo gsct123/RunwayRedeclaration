@@ -243,7 +243,7 @@
       <Line id="ldaStart" fx:id="ldaOtherLineStart" endY="25.0" layoutX="134.0" layoutY="164.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
       <Polygon fx:id="ldaArrow2" layoutX="372.0" layoutY="175.0" points="-11.25, 16.0, 0.5, 12.0, -11.25, 8.25" rotate="270.0" stroke="BLACK" strokeType="INSIDE" />
       <Line id="thresholdL" fx:id="thresholdL" endX="-7.62939453125E-6" endY="89.99996948242188" fill="WHITE" layoutX="100.0" layoutY="299.0" startX="-1.52587890625E-5" startY="0.4836578369140625" stroke="WHITE" strokeWidth="3.0" />
-      <Line id="thresholdR" fx:id="thresholdR" endX="-1.0" endY="91.0" fill="#f2f2f200" layoutX="700.0" layoutY="299.0" stroke="#f0f0f0" strokeWidth="3.0" />
+      <Line id="thresholdR" fx:id="thresholdR" endY="91.0" fill="#f2f2f200" layoutX="700.0" layoutY="299.0" stroke="#f0f0f0" strokeWidth="3.0" />
       <Rectangle fx:id="obstacleBlock" arcHeight="5.0" fill="#f53e3e" height="32.0" layoutX="44.0" layoutY="328.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="32.0" />
       <Line endX="413.0" endY="-69.5" layoutX="372.0" layoutY="552.0" startX="393.271484375" startY="-69.5" stroke="#0f0f0f" />
       <Line endX="413.0" endY="-69.5" layoutX="372.0" layoutY="415.0" startX="393.271484375" startY="-69.5" stroke="#0f0f0f" />
