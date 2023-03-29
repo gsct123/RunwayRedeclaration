@@ -14,11 +14,11 @@
       <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#b6c6e1" height="627.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
       <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#9a9898" height="176.0" layoutY="258.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9a9898" height="279.0" layoutX="185.0" layoutY="204.0" stroke="TRANSPARENT" strokeType="INSIDE" width="411.0" />
-      <Rectangle fx:id="clearwayR" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="724.0" layoutY="298.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="67.0" />
-      <Rectangle fx:id="clearwayL" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="12.0" layoutY="298.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="64.0" />
-      <Rectangle fx:id="stopwayR" arcHeight="5.0" fill="#fcf347" height="93.0" layoutX="724.0" layoutY="298.0" stroke="#ffdd5400" strokeType="INSIDE" width="33.0" />
-      <Rectangle fx:id="stopwayL" arcHeight="5.0" fill="#fcf347" height="93.0" layoutX="43.0" layoutY="298.0" stroke="#ffff0000" strokeType="INSIDE" width="32.0" />
-      <Rectangle fx:id="runway" arcHeight="5.0" fill="#0f0f0f" height="93.0" layoutX="75.0" layoutY="298.0" stroke="TRANSPARENT" strokeType="INSIDE" width="649.0" />
+      <Rectangle fx:id="clearwayR" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="700.0" layoutY="298.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="50.0" />
+      <Rectangle fx:id="clearwayL" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="50.0" layoutY="298.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="50.0" />
+      <Rectangle fx:id="stopwayR" arcHeight="5.0" fill="#fcf347" height="93.0" layoutX="700.0" layoutY="298.0" stroke="#ffdd5400" strokeType="INSIDE" width="25.0" />
+      <Rectangle fx:id="stopwayL" arcHeight="5.0" fill="#fcf347" height="93.0" layoutX="75.0" layoutY="298.0" stroke="#ffff0000" strokeType="INSIDE" width="25.0" />
+      <Rectangle fx:id="runway" arcHeight="5.0" fill="#0f0f0f" height="93.0" layoutX="100.0" layoutY="298.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
       <Polyline fill="#9a9898" layoutX="173.0" layoutY="496.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Line endX="-100.43783569335938" layoutX="289.0" layoutY="344.0" startX="-109.85165405273438" stroke="WHITE" />
       <Line endX="-100.43783569335938" layoutX="310.0" layoutY="344.0" startX="-109.85165405273438" stroke="WHITE" />
@@ -49,43 +49,40 @@
             <Point3D y="1.0" />
          </rotationAxis>
       </Polyline>
-      <Line id="thresholdL" fx:id="thresholdL" endX="-7.62939453125E-6" endY="89.99996948242188" fill="TRANSPARENT" layoutX="75.0" layoutY="299.0" startX="-1.52587890625E-5" startY="0.4836578369140625" stroke="#f2f2f200" strokeWidth="3.0" />
-      <Line id="thresholdR" fx:id="thresholdR" endX="-1.0" endY="92.0" fill="#f2f2f200" layoutX="724.0" layoutY="299.0" startY="-1.0" stroke="#f2f2f200" strokeWidth="3.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="324.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="328.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="332.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="336.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="340.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="344.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="348.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="352.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="356.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="360.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="-55.08058547973633" layoutX="187.0" layoutY="364.0" startX="-90.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="324.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="328.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="332.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="336.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="340.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="344.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="348.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="352.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="356.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="360.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
-      <Line endX="455.0805854797363" layoutX="213.0" layoutY="364.0" startX="490.530029296875" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="324.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="328.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="332.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="336.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="340.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="344.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="348.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="352.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="356.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="360.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="110.0" layoutY="364.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="324.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="328.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="332.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="336.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="340.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="344.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="348.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="352.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="356.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="360.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="30.0" layoutX="660.0" layoutY="364.0" stroke="WHITE" strokeWidth="2.0" />
       <Label fx:id="leftDesignator" layoutX="139.0" layoutY="332.0" rotate="90.0" text="___" textFill="WHITE" underline="true">
          <font>
             <Font name="Verdana Bold" size="20.0" />
          </font>
       </Label>
-      <Line id="displacedThresholdL" fx:id="displacedThresholdL" endY="93.0" fill="BLUE" layoutX="167.0" layoutY="297.0" startY="3.5" stroke="BLUE" strokeWidth="3.0" />
-      <Line id="displacedThresholdR" fx:id="displacedThresholdR" endY="93.0" fill="BLUE" layoutX="659.0" layoutY="296.0" startY="3.5" stroke="BLUE" strokeWidth="3.0" />
+      <Line id="displacedThresholdL" fx:id="displacedThresholdL" endY="93.0" fill="BLUE" layoutX="166.0" layoutY="297.0" startY="3.5" stroke="BLUE" strokeWidth="3.0" />
+      <Line id="displacedThresholdR" fx:id="displacedThresholdR" endY="93.0" fill="BLUE" layoutX="650.0" layoutY="296.0" startY="3.5" stroke="BLUE" strokeWidth="3.0" />
       <Label fx:id="rightDesignator" layoutX="615.0" layoutY="331.0" rotate="270.0" text="___" textFill="WHITE" underline="true">
          <font>
             <Font name="Verdana Bold" size="20.0" />
          </font>
       </Label>
-      <Rectangle fx:id="obstacleBlock" arcHeight="5.0" fill="#f53e3e" height="32.0" layoutX="44.0" layoutY="328.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="32.0" />
       <Label layoutX="147.0" layoutY="60.0" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="15.0" />
@@ -93,15 +90,15 @@
       </Label>
       <Polygon fill="#0f0f0f" layoutX="492.0" layoutY="92.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Line endX="539.4921875" endY="-70.64114379882812" layoutX="-12.0" layoutY="142.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
-      <Line endX="468.92669677734375" endY="-70.64117431640625" layoutX="-341.0" layoutY="142.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Line endX="80.0" endY="-70.64117431640625" layoutX="45.0" layoutY="142.0" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcf347" height="12.0" layoutX="635.0" layoutY="21.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Label layoutX="661.0" layoutY="20.0" style="-fx-text-fill: black;" text="Stopway">
+      <Label layoutX="660.0" layoutY="20.0" style="-fx-text-fill: black;" text="Stopway">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5ff552" height="12.0" layoutX="635.0" layoutY="44.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Label layoutX="661.0" layoutY="42.0" style="-fx-text-fill: black;" text="Clearway">
+      <Label layoutX="660.0" layoutY="42.0" style="-fx-text-fill: black;" text="Clearway">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
@@ -113,7 +110,6 @@
          </font>
       </Label>
       <Line fx:id="gradedAreaLine" endX="-92.00152587890625" endY="-55.94866943359375" layoutX="867.0" layoutY="402.0" startX="-92.00146484375" startY="79.2928466796875" stroke="#0f0f0f" />
-      <Line endX="555.0" endY="-70.0" layoutX="230.0" layoutY="552.0" startX="533.1329956054688" startY="-70.00003051757812" stroke="#0f0f0f" />
       <Label layoutX="742.0" layoutY="403.0" style="-fx-text-fill: black;" text="75m">
          <font>
             <Font name="Verdana" size="10.0" />
@@ -124,13 +120,12 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Line endX="413.0" layoutX="372.0" layoutY="344.0" startX="393.271484375" stroke="#0f0f0f" />
-      <Label id="asdaLabel" fx:id="asdaLabel" layoutX="385.0" layoutY="211.0" text="ASDA">
+      <Label id="asdaLabel" fx:id="asdaLabel" layoutX="375.0" layoutY="211.0" text="ASDA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="todaLabel" fx:id="todaLabel" layoutX="385.0" layoutY="185.0" text="TODA">
+      <Label id="todaLabel" fx:id="todaLabel" layoutX="375.0" layoutY="185.0" text="TODA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
@@ -141,12 +136,12 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label id="toraLabel" fx:id="toraLabel" layoutX="382.0" layoutY="235.0" text=" TORA">
+      <Label id="toraLabel" fx:id="toraLabel" layoutX="375.0" layoutY="235.0" text=" TORA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="ldaLabel" fx:id="ldaLabel" layoutX="390.0" layoutY="157.0" text="LDA">
+      <Label id="ldaLabel" fx:id="ldaLabel" layoutX="375.0" layoutY="157.0" text="LDA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
@@ -167,22 +162,22 @@
       <Polygon fill="#0f0f0f" layoutX="231.0" layoutY="604.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Line endX="539.4921875" endY="-70.64114379882812" layoutX="210.0" layoutY="652.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="468.92669677734375" endY="-70.64117431640625" layoutX="-112.0" layoutY="653.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
-      <Label id="asdaLabel" fx:id="asdaLabel1" layoutX="385.0" layoutY="438.0" text="ASDA">
+      <Label id="asdaLabel" fx:id="asdaLabel1" layoutX="375.0" layoutY="438.0" text="ASDA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="todaLabel" fx:id="todaLabel1" layoutX="384.0" layoutY="465.0" text="TODA">
+      <Label id="todaLabel" fx:id="todaLabel1" layoutX="375.0" layoutY="465.0" text="TODA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="toraLabel" fx:id="toraLabel1" layoutX="379.0" layoutY="413.0" text=" TORA">
+      <Label id="toraLabel" fx:id="toraLabel1" layoutX="375.0" layoutY="413.0" text=" TORA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="ldaLabel" fx:id="ldaLabel1" layoutX="389.0" layoutY="490.0" text="LDA">
+      <Label id="ldaLabel" fx:id="ldaLabel1" layoutX="375.0" layoutY="490.0" text="LDA">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
@@ -200,38 +195,38 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Line id="toraEnd" fx:id="toraEnd" endY="27.0" layoutX="724.0" layoutY="244.0" />
-      <Line id="ldaStart" fx:id="asdaStart" endY="27.0" layoutX="75.0" layoutY="216.0" />
-      <Line id="asdaStart" fx:id="ldaStart" endY="27.0" layoutX="167.0" layoutY="164.0" />
-      <Line id="ldaEnd" fx:id="asdaEnd" endY="27.0" layoutX="757.0" layoutY="216.0" />
-      <Line id="asdaEnd" fx:id="ldaEnd" endY="27.0" layoutX="724.0" layoutY="165.0" />
-      <Line id="todaStart" fx:id="todaStart" endY="27.0" layoutX="75.0" layoutY="190.0" />
-      <Line id="todaEnd" fx:id="todaEnd" endY="27.0" layoutX="791.0" layoutY="191.0" />
-      <Line id="toraLength" fx:id="toraLength" endX="649.0" layoutX="75.0" layoutY="258.0" />
-      <Line id="ldaLength" fx:id="ldaLength" endX="557.0" layoutX="167.0" layoutY="177.0" />
-      <Line id="asdaLength" fx:id="asdaLength" endX="682.0" layoutX="75.0" layoutY="230.0" />
-      <Line id="toraLength" fx:id="todaLength" endX="716.0" layoutX="75.0" layoutY="204.0" />
-      <Line id="blastProtectionEnd" fx:id="toraStart" endY="27.0" layoutX="75.0" layoutY="244.0" />
-      <Line id="toraEnd" fx:id="toraEnd1" endY="25.0" layoutX="724.0" layoutY="421.0" />
-      <Line id="ldaStart" fx:id="ldaStart1" endY="25.0" layoutX="75.0" layoutY="497.0" />
-      <Line id="asdaStart" fx:id="asdaStart1" endY="25.0" layoutX="43.0" layoutY="447.0" />
-      <Line id="ldaEnd" fx:id="ldaEnd1" endY="25.0" layoutX="659.0" layoutY="497.0" />
-      <Line id="asdaEnd" fx:id="asdaEnd1" endY="25.0" layoutX="724.0" layoutY="446.0" />
-      <Line id="toraStart" fx:id="toraStart1" endY="25.0" layoutX="75.0" layoutY="421.0" />
-      <Line id="todaStart" fx:id="todaStart1" endY="25.0" layoutX="12.0" layoutY="471.0" />
-      <Line id="todaEnd" fx:id="todaEnd1" endY="25.0" layoutX="724.0" layoutY="471.0" />
-      <Line id="toraLength" fx:id="toraLength1" endX="648.0" layoutX="76.0" layoutY="434.0" />
-      <Line id="ldaLength" fx:id="ldaLength1" endX="584.0" layoutX="75.0" layoutY="510.0" />
-      <Line id="asdaLength" fx:id="asdaLength1" endX="681.0" layoutX="43.0" layoutY="459.0" />
-      <Line id="toraLength" fx:id="todaLength1" endX="712.0" layoutX="12.0" layoutY="484.0" />
-      <Polygon fx:id="toraArrow" layoutX="724.0" layoutY="244.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" stroke="BLACK" strokeType="INSIDE" />
-      <Polygon fx:id="ldaArrow" layoutX="724.0" layoutY="165.0" points="-11.25, 16.0, 0.5, 12.0, -11.25, 8.25" stroke="BLACK" strokeType="INSIDE" />
-      <Polygon fx:id="asdaArrow" layoutX="757.0" layoutY="216.0" points="-9.75, 17.5, 0.0, 14.0, -9.75, 10.0" stroke="BLACK" strokeType="INSIDE" />
-      <Polygon fx:id="todaArrow" layoutX="791.0" layoutY="191.0" points="-10.0, 16.75, 0.5, 13.0, -10.0, 8.75" stroke="BLACK" strokeType="INSIDE" />
-      <Polygon fx:id="toraArrow1" layoutX="75.0" layoutY="421.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
-      <Polygon fx:id="ldaArrow1" layoutX="75.0" layoutY="497.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
-      <Polygon fx:id="asdaArrow1" layoutX="43.0" layoutY="447.0" points="10.5, 15.75, -0.5, 12.0, 10.5, 8.25" stroke="BLACK" strokeType="INSIDE" />
-      <Polygon fx:id="todaArrow1" layoutX="12.0" layoutY="471.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
+      <Line id="toraEnd" fx:id="toraEnd" endY="27.0" layoutX="700.0" layoutY="244.0" />
+      <Line id="ldaStart" fx:id="asdaStart" endY="27.0" layoutX="100.0" layoutY="216.0" />
+      <Line id="asdaStart" fx:id="ldaStart" endY="27.0" layoutX="166.0" layoutY="164.0" />
+      <Line id="ldaEnd" fx:id="asdaEnd" endY="27.0" layoutX="725.0" layoutY="216.0" />
+      <Line id="asdaEnd" fx:id="ldaEnd" endY="27.0" layoutX="700.0" layoutY="165.0" />
+      <Line id="todaStart" fx:id="todaStart" endY="27.0" layoutX="100.0" layoutY="190.0" />
+      <Line id="todaEnd" fx:id="todaEnd" endY="27.0" layoutX="750.0" layoutY="191.0" />
+      <Line id="toraLength" fx:id="toraLength" endX="600.0" layoutX="100.0" layoutY="258.0" />
+      <Line id="ldaLength" fx:id="ldaLength" endX="534.0" layoutX="166.0" layoutY="177.0" />
+      <Line id="asdaLength" fx:id="asdaLength" endX="625.0" layoutX="100.0" layoutY="230.0" />
+      <Line id="toraLength" fx:id="todaLength" endX="650.0" layoutX="100.0" layoutY="204.0" />
+      <Line id="blastProtectionEnd" fx:id="toraStart" endY="27.0" layoutX="100.0" layoutY="244.0" />
+      <Line id="toraEnd" fx:id="toraEnd1" endY="25.0" layoutX="700.0" layoutY="421.0" />
+      <Line id="ldaStart" fx:id="ldaStart1" endY="25.0" layoutX="100.0" layoutY="497.0" />
+      <Line id="asdaStart" fx:id="asdaStart1" endY="25.0" layoutX="75.0" layoutY="447.0" />
+      <Line id="ldaEnd" fx:id="ldaEnd1" endY="25.0" layoutX="700.0" layoutY="497.0" />
+      <Line id="asdaEnd" fx:id="asdaEnd1" endY="25.0" layoutX="700.0" layoutY="446.0" />
+      <Line id="toraStart" fx:id="toraStart1" endY="25.0" layoutX="100.0" layoutY="421.0" />
+      <Line id="todaStart" fx:id="todaStart1" endY="25.0" layoutX="50.0" layoutY="471.0" />
+      <Line id="todaEnd" fx:id="todaEnd1" endY="25.0" layoutX="700.0" layoutY="471.0" />
+      <Line id="toraLength" fx:id="toraLength1" endX="600.0" layoutX="100.0" layoutY="434.0" />
+      <Line id="ldaLength" fx:id="ldaLength1" endX="600.0" layoutX="100.0" layoutY="510.0" />
+      <Line id="asdaLength" fx:id="asdaLength1" endX="625.0" layoutX="75.0" layoutY="459.0" />
+      <Line id="toraLength" fx:id="todaLength1" endX="650.0" layoutX="50.0" layoutY="484.0" />
+      <Polygon fx:id="toraArrow" layoutX="700.0" layoutY="244.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="ldaArrow" layoutX="700.0" layoutY="165.0" points="-11.25, 16.0, 0.5, 12.0, -11.25, 8.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="asdaArrow" layoutX="725.0" layoutY="216.0" points="-9.75, 17.5, 0.0, 14.0, -9.75, 10.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="todaArrow" layoutX="750.0" layoutY="191.0" points="-10.0, 16.75, 0.5, 13.0, -10.0, 8.75" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="toraArrow1" layoutX="100.0" layoutY="421.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="ldaArrow1" layoutX="100.0" layoutY="497.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="asdaArrow1" layoutX="75.0" layoutY="447.0" points="10.5, 15.75, -0.5, 12.0, 10.5, 8.25" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="todaArrow1" layoutX="50.0" layoutY="471.0" points="10.5, 16.5, -0.5, 13.0, 10.5, 9.25" stroke="BLACK" strokeType="INSIDE" />
       <Line fx:id="ldaOtherLineLength1" endX="32.0" layoutX="659.0" layoutY="510.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
       <Line id="ldaStart" fx:id="ldaOtherLineEnd" endY="25.0" layoutX="692.0" layoutY="496.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
       <Label id="toraLabel" fx:id="ldaOtherLineLabel1" layoutX="638.0" layoutY="524.0" nodeOrientation="LEFT_TO_RIGHT" text="Blast protection" visible="false">
@@ -246,5 +241,15 @@
       </Label>
       <Line fx:id="ldaOtherLineLength" endX="32.0" layoutX="134.0" layoutY="177.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
       <Line id="ldaStart" fx:id="ldaOtherLineStart" endY="25.0" layoutX="134.0" layoutY="164.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
+      <Polygon fx:id="ldaArrow2" layoutX="372.0" layoutY="175.0" points="-11.25, 16.0, 0.5, 12.0, -11.25, 8.25" rotate="270.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line id="thresholdL" fx:id="thresholdL" endX="-7.62939453125E-6" endY="89.99996948242188" fill="WHITE" layoutX="100.0" layoutY="299.0" startX="-1.52587890625E-5" startY="0.4836578369140625" stroke="WHITE" strokeWidth="3.0" />
+      <Line id="thresholdR" fx:id="thresholdR" endX="-1.0" endY="91.0" fill="#f2f2f200" layoutX="700.0" layoutY="299.0" stroke="#f0f0f0" strokeWidth="3.0" />
+      <Rectangle fx:id="obstacleBlock" arcHeight="5.0" fill="#f53e3e" height="32.0" layoutX="44.0" layoutY="328.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="32.0" />
+      <Line endX="413.0" endY="-69.5" layoutX="372.0" layoutY="552.0" startX="393.271484375" startY="-69.5" stroke="#0f0f0f" />
+      <Line endX="413.0" endY="-69.5" layoutX="372.0" layoutY="415.0" startX="393.271484375" startY="-69.5" stroke="#0f0f0f" />
+      <Polygon layoutX="782.0" layoutY="463.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" rotate="90.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon layoutX="782.0" layoutY="413.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" rotate="90.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon layoutX="781.0" layoutY="338.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" rotate="270.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon layoutX="781.0" layoutY="426.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" rotate="270.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </AnchorPane>

@@ -132,7 +132,6 @@ public class MainController implements Initializable {
 
     //property to be used in Visualisation classes
     public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
-    public static ObjectProperty<LogicalRunway> logRunwayItem = new SimpleObjectProperty<>();
     public static ObjectProperty<Airport> airportItem = new SimpleObjectProperty();
     public static ObjectProperty<Obstacle> obstacleProperty = new SimpleObjectProperty<>();
     public static DoubleProperty disFromThreshold = new SimpleDoubleProperty();
