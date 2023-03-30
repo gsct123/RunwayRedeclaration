@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.Calculator;
-import Model.LogicalRunway;
-import Model.Obstacle;
-import Model.PhysicalRunway;
+import Model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -210,20 +207,30 @@ public class TopViewController implements Initializable {
             Calculator.performCalc(obstacle,selectedPhyRunway);
             resetValues(selectedPhyRunway);
 
-            setNewLine("TORA","Left",selectedPhyRunway,obstacle,toraStart,toraLength,toraEnd,toraLabel,toraArrow);
-            setNewLine("LDA","Left",selectedPhyRunway,obstacle,ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
-            setNewLine("ASDA","Left",selectedPhyRunway,obstacle,asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
-            setNewLine("TODA","Left",selectedPhyRunway,obstacle,todaStart,todaLength,todaEnd,todaLabel,todaArrow);
-            setNewLine("TORA","Right",selectedPhyRunway,obstacle,toraEnd1,toraLength1,toraStart1,toraLabel1,toraArrow1);
-            setNewLine("LDA","Right",selectedPhyRunway,obstacle,ldaEnd1,ldaLength1,ldaStart1,ldaLabel1,ldaArrow1);
-            setNewLine("ASDA","Right",selectedPhyRunway,obstacle,asdaEnd1,asdaLength1,asdaStart1,asdaLabel1,asdaArrow1);
-            setNewLine("TODA","Right",selectedPhyRunway,obstacle,todaEnd1,todaLength1,todaStart1,todaLabel1,todaArrow1);
+            Arrow ToraArrow = new Arrow(toraStart,toraLength,toraEnd,toraLabel,toraArrow);
+            Arrow LdaArrow = new Arrow(ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
+            Arrow AsdaArrow = new Arrow(asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
+            Arrow TodaArrow = new Arrow(todaStart,todaLength,todaEnd,todaLabel,todaArrow);
+            Arrow ToraArrow1 = new Arrow(toraEnd1,toraLength1,toraStart1,toraLabel1,toraArrow1);
+            Arrow LdaArrow1 = new Arrow(ldaEnd1,ldaLength1,ldaStart1,ldaLabel1,ldaArrow1);
+            Arrow AsdaArrow1 = new Arrow(asdaEnd1,asdaLength1,asdaStart1,asdaLabel1,asdaArrow1);
+            Arrow TodaArrow1 = new Arrow(todaEnd1,todaLength1,todaStart1,todaLabel1,todaArrow1);
 
-            setToraOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, toraOtherLineLabel, toraOtherLineLength, toraOtherLineStart, toraOtherArrow);
-            setLdaOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), false, ldaOtherLineLabel, ldaOtherLineLength, ldaOtherLineStart, ldaOtherArrow);
+            setNewLine("TORA","Left",selectedPhyRunway,obstacle,ToraArrow);
+            setNewLine("LDA","Left",selectedPhyRunway,obstacle,LdaArrow );
+            setNewLine("ASDA","Left",selectedPhyRunway,obstacle,AsdaArrow);
+            setNewLine("TODA","Left",selectedPhyRunway,obstacle,TodaArrow);
+            setNewLine("TORA","Right",selectedPhyRunway,obstacle,ToraArrow1);
+            setNewLine("LDA","Right",selectedPhyRunway,obstacle,LdaArrow1);
+            setNewLine("ASDA","Right",selectedPhyRunway,obstacle,AsdaArrow1);
+            setNewLine("TODA","Right",selectedPhyRunway,obstacle,TodaArrow1);
 
-            setToraOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), true, toraOtherLineLabel1, toraOtherLineLength1, toraOtherLineEnd, toraOtherArrow1);
-            setLdaOtherLine(Calculator.needRedeclare(obstacle, llogRunway), Calculator.getFlightMethod(obstacle, llogRunway).equals(Calculator.talo), true, ldaOtherLineLabel1, ldaOtherLineLength1, ldaOtherLineEnd, ldaOtherArrow1);
+            boolean needRedeclare = Calculator.needRedeclare(obstacle, llogRunway);
+            boolean isTalo = Calculator.getFlightMethod(obstacle,llogRunway).equals(Calculator.talo);
+            setToraOtherLine(needRedeclare,isTalo, false, toraOtherLineLabel, toraOtherLineLength, toraOtherLineStart, toraOtherArrow);
+            setLdaOtherLine(needRedeclare,isTalo, false, ldaOtherLineLabel, ldaOtherLineLength, ldaOtherLineStart, ldaOtherArrow);
+            setToraOtherLine(needRedeclare,isTalo, true, toraOtherLineLabel1, toraOtherLineLength1, toraOtherLineEnd, toraOtherArrow1);
+            setLdaOtherLine(needRedeclare,isTalo, true, ldaOtherLineLabel1, ldaOtherLineLength1, ldaOtherLineEnd, ldaOtherArrow1);
         } else{
             resetValues(selectedPhyRunway);
             setUpLogicalRunway(selectedPhyRunway);
@@ -296,7 +303,7 @@ public class TopViewController implements Initializable {
         displacedThresholdR.setLayoutX(rDisplacedThresholdX);
     }
 
-    protected void setNewLine(String type, String LeftorRight, PhysicalRunway physicalRunway, Obstacle obstacle, Line start, Line length, Line end, Label label, Polygon arrowHead){
+    protected void setNewLine(String type, String LeftorRight, PhysicalRunway physicalRunway, Obstacle obstacle, Arrow arrow){
         LogicalRunway logicalRunway = null;
         if (LeftorRight.equals("Left")){
             logicalRunway = physicalRunway.getLogicalRunways().get(0);
@@ -309,6 +316,13 @@ public class TopViewController implements Initializable {
         double difference = originalValue - newValue;
         double differenceInPx = getNumberOfPx(difference,logicalRunway);
         double labelLayout;
+
+        //Arrow variables
+        Line start = arrow.getStart();
+        Line length = arrow.getLength();
+        Line end = arrow.getEnd();
+        Label label = arrow.getLabel();
+        Polygon arrowHead = arrow.getArrowHead();
 
         String flightMethod = Calculator.getFlightMethod(obstacle,logicalRunway);
         String talo = Calculator.talo;
@@ -591,19 +605,27 @@ public class TopViewController implements Initializable {
     }
 
     protected void setUpLogicalRunway(PhysicalRunway physicalRunway){
+        Arrow ToraArrow = new Arrow(toraStart,toraLength,toraEnd,toraLabel,toraArrow);
+        Arrow LdaArrow = new Arrow(ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
+        Arrow AsdaArrow = new Arrow(asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
+        Arrow TodaArrow = new Arrow(todaStart,todaLength,todaEnd,todaLabel,todaArrow);
+        Arrow ToraArrow1 = new Arrow(toraEnd1,toraLength1,toraStart1,toraLabel1,toraArrow1);
+        Arrow LdaArrow1 = new Arrow(ldaEnd1,ldaLength1,ldaStart1,ldaLabel1,ldaArrow1);
+        Arrow AsdaArrow1 = new Arrow(asdaEnd1,asdaLength1,asdaStart1,asdaLabel1,asdaArrow1);
+        Arrow TodaArrow1 = new Arrow(todaEnd1,todaLength1,todaStart1,todaLabel1,todaArrow1);
         //left logical runway
-        setUpLine("TORA","Left",physicalRunway,toraStart,toraLength,toraEnd,toraLabel,toraArrow);
-        setUpLine("LDA","Left",physicalRunway,ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
-        setUpLine("ASDA","Left",physicalRunway,asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
-        setUpLine("TODA","Left",physicalRunway,todaStart,todaLength,todaEnd,todaLabel,todaArrow);
+        setUpLine("TORA","Left",physicalRunway,ToraArrow);
+        setUpLine("LDA","Left",physicalRunway,LdaArrow);
+        setUpLine("ASDA","Left",physicalRunway,AsdaArrow);
+        setUpLine("TODA","Left",physicalRunway,TodaArrow);
         //right
-        setUpLine("TORA","Right",physicalRunway,toraEnd1,toraLength1,toraStart1,toraLabel1,toraArrow1);
-        setUpLine("LDA","Right",physicalRunway,ldaEnd1,ldaLength1,ldaStart1,ldaLabel1,ldaArrow1);
-        setUpLine("ASDA","Right",physicalRunway,asdaEnd1,asdaLength1,asdaStart1,asdaLabel1,asdaArrow1);
-        setUpLine("TODA","Right",physicalRunway,todaEnd1,todaLength1,todaStart1,todaLabel1,todaArrow1);
+        setUpLine("TORA","Right",physicalRunway,ToraArrow1);
+        setUpLine("LDA","Right",physicalRunway,LdaArrow1 );
+        setUpLine("ASDA","Right",physicalRunway,AsdaArrow1);
+        setUpLine("TODA","Right",physicalRunway,TodaArrow1);
     }
 
-    protected void setUpLine(String type,String LeftorRight, PhysicalRunway physicalRunway, Line start, Line length, Line end, Label label, Polygon arrowHead){
+    protected void setUpLine(String type,String LeftorRight, PhysicalRunway physicalRunway,Arrow arrow){
         LogicalRunway logicalRunway = null;
         double originalStartX;
         double originalEndX;
@@ -612,6 +634,12 @@ public class TopViewController implements Initializable {
         double displacedThresholdLayoutX;
         Rectangle stopway;
         Rectangle clearway;
+        //Arrow variables
+        Line start = arrow.getStart();
+        Line length = arrow.getLength();
+        Line end = arrow.getEnd();
+        Label label = arrow.getLabel();
+        Polygon arrowHead = arrow.getArrowHead();
 
         if (LeftorRight.equals("Left")){
             logicalRunway = physicalRunway.getLogicalRunways().get(0);
