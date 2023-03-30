@@ -80,8 +80,6 @@ public class MainController implements Initializable {
     @FXML
     private Label oldLdaInfoLabel;
     @FXML
-    private Button resetButton;
-    @FXML
     private TextField stripEndTextField;
     @FXML
     private TextField blastProtectionField;
@@ -109,8 +107,6 @@ public class MainController implements Initializable {
     private ToggleButtonGroup lrButtonGroup;
     @FXML
     private RadioButton leftDirButton;
-    @FXML
-    private RadioButton rightDirButton;
     @FXML
     private Label notificationLabel;
 
@@ -550,12 +546,12 @@ public class MainController implements Initializable {
     }
 
     public void obstaclesEditing(boolean notAllowed){
-            obstacleMenu.setDisable(notAllowed);
-            if(MainController.getObstacleSelected() != null){
-                lrButtonGroup.setDisable(notAllowed);
-                distanceThresholdTextField.setDisable(notAllowed);
-                clDistTextField.setDisable(notAllowed);
-                performCalculationButton.setDisable(notAllowed);
-            }
+        obstacleMenu.setDisable(notAllowed);
+        if(MainController.getObstacleSelected() != null){
+            lrButtonGroup.setDisable(notAllowed);
+            distanceThresholdTextField.setDisable(notAllowed);
+            clDistTextField.setDisable(notAllowed);
+            performCalculationButton.setDisable(notAllowed);
+        }
     }
 }

@@ -12,14 +12,14 @@
 <AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
    <children>
       <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#b6c6e1" height="627.0" layoutY="1.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
-      <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#9a9898" height="176.0" layoutY="268.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9a9898" height="279.0" layoutX="192.0" layoutY="216.0" stroke="TRANSPARENT" strokeType="INSIDE" width="411.0" />
+      <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#a4a4a4" height="176.0" layoutY="268.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4a4a4" height="279.0" layoutX="192.0" layoutY="216.0" stroke="TRANSPARENT" strokeType="INSIDE" width="411.0" />
       <Rectangle fx:id="clearwayR" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="700.0" layoutY="308.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="50.0" />
       <Rectangle fx:id="clearwayL" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="50.0" layoutY="308.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="50.0" />
       <Rectangle fx:id="stopwayR" arcHeight="5.0" fill="#fcf347" height="93.0" layoutX="700.0" layoutY="308.0" stroke="#ffdd5400" strokeType="INSIDE" width="25.0" />
       <Rectangle fx:id="stopwayL" arcHeight="5.0" fill="#fcf347" height="93.0" layoutX="75.0" layoutY="308.0" stroke="#ffff0000" strokeType="INSIDE" width="25.0" />
       <Rectangle fx:id="runway" arcHeight="5.0" fill="#0f0f0f" height="93.0" layoutX="100.0" layoutY="308.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
-      <Polyline fill="#9a9898" layoutX="180.0" layoutY="506.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Polyline fill="#a4a4a4" layoutX="180.0" layoutY="506.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Line endX="-100.43783569335938" layoutX="289.0" layoutY="354.0" startX="-109.85165405273438" stroke="WHITE" />
       <Line endX="-100.43783569335938" layoutX="310.0" layoutY="354.0" startX="-109.85165405273438" stroke="WHITE" />
       <Line endX="-100.43783569335938" layoutX="330.0" layoutY="354.0" startX="-109.85165405273438" stroke="WHITE" />
@@ -42,9 +42,9 @@
       <Line endX="-100.43783569335938" layoutX="674.0" layoutY="354.0" startX="-109.85165405273438" stroke="WHITE" />
       <Line endX="-100.43783569335938" layoutX="694.0" layoutY="354.0" startX="-109.85165405273438" stroke="WHITE" />
       <Line endX="-100.43783569335938" layoutX="715.0" layoutY="354.0" startX="-109.85165405273438" stroke="WHITE" />
-      <Polyline fill="#9a9898" layoutX="643.0" layoutY="280.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <Polyline fill="#9a9898" layoutX="180.0" layoutY="280.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" rotate="90.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <Polyline fill="#9a9898" layoutX="643.0" layoutY="506.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Polyline fill="#a4a4a4" layoutX="643.0" layoutY="280.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Polyline fill="#a4a4a4" layoutX="180.0" layoutY="280.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" rotate="90.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Polyline fill="#a4a4a4" layoutX="643.0" layoutY="506.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE">
          <rotationAxis>
             <Point3D y="1.0" />
          </rotationAxis>
@@ -242,7 +242,7 @@
       <Polygon layoutX="782.0" layoutY="423.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" rotate="90.0" stroke="BLACK" strokeType="INSIDE" />
       <Polygon layoutX="781.0" layoutY="348.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" rotate="270.0" stroke="BLACK" strokeType="INSIDE" />
       <Polygon layoutX="781.0" layoutY="436.0" points="-12.0, 17.5, 0.0, 14.0, -12.0, 9.25" rotate="270.0" stroke="BLACK" strokeType="INSIDE" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#aeaeae" height="12.0" layoutX="635.0" layoutY="12.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4a4a4" height="12.0" layoutX="635.0" layoutY="12.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Label layoutX="660.0" layoutY="12.0" prefHeight="12.0" prefWidth="117.0" style="-fx-text-fill: black;" text="Clear and Graded Area" wrapText="true">
          <font>
             <Font name="Verdana" size="10.0" />
