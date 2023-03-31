@@ -120,12 +120,12 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label id="asdaLabel" fx:id="asdaLabel" layoutX="375.0" layoutY="222.0" text=" ASDA">
+      <Label id="asdaLabel" fx:id="asdaLabel" layoutX="375.0" layoutY="222.0" text=" ASDA ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="todaLabel" fx:id="todaLabel" layoutX="375.0" layoutY="196.0" text=" TODA">
+      <Label id="todaLabel" fx:id="todaLabel" layoutX="375.0" layoutY="196.0" text=" TODA ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
@@ -136,12 +136,12 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label id="toraLabel" fx:id="toraLabel" layoutX="375.0" layoutY="246.0" text=" TORA">
+      <Label id="toraLabel" fx:id="toraLabel" layoutX="375.0" layoutY="246.0" text=" TORA ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="ldaLabel" fx:id="ldaLabel" layoutX="375.0" layoutY="169.0" text=" LDA">
+      <Label id="ldaLabel" fx:id="ldaLabel" layoutX="375.0" layoutY="169.0" text=" LDA ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
@@ -162,22 +162,22 @@
       <Polygon fill="#0f0f0f" layoutX="231.0" layoutY="604.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Line endX="539.4921875" endY="-70.64114379882812" layoutX="210.0" layoutY="652.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="468.92669677734375" endY="-70.64117431640625" layoutX="-112.0" layoutY="653.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
-      <Label id="asdaLabel" fx:id="asdaLabel1" layoutX="375.0" layoutY="449.0" text=" ASDA">
+      <Label id="asdaLabel" fx:id="asdaLabel1" layoutX="375.0" layoutY="449.0" text=" ASDA ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="todaLabel" fx:id="todaLabel1" layoutX="375.0" layoutY="475.0" text=" TODA">
+      <Label id="todaLabel" fx:id="todaLabel1" layoutX="375.0" layoutY="475.0" text=" TODA ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="toraLabel" fx:id="toraLabel1" layoutX="375.0" layoutY="423.0" text=" TORA">
+      <Label id="toraLabel" fx:id="toraLabel1" layoutX="375.0" layoutY="423.0" text=" TORA ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="ldaLabel" fx:id="ldaLabel1" layoutX="375.0" layoutY="500.0" text=" LDA">
+      <Label id="ldaLabel" fx:id="ldaLabel1" layoutX="375.0" layoutY="500.0" text=" LDA ">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>

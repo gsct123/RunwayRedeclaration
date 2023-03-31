@@ -26,13 +26,7 @@ public class TopViewController implements Initializable {
     @FXML
     private Rectangle minCGArea;
 
-    //reference
-    @FXML
-    private Line thresholdL;
-    @FXML
-    private Line thresholdR;
-
-    //tora label
+    //tora labels
     @FXML
     private Line toraStart;
     @FXML
@@ -50,7 +44,7 @@ public class TopViewController implements Initializable {
     @FXML
     private Label toraLabel1;
 
-    //toda
+    //toda labels
     @FXML
     private Line todaStart;
     @FXML
@@ -68,7 +62,7 @@ public class TopViewController implements Initializable {
     @FXML
     private Line todaLength1;
 
-    //lda
+    //lda labels
     @FXML
     private Line ldaStart;
     @FXML
@@ -86,7 +80,7 @@ public class TopViewController implements Initializable {
     @FXML
     private Line ldaLength1;
 
-    //asda
+    //asda labels
     @FXML
     private Line asdaStart;
     @FXML
@@ -130,6 +124,7 @@ public class TopViewController implements Initializable {
     @FXML
     private Label ldaOtherLineLabel1;
 
+    //references
     @FXML
     private Rectangle clearwayL;
     @FXML
@@ -142,6 +137,10 @@ public class TopViewController implements Initializable {
     private Line displacedThresholdL;
     @FXML
     private Line displacedThresholdR;
+    @FXML
+    private Line thresholdL;
+    @FXML
+    private Line thresholdR;
 
     //arrows
     @FXML
@@ -172,18 +171,21 @@ public class TopViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //adding listeners to update views
+
+        //listener for different airport selection
         MainController.airportItem.addListener((observable, oldValue, newValue) -> {
             leftDesignator.setText("___");
             rightDesignator.setText("___");
         });
+        //listener for different physical runway selections
         MainController.physRunwayItem.addListener((observable, oldValue, newValue) -> {
-//            leftDesignator.setText(newValue.getLogicalRunways().get(0).getDesignator());
-//            rightDesignator.setText(newValue.getLogicalRunways().get(1).getDesignator());
             resetValues(MainController.getPhysRunwaySelected());
             if(MainController.getObstacleSelected() != null){
                 relocateObstacle();
             }
         });
+        //listener for different obstacle selection
         MainController.obstacleProperty.addListener((observable, oldValue, newValue) -> {
             if(oldValue != null){
                 oldValue.setDistFThreshold(0);
@@ -192,12 +194,14 @@ public class TopViewController implements Initializable {
             newValue.setDistFThreshold(MainController.disFromThreshold.get());
             relocateObstacle();
         });
+        //listener for result change to update with the revised parameters
         MainController.dirFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.disFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
     }
 
+    //function to update labels and line in top view
     public void updateLabel(){
         relocateObstacle();
         PhysicalRunway selectedPhyRunway = MainController.getPhysRunwaySelected();
@@ -206,7 +210,7 @@ public class TopViewController implements Initializable {
         if(Calculator.needRedeclare(obstacle, llogRunway)){
             Calculator.performCalc(obstacle,selectedPhyRunway);
             resetValues(selectedPhyRunway);
-
+            //Setting up arrows for lines
             Arrow ToraArrow = new Arrow(toraStart,toraLength,toraEnd,toraLabel,toraArrow);
             Arrow LdaArrow = new Arrow(ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
             Arrow AsdaArrow = new Arrow(asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
@@ -215,7 +219,7 @@ public class TopViewController implements Initializable {
             Arrow LdaArrow1 = new Arrow(ldaEnd1,ldaLength1,ldaStart1,ldaLabel1,ldaArrow1);
             Arrow AsdaArrow1 = new Arrow(asdaEnd1,asdaLength1,asdaStart1,asdaLabel1,asdaArrow1);
             Arrow TodaArrow1 = new Arrow(todaEnd1,todaLength1,todaStart1,todaLabel1,todaArrow1);
-
+            //setting up new lines for new runway parameters
             setNewLine("TORA","Left",selectedPhyRunway,obstacle,ToraArrow);
             setNewLine("LDA","Left",selectedPhyRunway,obstacle,LdaArrow );
             setNewLine("ASDA","Left",selectedPhyRunway,obstacle,AsdaArrow);
@@ -224,7 +228,7 @@ public class TopViewController implements Initializable {
             setNewLine("LDA","Right",selectedPhyRunway,obstacle,LdaArrow1);
             setNewLine("ASDA","Right",selectedPhyRunway,obstacle,AsdaArrow1);
             setNewLine("TODA","Right",selectedPhyRunway,obstacle,TodaArrow1);
-
+            //setting up other lines (resa/stripend/alstocs/blast protection)
             boolean needRedeclare = Calculator.needRedeclare(obstacle, llogRunway);
             boolean isTalo = Calculator.getFlightMethod(obstacle,llogRunway).equals(Calculator.talo);
             setToraOtherLine(needRedeclare,isTalo, false, toraOtherLineLabel, toraOtherLineLength, toraOtherLineStart, toraOtherArrow);
@@ -232,12 +236,13 @@ public class TopViewController implements Initializable {
             setToraOtherLine(needRedeclare,isTalo, true, toraOtherLineLabel1, toraOtherLineLength1, toraOtherLineEnd, toraOtherArrow1);
             setLdaOtherLine(needRedeclare,isTalo, true, ldaOtherLineLabel1, ldaOtherLineLength1, ldaOtherLineEnd, ldaOtherArrow1);
         } else{
+            //if not runway redeclaration is needed, simply reset the value
             resetValues(selectedPhyRunway);
-            setUpLogicalRunway(selectedPhyRunway);
         }
     }
 
     protected void resetValues(PhysicalRunway physicalRunway){
+        //hide labelling for additional lines for reference
         toraOtherLineEnd.setVisible(false);
         toraOtherLineStart.setVisible(false);
         toraOtherLineLabel.setVisible(false);
@@ -255,20 +260,23 @@ public class TopViewController implements Initializable {
         ldaOtherLineLength1.setVisible(false);
         ldaOtherArrow.setVisible(false);
         ldaOtherArrow1.setVisible(false);
+
+        //resetting runway and areas to the original parameters
         LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
         setUpPhyRunway(physicalRunway,lLogicalRunway);
         setUpStopwayAndClearway(physicalRunway,lLogicalRunway);
         setUpLogicalRunway(physicalRunway);
     }
 
+    //function to set up stopway and clearway areas for the runway
     protected void setUpStopwayAndClearway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
         LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
         LogicalRunway rLogicalRunway = physicalRunway.getLogicalRunways().get(1);
-        //If the left Logical runway is the selected Logical runway
         setStopClearway(lLogicalRunway,"Right");
         setStopClearway(rLogicalRunway,"Left");
     }
 
+    //function to set up physical runway based on the one selected, showing the original parameter values
     protected void setUpPhyRunway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
         LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
         LogicalRunway rLogicalRunway = physicalRunway.getLogicalRunways().get(1);
@@ -303,6 +311,7 @@ public class TopViewController implements Initializable {
         displacedThresholdR.setLayoutX(rDisplacedThresholdX);
     }
 
+    //function to set up lines
     protected void setNewLine(String type, String LeftorRight, PhysicalRunway physicalRunway, Obstacle obstacle, Arrow arrow){
         LogicalRunway logicalRunway = null;
         if (LeftorRight.equals("Left")){
@@ -687,8 +696,12 @@ public class TopViewController implements Initializable {
         }else {
             length.setLayoutX(originalEndX);
         }
+
         double difference = Math.abs(originalEndX-originalStartX);
+
         length.setEndX(difference);
+        double labelLayout = getLabelLayout(LeftorRight.equals("Left")? start: end,length,label);
+        label.setLayoutX(labelLayout);
         arrowHead.setLayoutX(end.getLayoutX());
     }
 

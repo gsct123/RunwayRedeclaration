@@ -575,6 +575,8 @@ public class SideViewController {
         double difference = Math.abs(originalEndX-originalStartX);
         length.setEndX(difference);
         arrowHead.setLayoutX(end.getLayoutX());
+        double labelLayout = getLabelLayout(LeftorRight.equals("Left")? start: end,length,label);
+        label.setLayoutX(labelLayout);
     }
 
     private double[] oldAndNewValue(String type, LogicalRunway logicalRunway){

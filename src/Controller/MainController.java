@@ -181,7 +181,7 @@ public class MainController implements Initializable {
         boolean flag = new ResetConfirmation().confirmReset();
         Main.setReset(true);
         if(flag) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/Main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Main.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
 
