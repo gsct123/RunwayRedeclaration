@@ -168,6 +168,26 @@ public class TopViewController implements Initializable {
     @FXML
     private Polygon ldaOtherArrow1;
 
+    //scales
+    @FXML
+    private Label scaleLabel;
+    @FXML
+    private Rectangle scaleStart;
+    @FXML
+    private Rectangle scaleEnd;
+    @FXML
+    private Rectangle scaleLength;
+    @FXML
+    private Label scale0;
+    @FXML
+    private Label scale500;
+    @FXML
+    private Label scale1000;
+    @FXML
+    private Label scale1500;
+    @FXML
+    private Label scaleUnit;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -266,6 +286,7 @@ public class TopViewController implements Initializable {
         setUpPhyRunway(physicalRunway,lLogicalRunway);
         setUpStopwayAndClearway(physicalRunway,lLogicalRunway);
         setUpLogicalRunway(physicalRunway);
+        setUpScale(lLogicalRunway);
     }
 
     //function to set up stopway and clearway areas for the runway
@@ -703,6 +724,25 @@ public class TopViewController implements Initializable {
         double labelLayout = getLabelLayout(LeftorRight.equals("Left")? start: end,length,label);
         label.setLayoutX(labelLayout);
         arrowHead.setLayoutX(end.getLayoutX());
+    }
+
+    protected void setUpScale(LogicalRunway logRunway){
+        //setting up scale proportion
+        scaleLength.setLayoutX(scaleLength.getLayoutX());
+        scaleLength.setWidth(1500*toraLength.getEndX()/logRunway.getTora());
+        scaleStart.setLayoutX(scaleLength.getLayoutX());
+        double length = scaleLength.getWidth();
+        scaleStart.setWidth(length/3);
+        scaleEnd.setLayoutX(scaleLength.getLayoutX()+length*2/3);
+        scaleEnd.setWidth(length/3);
+
+        //setting up scale labels
+        scale0.setLayoutX(scaleStart.getLayoutX()-scale0.getWidth());
+        scale500.setLayoutX(scaleStart.getLayoutX() + length/3 - scale500.getWidth());
+        scale1000.setLayoutX(scaleEnd.getLayoutX() -scale1000.getWidth());
+        scale1500.setLayoutX(scaleEnd.getLayoutX() + scaleEnd.getWidth()-scale1500.getWidth());
+        scaleUnit.setLayoutX(scaleEnd.getLayoutX() + scaleEnd.getWidth() + 10);
+        scaleLabel.setLayoutX(scaleLength.getLayoutX() + (length - scaleLabel.getWidth())/2);
     }
 
     private double meterPerPx(){
