@@ -30,6 +30,8 @@ public class Main extends Application {
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/MainStylesheet2.css").toExternalForm());
+
 
         stage.setTitle("SEG Runway Project");
         stage.setScene(scene);
