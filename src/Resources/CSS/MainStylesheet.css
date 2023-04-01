@@ -1,6 +1,3 @@
-#vboxpane {
-    -fx-background-color: black;
-}
 
 .split-pane > .split-pane-divider {
     -fx-background-color: transparent;

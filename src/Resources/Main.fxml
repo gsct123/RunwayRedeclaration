@@ -26,9 +26,7 @@
       <menus>
         <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
           <items>
-                  <MenuItem fx:id="aboutProject2" mnemonicParsing="false" text="User Guide" />
             <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
-                  <MenuItem mnemonicParsing="false" onAction="#loadAboutProject" text="Copyright" />
           </items>
         </Menu>
       </menus>
@@ -62,12 +60,12 @@
                         <Font name="Verdana" size="16.0" />
                      </font>
                   </MenuButton>
-                  <Label fx:id="obstacleHeightLabel" layoutX="29.0" layoutY="286.0" text="Obstacle height:-">
+                  <Label fx:id="obstacleHeightLabel" layoutX="29.0" layoutY="286.0" text="Obstacle height:">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="obstacleWidthLabel" layoutX="29.0" layoutY="315.0" text="Obstacle width:-">
+                  <Label fx:id="obstacleWidthLabel" layoutX="29.0" layoutY="315.0" text="Obstacle width:">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
@@ -145,6 +143,16 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
+                  <TextField fx:id="obstacleHeightField" disable="true" layoutX="131.0" layoutY="282.0" prefHeight="15.0" prefWidth="123.0" text="-">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="obstacleWidthField" disable="true" layoutX="131.0" layoutY="313.0" prefHeight="15.0" prefWidth="123.0" text="-">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </TextField>
                </children>
             </AnchorPane>
              <AnchorPane prefHeight="655.0" prefWidth="829.0">
