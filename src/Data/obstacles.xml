@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <obstacles>
     <obstacle>
+        <name>Customisable Obstacle</name>
+        <height>10</height>
+        <width>10</width>
+    </obstacle>
+    <obstacle>
         <name>Airbus A320</name>
         <height>11</height>
         <width>34</width>

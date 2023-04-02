@@ -6,8 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Objects;
-
 
 public class Main extends Application {
     private static Stage classStage;
@@ -32,7 +30,7 @@ public class Main extends Application {
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+
         stage.setTitle("SEG Runway Project");
         stage.setScene(scene);
         stage.setResizable(false);

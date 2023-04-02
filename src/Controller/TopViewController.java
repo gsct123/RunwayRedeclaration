@@ -1,18 +1,23 @@
 package Controller;
 
 import Model.*;
+import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TopViewController implements Initializable {
 
+    @FXML
+    private AnchorPane topDownRunwayGroup;
     @FXML
     private Label leftDesignator;
     @FXML
@@ -330,6 +335,7 @@ public class TopViewController implements Initializable {
 
         displacedThresholdL.setLayoutX(lDisplacedThresholdX);
         displacedThresholdR.setLayoutX(rDisplacedThresholdX);
+        rotateRunway();
     }
 
     //function to set up lines
@@ -727,9 +733,11 @@ public class TopViewController implements Initializable {
     }
 
     protected void setUpScale(LogicalRunway logRunway){
+        double tora = logRunway.getTora();
+        int scaleRange = Miscellaneous.getScaleRange(tora);
         //setting up scale proportion
         scaleLength.setLayoutX(scaleLength.getLayoutX());
-        scaleLength.setWidth(1500*toraLength.getEndX()/logRunway.getTora());
+        scaleLength.setWidth(scaleRange*toraLength.getEndX()/tora);
         scaleStart.setLayoutX(scaleLength.getLayoutX());
         double length = scaleLength.getWidth();
         scaleStart.setWidth(length/3);
@@ -737,6 +745,9 @@ public class TopViewController implements Initializable {
         scaleEnd.setWidth(length/3);
 
         //setting up scale labels
+        scale500.setText(""+scaleRange/3);
+        scale1000.setText(""+scaleRange*2/3);
+        scale1500.setText(""+scaleRange);
         scale0.setLayoutX(scaleStart.getLayoutX()-scale0.getWidth());
         scale500.setLayoutX(scaleStart.getLayoutX() + length/3 - scale500.getWidth());
         scale1000.setLayoutX(scaleEnd.getLayoutX() -scale1000.getWidth());
@@ -785,5 +796,14 @@ public class TopViewController implements Initializable {
             way.setWidth(0);
         }
         way.setLayoutX(oriWayX);
+    }
+
+    private void rotateRunway(){
+        LogicalRunway lLogicalRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(0);
+        int designatorInt = Integer.parseInt(lLogicalRunway.getDesignator().trim().replaceAll("[^0-9]",""));
+        int direction = designatorInt * 10 - 90;
+        RotateTransition rotate = new RotateTransition(Duration.millis(1500),topDownRunwayGroup);
+        rotate.setToAngle(direction);
+        rotate.play();
     }
 }

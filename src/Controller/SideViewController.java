@@ -625,9 +625,11 @@ public class SideViewController {
     }
 
     protected void setUpScale(LogicalRunway logRunway){
+        double tora = logRunway.getTora();
+        int scaleRange = Miscellaneous.getScaleRange(tora);
         //setting up scale proportion
         scaleLength.setLayoutX(scaleLength.getLayoutX());
-        scaleLength.setWidth(1500*toraLength.getEndX()/logRunway.getTora());
+        scaleLength.setWidth(scaleRange*toraLength.getEndX()/tora);
         scaleStart.setLayoutX(scaleLength.getLayoutX());
         double length = scaleLength.getWidth();
         scaleStart.setWidth(length/3);
@@ -635,6 +637,9 @@ public class SideViewController {
         scaleEnd.setWidth(length/3);
 
         //setting up scale labels
+        scale500.setText(""+scaleRange/3);
+        scale1000.setText(""+scaleRange*2/3);
+        scale1500.setText(""+scaleRange);
         scale0.setLayoutX(scaleStart.getLayoutX()-scale0.getWidth());
         scale500.setLayoutX(scaleStart.getLayoutX() + length/3 - scale500.getWidth());
         scale1000.setLayoutX(scaleEnd.getLayoutX() -scale1000.getWidth());
