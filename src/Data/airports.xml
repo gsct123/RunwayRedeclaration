@@ -11,6 +11,10 @@
     <logicalRunway designator="09R" tora="3660.0" toda="3660.0" asda="3660.0" lda="3353.0" />
     <logicalRunway designator="27L" tora="3660.0" toda="3660.0" asda="3660.0" lda="3660.0" />
    </physicalRunway>
+   <physicalRunway name="06/24">
+    <logicalRunway designator="06" tora="2734.0" toda="2734.0" asda="2734.0" lda="2734.0" />
+    <logicalRunway designator="24" tora="2734.0" toda="2900.0" asda="2800.0" lda="2500.0" />
+   </physicalRunway>
   </physicalRunways>
  </airport>
 </airports>
