@@ -104,6 +104,8 @@ public class MainController implements Initializable {
     @FXML
     private Tab sideViewTab;
     @FXML
+    private Tab simultaneousViewTab;
+    @FXML
     private ToggleButtonGroup lrButtonGroup;
     @FXML
     private RadioButton leftDirButton;
@@ -148,6 +150,7 @@ public class MainController implements Initializable {
         try {
             topViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/TopView.fxml"))));
             sideViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/SideView.fxml"))));
+            simultaneousViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/SimultaneousView.fxml"))));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
@@ -235,6 +238,7 @@ public class MainController implements Initializable {
         calculationBreakdown.setDisable(false);
         valueChanged.set(valueChanged.doubleValue() == 1? 0: 1);
         notificationLabel.setText("Status: Calculation performed\t " + getDateTimeNow());
+
     }
 
     public String getDateTimeNow(){
@@ -554,4 +558,6 @@ public class MainController implements Initializable {
             performCalculationButton.setDisable(notAllowed);
         }
     }
+
+
 }
