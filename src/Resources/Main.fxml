@@ -20,13 +20,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vboxpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
+        <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Help">
           <items>
-            <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
+            <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About runway project" />
           </items>
         </Menu>
       </menus>
@@ -60,12 +60,12 @@
                         <Font name="Verdana" size="16.0" />
                      </font>
                   </MenuButton>
-                  <Label fx:id="obstacleHeightLabel" layoutX="29.0" layoutY="286.0" text="Obstacle height:">
+                  <Label fx:id="obstacleHeightLabel" layoutX="29.0" layoutY="286.0" text="Obstacle height:-">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="obstacleWidthLabel" layoutX="29.0" layoutY="315.0" text="Obstacle width:">
+                  <Label fx:id="obstacleWidthLabel" layoutX="29.0" layoutY="315.0" text="Obstacle width:-">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
@@ -143,16 +143,6 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="obstacleHeightField" disable="true" layoutX="131.0" layoutY="282.0" prefHeight="15.0" prefWidth="123.0" text="-">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="obstacleWidthField" disable="true" layoutX="131.0" layoutY="313.0" prefHeight="15.0" prefWidth="123.0" text="-">
-                     <font>
-                        <Font name="Verdana" size="12.0" />
-                     </font>
-                  </TextField>
                </children>
             </AnchorPane>
              <AnchorPane prefHeight="655.0" prefWidth="829.0">
@@ -225,14 +215,14 @@
                         <Font name="Verdana" size="8.0" />
                      </font>
                   </Button>
-                  <TableView fx:id="leftTableView" layoutX="28.0" layoutY="72.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244); -fx-border-color: rgb(244,244,244);">
+                  <TableView fx:id="leftTableView" layoutX="28.0" layoutY="72.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244); -fx-border-color: rgb(244,244,244);-fx-border-color: black; -fx-border-width: 1px;">
                     <columns>
                       <TableColumn fx:id="parColumn1" editable="false" prefWidth="73.62646484375" sortable="false" style="-fx-font-size: 14px; -fx-font-family: Verdana;" text="L" />
                       <TableColumn fx:id="originalCol1" editable="false" minWidth="3.9134521484375" prefWidth="75.824951171875" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Original" />
                         <TableColumn fx:id="revisedCol1" editable="false" prefWidth="90.62646484375" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Revised" />
                     </columns>
                   </TableView>
-                  <TableView fx:id="rightTableView" layoutX="27.0" layoutY="231.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244); -fx-border-color: rgb(244,244,244);">
+                  <TableView fx:id="rightTableView" layoutX="27.0" layoutY="231.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244); -fx-border-color: rgb(244,244,244);-fx-border-color: black; -fx-border-width: 1px;">
                      <columns>
                         <TableColumn fx:id="parColumn2" editable="false" prefWidth="74.5875244140625" sortable="false" style="-fx-font-size: 14px; -fx-font-family: Verdana;" text="R" />
                         <TableColumn fx:id="originalCol2" editable="false" prefWidth="75.14111328125" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Original" />
