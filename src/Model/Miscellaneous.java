@@ -1,5 +1,6 @@
 package Model;
 
+import View.Main;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
@@ -48,24 +49,30 @@ public class Miscellaneous {
         pane.addEventHandler(ScrollEvent.SCROLL, scrollEvent -> {
             if (scrollEvent.isShortcutDown()){
                 double zoom = scrollEvent.getDeltaY();
-                System.out.println(pane.getScaleX() + zoom * -0.01);
-                pane.setScaleX(pane.getScaleX() - zoom * -0.01);
-                pane.setScaleY(pane.getScaleY() - zoom * -0.01);
+                System.out.println(pane.getScaleX() - zoom * -0.005);
+                if (pane.getScaleX()>=0.5 && pane.getScaleY()>=0.5){
+                    pane.setScaleX(pane.getScaleX() - zoom * -0.005);
+                    pane.setScaleY(pane.getScaleY() - zoom * -0.005);
+                }else if (pane.getScaleX()<0.5 && pane.getScaleY()<0.5){
+                    pane.setScaleX(0.5);
+                    pane.setScaleY(0.5);
+                }
+
                 scrollEvent.consume();
             }
         });
     }
-
     public static void initializeDrag(AnchorPane pane){
         pane.addEventHandler(MouseEvent.MOUSE_DRAGGED, dragEvent -> {
             if (dragEvent.isShortcutDown()){
-                System.out.println();
-                pane.setTranslateX(pane.getTranslateX() + dragEvent.getX() - pane.getWidth()/2);
-                pane.setTranslateY(pane.getTranslateY() + dragEvent.getY() - pane.getHeight()/2);
-                System.out.println(pane.getTranslateX() + dragEvent.getX() - pane.getWidth()/2);
-                System.out.println(pane.getTranslateY() + dragEvent.getY() - pane.getHeight()/2);
+                pane.setTranslateX(dragEvent.getSceneX() - Main.getStage().getWidth()/2);
+                pane.setTranslateY(dragEvent.getSceneY() - Main.getStage().getHeight()/2);
+
+                System.out.println(dragEvent.getSceneX() - pane.getWidth());
+                System.out.println(dragEvent.getSceneY() - pane.getHeight());
                 dragEvent.consume();
             }
         });
     }
+
 }
