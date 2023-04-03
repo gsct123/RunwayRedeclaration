@@ -206,6 +206,7 @@ public class SideViewController {
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
             setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
         });
+        MainController.obstacleHeight.addListener((observable, oldValue, newValue) -> {setUpAlsTocs(MainController.getObstacleSelected(), MainController.getPhysRunwaySelected().getLogicalRunways().get(0));});
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel(new ActionEvent()));
     }
 
