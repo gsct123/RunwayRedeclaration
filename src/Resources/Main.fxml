@@ -143,12 +143,12 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="obstacleHeightField" disable="true" layoutX="131.0" layoutY="282.0" prefHeight="15.0" prefWidth="123.0" text="-">
+                  <TextField fx:id="obstacleHeightField" editable="false" layoutX="131.0" layoutY="282.0" onAction="#checkObstacleHeight" prefHeight="15.0" prefWidth="123.0" text="-">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="obstacleWidthField" disable="true" layoutX="131.0" layoutY="313.0" prefHeight="15.0" prefWidth="123.0" text="-">
+                  <TextField fx:id="obstacleWidthField" editable="false" layoutX="131.0" layoutY="313.0" onAction="#checkObstacleWidth" prefHeight="15.0" prefWidth="123.0" text="-">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
