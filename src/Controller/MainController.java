@@ -1,8 +1,7 @@
 package Controller;
 
 import Model.*;
-import View.ErrorPopUp.*;
-import View.ErrorPopUp.Error;
+import View.ErrorView;
 import View.Main;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
@@ -210,7 +209,7 @@ public class MainController implements Initializable {
             disFromThreshold.set(distFromThreshold);
         } catch (NumberFormatException exception) {
             //display error message
-            new InvalidDistanceThreshold().showDisThresholdError(distanceThresholdTextField);
+            new ErrorView().showError(distanceThresholdTextField, "Invalid input for distance from threshold\nHint: please input a numerical value", "0");
         }
     }
 
@@ -222,7 +221,7 @@ public class MainController implements Initializable {
             getObstacleSelected().setDistFCent(distFromCentreLine);
             disFromCentre.set(distFromCentreLine);
         } catch (NumberFormatException exception){
-            new InvalidDistanceFromCentreline().showDisFromCentreError(clDistTextField);
+            new ErrorView().showError(clDistTextField, "Invalid input for distance from centre line\nHint: please input a numerical value greater or equal to 0", "0");
         }
     }
 
@@ -234,7 +233,7 @@ public class MainController implements Initializable {
             getObstacleSelected().setHeight(height);
             obstacleHeight.set(height);
         } catch (NumberFormatException e){
-            new Error().showError(obstacleHeightField, "Invalid obstacle height, please input a numerical value greater than 0", "10");
+            new ErrorView().showError(obstacleHeightField, "Invalid obstacle height, please input a numerical value greater than 0", "10");
         }
     }
 
@@ -246,7 +245,7 @@ public class MainController implements Initializable {
             getObstacleSelected().setWidth(width);
             obstacleWidth.set(width);
         } catch (NumberFormatException e){
-            new Error().showError(obstacleWidthField, "Invalid obstacle width, please input a numerical value greater than 0", "10");
+            new ErrorView().showError(obstacleWidthField, "Invalid obstacle width, please input a numerical value greater than 0", "10");
         }
     }
 
@@ -287,7 +286,7 @@ public class MainController implements Initializable {
             if(stripEnd < 0 || stripEnd > 100){throw new NumberFormatException();}
             PhysicalRunway.setStripEnd(stripEnd);
         } catch (NumberFormatException e){
-            new InvalidStripEnd().showError(stripEndTextField);
+            new ErrorView().showError(stripEndTextField, "Invalid input for strip end \nHint: please input a numerical value within this range 0-100", "60");
         }
     }
 
@@ -300,7 +299,7 @@ public class MainController implements Initializable {
             }
             PhysicalRunway.setBlastProtection(blastProtection);
         } catch (NumberFormatException e){
-            new InvalidBlastProtection().showError(blastProtectionField);
+            new ErrorView().showError(blastProtectionField, "Invalid input for blast protection\nHint: please input a numerical value within this range: 300-500 (for safety purpose)", "300");
         }
     }
 
@@ -313,7 +312,7 @@ public class MainController implements Initializable {
             }
             PhysicalRunway.setResa(resa);
         } catch (NumberFormatException e){
-            new InvalidRESA().showError(resaTextField);
+            new ErrorView().showError(resaTextField, "Invalid input for RESA\nHint: please input a numerical value within this range 240-500 (for safety purpose)", "240");
         }
     }
 

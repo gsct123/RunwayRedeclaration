@@ -2,7 +2,7 @@ package Controller;
 
 import Model.Miscellaneous;
 import Model.User;
-import View.ErrorPopUp.Error;
+import View.ErrorView;
 import View.Main;
 import View.MainWithLogin;
 import javafx.fxml.FXML;
@@ -48,7 +48,7 @@ public class LoginController implements Initializable {
         if(users.containsKey(username)){
             this.username = username;
         } else{
-            new Error().showError(usernameField, "Invalid username", "");
+            new ErrorView().showError(usernameField, "Invalid username", "");
         }
     }
 
@@ -59,7 +59,7 @@ public class LoginController implements Initializable {
             MainWithLogin.getStage().close();
             new Main().start(new Stage());
         } else{
-            new Error().showError(passwordField, "Invalid password", "");
+            new ErrorView().showError(passwordField, "Invalid password", "");
         }
     }
 
