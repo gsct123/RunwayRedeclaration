@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class TopViewController implements Initializable {
 
     @FXML
-    private AnchorPane topDownRunwayGroup;
+    private AnchorPane topDownRunwayPane;
     @FXML
     private Label leftDesignator;
     @FXML
@@ -224,6 +224,11 @@ public class TopViewController implements Initializable {
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.disFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
+
+        Miscellaneous.initializeZoom(topDownRunwayPane);
+        Miscellaneous.initializeDrag(topDownRunwayPane);
+
+
     }
 
     //function to update labels and line in top view
@@ -335,7 +340,7 @@ public class TopViewController implements Initializable {
 
         displacedThresholdL.setLayoutX(lDisplacedThresholdX);
         displacedThresholdR.setLayoutX(rDisplacedThresholdX);
-        rotateRunway();
+        //rotateRunway();
     }
 
     //function to set up lines
@@ -802,8 +807,15 @@ public class TopViewController implements Initializable {
         LogicalRunway lLogicalRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(0);
         int designatorInt = Integer.parseInt(lLogicalRunway.getDesignator().trim().replaceAll("[^0-9]",""));
         int direction = designatorInt * 10 - 90;
-        RotateTransition rotate = new RotateTransition(Duration.millis(1500),topDownRunwayGroup);
+        RotateTransition rotate = new RotateTransition(Duration.millis(1500),topDownRunwayPane);
         rotate.setToAngle(direction);
         rotate.play();
+    }
+
+    private void resetZoomAndDrag(AnchorPane pane){
+        pane.setTranslateX(0);
+        pane.setTranslateY(0);
+        pane.setScaleX(1);
+        pane.setScaleY(1);
     }
 }

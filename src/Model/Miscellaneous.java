@@ -1,5 +1,9 @@
 package Model;
 
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
+
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -37,5 +41,31 @@ public class Miscellaneous {
             hexString.insert(0, '0');
         }
         return hexString.toString();
+    }
+
+    //allow zoom in / out when hodl down ctrl
+    public static void initializeZoom(AnchorPane pane){
+        pane.addEventHandler(ScrollEvent.SCROLL, scrollEvent -> {
+            if (scrollEvent.isShortcutDown()){
+                double zoom = scrollEvent.getDeltaY();
+                System.out.println(pane.getScaleX() + zoom * -0.01);
+                pane.setScaleX(pane.getScaleX() - zoom * -0.01);
+                pane.setScaleY(pane.getScaleY() - zoom * -0.01);
+                scrollEvent.consume();
+            }
+        });
+    }
+
+    public static void initializeDrag(AnchorPane pane){
+        pane.addEventHandler(MouseEvent.MOUSE_DRAGGED, dragEvent -> {
+            if (dragEvent.isShortcutDown()){
+                System.out.println();
+                pane.setTranslateX(pane.getTranslateX() + dragEvent.getX() - pane.getWidth()/2);
+                pane.setTranslateY(pane.getTranslateY() + dragEvent.getY() - pane.getHeight()/2);
+                System.out.println(pane.getTranslateX() + dragEvent.getX() - pane.getWidth()/2);
+                System.out.println(pane.getTranslateY() + dragEvent.getY() - pane.getHeight()/2);
+                dragEvent.consume();
+            }
+        });
     }
 }
