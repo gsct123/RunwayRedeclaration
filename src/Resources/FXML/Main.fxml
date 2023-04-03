@@ -39,7 +39,7 @@
             <Insets bottom="10.0" top="10.0" />
          </padding>
       </Label>
-      <SplitPane dividerPositions="0.19321428571428573, 0.7760714285714285" prefHeight="601.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@Resources/CSS/MainStylesheet.css">
+      <SplitPane dividerPositions="0.19321428571428573, 0.7760714285714285" prefHeight="601.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../CSS/MainStylesheet.css">
          <items>
             <AnchorPane prefHeight="692.0" prefWidth="261.0">
                <children>
@@ -157,7 +157,7 @@
             </AnchorPane>
              <AnchorPane prefHeight="655.0" prefWidth="829.0">
                <children>
-                  <TabPane fx:id="visualPane" layoutX="3.0" layoutY="-1.0" prefHeight="656.0" prefWidth="804.0" stylesheets="@Resources/CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane fx:id="visualPane" layoutX="3.0" layoutY="-1.0" prefHeight="656.0" prefWidth="804.0" stylesheets="@../CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                       <Tab fx:id="topViewTab" style="-fx-font-family: Verdana;" text="Top-down View">
                          <content>

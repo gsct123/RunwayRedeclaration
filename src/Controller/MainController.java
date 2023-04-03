@@ -154,9 +154,9 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadInfos();
         try {
-            topViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/TopView.fxml"))));
-            sideViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/SideView.fxml"))));
-            simultaneousViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/SimultaneousView.fxml"))));
+            topViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/TopView.fxml"))));
+            sideViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/SideView.fxml"))));
+            simultaneousViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/SimultaneousView.fxml"))));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
@@ -190,7 +190,7 @@ public class MainController implements Initializable {
         boolean flag = new ResetConfirmation().confirmReset();
         Main.setReset(true);
         if(flag) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Main.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
 
@@ -319,7 +319,7 @@ public class MainController implements Initializable {
     @FXML
     public void showCalculationBreakdown(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CalculationBreakdown.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CalculationBreakdown.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);

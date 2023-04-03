@@ -32,7 +32,7 @@ public class MainWithLogin extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         MainWithLogin.stage = stage;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginPage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/LoginPage.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
