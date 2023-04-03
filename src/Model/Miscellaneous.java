@@ -1,8 +1,5 @@
 package Model;
 
-import View.Main;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.math.BigInteger;
@@ -44,9 +41,11 @@ public class Miscellaneous {
         return hexString.toString();
     }
 
+
+
     //allow zoom in / out when hodl down ctrl
     public static void initializeZoom(AnchorPane pane){
-        pane.addEventHandler(ScrollEvent.SCROLL, scrollEvent -> {
+        pane.setOnScroll(scrollEvent -> {
             if (scrollEvent.isShortcutDown()){
                 double zoom = scrollEvent.getDeltaY();
                 System.out.println(pane.getScaleX() - zoom * -0.005);
@@ -63,16 +62,26 @@ public class Miscellaneous {
         });
     }
     public static void initializeDrag(AnchorPane pane){
-        pane.addEventHandler(MouseEvent.MOUSE_DRAGGED, dragEvent -> {
-            if (dragEvent.isShortcutDown()){
-                pane.setTranslateX(dragEvent.getSceneX() - Main.getStage().getWidth()/2);
-                pane.setTranslateY(dragEvent.getSceneY() - Main.getStage().getHeight()/2);
-
-                System.out.println(dragEvent.getSceneX() - pane.getWidth());
-                System.out.println(dragEvent.getSceneY() - pane.getHeight());
-                dragEvent.consume();
+        pane.setOnMousePressed(mouseEvent->{
+            if (mouseEvent.isShortcutDown()){
+                double mouseX = mouseEvent.getX();
+                double mouseY = mouseEvent.getY();
+                pane.setOnMouseDragged(dragEvent -> {
+                    double translationX = dragEvent.getX() - mouseX;
+                    double translationY = dragEvent.getY() - mouseY;
+                    pane.setTranslateX(pane.getTranslateX() + translationX);
+                    pane.setTranslateY(pane.getTranslateY() + translationY);
+                    dragEvent.consume();
+                });
             }
         });
+        pane.setOnMouseReleased(releaseEvent -> {
+            pane.setOnMouseDragged(null);
+        });
     }
+
+
+
+
 
 }
