@@ -1,7 +1,5 @@
 package Model;
 
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.math.BigInteger;
@@ -43,29 +41,47 @@ public class Miscellaneous {
         return hexString.toString();
     }
 
+
+
     //allow zoom in / out when hodl down ctrl
     public static void initializeZoom(AnchorPane pane){
-        pane.addEventHandler(ScrollEvent.SCROLL, scrollEvent -> {
+        pane.setOnScroll(scrollEvent -> {
             if (scrollEvent.isShortcutDown()){
                 double zoom = scrollEvent.getDeltaY();
-                System.out.println(pane.getScaleX() + zoom * -0.01);
-                pane.setScaleX(pane.getScaleX() - zoom * -0.01);
-                pane.setScaleY(pane.getScaleY() - zoom * -0.01);
+                System.out.println(pane.getScaleX() - zoom * -0.005);
+                if (pane.getScaleX()>=0.5 && pane.getScaleY()>=0.5){
+                    pane.setScaleX(pane.getScaleX() - zoom * -0.005);
+                    pane.setScaleY(pane.getScaleY() - zoom * -0.005);
+                }else if (pane.getScaleX()<0.5 && pane.getScaleY()<0.5){
+                    pane.setScaleX(0.5);
+                    pane.setScaleY(0.5);
+                }
+
                 scrollEvent.consume();
             }
         });
     }
-
     public static void initializeDrag(AnchorPane pane){
-        pane.addEventHandler(MouseEvent.MOUSE_DRAGGED, dragEvent -> {
-            if (dragEvent.isShortcutDown()){
-                System.out.println();
-                pane.setTranslateX(pane.getTranslateX() + dragEvent.getX() - pane.getWidth()/2);
-                pane.setTranslateY(pane.getTranslateY() + dragEvent.getY() - pane.getHeight()/2);
-                System.out.println(pane.getTranslateX() + dragEvent.getX() - pane.getWidth()/2);
-                System.out.println(pane.getTranslateY() + dragEvent.getY() - pane.getHeight()/2);
-                dragEvent.consume();
+        pane.setOnMousePressed(mouseEvent->{
+            if (mouseEvent.isShortcutDown()){
+                double mouseX = mouseEvent.getX();
+                double mouseY = mouseEvent.getY();
+                pane.setOnMouseDragged(dragEvent -> {
+                    double translationX = dragEvent.getX() - mouseX;
+                    double translationY = dragEvent.getY() - mouseY;
+                    pane.setTranslateX(pane.getTranslateX() + translationX);
+                    pane.setTranslateY(pane.getTranslateY() + translationY);
+                    dragEvent.consume();
+                });
             }
         });
+        pane.setOnMouseReleased(releaseEvent -> {
+            pane.setOnMouseDragged(null);
+        });
     }
+
+
+
+
+
 }
