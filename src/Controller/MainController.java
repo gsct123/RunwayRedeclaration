@@ -3,6 +3,7 @@ package Controller;
 import Model.*;
 import View.ErrorView;
 import View.Main;
+import View.MainWithLogin;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
@@ -202,6 +203,12 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    public void handleLogout(ActionEvent event) throws Exception {
+        Main.getStage().close();
+        new MainWithLogin().start(new Stage());
+    }
+
+    @FXML
     public void checkDistFromThreshold(ActionEvent event){
         try {
             double distFromThreshold = Double.parseDouble(distanceThresholdTextField.getText().trim());
@@ -209,7 +216,7 @@ public class MainController implements Initializable {
             disFromThreshold.set(distFromThreshold);
         } catch (NumberFormatException exception) {
             //display error message
-            new ErrorView().showError(distanceThresholdTextField, "Invalid input for distance from threshold\nHint: please input a numerical value", "0");
+            new ErrorView().showError(distanceThresholdTextField, "Invalid input for distance from threshold\nHint: please input a numerical value", ""+getObstacleSelected().getDistFThreshold());
         }
     }
 
@@ -221,7 +228,7 @@ public class MainController implements Initializable {
             getObstacleSelected().setDistFCent(distFromCentreLine);
             disFromCentre.set(distFromCentreLine);
         } catch (NumberFormatException exception){
-            new ErrorView().showError(clDistTextField, "Invalid input for distance from centre line\nHint: please input a numerical value greater or equal to 0", "0");
+            new ErrorView().showError(clDistTextField, "Invalid input for distance from centre line\nHint: please input a numerical value greater or equal to 0", ""+getObstacleSelected().getDirFromCentre());
         }
     }
 
@@ -233,7 +240,7 @@ public class MainController implements Initializable {
             getObstacleSelected().setHeight(height);
             obstacleHeight.set(height);
         } catch (NumberFormatException e){
-            new ErrorView().showError(obstacleHeightField, "Invalid obstacle height, please input a numerical value greater than 0", "10");
+            new ErrorView().showError(obstacleHeightField, "Invalid obstacle height, please input a numerical value greater than 0", ""+getObstacleSelected().getHeight());
         }
     }
 
@@ -245,7 +252,7 @@ public class MainController implements Initializable {
             getObstacleSelected().setWidth(width);
             obstacleWidth.set(width);
         } catch (NumberFormatException e){
-            new ErrorView().showError(obstacleWidthField, "Invalid obstacle width, please input a numerical value greater than 0", "10");
+            new ErrorView().showError(obstacleWidthField, "Invalid obstacle width, please input a numerical value greater than 0", ""+getObstacleSelected().getWidth());
         }
     }
 
@@ -599,6 +606,4 @@ public class MainController implements Initializable {
             performCalculationButton.setDisable(notAllowed);
         }
     }
-
-
 }

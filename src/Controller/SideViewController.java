@@ -24,6 +24,10 @@ public class SideViewController {
     @FXML
     private Label designatorR;
     @FXML
+    private Label designatorL1;
+    @FXML
+    private Label designatorR1;
+    @FXML
     private Line thresholdL;
     @FXML
     private Line thresholdR;
@@ -671,8 +675,10 @@ public class SideViewController {
         double rDisplacedThresholdX;
 
         //change in designator and displacedThreshold as logical runway changes
-         designatorL.setText(lDesignator);
-         designatorR.setText(rDesignator);
+         designatorL.setText(lDesignator.substring(0, lDesignator.length()-1));
+         designatorR.setText(rDesignator.substring(0, rDesignator.length()-1));
+         designatorL1.setText(lDesignator.substring(lDesignator.length()-1));
+         designatorR1.setText(rDesignator.substring(rDesignator.length()-1));
          lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(lDisplacedThreshold,lLogicalRunway);
          rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(rDisplacedThreshold,rLogicalRunway);
 
