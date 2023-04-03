@@ -20,14 +20,13 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
     HashMap<String, User> users = new HashMap<>();
-    private String username;
+    private String username = null;
 
     @FXML
     private TextField usernameField;
@@ -39,6 +38,8 @@ public class LoginController implements Initializable {
     private AnchorPane userPane;
     @FXML
     private AnchorPane passwordPane;
+    @FXML
+    private Button loginButton;
 
 
     @Override
@@ -48,30 +49,55 @@ public class LoginController implements Initializable {
             DropShadow shadow = new DropShadow(13, Color.valueOf("#4cc9f0"));
             userPane.setEffect(shadow);
             passwordPane.setEffect(shadow);
+            usernameField.setOnAction(actionEvent -> checkUsername());
+            passwordField.setOnAction(actionEvent -> checkPassword());
+            loginButton.setOnMouseClicked(actionEvent -> checkPassword());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @FXML
-    public void checkUsername(ActionEvent event){
-        String username = usernameField.getText();
-        if(users.containsKey(username)){
-            this.username = username;
-        } else{
-            new ErrorView().showError(usernameField, "Invalid username", "");
-        }
+
+
+    public boolean checkUsername(){
+        try{
+            String name = usernameField.getText().trim();
+            if(name.length() == 0){
+                new ErrorView().showError(usernameField, "Please enter a valid username", "");
+                return false;
+            } else{
+                if(users.containsKey(name)){
+                    this.username = name;
+                    return true;
+                } else{
+                    new ErrorView().showError(usernameField, "Username does not exist, please check again", name);
+                    passwordField.clear();
+                    return false;
+                }
+            }
+
+        } catch (Exception ignored){return false;}
     }
 
-    @FXML
-    public void checkPassword(ActionEvent event) throws Exception {
-        String password = passwordField.getText();
-        if(users.get(username).getPassword().equals(password)){
-            MainWithLogin.getStage().close();
-            new Main().start(new Stage());
-        } else{
-            new ErrorView().showError(passwordField, "Invalid password", "");
-        }
+    public void checkPassword(){
+        try{
+            String password = passwordField.getText().trim();
+            String name = usernameField.getText().trim();
+            if(name.length() > 0 && password.length() > 0 && checkUsername()){
+                if(users.get(username).getPassword().equals(Miscellaneous.toHexString(Miscellaneous.getSHA(password)))) {
+                    MainWithLogin.getStage().close();
+                    new Main(username).start(new Stage());
+                } else{
+                    new ErrorView().showError(passwordField, "Invalid password", "");
+                }
+            } else if (name.length() <= 0){
+                new ErrorView().showError(usernameField, "Please enter a valid username", "");
+            } else if (password.length() <= 0){
+                new ErrorView().showError(passwordField, "Please enter a valid password", "");
+            } else{
+                new ErrorView().showError(usernameField, "Username does not exist, please check again", name);
+            }
+        } catch (Exception ignored){}
     }
 
     //have the xml ready before writing this writer
@@ -99,11 +125,9 @@ public class LoginController implements Initializable {
                 String password = userElement.getElementsByTagName("password").item(0).getTextContent();
                 int role = Integer.parseInt(userElement.getElementsByTagName("role").item(0).getTextContent());
 
-                User user = new User(username, Miscellaneous.toHexString(Miscellaneous.getSHA(password)), role);
+                User user = new User(username, password, role);
                 users.put(username, user);
             }
         }
     }
-
-
 }

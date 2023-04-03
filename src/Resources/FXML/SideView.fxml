@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: #b6c6e1;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SideViewController">
+<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: #b6c6e1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SideViewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcf347" height="12.0" layoutX="635.0" layoutY="56.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5ff552" height="12.0" layoutX="635.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
@@ -92,12 +92,12 @@
          <children>
             <Rectangle fill="#a4a4a4" height="15.0" layoutY="208.0" stroke="#a4a4a4" strokeType="INSIDE" width="804.0" />
             <Rectangle id="phyRunway" fx:id="phyRunway" height="15.0" layoutX="100.0" layoutY="208.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
-            <Label id="designatorR" fx:id="designatorR" layoutX="649.0" layoutY="206.0" prefWidth="38.0" textFill="WHITE">
+            <Label id="designatorR" fx:id="designatorR" layoutX="661.0" layoutY="206.0" prefWidth="25.0" textFill="WHITE">
                <font>
                   <Font name="Verdana Bold" size="15.0" />
                </font>
             </Label>
-            <Label id="designatorL" fx:id="designatorL" layoutX="112.0" layoutY="206.0" prefWidth="57.0" textFill="WHITE">
+            <Label id="designatorL" fx:id="designatorL" alignment="CENTER" layoutX="112.0" layoutY="206.0" prefHeight="19.0" prefWidth="25.0" text="29" textFill="WHITE">
                <font>
                   <Font name="Verdana Bold" size="15.0" />
                </font>
@@ -216,6 +216,16 @@
             <Polygon fx:id="toraOtherArrow" layoutX="710.0" layoutY="150.0" points="-9.0, -25.0, -9.0, -17.25, -0.75, -21.25" stroke="BLACK" strokeType="INSIDE" />
             <Polygon fx:id="toraOtherArrow1" layoutX="110.0" layoutY="327.0" points="8.25, -25.75, 8.25, -18.75, 0.5, -22.5" stroke="BLACK" strokeType="INSIDE" />
             <Polygon fx:id="ldaOtherArrow1" layoutX="110.0" layoutY="403.0" points="9.25, -26.25, 9.25, -18.25, 0.5, -22.5" stroke="BLACK" strokeType="INSIDE" />
+            <Label id="designatorL" fx:id="designatorL1" alignment="CENTER" layoutX="112.0" layoutY="225.0" prefWidth="25.0">
+               <font>
+                  <Font name="Verdana Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label id="designatorL" fx:id="designatorR1" alignment="CENTER" layoutX="661.0" layoutY="225.0" prefWidth="25.0">
+               <font>
+                  <Font name="Verdana Bold" size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

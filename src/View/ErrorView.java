@@ -20,12 +20,14 @@ public class ErrorView {
 
         if(result.isPresent() && result.get() == ButtonType.OK){
             field.setText(resetValue);
+            field.positionCaret(resetValue.length());
             errorAlert.close();
         }
 
         Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
         okButton.setOnAction(event1 -> {
             field.setText(resetValue);
+            field.positionCaret(resetValue.length());
             errorAlert.close();
         });
     }
