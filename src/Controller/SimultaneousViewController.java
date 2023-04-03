@@ -1,198 +1,116 @@
 package Controller;
 
 import Model.*;
-import javafx.animation.RotateTransition;
-import javafx.fxml.FXML;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TopViewController implements Initializable {
+public class SimultaneousViewController implements Initializable {
+    public Rectangle minCGArea;
+    public Rectangle clearwayR1;
+    public Rectangle clearwayL1;
+    public Rectangle stopwayR1;
+    public Rectangle stopwayL1;
+    public Rectangle runway1;
+    public Line centreLine;
+    
+    
+    public Label leftDesignator;  
+    public Label rightDesignator;
+    public Line displacedThresholdL1;
+    public Line displacedThresholdR1;
 
-    @FXML
-    private AnchorPane topDownRunwayGroup;
-    @FXML
-    private Label leftDesignator;
-    @FXML
-    private Label rightDesignator;
-    @FXML
-    private Rectangle runway;
-    @FXML
-    private Rectangle obstacleBlock;
-    @FXML
-    private Line centreLine;
-    @FXML
-    private Rectangle minCGArea;
-
-    //tora labels
-    @FXML
-    private Line toraStart;
-    @FXML
-    private Line toraEnd;
-    @FXML
-    private Label toraLabel;
-    @FXML
-    private Line toraLength;
-    @FXML
-    private Line toraStart1;
-    @FXML
-    private Line toraEnd1;
-    @FXML
-    private Line toraLength1;
-    @FXML
-    private Label toraLabel1;
-
-    //toda labels
-    @FXML
-    private Line todaStart;
-    @FXML
-    private Line todaEnd;
-    @FXML
-    private Label todaLabel;
-    @FXML
-    private Line todaLength;
-    @FXML
-    private Line todaStart1;
-    @FXML
-    private Line todaEnd1;
-    @FXML
-    private Label todaLabel1;
-    @FXML
-    private Line todaLength1;
-
-    //lda labels
-    @FXML
-    private Line ldaStart;
-    @FXML
-    private Line ldaEnd;
-    @FXML
-    private Label ldaLabel;
-    @FXML
-    private Line ldaLength;
-    @FXML
-    private Line ldaStart1;
-    @FXML
-    private Line ldaEnd1;
-    @FXML
-    private Label ldaLabel1;
-    @FXML
-    private Line ldaLength1;
-
-    //asda labels
-    @FXML
-    private Line asdaStart;
-    @FXML
-    private Line asdaEnd;
-    @FXML
-    private Label asdaLabel;
-    @FXML
-    private Line asdaLength;
-    @FXML
-    private Line asdaStart1;
-    @FXML
-    private Line asdaEnd1;
-    @FXML
-    private Label asdaLabel1;
-    @FXML
-    private Line asdaLength1;
-
-    //other labels
-    @FXML
-    private Line toraOtherLineLength;
-    @FXML
-    private Line toraOtherLineStart;
-    @FXML
-    private Label toraOtherLineLabel;
-    @FXML
-    private Line toraOtherLineLength1;
-    @FXML
-    private Line toraOtherLineEnd;
-    @FXML
-    private Label toraOtherLineLabel1;
-    @FXML
-    private Line ldaOtherLineLength;
-    @FXML
-    private Line ldaOtherLineStart;
-    @FXML
-    private Label ldaOtherLineLabel;
-    @FXML
-    private Line ldaOtherLineLength1;
-    @FXML
-    private Line ldaOtherLineEnd;
-    @FXML
-    private Label ldaOtherLineLabel1;
-
-    //references
-    @FXML
-    private Rectangle clearwayL;
-    @FXML
-    private Rectangle clearwayR;
-    @FXML
-    private Rectangle stopwayL;
-    @FXML
-    private Rectangle stopwayR;
-    @FXML
-    private Line displacedThresholdL;
-    @FXML
-    private Line displacedThresholdR;
-    @FXML
-    private Line thresholdL;
-    @FXML
-    private Line thresholdR;
-
-    //arrows
-    @FXML
-    private Polygon todaArrow;
-    @FXML
-    private Polygon asdaArrow;
-    @FXML
-    private Polygon ldaArrow;
-    @FXML
-    private Polygon toraArrow;
-    @FXML
-    private Polygon todaArrow1;
-    @FXML
-    private Polygon ldaArrow1;
-    @FXML
-    private Polygon asdaArrow1;
-    @FXML
-    private Polygon toraArrow1;
-    @FXML
-    private Polygon toraOtherArrow;
-    @FXML
-    private Polygon ldaOtherArrow;
-    @FXML
-    private Polygon toraOtherArrow1;
-    @FXML
-    private Polygon ldaOtherArrow1;
-
-    //scales
-    @FXML
-    private Label scaleLabel;
-    @FXML
-    private Rectangle scaleStart;
-    @FXML
-    private Rectangle scaleEnd;
-    @FXML
-    private Rectangle scaleLength;
-    @FXML
-    private Label scale0;
-    @FXML
-    private Label scale500;
-    @FXML
-    private Label scale1000;
-    @FXML
-    private Label scale1500;
-    @FXML
-    private Label scaleUnit;
-
+    public Line gradedAreaLine;
+    public Label asdaLabel1;
+    public Label todaLabel1;
+    public Label toraLabel1;
+    public Label ldaLabel1;
+    public Line toraOtherLineLength1;
+    public Line toraOtherLineEnd;
+    public Label toraOtherLineLabel1;
+    public Line toraEnd1;
+    public Line ldaStart1;
+    public Line asdaStart1;
+    public Line ldaEnd1;
+    public Line asdaEnd1;
+    public Line toraStart1;
+    public Line todaStart1;
+    public Line todaEnd1;
+    public Line toraLength1;
+    public Line ldaLength1;
+    public Line asdaLength1;
+    public Line todaLength1;
+    public Line ldaOtherLineLength1;
+    public Line ldaOtherLineEnd;
+    public Label ldaOtherLineLabel1;
+    public Line thresholdL1;
+    public Line thresholdR1;
+    public Rectangle obstacleBlock;
+    public Polygon toraArrow1;
+    public Polygon ldaArrow1;
+    public Polygon asdaArrow1;
+    public Polygon todaArrow1;
+    public Polygon toraOtherArrow1;
+    public Polygon ldaOtherArrow1;
+    public AnchorPane sideOnPane1;
+    public Rectangle runway;
+    public Label designatorR;
+    public Label designatorL;
+    public Rectangle clearwayR;
+    public Rectangle clearwayL;
+    public Line displacedThresholdR;
+    public Line displacedThresholdL;
+    public Rectangle stopwayR;
+    public Rectangle stopwayL;
+    public Line thresholdL;
+    public Line toraEnd;
+    public Line thresholdR;
+    public Line ldaStart;
+    public Line asdaStart;
+    public Line ldaEnd;
+    public Line asdaEnd;
+    public Line toraStart;
+    public Line todaStart;
+    public Line todaEnd;
+    public Line toraLength;
+    public Line ldaLength;
+    public Line asdaLength;
+    public Line todaLength;
+    public Label ldaLabel;
+    public Label toraLabel;
+    public Label asdaLabel;
+    public Label todaLabel;
+    public Polygon tocsSlope;
+    public Polygon alsSlope;
+    public Polygon todaArrow;
+    public Polygon asdaArrow;
+    public Polygon ldaArrow;
+    public Polygon toraArrow;
+    public Label ldaOtherLabel;
+    public Line ldaOtherLength;
+    public Line ldaOtherStart;
+    public Line toraOtherLength;
+    public Line toraOtherStart;
+    public Label toraOtherLabel;
+    public Polygon ldaOtherArrow;
+    public Polygon toraOtherArrow;
+    public Rectangle scaleLength;
+    public Rectangle scaleStart;
+    public Rectangle scaleEnd;
+    public Label scaleLabel;
+    public Label scale0;
+    public Label scale500;
+    public Label scale1000;
+    public Label scale1500;
+    public Label scaleUnit;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -219,13 +137,26 @@ public class TopViewController implements Initializable {
             newValue.setDistFThreshold(MainController.disFromThreshold.get());
             relocateObstacle();
         });
+        MainController.obstacleProperty.addListener(((ObservableValue<? extends Obstacle> observable, Obstacle oldValue, Obstacle newValue) -> {
+            if(oldValue != null){
+                oldValue.setDistFThreshold(0);
+                oldValue.setDistFCent(0);
+            }
+            newValue.setDistFThreshold(MainController.disFromThreshold.get());
+            setUpAlsTocs(newValue,MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
+        }));
+        MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
+            setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
+        });
         //listener for result change to update with the revised parameters
         MainController.dirFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.disFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
-    }
 
+
+
+    }
     //function to update labels and line in top view
     public void updateLabel(){
         relocateObstacle();
@@ -256,8 +187,8 @@ public class TopViewController implements Initializable {
             //setting up other lines (resa/stripend/alstocs/blast protection)
             boolean needRedeclare = Calculator.needRedeclare(obstacle, llogRunway);
             boolean isTalo = Calculator.getFlightMethod(obstacle,llogRunway).equals(Calculator.talo);
-            setToraOtherLine(needRedeclare,isTalo, false, toraOtherLineLabel, toraOtherLineLength, toraOtherLineStart, toraOtherArrow);
-            setLdaOtherLine(needRedeclare,isTalo, false, ldaOtherLineLabel, ldaOtherLineLength, ldaOtherLineStart, ldaOtherArrow);
+            setToraOtherLine(needRedeclare,isTalo, false, toraOtherLabel, toraOtherLength, toraOtherStart, toraOtherArrow);
+            setLdaOtherLine(needRedeclare,isTalo, false, ldaOtherLabel, ldaOtherLength, ldaOtherStart, ldaOtherArrow);
             setToraOtherLine(needRedeclare,isTalo, true, toraOtherLineLabel1, toraOtherLineLength1, toraOtherLineEnd, toraOtherArrow1);
             setLdaOtherLine(needRedeclare,isTalo, true, ldaOtherLineLabel1, ldaOtherLineLength1, ldaOtherLineEnd, ldaOtherArrow1);
         } else{
@@ -269,19 +200,19 @@ public class TopViewController implements Initializable {
     protected void resetValues(PhysicalRunway physicalRunway){
         //hide labelling for additional lines for reference
         toraOtherLineEnd.setVisible(false);
-        toraOtherLineStart.setVisible(false);
-        toraOtherLineLabel.setVisible(false);
+        toraOtherStart.setVisible(false);
+        toraOtherLabel.setVisible(false);
         toraOtherLineLabel1.setVisible(false);
         toraOtherLineLength1.setVisible(false);
-        toraOtherLineLength.setVisible(false);
+        toraOtherLength.setVisible(false);
         toraOtherArrow.setVisible(false);
         toraOtherArrow1.setVisible(false);
 
         ldaOtherLineEnd.setVisible(false);
-        ldaOtherLineStart.setVisible(false);
-        ldaOtherLineLabel.setVisible(false);
+        ldaOtherStart.setVisible(false);
+        ldaOtherLabel.setVisible(false);
         ldaOtherLineLabel1.setVisible(false);
-        ldaOtherLineLength.setVisible(false);
+        ldaOtherLength.setVisible(false);
         ldaOtherLineLength1.setVisible(false);
         ldaOtherArrow.setVisible(false);
         ldaOtherArrow1.setVisible(false);
@@ -309,7 +240,9 @@ public class TopViewController implements Initializable {
 
         //Set Up Threshold
         thresholdL.setLayoutX(runway.getLayoutX());
-        thresholdR.setLayoutX(runway.getLayoutX()+runway.getWidth());
+        thresholdR.setLayoutX(runway.getLayoutX() + runway.getWidth());
+        thresholdL1.setLayoutX(runway1.getLayoutX());
+        thresholdR1.setLayoutX(runway1.getLayoutX() + runway1.getWidth());
 
         //Set Up Designator
         String lDesignator = lLogicalRunway.getDesignator();
@@ -320,22 +253,18 @@ public class TopViewController implements Initializable {
         double lDisplacedThresholdX;
         double rDisplacedThresholdX;
 
-        //change in designator and displacedThreshold as logical runway changes
-        if (selectedLogRunway.getDesignator().equals(lDesignator)){
-            leftDesignator.setText(lDesignator);
-            rightDesignator.setText(rDesignator);
-            lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(lDisplacedThreshold,lLogicalRunway);
-            rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(rDisplacedThreshold,rLogicalRunway);
-        }else {
-            leftDesignator.setText(rDesignator);
-            rightDesignator.setText(lDesignator);
-            lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(rDisplacedThreshold,lLogicalRunway);
-            rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(lDisplacedThreshold,rLogicalRunway);
-        }
+
+        leftDesignator.setText(lDesignator);
+        rightDesignator.setText(rDesignator);
+        designatorL.setText(lDesignator);
+        designatorR.setText(rDesignator);
+        lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(lDisplacedThreshold,lLogicalRunway);
+        rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(rDisplacedThreshold,rLogicalRunway);
 
         displacedThresholdL.setLayoutX(lDisplacedThresholdX);
         displacedThresholdR.setLayoutX(rDisplacedThresholdX);
-        rotateRunway();
+        displacedThresholdL1.setLayoutX(lDisplacedThresholdX);
+        displacedThresholdR1.setLayoutX(rDisplacedThresholdX);
     }
 
     //function to set up lines
@@ -770,6 +699,8 @@ public class TopViewController implements Initializable {
         double oriClearwayX;
         Rectangle stopway;
         Rectangle clearway;
+        Rectangle stopway1;
+        Rectangle clearway1;
 
         //Set Up Variable based on left or right
         if (leftOrRightWay.equals("Left")){
@@ -777,16 +708,22 @@ public class TopViewController implements Initializable {
             oriClearwayX = thresholdL.getLayoutX() - clearwayWidthPx;
             stopway = stopwayL;
             clearway = clearwayL;
+            stopway1 = stopwayL1;
+            clearway1 = clearwayL1;
         } else {
             oriStopwayX = thresholdR.getLayoutX();
             oriClearwayX = thresholdR.getLayoutX();
             stopway = stopwayR;
             clearway = clearwayR;
+            stopway1 = stopwayR1;
+            clearway1 = clearwayR1;
         }
 
         // Set Values for both clearway and stopway
         setStopClearwayValue(stopway,stopwayLength,stopwayWidthPx,oriStopwayX);
         setStopClearwayValue(clearway,clearwayLength,clearwayWidthPx,oriClearwayX);
+        setStopClearwayValue(stopway1 ,stopwayLength,stopwayWidthPx,oriStopwayX);
+        setStopClearwayValue(clearway1,clearwayLength,clearwayWidthPx,oriClearwayX);
     }
 
     protected void setStopClearwayValue(Rectangle way,double length, double widthPx, double oriWayX){
@@ -797,13 +734,37 @@ public class TopViewController implements Initializable {
         }
         way.setLayoutX(oriWayX);
     }
+    private void setUpAlsTocs(Obstacle obstacle, LogicalRunway logicalRunway){
+        double obsHeight = obstacle.getHeight();
+        double slopeWidth = obstacle.getAlsTocs();
+        double distanceFromThreshold = obstacle.getDistFThreshold();
 
-    private void rotateRunway(){
-        LogicalRunway lLogicalRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(0);
-        int designatorInt = Integer.parseInt(lLogicalRunway.getDesignator().trim().replaceAll("[^0-9]",""));
-        int direction = designatorInt * 10 - 90;
-        RotateTransition rotate = new RotateTransition(Duration.millis(1500),topDownRunwayGroup);
-        rotate.setToAngle(direction);
-        rotate.play();
+        //Get Number of Pixel
+        double slopeWidthPx = getNumberOfPx(slopeWidth,logicalRunway);
+        double obsHeightPx = getNumberOfPx(obsHeight,logicalRunway);
+        double distanceFromThresholdPx = getNumberOfPx(distanceFromThreshold,logicalRunway);
+
+        Polygon slope;
+        boolean usingAls = Calculator.getFlightMethod(obstacle,logicalRunway).equals(Calculator.talo);
+        if (usingAls){
+            tocsSlope.setVisible(false);
+            alsSlope.setVisible(true);
+            slope = alsSlope;
+            slope.setLayoutX(displacedThresholdL.getLayoutX()+distanceFromThresholdPx);
+            ObservableList<Double> points = slope.getPoints();
+            points.set(3,-obsHeightPx*10);
+            //points.set(3,-20d);
+            points.set(0, points.get(4)+slopeWidthPx);
+        }else {
+            tocsSlope.setVisible(true);
+            alsSlope.setVisible(false);
+            slope = tocsSlope;
+            slope.setLayoutX(displacedThresholdL.getLayoutX()+distanceFromThresholdPx);
+            ObservableList<Double> points = slope.getPoints();
+            points.set(3,-obsHeightPx*10);
+            //points.set(3,-20d);
+            points.set(0, points.get(4)-slopeWidthPx);
+        }
     }
+
 }

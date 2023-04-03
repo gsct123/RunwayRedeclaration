@@ -236,7 +236,7 @@ public class Calculator {
     }
 
     public static double getOppositeDistFThrehold(Obstacle obstacle,PhysicalRunway runway){
-        return runway.getLogicalRunways().get(0).getLda()-obstacle.getDistFThreshold();
+        return runway.getLogicalRunways().get(0).getLda()-obstacle.getDistFThreshold() - runway.getLogicalRunways().get(1).getDisplacedThreshold();
     }
 
     public static String toraBreakdown(Obstacle obstacle, LogicalRunway runway) {
