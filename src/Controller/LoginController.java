@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -32,11 +35,19 @@ public class LoginController implements Initializable {
     private TextField passwordField;
     @FXML
     private Button signInButton;
+    @FXML
+    private AnchorPane userPane;
+    @FXML
+    private AnchorPane passwordPane;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             loadUsers("src/Data/users.xml");
+            DropShadow shadow = new DropShadow(13, Color.valueOf("#4cc9f0"));
+            userPane.setEffect(shadow);
+            passwordPane.setEffect(shadow);
         } catch (Exception e) {
             e.printStackTrace();
         }

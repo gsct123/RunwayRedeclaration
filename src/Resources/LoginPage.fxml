@@ -22,7 +22,7 @@
         </AnchorPane>
         <AnchorPane layoutX="4.0" layoutY="1.0" prefHeight="43.0" prefWidth="325.0">
             <children>
-                <Label layoutX="53.0" layoutY="27.0" prefHeight="30.0" prefWidth="228.0" styleClass="text" stylesheets="@CSS/LoginStyleSheet.css" text="Runway Redeclaration" textFill="#dadada">
+                <Label fx:id="title" layoutX="53.0" layoutY="27.0" prefHeight="30.0" prefWidth="228.0" styleClass="text" stylesheets="@CSS/LoginStyleSheet.css" text="Runway Redeclaration" textFill="#dadada">
                     <font>
                         <Font size="24.0" />
                     </font>
@@ -30,7 +30,7 @@
             </children>
         </AnchorPane>
         <ImageView fitHeight="124.0" fitWidth="149.0" layoutX="99.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true" />
-        <AnchorPane layoutX="16.0" layoutY="246.0" prefHeight="48.0" prefWidth="308.0" styleClass="anchorPanesStyle" stylesheets="@CSS/LoginStyleSheet.css">
+        <AnchorPane fx:id="userPane" layoutX="16.0" layoutY="246.0" prefHeight="48.0" prefWidth="308.0" styleClass="anchorPanesStyle" stylesheets="@CSS/LoginStyleSheet.css">
          <children>
             <TextField layoutX="46.0" layoutY="10.0" prefHeight="29.0" prefWidth="247.0" promptText="username" styleClass="textPrompt" stylesheets="@CSS/LoginStyleSheet.css">
                <font>
@@ -44,7 +44,7 @@
             </ImageView>
          </children>
         </AnchorPane>
-        <AnchorPane layoutX="16.0" layoutY="320.0" prefHeight="48.0" prefWidth="308.0" style="-fx-border-color: #dadada;" styleClass="anchorPanesStyle" stylesheets="@CSS/LoginStyleSheet.css">
+        <AnchorPane fx:id="passwordPane" layoutX="16.0" layoutY="320.0" prefHeight="48.0" prefWidth="308.0" styleClass="anchorPanesStyle" stylesheets="@CSS/LoginStyleSheet.css">
          <children>
             <PasswordField layoutX="14.0" layoutY="12.0" prefHeight="26.0" prefWidth="278.0" promptText="password" styleClass="textPrompt" stylesheets="@CSS/LoginStyleSheet.css">
                <font>
@@ -53,7 +53,7 @@
             </PasswordField>
          </children>
         </AnchorPane>
-      <ImageView fitHeight="92.0" fitWidth="94.0" layoutX="124.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="airplaneLogo" fitHeight="92.0" fitWidth="94.0" layoutX="124.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@airplaneLogo.png" />
          </image>
