@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.*;
-import View.ErrorPopUp.*;
+import View.ErrorView;
 import View.Main;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
@@ -57,6 +57,10 @@ public class MainController implements Initializable {
     private Label obstacleHeightLabel;
     @FXML
     private Label obstacleWidthLabel;
+    @FXML
+    private TextField obstacleHeightField;
+    @FXML
+    private TextField obstacleWidthField;
     @FXML
     private TextField distanceThresholdTextField;
     @FXML
@@ -138,6 +142,8 @@ public class MainController implements Initializable {
     public static DoubleProperty disFromCentre = new SimpleDoubleProperty();
     public static StringProperty dirFromCentre = new SimpleStringProperty();
     public static DoubleProperty valueChanged = new SimpleDoubleProperty();
+    public static DoubleProperty obstacleHeight = new SimpleDoubleProperty();
+    public static DoubleProperty obstacleWidth = new SimpleDoubleProperty();
 
 
     //list of airports and obstacles from files
@@ -203,7 +209,7 @@ public class MainController implements Initializable {
             disFromThreshold.set(distFromThreshold);
         } catch (NumberFormatException exception) {
             //display error message
-            new InvalidDistanceThreshold().showDisThresholdError(distanceThresholdTextField);
+            new ErrorView().showError(distanceThresholdTextField, "Invalid input for distance from threshold\nHint: please input a numerical value", "0");
         }
     }
 
@@ -215,7 +221,31 @@ public class MainController implements Initializable {
             getObstacleSelected().setDistFCent(distFromCentreLine);
             disFromCentre.set(distFromCentreLine);
         } catch (NumberFormatException exception){
-            new InvalidDistanceFromCentreline().showDisFromCentreError(clDistTextField);
+            new ErrorView().showError(clDistTextField, "Invalid input for distance from centre line\nHint: please input a numerical value greater or equal to 0", "0");
+        }
+    }
+
+    @FXML
+    public void checkObstacleHeight(ActionEvent event){
+        try{
+            double height = Double.parseDouble(obstacleHeightField.getText().trim());
+            if(height <= 0){throw new NumberFormatException();}
+            getObstacleSelected().setHeight(height);
+            obstacleHeight.set(height);
+        } catch (NumberFormatException e){
+            new ErrorView().showError(obstacleHeightField, "Invalid obstacle height, please input a numerical value greater than 0", "10");
+        }
+    }
+
+    @FXML
+    public void checkObstacleWidth(ActionEvent event){
+        try{
+            double width = Double.parseDouble(obstacleWidthField.getText().trim());
+            if(width <= 0){throw new NumberFormatException();}
+            getObstacleSelected().setWidth(width);
+            obstacleWidth.set(width);
+        } catch (NumberFormatException e){
+            new ErrorView().showError(obstacleWidthField, "Invalid obstacle width, please input a numerical value greater than 0", "10");
         }
     }
 
@@ -223,6 +253,8 @@ public class MainController implements Initializable {
     public void performCalculation(ActionEvent event){
         checkDistFromThreshold(new ActionEvent());
         checkDistFromCentreLine(new ActionEvent());
+        checkObstacleHeight(new ActionEvent());
+        checkObstacleWidth(new ActionEvent());
         setRESA(new ActionEvent());
         setStripEnd(new ActionEvent());
         setBlastProtection(new ActionEvent());
@@ -254,7 +286,7 @@ public class MainController implements Initializable {
             if(stripEnd < 0 || stripEnd > 100){throw new NumberFormatException();}
             PhysicalRunway.setStripEnd(stripEnd);
         } catch (NumberFormatException e){
-            new InvalidStripEnd().showError(stripEndTextField);
+            new ErrorView().showError(stripEndTextField, "Invalid input for strip end \nHint: please input a numerical value within this range 0-100", "60");
         }
     }
 
@@ -267,7 +299,7 @@ public class MainController implements Initializable {
             }
             PhysicalRunway.setBlastProtection(blastProtection);
         } catch (NumberFormatException e){
-            new InvalidBlastProtection().showError(blastProtectionField);
+            new ErrorView().showError(blastProtectionField, "Invalid input for blast protection\nHint: please input a numerical value within this range: 300-500 (for safety purpose)", "300");
         }
     }
 
@@ -280,7 +312,7 @@ public class MainController implements Initializable {
             }
             PhysicalRunway.setResa(resa);
         } catch (NumberFormatException e){
-            new InvalidRESA().showError(resaTextField);
+            new ErrorView().showError(resaTextField, "Invalid input for RESA\nHint: please input a numerical value within this range 240-500 (for safety purpose)", "240");
         }
     }
 
@@ -533,17 +565,26 @@ public class MainController implements Initializable {
             MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
             obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             obstacleMenuItem.setOnAction(e -> {
+                obstacleHeightField.setText(""+obstacle.getHeight());
+                obstacleWidthField.setText(""+obstacle.getWidth());
                 performCalculationButton.setDisable(false);
                 distanceThresholdTextField.setDisable(false);
                 lrButtonGroup.setDisable(false);
                 clDistTextField.setDisable(false);
                 obstacleProperty.set(obstacle);
                 obstacleMenu.setText(obstacle.getName());
-                obstacleHeightLabel.setText("Obstacle Height: "+obstacle.getHeight()+" m");
-                obstacleWidthLabel.setText("Obstacle Width: "+obstacle.getWidth()+" m");
+                if(obstacle.getName().equals("Customisable Obstacle")){
+                    obstacleHeightField.setEditable(true);
+                    obstacleWidthField.setEditable(true);
+                } else{
+                    obstacleHeightField.setEditable(false);
+                    obstacleWidthField.setEditable(false);
+                }
                 obstacleProperty.set(obstacle);
                 checkDistFromThreshold(new ActionEvent());
-                checkDistFromThreshold(new ActionEvent());
+                checkDistFromCentreLine(new ActionEvent());
+                checkObstacleWidth(new ActionEvent());
+                checkObstacleHeight(new ActionEvent());
             });
             obstacleMenu.getItems().add(obstacleMenuItem);
         }

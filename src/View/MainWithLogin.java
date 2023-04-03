@@ -15,7 +15,7 @@ public class MainWithLogin extends Application {
         return stage;
     }
 
-    @Override
+    /*@Override
     public void start(Stage stage) throws Exception {
         MainWithLogin.stage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
@@ -23,6 +23,20 @@ public class MainWithLogin extends Application {
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+
+        stage.setTitle("SEG Runway Project");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }*/
+    @Override
+    public void start(Stage stage) throws Exception {
+        MainWithLogin.stage = stage;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginPage.fxml"));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/LoginStyleSheet.css")).toExternalForm());
 
         stage.setTitle("SEG Runway Project");
         stage.setScene(scene);
