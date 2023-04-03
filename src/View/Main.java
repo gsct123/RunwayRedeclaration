@@ -10,6 +10,15 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private static Stage classStage;
     private static boolean status;
+    private static String username;
+
+    public Main(String username) {
+        Main.username = username;
+    }
+
+    public static String getUsername() {
+        return username;
+    }
 
     public static Stage getStage(){
         return classStage;

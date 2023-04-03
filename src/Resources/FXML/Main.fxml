@@ -36,14 +36,34 @@
         </Menu>
       </menus>
     </MenuBar>
-      <Label alignment="CENTER" prefHeight="133.0" prefWidth="1400.0" text="RUNWAY REDECLARATION" textAlignment="CENTER">
-         <font>
-            <Font name="Verdana Bold" size="25.0" />
-         </font>
-         <padding>
-            <Insets bottom="10.0" top="10.0" />
-         </padding>
-      </Label>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="1089.0" text="RUNWAY REDECLARATION" textAlignment="CENTER">
+               <font>
+                  <Font name="Verdana Bold" size="25.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" right="170.0" top="10.0" />
+               </padding>
+            </Label>
+            <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="238.0">
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+               <font>
+                  <Font name="Verdana" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="logoutLabel" alignment="CENTER_RIGHT" onMouseClicked="#handleLogout" prefHeight="67.0" prefWidth="73.0" text="Logout" textFill="#2759cd">
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+               <font>
+                  <Font name="Verdana" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
       <SplitPane dividerPositions="0.19321428571428573, 0.7760714285714285" prefHeight="601.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../CSS/MainStylesheet.css">
          <items>
             <AnchorPane prefHeight="692.0" prefWidth="261.0">

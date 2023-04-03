@@ -86,7 +86,7 @@ public class LoginController implements Initializable {
             if(name.length() > 0 && password.length() > 0 && checkUsername()){
                 if(users.get(username).getPassword().equals(Miscellaneous.toHexString(Miscellaneous.getSHA(password)))) {
                     MainWithLogin.getStage().close();
-                    new Main().start(new Stage());
+                    new Main(username).start(new Stage());
                 } else{
                     new ErrorView().showError(passwordField, "Invalid password", "");
                 }

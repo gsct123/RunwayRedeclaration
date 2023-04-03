@@ -134,6 +134,10 @@ public class MainController implements Initializable {
     private TableColumn<Parameter, String> originalCol2;
     @FXML
     private TableColumn<Parameter, String> revisedCol2;
+    @FXML
+    private Label logoutLabel;
+    @FXML
+    private Label identityLabel;
 
     //property to be used in Visualisation classes
     public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -162,6 +166,21 @@ public class MainController implements Initializable {
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
             addObstacleEvent();
+
+            identityLabel.setText("Logged in as "+Main.getUsername());
+            logoutLabel.setOnMouseExited(mouseEvent -> logoutLabel.setStyle("-fx-text-fill: #2759cd"));
+            logoutLabel.setOnMouseEntered(mouseEvent -> {
+                logoutLabel.setStyle("-fx-text-fill: #779beb");
+                //underline?
+            });
+            logoutLabel.setOnMouseClicked(mouseEvent -> {
+                try {
+                    handleLogout(new ActionEvent());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
 
             if(Main.isReset()){
                 notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
