@@ -153,10 +153,9 @@ public class SimultaneousViewController implements Initializable {
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.disFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
-
-
-
+        MainController.obstacleHeight.addListener((observable, oldValue, newValue) -> {setUpAlsTocs(MainController.getObstacleSelected(), MainController.getPhysRunwaySelected().getLogicalRunways().get(0));});
     }
+
     //function to update labels and line in top view
     public void updateLabel(){
         relocateObstacle();

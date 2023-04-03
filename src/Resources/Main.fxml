@@ -177,6 +177,15 @@
                               </AnchorPane>
                            </content>
                       </Tab>
+                        <Tab fx:id="simultaneousViewTab" style="-fx-font-family: Verdana;" text="Simultaneous View">
+                           <content>
+                              <AnchorPane prefHeight="607.0" prefWidth="774.0">
+                                 <children>
+                                    <AnchorPane layoutX="6.0" prefHeight="627.0" prefWidth="804.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
                     </tabs>
                   </TabPane>
                </children></AnchorPane>
