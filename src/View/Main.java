@@ -21,6 +21,7 @@ public class Main extends Application {
 
     public static void setReset(boolean reset){
         status = reset;
+
     }
 
     @Override
