@@ -1,5 +1,7 @@
 package Model;
 
+import javafx.scene.layout.AnchorPane;
+
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -38,4 +40,57 @@ public class Miscellaneous {
         }
         return hexString.toString();
     }
+
+
+
+    //allow zoom in / out when hodl down ctrl
+    public static void initializeZoom(AnchorPane pane){
+        //constants
+        double zoomSens = 0.005;
+        double zoomInLimit = 0.5;
+        pane.setOnScroll(scrollEvent -> {
+            //conditions
+            boolean zoomReachLimit = pane.getScaleX() >= zoomInLimit && pane.getScaleY() >= zoomInLimit;
+            boolean zoomSmallerThanLimit = pane.getScaleX() < zoomInLimit && pane.getScaleY() < zoomInLimit;
+            //scroll event
+            if (scrollEvent.isShortcutDown()){
+                double zoom = scrollEvent.getDeltaY();
+                if (zoomReachLimit){
+                    pane.setScaleX(pane.getScaleX() - zoom * -zoomSens);
+                    pane.setScaleY(pane.getScaleY() - zoom * -zoomSens);
+                }else if (zoomSmallerThanLimit){
+                    pane.setScaleX(zoomInLimit);
+                    pane.setScaleY(zoomInLimit);
+                }
+                scrollEvent.consume();
+            }
+        });
+    }
+    public static void initializeDrag(AnchorPane pane){
+        pane.setOnMousePressed(mouseEvent->{
+            if (mouseEvent.isShortcutDown()){
+                //mouse position before drag
+                double mouseX = mouseEvent.getX();
+                double mouseY = mouseEvent.getY();
+                pane.setOnMouseDragged(dragEvent -> {
+                    //the amount dragged minus original mouse position
+                    double translationX = dragEvent.getX() - mouseX;
+                    double translationY = dragEvent.getY() - mouseY;
+                    //set translation
+                    pane.setTranslateX(pane.getTranslateX() + translationX);
+                    pane.setTranslateY(pane.getTranslateY() + translationY);
+                    dragEvent.consume();
+                });
+            }
+        });
+        //disable the dragging after ctrl and mouse has been released
+        pane.setOnMouseReleased(releaseEvent -> {
+            pane.setOnMouseDragged(null);
+        });
+    }
+
+
+
+
+
 }

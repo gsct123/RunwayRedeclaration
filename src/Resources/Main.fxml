@@ -24,9 +24,14 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Help">
+            <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="File">
+               <items>
+                  <MenuItem fx:id="aboutProject1" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+               </items>
+            </Menu>
+        <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
           <items>
-            <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About runway project" />
+            <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
           </items>
         </Menu>
       </menus>
@@ -60,12 +65,12 @@
                         <Font name="Verdana" size="16.0" />
                      </font>
                   </MenuButton>
-                  <Label fx:id="obstacleHeightLabel" layoutX="29.0" layoutY="286.0" text="Obstacle height:-">
+                  <Label fx:id="obstacleHeightLabel" layoutX="29.0" layoutY="286.0" text="Obstacle height (m):">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="obstacleWidthLabel" layoutX="29.0" layoutY="315.0" text="Obstacle width:-">
+                  <Label fx:id="obstacleWidthLabel" layoutX="29.0" layoutY="315.0" text="Obstacle width (m):">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
@@ -143,6 +148,16 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
+                  <TextField fx:id="obstacleHeightField" editable="false" layoutX="160.0" layoutY="282.0" onAction="#checkObstacleHeight" prefHeight="23.0" prefWidth="94.0" text="-">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="obstacleWidthField" editable="false" layoutX="160.0" layoutY="313.0" onAction="#checkObstacleWidth" prefHeight="23.0" prefWidth="94.0" text="-">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </TextField>
                </children>
             </AnchorPane>
              <AnchorPane prefHeight="655.0" prefWidth="829.0">
@@ -167,6 +182,15 @@
                               </AnchorPane>
                            </content>
                       </Tab>
+                        <Tab fx:id="simultaneousViewTab" style="-fx-font-family: Verdana;" text="Simultaneous View">
+                           <content>
+                              <AnchorPane prefHeight="607.0" prefWidth="774.0">
+                                 <children>
+                                    <AnchorPane layoutX="6.0" prefHeight="627.0" prefWidth="804.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
                     </tabs>
                   </TabPane>
                </children></AnchorPane>

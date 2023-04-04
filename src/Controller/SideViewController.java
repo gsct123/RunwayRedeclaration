@@ -6,12 +6,35 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
 public class SideViewController {
 
+
+    //physical runway
+    @FXML
+    private AnchorPane sideOnPane;
+    @FXML
+    private Rectangle phyRunway;
+    @FXML
+    private Label designatorL;
+    @FXML
+    private Label designatorR;
+    @FXML
+    private Label designatorL1;
+    @FXML
+    private Label designatorR1;
+    @FXML
+    private Line thresholdL;
+    @FXML
+    private Line thresholdR;
+    @FXML
+    private Line displacedThresholdL;
+    @FXML
+    private Line displacedThresholdR;
     //tora
     @FXML
     private Line toraStart;
@@ -144,22 +167,6 @@ public class SideViewController {
     @FXML
     private Rectangle stopwayR;
 
-    //physical runway
-    @FXML
-    private Rectangle phyRunway;
-    @FXML
-    private Label designatorL;
-    @FXML
-    private Label designatorR;
-    @FXML
-    private Line thresholdL;
-    @FXML
-    private Line thresholdR;
-    @FXML
-    private Line displacedThresholdL;
-    @FXML
-    private Line displacedThresholdR;
-
     //obstacles
     @FXML
     private Polygon tocsSlope;
@@ -190,7 +197,6 @@ public class SideViewController {
     @FXML
     private void initialize() {
         initialiseVisibility();
-
         MainController.physRunwayItem.addListener((observable, oldValue, newValue) -> {
             PhysicalRunway runway = MainController.getPhysRunwaySelected();
             resetValues(runway);
@@ -206,7 +212,10 @@ public class SideViewController {
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
             setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
         });
+        MainController.obstacleHeight.addListener((observable, oldValue, newValue) -> {setUpAlsTocs(MainController.getObstacleSelected(), MainController.getPhysRunwaySelected().getLogicalRunways().get(0));});
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel(new ActionEvent()));
+        Miscellaneous.initializeZoom(sideOnPane);
+        Miscellaneous.initializeDrag(sideOnPane);
     }
 
     @FXML
@@ -666,8 +675,10 @@ public class SideViewController {
         double rDisplacedThresholdX;
 
         //change in designator and displacedThreshold as logical runway changes
-         designatorL.setText(lDesignator);
-         designatorR.setText(rDesignator);
+         designatorL.setText(lDesignator.substring(0, lDesignator.length()-1));
+         designatorR.setText(rDesignator.substring(0, rDesignator.length()-1));
+         designatorL1.setText(lDesignator.substring(lDesignator.length()-1));
+         designatorR1.setText(rDesignator.substring(rDesignator.length()-1));
          lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(lDisplacedThreshold,lLogicalRunway);
          rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(rDisplacedThreshold,rLogicalRunway);
 
@@ -675,18 +686,11 @@ public class SideViewController {
         displacedThresholdR.setLayoutX(rDisplacedThresholdX);
     }
 
-    private void setUpStopwayAndClearway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
+    protected void setUpStopwayAndClearway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
         LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
         LogicalRunway rLogicalRunway = physicalRunway.getLogicalRunways().get(1);
-        //If the left Logical runway is the selected Logical runway
-        if (lLogicalRunway.getDesignator().equals(selectedLogRunway.getDesignator())){
-            //The stop/clearway for left runway will be on the right side, vice versa
-            setStopClearway(lLogicalRunway,"Right");
-            setStopClearway(rLogicalRunway,"Left");
-        }else {
-            setStopClearway(lLogicalRunway,"Left");
-            setStopClearway(rLogicalRunway,"Right");
-        }
+        setStopClearway(lLogicalRunway,"Right");
+        setStopClearway(rLogicalRunway,"Left");
     }
 
     private void setStopClearway(LogicalRunway logicalRunway,String leftOrRightWay){
@@ -771,5 +775,6 @@ public class SideViewController {
     private double getLabelLayout(Line start,Line length,Label label){
         return start.getLayoutX() + (length.getEndX()/2 - label.getWidth()/2);
     }
+
 
 }

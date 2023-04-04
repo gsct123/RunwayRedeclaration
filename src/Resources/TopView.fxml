@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
@@ -69,7 +68,7 @@
             <Line endX="30.0" layoutX="660.0" layoutY="217.0" stroke="WHITE" strokeWidth="2.0" />
             <Line endX="30.0" layoutX="660.0" layoutY="221.0" stroke="WHITE" strokeWidth="2.0" />
             <Line endX="30.0" layoutX="660.0" layoutY="225.0" stroke="WHITE" strokeWidth="2.0" />
-            <Label fx:id="leftDesignator" layoutX="139.0" layoutY="193.0" rotate="90.0" text="___" textFill="WHITE" underline="true">
+            <Label fx:id="leftDesignator" layoutX="139.0" layoutY="193.0" prefWidth="43.0" rotate="90.0" text="___" textFill="WHITE" underline="true">
                <font>
                   <Font name="Verdana Bold" size="20.0" />
                </font>
@@ -185,7 +184,7 @@
             </Label>
             <Line fx:id="ldaOtherLineLength" endX="32.0" layoutX="134.0" layoutY="41.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
             <Line id="ldaStart" fx:id="ldaOtherLineStart" endY="25.0" layoutX="134.0" layoutY="27.0" nodeOrientation="LEFT_TO_RIGHT" visible="false" />
-            <Line id="thresholdL" fx:id="thresholdL" endX="-7.62939453125E-6" endY="89.99996948242188" fill="WHITE" layoutX="100.0" layoutY="160.0" startX="-1.52587890625E-5" startY="0.4836578369140625" stroke="WHITE" strokeWidth="3.0" />
+            <Line id="thresholdL" fx:id="thresholdL" endX="-7.62939453125E-6" endY="92.0" fill="WHITE" layoutX="100.0" layoutY="160.0" startX="-1.52587890625E-5" stroke="WHITE" strokeWidth="3.0" />
             <Line id="thresholdR" fx:id="thresholdR" endY="91.0" fill="#f2f2f200" layoutX="700.0" layoutY="160.0" stroke="#f0f0f0" strokeWidth="3.0" />
             <Rectangle fx:id="obstacleBlock" arcHeight="5.0" fill="#f53e3e" height="32.0" layoutX="44.0" layoutY="189.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="32.0" />
             <Line endX="413.0" endY="-69.5" layoutX="372.0" layoutY="413.0" startX="393.271484375" startY="-69.5" stroke="#0f0f0f" />
