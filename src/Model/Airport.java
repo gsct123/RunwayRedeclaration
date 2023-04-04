@@ -4,9 +4,11 @@ import javafx.collections.ObservableList;
 
 public class Airport {
     private String name;
+    private int referenceID;
     private ObservableList<PhysicalRunway> physicalRunways;
 
-    public Airport(String name, ObservableList<PhysicalRunway> physicalRunways) {
+    public Airport(int referenceID, String name, ObservableList<PhysicalRunway> physicalRunways) {
+        this.referenceID = referenceID;
         this.name = name;
         this.physicalRunways = physicalRunways;
     }

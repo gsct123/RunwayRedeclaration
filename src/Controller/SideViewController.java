@@ -214,8 +214,8 @@ public class SideViewController {
         });
         MainController.obstacleHeight.addListener((observable, oldValue, newValue) -> {setUpAlsTocs(MainController.getObstacleSelected(), MainController.getPhysRunwaySelected().getLogicalRunways().get(0));});
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel(new ActionEvent()));
-        Miscellaneous.initializeZoom(sideOnPane);
-        Miscellaneous.initializeDrag(sideOnPane);
+        Utility.initializeZoom(sideOnPane);
+        Utility.initializeDrag(sideOnPane);
     }
 
     @FXML
@@ -635,7 +635,7 @@ public class SideViewController {
 
     protected void setUpScale(LogicalRunway logRunway){
         double tora = logRunway.getTora();
-        int scaleRange = Miscellaneous.getScaleRange(tora);
+        int scaleRange = Utility.getScaleRange(tora);
         //setting up scale proportion
         scaleLength.setLayoutX(scaleLength.getLayoutX());
         scaleLength.setWidth(scaleRange*toraLength.getEndX()/tora);

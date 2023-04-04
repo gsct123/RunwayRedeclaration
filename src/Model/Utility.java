@@ -1,13 +1,25 @@
 package Model;
 
+import View.Main;
+import View.MainWithLogin;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Miscellaneous {
+public class Utility {
+
+    @FXML
+    public static void handleLogout(ActionEvent event) throws Exception {
+        Main.getStage().close();
+        new MainWithLogin().start(new Stage());
+    }
+
     public static int getScaleRange(double input){
         if(input <= 500){
             return 90;

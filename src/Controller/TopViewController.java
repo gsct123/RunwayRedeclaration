@@ -225,8 +225,8 @@ public class TopViewController implements Initializable {
         MainController.disFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
 
-        Miscellaneous.initializeZoom(topDownRunwayPane);
-        Miscellaneous.initializeDrag(topDownRunwayPane);
+        Utility.initializeZoom(topDownRunwayPane);
+        Utility.initializeDrag(topDownRunwayPane);
 
 
     }
@@ -739,7 +739,7 @@ public class TopViewController implements Initializable {
 
     protected void setUpScale(LogicalRunway logRunway){
         double tora = logRunway.getTora();
-        int scaleRange = Miscellaneous.getScaleRange(tora);
+        int scaleRange = Utility.getScaleRange(tora);
         //setting up scale proportion
         scaleLength.setLayoutX(scaleLength.getLayoutX());
         scaleLength.setWidth(scaleRange*toraLength.getEndX()/tora);

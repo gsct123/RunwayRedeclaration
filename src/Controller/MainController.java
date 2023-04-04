@@ -3,7 +3,6 @@ package Controller;
 import Model.*;
 import View.ErrorView;
 import View.Main;
-import View.MainWithLogin;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
@@ -175,11 +174,12 @@ public class MainController implements Initializable {
             });
             logoutLabel.setOnMouseClicked(mouseEvent -> {
                 try {
-                    handleLogout(new ActionEvent());
+                    Utility.handleLogout(new ActionEvent());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
+            
 
 
             if(Main.isReset()){
@@ -219,12 +219,6 @@ public class MainController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
-    }
-
-    @FXML
-    public void handleLogout(ActionEvent event) throws Exception {
-        Main.getStage().close();
-        new MainWithLogin().start(new Stage());
     }
 
     @FXML
@@ -407,6 +401,7 @@ public class MainController implements Initializable {
 
             if (airportNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element airportElement = (Element) airportNode;
+                int airportID = Integer.parseInt(airportElement.getElementsByTagName("airportID").item(0).getTextContent());
                 // Get the airport name
                 String airportName = airportElement.getElementsByTagName("name").item(0).getTextContent();
                 // Create a list to hold the physical runways
@@ -447,7 +442,7 @@ public class MainController implements Initializable {
                     }
                 }
                 // Create a new Airport object with the physical runways and add it to the list of airports
-                Airport airport = new Airport(airportName, physicalRunways);
+                Airport airport = new Airport(airportID, airportName, physicalRunways);
                 getAirports().add(airport);
             }
         }

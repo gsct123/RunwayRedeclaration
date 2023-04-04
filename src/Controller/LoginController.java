@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Miscellaneous;
+import Model.Utility;
 import Model.User;
 import View.ErrorView;
 import View.Main;
@@ -84,7 +84,7 @@ public class LoginController implements Initializable {
             String password = passwordField.getText().trim();
             String name = usernameField.getText().trim();
             if(name.length() > 0 && password.length() > 0 && checkUsername()){
-                if(users.get(username).getPassword().equals(Miscellaneous.toHexString(Miscellaneous.getSHA(password)))) {
+                if(users.get(username).getPassword().equals(Utility.toHexString(Utility.getSHA(password)))) {
                     MainWithLogin.getStage().close();
                     new Main(username).start(new Stage());
                 } else{
@@ -123,9 +123,10 @@ public class LoginController implements Initializable {
                 //get username
                 String username = userElement.getElementsByTagName("username").item(0).getTextContent();
                 String password = userElement.getElementsByTagName("password").item(0).getTextContent();
+                String airport = userElement.getElementsByTagName("airport").item(0).getTextContent();
                 int role = Integer.parseInt(userElement.getElementsByTagName("role").item(0).getTextContent());
 
-                User user = new User(username, password, role);
+                User user = new User(username, password, airport, role);
                 users.put(username, user);
             }
         }

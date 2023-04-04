@@ -32,7 +32,7 @@
         <ImageView fitHeight="124.0" fitWidth="149.0" layoutX="99.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true" />
         <AnchorPane fx:id="userPane" layoutX="16.0" layoutY="246.0" prefHeight="48.0" prefWidth="308.0" styleClass="anchorPanesStyle" stylesheets="@../CSS/LoginStyleSheet.css">
          <children>
-            <TextField fx:id="usernameField" layoutX="46.0" layoutY="10.0" prefHeight="29.0" prefWidth="247.0" promptText="username" styleClass="textPrompt" stylesheets="@../CSS/LoginStyleSheet.css">
+            <TextField fx:id="usernameField" layoutX="46.0" layoutY="10.0" prefHeight="29.0" prefWidth="247.0" promptText="Enter your username" styleClass="textPrompt" stylesheets="@../CSS/LoginStyleSheet.css">
                <font>
                   <Font size="15.0" />
                </font>
@@ -46,7 +46,7 @@
         </AnchorPane>
         <AnchorPane fx:id="passwordPane" layoutX="16.0" layoutY="320.0" prefHeight="48.0" prefWidth="308.0" styleClass="anchorPanesStyle" stylesheets="@../CSS/LoginStyleSheet.css">
          <children>
-            <PasswordField fx:id="passwordField" layoutX="14.0" layoutY="12.0" prefHeight="29.0" prefWidth="278.0" promptText="password" styleClass="textPrompt" stylesheets="@../CSS/LoginStyleSheet.css">
+            <PasswordField fx:id="passwordField" layoutX="14.0" layoutY="12.0" prefHeight="29.0" prefWidth="278.0" promptText="Enter your password" styleClass="textPrompt" stylesheets="@../CSS/LoginStyleSheet.css">
                <font>
                   <Font size="15.0" />
                </font>

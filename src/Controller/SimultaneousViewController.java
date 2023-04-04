@@ -662,7 +662,7 @@ public class SimultaneousViewController implements Initializable {
 
     protected void setUpScale(LogicalRunway logRunway){
         double tora = logRunway.getTora();
-        int scaleRange = Miscellaneous.getScaleRange(tora);
+        int scaleRange = Utility.getScaleRange(tora);
         //setting up scale proportion
         scaleLength.setLayoutX(scaleLength.getLayoutX());
         scaleLength.setWidth(scaleRange*toraLength.getEndX()/tora);
