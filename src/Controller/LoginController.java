@@ -2,7 +2,7 @@ package Controller;
 
 import Model.Utility;
 import Model.User;
-import View.ErrorView;
+import View.ErrorPopUp.Error;
 import View.Main;
 import View.MainWithLogin;
 import javafx.fxml.FXML;
@@ -63,14 +63,14 @@ public class LoginController implements Initializable {
         try{
             String name = usernameField.getText().trim();
             if(name.length() == 0){
-                new ErrorView().showError(usernameField, "Please enter a valid username", "");
+                new Error().showError(usernameField, "Please enter a valid username", "");
                 return false;
             } else{
                 if(users.containsKey(name)){
                     this.username = name;
                     return true;
                 } else{
-                    new ErrorView().showError(usernameField, "Username does not exist, please check again", name);
+                    new Error().showError(usernameField, "Username does not exist, please check again", name);
                     passwordField.clear();
                     return false;
                 }
@@ -88,14 +88,14 @@ public class LoginController implements Initializable {
                     MainWithLogin.getStage().close();
                     new Main(username).start(new Stage());
                 } else{
-                    new ErrorView().showError(passwordField, "Invalid password", "");
+                    new Error().showError(passwordField, "Invalid password", "");
                 }
             } else if (name.length() <= 0){
-                new ErrorView().showError(usernameField, "Please enter a valid username", "");
+                new Error().showError(usernameField, "Please enter a valid username", "");
             } else if (password.length() <= 0){
-                new ErrorView().showError(passwordField, "Please enter a valid password", "");
+                new Error().showError(passwordField, "Please enter a valid password", "");
             } else{
-                new ErrorView().showError(usernameField, "Username does not exist, please check again", name);
+                new Error().showError(usernameField, "Username does not exist, please check again", name);
             }
         } catch (Exception ignored){}
     }

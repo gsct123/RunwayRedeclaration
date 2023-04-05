@@ -55,7 +55,7 @@
             </Label>
             <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="263.0">
                <padding>
-                  <Insets right="20.0" />
+                  <Insets right="5.0" />
                </padding>
                <font>
                   <Font name="Verdana" size="13.0" />

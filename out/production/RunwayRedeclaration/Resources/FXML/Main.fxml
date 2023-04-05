@@ -26,8 +26,7 @@
       <menus>
             <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="File">
                <items>
-                  <MenuItem fx:id="manageAirport" mnemonicParsing="false" onAction="#goAirportManager" text="Manage Airports" />
-                  <MenuItem fx:id="aboutProject11" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+                  <MenuItem fx:id="aboutProject1" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
                </items>
             </Menu>
         <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
@@ -55,7 +54,14 @@
                   <Font name="Verdana" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="logoutButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefHeight="36.0" prefWidth="102.0" text="LOGOUT" />
+            <Label fx:id="logoutLabel" alignment="CENTER_RIGHT" onMouseClicked="#handleLogout" prefHeight="67.0" prefWidth="73.0" text="Logout" textFill="#2759cd">
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+               <font>
+                  <Font name="Verdana" size="13.0" />
+               </font>
+            </Label>
          </children>
       </HBox>
       <SplitPane dividerPositions="0.19321428571428573, 0.7760714285714285" prefHeight="601.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../CSS/MainStylesheet.css">
@@ -388,6 +394,5 @@
             <Font name="Verdana" size="13.0" />
          </font>
       </Label>
-      <HBox prefHeight="100.0" prefWidth="161.0" />
   </children>
 </VBox>

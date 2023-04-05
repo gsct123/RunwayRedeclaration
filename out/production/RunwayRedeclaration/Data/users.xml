@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <users>
     <user>
-        <userId>0</userId>
         <username>admin</username>
         <password>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</password>
-        <airportId>0</airportId>
+        <airportID>0</airportID>
         <role>1</role>
     </user>
     <user>
-        <userId>1</userId>
         <username>manager</username>
         <password>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</password>
-        <airportId>1</airportId>
+        <airportID>1</airportID>
         <role>2</role>
     </user>
     <user>
-        <userId>2</userId>
         <username>atc</username>
         <password>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</password>
-        <airportId>1</airportId>
+        <airportID>1</airportID>
         <role>3</role>
     </user>
 </users>
