@@ -151,8 +151,8 @@ public class MainController implements Initializable {
 
 
     //list of airports and obstacles from files
-    ObservableList<Airport> airports = FXCollections.observableArrayList();
-    ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
+    public static ObservableList<Airport> airports = FXCollections.observableArrayList();
+    public static ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
