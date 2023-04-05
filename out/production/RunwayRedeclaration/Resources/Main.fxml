@@ -65,20 +65,12 @@
                         <Font name="Verdana" size="16.0" />
                      </font>
                   </MenuButton>
-<<<<<<< HEAD
                   <Label fx:id="obstacleHeightLabel" layoutX="29.0" layoutY="286.0" text="Obstacle height (m):">
-=======
-                  <Label fx:id="obstacleHeightLabel" layoutX="29.0" layoutY="286.0" text="Obstacle height:-">
->>>>>>> origin/main
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                   </Label>
-<<<<<<< HEAD
                   <Label fx:id="obstacleWidthLabel" layoutX="29.0" layoutY="315.0" text="Obstacle width (m):">
-=======
-                  <Label fx:id="obstacleWidthLabel" layoutX="29.0" layoutY="315.0" text="Obstacle width:-">
->>>>>>> origin/main
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
@@ -156,7 +148,6 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Label>
-<<<<<<< HEAD
                   <TextField fx:id="obstacleHeightField" editable="false" layoutX="160.0" layoutY="282.0" onAction="#checkObstacleHeight" prefHeight="23.0" prefWidth="94.0" text="-">
                      <font>
                         <Font name="Verdana" size="12.0" />
@@ -167,8 +158,6 @@
                         <Font name="Verdana" size="12.0" />
                      </font>
                   </TextField>
-=======
->>>>>>> origin/main
                </children>
             </AnchorPane>
              <AnchorPane prefHeight="655.0" prefWidth="829.0">
@@ -193,7 +182,6 @@
                               </AnchorPane>
                            </content>
                       </Tab>
-<<<<<<< HEAD
                         <Tab fx:id="simultaneousViewTab" style="-fx-font-family: Verdana;" text="Simultaneous View">
                            <content>
                               <AnchorPane prefHeight="607.0" prefWidth="774.0">
@@ -203,8 +191,6 @@
                               </AnchorPane>
                            </content>
                         </Tab>
-=======
->>>>>>> origin/main
                     </tabs>
                   </TabPane>
                </children></AnchorPane>
