@@ -2,6 +2,7 @@ package Model;
 
 import View.Main;
 import View.MainWithLogin;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -13,6 +14,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Utility {
+
+    public static void changeScene(Stage previous, Application newStage) throws Exception {
+        previous.close();
+        newStage.start(new Stage());
+    }
 
     @FXML
     public static void handleLogout(ActionEvent event) throws Exception {

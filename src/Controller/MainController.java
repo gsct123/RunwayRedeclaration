@@ -1,7 +1,8 @@
 package Controller;
 
 import Model.*;
-import View.ErrorPopUp.Error;
+import View.AirportManager;
+import View.Error;
 import View.Main;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.ResetConfirmation;
@@ -53,6 +54,10 @@ public class MainController implements Initializable {
     private MenuButton physicalRunwayMenu;
     @FXML
     private MenuButton obstacleMenu;
+    @FXML
+    private MenuItem logoutItem;
+    @FXML
+    private MenuItem airportManager;
     @FXML
     private Label obstacleHeightLabel;
     @FXML
@@ -166,11 +171,18 @@ public class MainController implements Initializable {
             loadObstacles("src/Data/obstacles.xml");
             addObstacleEvent();
 
-            identityLabel.setText("Logged in as "+Main.getUsername());
+            identityLabel.setText("Logged in as "+ Main.getUsername());
             logoutLabel.setOnMouseExited(mouseEvent -> logoutLabel.setStyle("-fx-text-fill: #2759cd"));
             logoutLabel.setOnMouseEntered(mouseEvent -> {
                 logoutLabel.setStyle("-fx-text-fill: #779beb");
                 //underline?
+            });
+            logoutItem.setOnAction(actionEvent -> {
+                try {
+                    Utility.handleLogout(new ActionEvent());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             });
             logoutLabel.setOnMouseClicked(mouseEvent -> {
                 try {
@@ -179,7 +191,15 @@ public class MainController implements Initializable {
                     e.printStackTrace();
                 }
             });
-            
+
+            airportManager.setOnAction(actionEvent -> {
+                try {
+                    Utility.changeScene(Main.getStage(), new AirportManager());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
 
 
             if(Main.isReset()){
@@ -442,11 +462,10 @@ public class MainController implements Initializable {
                     }
                 }
 
-                Element manager = (Element) airportElement.getElementsByTagName("user");
+                String manager = airportElement.getElementsByTagName("user").item(0).getTextContent();
 
-                String username = manager.getAttribute("name");
 
-                Airport airport = new Airport(reference, airportName, physicalRunways, username);
+                Airport airport = new Airport(reference, airportName, physicalRunways, manager);
 
                 getAirports().add(airport);
             }

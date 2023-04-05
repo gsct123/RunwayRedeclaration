@@ -2,13 +2,17 @@ package Controller;
 
 import Model.User;
 import Model.Utility;
-import View.ErrorPopUp.Error;
-import View.Main;
+import View.Error;
+import View.MainWithLogin;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -43,12 +47,20 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             loadUsers("src/Data/users.xml");
-//            DropShadow shadow = new DropShadow(13, Color.valueOf("#4cc9f0"));
-//            userPane.setEffect(shadow);
-//            passwordPane.setEffect(shadow);
-//            usernameField.setOnAction(actionEvent -> checkUsername());
-//            passwordField.setOnAction(actionEvent -> checkPassword());
-//            loginButton.setOnMouseClicked(actionEvent -> checkPassword());
+            DropShadow shadow = new DropShadow(13, Color.valueOf("#4cc9f0"));
+            userPane.setEffect(shadow);
+            passwordPane.setEffect(shadow);
+            usernameField.setOnKeyPressed(keyEvent -> {
+                if(new KeyCodeCombination(KeyCode.ENTER).match(keyEvent)){
+                    checkUsername();
+                }
+            });
+            passwordField.setOnKeyPressed(keyEvent -> {
+                if (new KeyCodeCombination(KeyCode.ENTER).match(keyEvent)) {
+                    checkPassword();
+                }
+            });
+            loginButton.setOnMouseClicked(actionEvent -> checkPassword());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,6 +77,12 @@ public class LoginController implements Initializable {
             } else{
                 if(users.containsKey(name)){
                     this.username = name;
+                    String password = passwordField.getText().trim();
+                    if(password.length() > 0 && users.get(username).getPassword().equals(Utility.toHexString(Utility.getSHA(password)))){
+                        MainWithLogin.getStage().close();
+                        new View.Main(username).start(new Stage());
+                    }
+//
                     return true;
                 } else{
                     new Error().showError(usernameField, "Username does not exist, please check again", name);
@@ -76,14 +94,14 @@ public class LoginController implements Initializable {
         } catch (Exception ignored){return false;}
     }
 
-    public void checkPassword(){
+        public void checkPassword(){
         try{
             String password = passwordField.getText().trim();
             String name = usernameField.getText().trim();
             if(name.length() > 0 && password.length() > 0 && checkUsername()){
                 if(users.get(username).getPassword().equals(Utility.toHexString(Utility.getSHA(password)))) {
 //                    MainWithLogin.getStage().close();
-                    new Main(username).start(new Stage());
+                    new View.Main(username).start(new Stage());
                 } else{
                     new Error().showError(passwordField, "Invalid password", "");
                 }

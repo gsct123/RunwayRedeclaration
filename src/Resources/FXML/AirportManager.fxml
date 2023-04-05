@@ -76,10 +76,11 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="1400.0">
                <children>
-                  <TableView fx:id="airportTable" layoutX="326.0" layoutY="-2.0" prefHeight="687.0" prefWidth="741.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="326.0" AnchorPane.rightAnchor="331.0" AnchorPane.topAnchor="-2.0">
+                  <TableView fx:id="airportTable" layoutX="326.0" layoutY="-2.0" prefHeight="687.0" prefWidth="741.0" style="-fx-font-family: Verdana;" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="326.0" AnchorPane.rightAnchor="331.0" AnchorPane.topAnchor="-2.0">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="C1" />
-                        <TableColumn prefWidth="75.0" text="C2" />
+                        <TableColumn fx:id="IDCol" prefWidth="75.0" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="ID" />
+                        <TableColumn fx:id="nameCol" prefWidth="335.9877624511719" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="NAME" />
+                        <TableColumn fx:id="managerCol" minWidth="0.0" prefWidth="329.0122375488281" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="MANAGER" />
                      </columns>
                   </TableView>
                   <Label alignment="CENTER" layoutX="48.0" layoutY="138.0" prefHeight="42.0" prefWidth="220.0" text="ADD NEW AIRPORT">

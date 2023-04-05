@@ -48,32 +48,41 @@ public class AirportManagerController implements Initializable {
     private Button exportAirportButton;
     @FXML
     private TextField searchField;
+    @FXML
+    private TableColumn<Airport, String> IDCol;
+    @FXML
+    private TableColumn<Airport, String> nameCol;
+    @FXML
+    private TableColumn<Airport, String> managerCol;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        identityLabel.setText("Logged in as "+Main.getUsername());
+        identityLabel.setText("Logged in as "+ Main.getUsername());
 
-        airportTable = new TableView<>();
         searchField.textProperty().addListener((observable, oldValue, newValue) ->
                 airportTable.setItems(filterList(MainController.airports, newValue))
         );
-        TableColumn<Airport, String> IDCol = new TableColumn<>("ID");
-        TableColumn<Airport, String> airportNameCol = new TableColumn<>("NAME");
-        TableColumn<Airport, String> managerCol = new TableColumn<>("MANAGER");
+
         airportTable.setEditable(false);
-        airportTable.getColumns().addAll(IDCol, airportNameCol,managerCol);
 
         IDCol.setCellValueFactory(
                 new PropertyValueFactory<>("ID")
         );
-        airportNameCol.setCellValueFactory(
+        nameCol.setCellValueFactory(
                 new PropertyValueFactory<>("name")
         );
         managerCol.setCellValueFactory(
                 new PropertyValueFactory<>("manager")
         );
+        editColumn(IDCol);
+        editColumn(nameCol);
+        editColumn(managerCol);
+
+
+        airportTable.setItems(FXCollections.observableList(MainController.airports));
     }
+
 
 
     @FXML
@@ -100,5 +109,23 @@ public class AirportManagerController implements Initializable {
 
     private boolean searchFindAirport(Airport airport, String searchText){
         return (airport.getName().toLowerCase().contains(searchText.toLowerCase()));
+    }
+
+    private void editColumn(TableColumn<Airport, String> tableColumn){
+
+        tableColumn.setResizable(false);
+        tableColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    this.setStyle("-fx-background-color: rgb(244,244,244); -fx-alignment: CENTER;-fx-font-family: Verdana; -fx-padding: 7");
+                    // Set the text of the cell to the item
+                    setText(item);
+                } else {
+                    setText(null);
+                }
+            }
+        });
     }
 }

@@ -1,4 +1,4 @@
-package View.ErrorPopUp;
+package View;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

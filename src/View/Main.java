@@ -13,7 +13,7 @@ public class Main extends Application {
     private static String username;
 
     public Main(){}
-    
+
     public Main(String username) {
         Main.username = username;
     }

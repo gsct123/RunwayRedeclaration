@@ -1,5 +1,6 @@
 package View;
 
+import Controller.AirportManagerController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,6 +31,7 @@ public class AirportManager extends Application {
         classStage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/AirportManager.fxml"));
         Parent root = loader.load();
+        loader.setController(new AirportManagerController());
 
         Scene scene = new Scene(root);
 

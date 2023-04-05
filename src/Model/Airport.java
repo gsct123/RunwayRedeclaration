@@ -39,4 +39,12 @@ public class Airport {
     public void setPhysicalRunways(ObservableList<PhysicalRunway> physicalRunways) {
         this.physicalRunways = physicalRunways;
     }
+
+    public String getManager() {
+        return manager;
+    }
+
+    public String getID() {
+        return ID;
+    }
 }
