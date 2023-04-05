@@ -17,6 +17,10 @@ import java.util.ResourceBundle;
 public class TopViewController implements Initializable {
 
     @FXML
+    private Label leftDirection;
+    @FXML
+    private Label rightDirection;
+    @FXML
     private AnchorPane topDownRunwayPane;
     @FXML
     private Label leftDesignator;
@@ -319,28 +323,29 @@ public class TopViewController implements Initializable {
         //Set Up Designator
         String lDesignator = lLogicalRunway.getDesignator();
         String rDesignator = rLogicalRunway.getDesignator();
+
+        //separate num and alphabet
+        String lDegree = lDesignator.replaceAll("[a-zA-Z]","");
+        String rDegree = rDesignator.replaceAll("[a-zA-Z]","");
+        String lDirection = lDesignator.replaceAll("[0-9]","");
+        String rDirection = rDesignator.replaceAll("[0-9]","");
+
         //Set Up DisplacedThreshold
         double lDisplacedThreshold = lLogicalRunway.getDisplacedThreshold();
         double rDisplacedThreshold = rLogicalRunway.getDisplacedThreshold();
         double lDisplacedThresholdX;
         double rDisplacedThresholdX;
 
-        //change in designator and displacedThreshold as logical runway changes
-        if (selectedLogRunway.getDesignator().equals(lDesignator)){
-            leftDesignator.setText(lDesignator);
-            rightDesignator.setText(rDesignator);
-            lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(lDisplacedThreshold,lLogicalRunway);
-            rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(rDisplacedThreshold,rLogicalRunway);
-        }else {
-            leftDesignator.setText(rDesignator);
-            rightDesignator.setText(lDesignator);
-            lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(rDisplacedThreshold,lLogicalRunway);
-            rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(lDisplacedThreshold,rLogicalRunway);
-        }
+        leftDesignator.setText(lDegree);
+        rightDesignator.setText(rDegree);
+        leftDirection.setText(lDirection);
+        rightDirection.setText(rDirection);
+        lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(lDisplacedThreshold,lLogicalRunway);
+        rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(rDisplacedThreshold,rLogicalRunway);
 
         displacedThresholdL.setLayoutX(lDisplacedThresholdX);
         displacedThresholdR.setLayoutX(rDisplacedThresholdX);
-        //rotateRunway();
+        rotateRunway();
     }
 
     //function to set up lines

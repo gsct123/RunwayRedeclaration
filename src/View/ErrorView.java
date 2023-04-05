@@ -1,4 +1,4 @@
-package View;
+package View.ErrorPopUp;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -7,8 +7,8 @@ import javafx.scene.control.TextField;
 
 import java.util.Optional;
 
-public class ErrorView {
-    public ErrorView() {}
+public class Error {
+    public Error() {}
 
     public void showError(TextField field, String message, String resetValue){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -20,14 +20,12 @@ public class ErrorView {
 
         if(result.isPresent() && result.get() == ButtonType.OK){
             field.setText(resetValue);
-            field.positionCaret(resetValue.length());
             errorAlert.close();
         }
 
         Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
         okButton.setOnAction(event1 -> {
             field.setText(resetValue);
-            field.positionCaret(resetValue.length());
             errorAlert.close();
         });
     }
