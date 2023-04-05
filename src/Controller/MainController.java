@@ -401,7 +401,7 @@ public class MainController implements Initializable {
 
             if (airportNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element airportElement = (Element) airportNode;
-                int airportID = Integer.parseInt(airportElement.getElementsByTagName("airportID").item(0).getTextContent());
+                String reference = airportElement.getElementsByTagName("ID").item(0).getTextContent();
                 // Get the airport name
                 String airportName = airportElement.getElementsByTagName("name").item(0).getTextContent();
                 // Create a list to hold the physical runways
@@ -441,8 +441,13 @@ public class MainController implements Initializable {
                         physicalRunways.add(physicalRunway);
                     }
                 }
-                // Create a new Airport object with the physical runways and add it to the list of airports
-                Airport airport = new Airport(airportID, airportName, physicalRunways);
+
+                Element manager = (Element) airportElement.getElementsByTagName("user");
+
+                String username = manager.getAttribute("name");
+
+                Airport airport = new Airport(reference, airportName, physicalRunways, username);
+
                 getAirports().add(airport);
             }
         }

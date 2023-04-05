@@ -1,17 +1,14 @@
 package Controller;
 
-import Model.Utility;
 import Model.User;
+import Model.Utility;
 import View.ErrorPopUp.Error;
 import View.Main;
-import View.MainWithLogin;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -46,12 +43,12 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             loadUsers("src/Data/users.xml");
-            DropShadow shadow = new DropShadow(13, Color.valueOf("#4cc9f0"));
-            userPane.setEffect(shadow);
-            passwordPane.setEffect(shadow);
-            usernameField.setOnAction(actionEvent -> checkUsername());
-            passwordField.setOnAction(actionEvent -> checkPassword());
-            loginButton.setOnMouseClicked(actionEvent -> checkPassword());
+//            DropShadow shadow = new DropShadow(13, Color.valueOf("#4cc9f0"));
+//            userPane.setEffect(shadow);
+//            passwordPane.setEffect(shadow);
+//            usernameField.setOnAction(actionEvent -> checkUsername());
+//            passwordField.setOnAction(actionEvent -> checkPassword());
+//            loginButton.setOnMouseClicked(actionEvent -> checkPassword());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -85,7 +82,7 @@ public class LoginController implements Initializable {
             String name = usernameField.getText().trim();
             if(name.length() > 0 && password.length() > 0 && checkUsername()){
                 if(users.get(username).getPassword().equals(Utility.toHexString(Utility.getSHA(password)))) {
-                    MainWithLogin.getStage().close();
+//                    MainWithLogin.getStage().close();
                     new Main(username).start(new Stage());
                 } else{
                     new Error().showError(passwordField, "Invalid password", "");
@@ -123,7 +120,7 @@ public class LoginController implements Initializable {
                 //get username
                 String username = userElement.getElementsByTagName("username").item(0).getTextContent();
                 String password = userElement.getElementsByTagName("password").item(0).getTextContent();
-                String airport = userElement.getElementsByTagName("airport").item(0).getTextContent();
+                String airport = userElement.getElementsByTagName("airportID").item(0).getTextContent();
                 int role = Integer.parseInt(userElement.getElementsByTagName("role").item(0).getTextContent());
 
                 User user = new User(username, password, airport, role);

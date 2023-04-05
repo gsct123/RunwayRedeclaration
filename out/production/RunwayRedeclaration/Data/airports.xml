@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <airports>
  <airport>
-  <referenceID>1</referenceID>
+  <ID>LHR</ID>
   <name>Heathrow Airport</name>
   <physicalRunways>
    <physicalRunway name="09L/27R">
@@ -17,6 +17,7 @@
     <logicalRunway designator="24" tora="2734.0" toda="2900.0" asda="2800.0" lda="2500.0" />
    </physicalRunway>
   </physicalRunways>
+  <user>manager</user>
  </airport>
 </airports>
 

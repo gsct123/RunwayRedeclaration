@@ -11,7 +11,7 @@
       <AnchorPane prefHeight="782.0" prefWidth="1400.0">
          <children>
             <TextField fx:id="usernameField" layoutX="850.0" layoutY="302.0" onAction="#checkUsername" promptText="Enter your username" />
-            <Button fx:id="signInButton" layoutX="904.0" layoutY="548.0" mnemonicParsing="false" text="Sign In" onAction="signIn"/>
+            <Button fx:id="signInButton" layoutX="904.0" layoutY="548.0" mnemonicParsing="false" text="Sign In" onAction="#checkPassword"/>
             <PasswordField fx:id="passwordField" layoutX="878.0" layoutY="479.0" onAction="#checkPassword" promptText="Enter your password" />
          </children>
       </AnchorPane>

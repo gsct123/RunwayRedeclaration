@@ -12,6 +12,8 @@ public class Main extends Application {
     private static boolean status;
     private static String username;
 
+    public Main(){}
+    
     public Main(String username) {
         Main.username = username;
     }
@@ -35,7 +37,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        classStage = stage;
+        Main.classStage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Main.fxml"));
         Parent root = loader.load();
 

@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -57,30 +58,21 @@ public class AirportManagerController implements Initializable {
         searchField.textProperty().addListener((observable, oldValue, newValue) ->
                 airportTable.setItems(filterList(MainController.airports, newValue))
         );
-//        TableColumn<User, String> nameCol = new TableColumn<>("NAME");
-//        TableColumn<User, String> usernameCol = new TableColumn<>("USERNAME");
-//        TableColumn<User, String> emailCol = new TableColumn<>("EMAIL");
-//        TableColumn<User, String> typeCol = new TableColumn<>("TYPE");
-//        TableColumn<User, Date> hiredDateCol = new TableColumn<>("HIRED DATE");
-//        airportTable.setEditable(true);
-//        airportTable.getColumns().addAll(nameCol, usernameCol,emailCol,typeCol, hiredDateCol);
-//
-//        nameCol.setCellValueFactory(
-//                new PropertyValueFactory<>("name")
-//        );
-//        nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-//        usernameCol.setCellValueFactory(
-//                new PropertyValueFactory<>("username")
-//        );
-//        emailCol.setCellValueFactory(
-//                new PropertyValueFactory<>("email")
-//        );
-//        typeCol.setCellValueFactory(
-//                new PropertyValueFactory<>("type")
-//        );
-//
-//        hiredDateCol.setCellValueFactory(
-//                new PropertyValueFactory<>("hiredDate"));
+        TableColumn<Airport, String> IDCol = new TableColumn<>("ID");
+        TableColumn<Airport, String> airportNameCol = new TableColumn<>("NAME");
+        TableColumn<Airport, String> managerCol = new TableColumn<>("MANAGER");
+        airportTable.setEditable(false);
+        airportTable.getColumns().addAll(IDCol, airportNameCol,managerCol);
+
+        IDCol.setCellValueFactory(
+                new PropertyValueFactory<>("ID")
+        );
+        airportNameCol.setCellValueFactory(
+                new PropertyValueFactory<>("name")
+        );
+        managerCol.setCellValueFactory(
+                new PropertyValueFactory<>("manager")
+        );
     }
 
 
@@ -109,6 +101,4 @@ public class AirportManagerController implements Initializable {
     private boolean searchFindAirport(Airport airport, String searchText){
         return (airport.getName().toLowerCase().contains(searchText.toLowerCase()));
     }
-
-
 }
