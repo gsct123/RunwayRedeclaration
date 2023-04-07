@@ -10,9 +10,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
+<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
    <children>
-      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#b6c6e1" height="627.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
+      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#d9e8ff" height="627.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
       <AnchorPane fx:id="topDownRunwayPane" layoutY="139.0" prefHeight="400.0" prefWidth="600.0">
          <children>
             <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#a4a4a4" height="200.0" layoutY="105.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />

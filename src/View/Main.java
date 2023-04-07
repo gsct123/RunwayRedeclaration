@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 
 public class Main extends Application {
     private static Stage classStage;
@@ -17,6 +19,7 @@ public class Main extends Application {
     public Main(String username) {
         Main.username = username;
     }
+
 
     public static String getUsername() {
         return username;
@@ -39,9 +42,11 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Main.classStage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Main.fxml"));
+
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
 
         stage.setTitle("SEG Runway Project");
         stage.setScene(scene);

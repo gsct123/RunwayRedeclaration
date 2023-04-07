@@ -1,7 +1,7 @@
 package Model;
 
 import View.Main;
-import View.MainWithLogin;
+import View.Login;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +23,7 @@ public class Utility {
     @FXML
     public static void handleLogout(ActionEvent event) throws Exception {
         Main.getStage().close();
-        new MainWithLogin().start(new Stage());
+        new Login().start(new Stage());
     }
 
     public static int getScaleRange(double input){

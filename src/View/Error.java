@@ -1,9 +1,6 @@
 package View;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.Optional;
 
@@ -15,17 +12,47 @@ public class Error {
         errorAlert.setTitle("Error Message");
         errorAlert.setHeaderText("ERROR");
         errorAlert.setContentText(message);
-        errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
+        errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 10px");
         Optional<ButtonType> result = errorAlert.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK){
             field.setText(resetValue);
+            field.positionCaret(field.getText().length()-1);
             errorAlert.close();
         }
 
         Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
         okButton.setOnAction(event1 -> {
             field.setText(resetValue);
+            field.positionCaret(field.getText().length());
+            errorAlert.close();
+        });
+    }
+    public void showError(String message){
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setTitle("Error Message");
+        errorAlert.setHeaderText("ERROR");
+        // Create a scroll pane for the content
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setPrefSize(800, 400);
+
+// Create a label with the error message
+        Label label = new Label(message);
+        label.setLineSpacing(5);
+        label.setWrapText(true);
+
+// Add the label to the scroll pane
+        scrollPane.setContent(label);
+        errorAlert.getDialogPane().setContent(scrollPane);
+        errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 10px");
+        Optional<ButtonType> result = errorAlert.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            errorAlert.close();
+        }
+
+        Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
+        okButton.setOnAction(event1 -> {
             errorAlert.close();
         });
     }

@@ -37,51 +37,55 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <HBox prefHeight="100.0" prefWidth="200.0">
+        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #212f45;">
             <children>
-                <Label alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="1089.0" text="RUNWAY REDECLARATION" textAlignment="CENTER">
+                <Label alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="1089.0" text="RUNWAY REDECLARATION" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Verdana Bold" size="25.0" />
                     </font>
                     <padding>
-                        <Insets bottom="10.0" right="170.0" top="10.0" />
+                        <Insets bottom="10.0" right="170.0" top="20.0" />
                     </padding>
                 </Label>
-                <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="238.0">
+                <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="238.0" textFill="WHITE">
                     <padding>
-                        <Insets right="5.0" />
+                        <Insets right="25.0" top="5.0" />
                     </padding>
                     <font>
                         <Font name="Verdana" size="13.0" />
                     </font>
                 </Label>
-                <Label fx:id="logoutLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="73.0" text="Logout" textFill="#2759cd">
-                    <padding>
-                        <Insets right="20.0" />
-                    </padding>
-                    <font>
-                        <Font name="Verdana" size="13.0" />
-                    </font>
-                </Label>
+            <HBox prefHeight="67.0" prefWidth="161.0">
+               <children>
+                  <Button fx:id="logoutButton" alignment="CENTER" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" styleClass="logoutButton" stylesheets="@../CSS/MainStylesheet.css" text="LOGOUT" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets right="20.0" top="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Verdana Bold" size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
             </children>
         </HBox>
-        <SplitPane dividerPositions="0.19321428571428573, 0.7760714285714285" prefHeight="601.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../CSS/MainStylesheet.css">
+        <SplitPane dividerPositions="0.20021489971346704, 0.7861747851002865" prefHeight="601.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../CSS/MainStylesheet.css">
             <items>
                 <AnchorPane prefHeight="692.0" prefWidth="261.0">
                     <children>
-                        <MenuButton id="airportMenu" fx:id="airportMenu" layoutX="20.0" layoutY="52.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="235.0" text="Select an Airport">
+                        <MenuButton id="airportMenu" fx:id="airportMenu" layoutX="20.0" layoutY="52.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="235.0" styleClass="normalButton" stylesheets="@../CSS/MainStylesheet.css" text="Select an Airport">
                             <items>
                             </items>
                             <font>
                                 <Font name="Verdana" size="16.0" />
                             </font>
                         </MenuButton>
-                        <MenuButton id="runwayMenu" fx:id="physicalRunwayMenu" disable="true" layoutX="20.0" layoutY="142.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="235.0" text="Select Physical Runway">
+                        <MenuButton id="runwayMenu" fx:id="physicalRunwayMenu" disable="true" layoutX="20.0" layoutY="142.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="235.0" styleClass="normalButton" text="Select Physical Runway">
                             <font>
                                 <Font name="Verdana" size="16.0" />
                             </font>
                         </MenuButton>
-                        <MenuButton fx:id="obstacleMenu" disable="true" layoutX="20.0" layoutY="236.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="235.0" text="Select an Obstacle">
+                        <MenuButton fx:id="obstacleMenu" disable="true" layoutX="20.0" layoutY="236.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="235.0" styleClass="normalButton" text="Select an Obstacle">
                             <font>
                                 <Font name="Verdana" size="16.0" />
                             </font>
@@ -135,7 +139,7 @@
                             <font>
                                 <Font name="Verdana" size="12.0" />
                             </font></TextField>
-                        <Button fx:id="performCalculationButton" disable="true" layoutX="37.0" layoutY="539.0" mnemonicParsing="false" onAction="#performCalculation" prefHeight="35.0" text="Perform Recalculation">
+                        <Button fx:id="performCalculationButton" disable="true" layoutX="19.0" layoutY="539.0" mnemonicParsing="false" onAction="#performCalculation" prefHeight="35.0" prefWidth="235.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="Perform Recalculation" textFill="WHITE">
                             <font>
                                 <Font name="Verdana" size="16.0" />
                             </font>
@@ -156,7 +160,7 @@
                                 <Insets bottom="5.0" top="5.0" />
                             </padding>
                         </Label>
-                        <Button fx:id="resetButton" layoutX="102.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" text="Reset">
+                        <Button fx:id="resetButton" layoutX="19.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" prefWidth="235.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="Reset" textFill="WHITE">
                             <font>
                                 <Font name="Verdana" size="16.0" />
                             </font>
@@ -183,13 +187,13 @@
                 </AnchorPane>
                 <AnchorPane prefHeight="655.0" prefWidth="829.0">
                     <children>
-                        <TabPane fx:id="visualPane" layoutX="3.0" layoutY="-1.0" prefHeight="656.0" prefWidth="804.0" stylesheets="@../CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane fx:id="visualPane" layoutX="3.0" layoutY="-1.0" prefHeight="654.0" prefWidth="804.0" styleClass="visualPane" stylesheets="@../CSS/MainStylesheet.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="-1.0">
                             <tabs>
-                                <Tab fx:id="topViewTab" style="-fx-font-family: Verdana;" text="Top-down View">
+                                <Tab fx:id="topViewTab" style="-fx-font-family: Verdana;" styleClass="tabButton" text="Top-down View">
                                     <content>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                             <children>
-                                                <AnchorPane prefHeight="627.0" prefWidth="816.0" />
+                                                <AnchorPane prefHeight="627.0" prefWidth="804.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                             </children>
                                         </AnchorPane>
                                     </content>
@@ -198,7 +202,7 @@
                                     <content>
                                         <AnchorPane prefHeight="607.0" prefWidth="774.0">
                                             <children>
-                                                <AnchorPane layoutX="6.0" prefHeight="627.0" prefWidth="804.0" />
+                                                <AnchorPane layoutX="-2.0" prefHeight="623.0" prefWidth="804.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0" />
                                             </children>
                                         </AnchorPane>
                                     </content>
@@ -207,7 +211,7 @@
                                     <content>
                                         <AnchorPane prefHeight="607.0" prefWidth="774.0">
                                             <children>
-                                                <AnchorPane layoutX="6.0" prefHeight="627.0" prefWidth="804.0" />
+                                                <AnchorPane layoutX="6.0" prefHeight="620.5" prefWidth="804.0" styleClass="normalB" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                             </children>
                                         </AnchorPane>
                                     </content>
@@ -245,7 +249,7 @@
                                 <Font name="Verdana" size="14.0" />
                             </font>
                         </TextField>
-                        <Button fx:id="calculationBreakdown" disable="true" layoutX="34.0" layoutY="592.0" mnemonicParsing="false" onAction="#showCalculationBreakdown" prefHeight="35.0" prefWidth="219.0" text="Calculation Breakdown">
+                        <Button fx:id="calculationBreakdown" disable="true" layoutX="34.0" layoutY="592.0" mnemonicParsing="false" onAction="#showCalculationBreakdown" prefHeight="35.0" prefWidth="219.0" styleClass="functionButton" text="Calculation Breakdown">
                             <font>
                                 <Font name="Verdana" size="16.0" />
                             </font>
@@ -260,18 +264,18 @@
                                 <Font name="Verdana" size="8.0" />
                             </font>
                         </Button>
-                        <TableView fx:id="leftTableView" layoutX="28.0" layoutY="72.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244); -fx-border-color: rgb(244,244,244);-fx-border-color: black; -fx-border-width: 1px;">
+                        <TableView fx:id="leftTableView" layoutX="28.0" layoutY="72.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244);">
                             <columns>
                                 <TableColumn fx:id="parColumn1" editable="false" prefWidth="73.62646484375" sortable="false" style="-fx-font-size: 14px; -fx-font-family: Verdana;" text="L" />
                                 <TableColumn fx:id="originalCol1" editable="false" minWidth="3.9134521484375" prefWidth="75.824951171875" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Original" />
-                                <TableColumn fx:id="revisedCol1" editable="false" prefWidth="90.62646484375" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Revised" />
+                                <TableColumn fx:id="revisedCol1" editable="false" prefWidth="94.0" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Revised" />
                             </columns>
                         </TableView>
-                        <TableView fx:id="rightTableView" layoutX="27.0" layoutY="231.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244); -fx-border-color: rgb(244,244,244);-fx-border-color: black; -fx-border-width: 1px;">
+                        <TableView fx:id="rightTableView" layoutX="27.0" layoutY="231.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244);">
                             <columns>
                                 <TableColumn fx:id="parColumn2" editable="false" prefWidth="74.5875244140625" sortable="false" style="-fx-font-size: 14px; -fx-font-family: Verdana;" text="R" />
                                 <TableColumn fx:id="originalCol2" editable="false" prefWidth="75.14111328125" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Original" />
-                                <TableColumn fx:id="revisedCol2" editable="false" prefWidth="88.63623046875" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Revised" />
+                                <TableColumn fx:id="revisedCol2" editable="false" prefWidth="93.5" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Revised" />
                             </columns>
                         </TableView>
                         <Label alignment="CENTER" layoutX="11.0" layoutY="16.0" prefHeight="42.0" prefWidth="268.0" text="CALCULATION">
@@ -376,24 +380,20 @@
                     </children></AnchorPane>
             </items>
         </SplitPane>
-        <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="1400.0" spacing="5.0" VBox.vgrow="NEVER">
+        <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="1400.0" spacing="5.0" styleClass="visualPane" stylesheets="@../CSS/MainStylesheet.css" VBox.vgrow="NEVER">
             <padding>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
             </padding>
             <children>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+              <Label fx:id="notificationLabel" prefHeight="37.0" prefWidth="1400.0" style="-fx-text-fill: grey;" text="Status">
+                  <padding>
+                      <Insets left="20.0" />
+                  </padding>
+                  <font>
+                      <Font name="Verdana" size="13.0" />
+                  </font>
+              </Label>
             </children>
         </HBox>
-        <Label fx:id="notificationLabel" prefHeight="37.0" prefWidth="1400.0" style="-fx-text-fill: grey;" text="Status">
-            <VBox.margin>
-                <Insets bottom="5.0" />
-            </VBox.margin>
-            <padding>
-                <Insets left="20.0" />
-            </padding>
-            <font>
-                <Font name="Verdana" size="13.0" />
-            </font>
-        </Label>
     </children>
 </VBox>

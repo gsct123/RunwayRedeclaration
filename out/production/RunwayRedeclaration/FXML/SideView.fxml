@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: #b6c6e1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SideViewController">
+<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: #d9e8ff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SideViewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcf347" height="12.0" layoutX="635.0" layoutY="56.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5ff552" height="12.0" layoutX="635.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
@@ -122,22 +122,22 @@
             <Line id="ldaLength" fx:id="ldaLength" endX="534.0" layoutX="166.0" layoutY="51.0" />
             <Line id="asdaLength" fx:id="asdaLength" endX="625.0" layoutX="100.0" layoutY="102.0" />
             <Line id="toraLength" fx:id="todaLength" endX="650.0" layoutX="100.0" layoutY="77.0" />
-            <Label id="ldaLabel" fx:id="ldaLabel" layoutX="375.0" layoutY="30.0" style="-fx-background-color: #b6c6e1;" text=" LDA   ">
+            <Label id="ldaLabel" fx:id="ldaLabel" layoutX="375.0" layoutY="30.0" style="-fx-background-color: #d9e8ff;" text=" LDA   ">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
             </Label>
-            <Label id="toraLabel" fx:id="toraLabel" layoutX="375.0" layoutY="107.0" style="-fx-background-color: #b6c6e1;" text=" TORA ">
+            <Label id="toraLabel" fx:id="toraLabel" layoutX="375.0" layoutY="107.0" style="-fx-background-color: #d9e8ff;" text=" TORA ">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
             </Label>
-            <Label id="asdaLabel" fx:id="asdaLabel" layoutX="375.0" layoutY="83.0" style="-fx-background-color: #b6c6e1;" text=" ASDA ">
+            <Label id="asdaLabel" fx:id="asdaLabel" layoutX="375.0" layoutY="83.0" style="-fx-background-color: #d9e8ff;" text=" ASDA ">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
             </Label>
-            <Label id="todaLabel" fx:id="todaLabel" layoutX="375.0" layoutY="57.0" style="-fx-background-color: #b6c6e1;" text=" TODA ">
+            <Label id="todaLabel" fx:id="todaLabel" layoutX="375.0" layoutY="57.0" style="-fx-background-color: #d9e8ff;" text=" TODA ">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
@@ -156,22 +156,22 @@
             <Line id="ldaLength" fx:id="rLdaLength" endX="600.0" layoutX="100.0" layoutY="381.0" />
             <Line id="asdaLength" fx:id="rAsdaLength" endX="625.0" layoutX="75.0" layoutY="330.0" />
             <Line id="toraLength" fx:id="rTodaLength" endX="650.0" layoutX="50.0" layoutY="355.0" />
-            <Label id="ldaLabel" fx:id="rLdaLabel" layoutX="375.0" layoutY="361.0" style="-fx-background-color: #b6c6e1;" text=" LDA">
+            <Label id="ldaLabel" fx:id="rLdaLabel" layoutX="375.0" layoutY="361.0" style="-fx-background-color: #d9e8ff;" text=" LDA">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
             </Label>
-            <Label id="toraLabel" fx:id="rToraLabel" layoutX="375.0" layoutY="284.0" style="-fx-background-color: #b6c6e1;" text=" TORA">
+            <Label id="toraLabel" fx:id="rToraLabel" layoutX="375.0" layoutY="284.0" style="-fx-background-color: #d9e8ff;" text=" TORA">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
             </Label>
-            <Label id="asdaLabel" fx:id="rAsdaLabel" layoutX="375.0" layoutY="310.0" style="-fx-background-color: #b6c6e1;" text=" ASDA">
+            <Label id="asdaLabel" fx:id="rAsdaLabel" layoutX="375.0" layoutY="310.0" style="-fx-background-color: #d9e8ff;" text=" ASDA">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
             </Label>
-            <Label id="todaLabel" fx:id="rTodaLabel" layoutX="375.0" layoutY="336.0" style="-fx-background-color: #b6c6e1;" text=" TODA">
+            <Label id="todaLabel" fx:id="rTodaLabel" layoutX="375.0" layoutY="336.0" style="-fx-background-color: #d9e8ff;" text=" TODA">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>

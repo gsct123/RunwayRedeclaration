@@ -16,126 +16,118 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AirportManagerController">
-   <children>
-      <MenuBar prefHeight="28.0" prefWidth="1400.0">
-         <menus>
-            <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="File">
-               <items>
-                  <MenuItem fx:id="aboutProject1" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
-               <items>
-                  <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <HBox layoutY="28.0" prefHeight="67.0" prefWidth="1400.0">
-         <children>
-            <HBox prefHeight="67.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="backButton" alignment="CENTER" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" text="BACK">
-                     <HBox.margin>
-                        <Insets left="30.0" top="15.0" />
-                     </HBox.margin>
+    <children>
+        <MenuBar prefHeight="28.0" prefWidth="1400.0">
+            <menus>
+                <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="File">
+                    <items>
+                        <MenuItem fx:id="aboutProject1" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
+                    <items>
+                        <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <HBox layoutY="28.0" prefHeight="67.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
+            <children>
+                <HBox prefHeight="67.0" prefWidth="200.0" />
+                <Label alignment="CENTER_RIGHT" layoutY="28.0" prefHeight="67.0" prefWidth="853.0" text="AIRPORT MANAGER" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font name="Verdana Bold" size="25.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="10.0" right="160.0" top="10.0" />
+                    </padding>
+                </Label>
+                <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="263.0">
+                    <padding>
+                        <Insets right="5.0" />
+                    </padding>
+                    <font>
+                        <Font name="Verdana" size="13.0" />
+                    </font>
+                </Label>
+                <HBox prefHeight="67.0" prefWidth="161.0">
+                    <children>
+                        <Button fx:id="logoutButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefHeight="36.0" prefWidth="102.0" text="LOGOUT">
+                            <HBox.margin>
+                                <Insets right="30.0" top="15.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+        <SplitPane layoutY="97.0" prefHeight="682.0" prefWidth="1400.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="1400.0">
+                    <children>
+                        <TableView fx:id="airportTable" layoutX="326.0" layoutY="-2.0" prefHeight="687.0" prefWidth="741.0" style="-fx-font-family: Verdana;" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="326.0" AnchorPane.rightAnchor="331.0" AnchorPane.topAnchor="-2.0">
+                            <columns>
+                                <TableColumn fx:id="IDCol" prefWidth="75.0" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="ID" />
+                                <TableColumn fx:id="nameCol" prefWidth="335.9877624511719" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="NAME" />
+                                <TableColumn fx:id="managerCol" minWidth="0.0" prefWidth="329.0122375488281" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="MANAGER" />
+                            </columns>
+                        </TableView>
+                        <Label alignment="CENTER" layoutX="48.0" layoutY="138.0" prefHeight="42.0" prefWidth="220.0" text="ADD NEW AIRPORT">
+                            <font>
+                                <Font name="Verdana Bold" size="16.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="5.0" top="5.0" />
+                            </padding>
+                        </Label>
+                        <Button fx:id="importAirportButton" layoutX="27.0" layoutY="201.0" mnemonicParsing="false" onAction="#importAirport" prefHeight="35.0" prefWidth="275.0" text="Choose File">
+                            <font>
+                                <Font name="Verdana" size="16.0" />
+                            </font>
+                        </Button>
+                        <Label alignment="CENTER" layoutX="48.0" layoutY="261.0" prefHeight="42.0" prefWidth="220.0" text="MANAGE AIRPORTS">
+                            <font>
+                                <Font name="Verdana Bold" size="16.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="5.0" top="5.0" />
+                            </padding>
+                        </Label>
+                        <Button fx:id="deleteAirportButton" layoutX="27.0" layoutY="322.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="275.0" text="Delete Selected Airport">
+                            <font>
+                                <Font name="Verdana" size="16.0" />
+                            </font>
+                        </Button>
+                        <TextArea fx:id="airportDetails" layoutX="1096.0" layoutY="118.0" prefHeight="366.0" prefWidth="275.0" wrapText="true">
                      <font>
                         <Font name="Verdana" size="13.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-            <Label alignment="CENTER_RIGHT" layoutY="28.0" prefHeight="67.0" prefWidth="853.0" text="AIRPORT MANAGER" textAlignment="CENTER">
-               <font>
-                  <Font name="Verdana Bold" size="25.0" />
-               </font>
-               <padding>
-                  <Insets bottom="10.0" right="160.0" top="10.0" />
-               </padding>
-            </Label>
-            <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="263.0">
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-               <font>
-                  <Font name="Verdana" size="13.0" />
-               </font>
-            </Label>
-            <HBox prefHeight="67.0" prefWidth="161.0">
-               <children>
-                  <Button fx:id="logoutButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLogout" prefHeight="36.0" prefWidth="102.0" text="LOGOUT">
-                     <HBox.margin>
-                        <Insets right="30.0" top="15.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
-      </HBox>
-      <SplitPane layoutY="97.0" prefHeight="682.0" prefWidth="1400.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="1400.0">
-               <children>
-                  <TableView fx:id="airportTable" layoutX="326.0" layoutY="-2.0" prefHeight="687.0" prefWidth="741.0" style="-fx-font-family: Verdana;" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="326.0" AnchorPane.rightAnchor="331.0" AnchorPane.topAnchor="-2.0">
-                     <columns>
-                        <TableColumn fx:id="IDCol" prefWidth="75.0" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="ID" />
-                        <TableColumn fx:id="nameCol" prefWidth="335.9877624511719" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="NAME" />
-                        <TableColumn fx:id="managerCol" minWidth="0.0" prefWidth="329.0122375488281" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="MANAGER" />
-                     </columns>
-                  </TableView>
-                  <Label alignment="CENTER" layoutX="48.0" layoutY="138.0" prefHeight="42.0" prefWidth="220.0" text="ADD NEW AIRPORT">
-                     <font>
-                        <Font name="Verdana Bold" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" top="5.0" />
-                     </padding>
-                  </Label>
-                  <Button fx:id="importAirportButton" layoutX="27.0" layoutY="201.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="275.0" text="Choose File">
-                     <font>
-                        <Font name="Verdana" size="16.0" />
-                     </font>
-                  </Button>
-                  <Label alignment="CENTER" layoutX="48.0" layoutY="261.0" prefHeight="42.0" prefWidth="220.0" text="MANAGE AIRPORTS">
-                     <font>
-                        <Font name="Verdana Bold" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" top="5.0" />
-                     </padding>
-                  </Label>
-                  <Button fx:id="deleteAirportButton" layoutX="27.0" layoutY="322.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="275.0" text="Delete Selected Airport">
-                     <font>
-                        <Font name="Verdana" size="16.0" />
-                     </font>
-                  </Button>
-                  <TextArea fx:id="airportDetails" layoutX="1096.0" layoutY="118.0" prefHeight="366.0" prefWidth="275.0" />
-                  <Label alignment="CENTER" layoutX="1128.0" layoutY="58.0" prefHeight="42.0" prefWidth="220.0" text="AIRPORT DETAILS">
-                     <font>
-                        <Font name="Verdana Bold" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" top="5.0" />
-                     </padding>
-                  </Label>
-                  <Button fx:id="editAirportButton" layoutX="1096.0" layoutY="510.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="275.0" text="Edit Airport Details">
-                     <font>
-                        <Font name="Verdana" size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="exportAirportDetails" layoutX="1096.0" layoutY="572.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="275.0" text="Export Airport Details">
-                     <font>
-                        <Font name="Verdana" size="16.0" />
-                     </font>
-                  </Button>
-                  <TextField fx:id="searchField" layoutX="27.0" layoutY="69.0" prefHeight="40.0" prefWidth="275.0" promptText="Search Airport">
-                     <font>
-                        <Font name="Verdana" size="16.0" />
-                     </font>
-                  </TextField>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-   </children>
+                     </font></TextArea>
+                        <Label alignment="CENTER" layoutX="1128.0" layoutY="58.0" prefHeight="42.0" prefWidth="220.0" text="AIRPORT DETAILS">
+                            <font>
+                                <Font name="Verdana Bold" size="16.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="5.0" top="5.0" />
+                            </padding>
+                        </Label>
+                        <Button fx:id="editAirportButton" layoutX="1096.0" layoutY="510.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="275.0" text="Edit Airport Details">
+                            <font>
+                                <Font name="Verdana" size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="exportAirportDetails" layoutX="1096.0" layoutY="572.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="275.0" text="Export Airport Details">
+                            <font>
+                                <Font name="Verdana" size="16.0" />
+                            </font>
+                        </Button>
+                        <TextField fx:id="searchField" layoutX="27.0" layoutY="69.0" prefHeight="40.0" prefWidth="275.0" promptText="Search Airport">
+                            <font>
+                                <Font name="Verdana" size="16.0" />
+                            </font>
+                        </TextField>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
 </AnchorPane>

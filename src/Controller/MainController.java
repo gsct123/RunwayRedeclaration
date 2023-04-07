@@ -22,6 +22,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
@@ -139,7 +142,9 @@ public class MainController implements Initializable {
     @FXML
     private TableColumn<Parameter, String> revisedCol2;
     @FXML
-    private Label logoutLabel;
+    private Button logoutButton;
+    @FXML
+    private Button resetButton;
     @FXML
     private Label identityLabel;
 
@@ -157,10 +162,28 @@ public class MainController implements Initializable {
 
     //list of airports and obstacles from files
     public static ObservableList<Airport> airports = FXCollections.observableArrayList();
+    public static ObservableList<String> references = FXCollections.observableArrayList();
     public static ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
+    public static ObservableList<String> airportNames = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        DropShadow shadow = new DropShadow(2, Color.valueOf("#212f45"));
+        leftTableView.setEffect(shadow);
+        rightTableView.setEffect(shadow);
+
+        // or if you only want to disable horizontal scrolling
+        leftTableView.addEventFilter(ScrollEvent.ANY, event -> {
+            if (event.getDeltaX() != 0) {
+                event.consume();
+            }
+        });
+        rightTableView.addEventFilter(ScrollEvent.ANY, event -> {
+            if (event.getDeltaX() != 0) {
+                event.consume();
+            }
+        });
+
         loadInfos();
         try {
             topViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/TopView.fxml"))));
@@ -172,11 +195,6 @@ public class MainController implements Initializable {
             addObstacleEvent();
 
             identityLabel.setText("Logged in as "+ Main.getUsername());
-            logoutLabel.setOnMouseExited(mouseEvent -> logoutLabel.setStyle("-fx-text-fill: #2759cd"));
-            logoutLabel.setOnMouseEntered(mouseEvent -> {
-                logoutLabel.setStyle("-fx-text-fill: #779beb");
-                //underline?
-            });
             logoutItem.setOnAction(actionEvent -> {
                 try {
                     Utility.handleLogout(new ActionEvent());
@@ -184,7 +202,7 @@ public class MainController implements Initializable {
                     e.printStackTrace();
                 }
             });
-            logoutLabel.setOnMouseClicked(mouseEvent -> {
+            logoutButton.setOnMouseClicked(mouseEvent -> {
                 try {
                     Utility.handleLogout(new ActionEvent());
                 } catch (Exception e) {
@@ -194,7 +212,8 @@ public class MainController implements Initializable {
 
             airportManager.setOnAction(actionEvent -> {
                 try {
-                    Utility.changeScene(Main.getStage(), new AirportManager());
+                    Main.getStage().close();
+                    new AirportManager(AirportManager.getUsername()).start(new Stage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -208,11 +227,12 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(MainController.airports + " from main controller");
     }
 
     //getters
-    public ObservableList<Obstacle> getObstacles(){return this.obstacles;}
-    public ObservableList<Airport> getAirports(){return this.airports;}
+    public ObservableList<Obstacle> getObstacles(){return obstacles;}
+    public ObservableList<Airport> getAirports(){return airports;}
     public static PhysicalRunway getPhysRunwaySelected() {return physRunwayItem.get();}
     public static boolean needRedeclare(){return needRedeclare;}
     public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
@@ -360,9 +380,11 @@ public class MainController implements Initializable {
     public void showCalculationBreakdown(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CalculationBreakdown.fxml"));
+
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
 
         stage.setTitle("Calculation Breakdown");
         stage.setScene(scene);
@@ -402,6 +424,9 @@ public class MainController implements Initializable {
 
     //this function read from a xml file and instantiate list of airports available
     public void loadAirports(String file) throws Exception {
+        airports = FXCollections.observableArrayList();
+        references = FXCollections.observableArrayList();
+        airportNames = FXCollections.observableArrayList();
         // Create a DocumentBuilder
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -422,8 +447,10 @@ public class MainController implements Initializable {
             if (airportNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element airportElement = (Element) airportNode;
                 String reference = airportElement.getElementsByTagName("ID").item(0).getTextContent();
+                references.add(reference);
                 // Get the airport name
                 String airportName = airportElement.getElementsByTagName("name").item(0).getTextContent();
+                airportNames.add(airportName);
                 // Create a list to hold the physical runways
                 ObservableList<PhysicalRunway> physicalRunways = FXCollections.observableArrayList();
                 // Get a NodeList of all physical runway elements for the current airport
@@ -579,6 +606,7 @@ public class MainController implements Initializable {
 
     //functions to load obstacles from xml files and displayed in the menu selection
     public void loadObstacles(String file) throws IOException, ParserConfigurationException, SAXException {
+        obstacles = FXCollections.observableArrayList();
         // Create a DocumentBuilder
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();

@@ -3,7 +3,7 @@ package Controller;
 import Model.User;
 import Model.Utility;
 import View.Error;
-import View.MainWithLogin;
+import View.Login;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -52,67 +52,43 @@ public class LoginController implements Initializable {
             passwordPane.setEffect(shadow);
             usernameField.setOnKeyPressed(keyEvent -> {
                 if(new KeyCodeCombination(KeyCode.ENTER).match(keyEvent)){
-                    checkUsername();
+                    check();
                 }
             });
             passwordField.setOnKeyPressed(keyEvent -> {
                 if (new KeyCodeCombination(KeyCode.ENTER).match(keyEvent)) {
-                    checkPassword();
+                    check();
                 }
             });
-            loginButton.setOnMouseClicked(actionEvent -> checkPassword());
+            loginButton.setOnMouseClicked(actionEvent -> check());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(MainController.airports+" from login");
     }
 
 
-
-    public boolean checkUsername(){
-        try{
-            String name = usernameField.getText().trim();
-            if(name.length() == 0){
-                new Error().showError(usernameField, "Please enter a valid username", "");
-                return false;
-            } else{
-                if(users.containsKey(name)){
-                    this.username = name;
-                    String password = passwordField.getText().trim();
-                    if(password.length() > 0 && users.get(username).getPassword().equals(Utility.toHexString(Utility.getSHA(password)))){
-                        MainWithLogin.getStage().close();
-                        new View.Main(username).start(new Stage());
-                    }
-//
-                    return true;
-                } else{
-                    new Error().showError(usernameField, "Username does not exist, please check again", name);
-                    passwordField.clear();
-                    return false;
-                }
-            }
-
-        } catch (Exception ignored){return false;}
-    }
-
-        public void checkPassword(){
+    public void check(){
         try{
             String password = passwordField.getText().trim();
             String name = usernameField.getText().trim();
-            if(name.length() > 0 && password.length() > 0 && checkUsername()){
-                if(users.get(username).getPassword().equals(Utility.toHexString(Utility.getSHA(password)))) {
-//                    MainWithLogin.getStage().close();
-                    new View.Main(username).start(new Stage());
+            if(name.length() > 0 && password.length() > 0 && users.containsKey(name)){
+                if(users.get(name).getPassword().equals(Utility.toHexString(Utility.getSHA(password)))) {
+                    Login.getStage().close();
+                    new View.Main(name).start(new Stage());
                 } else{
                     new Error().showError(passwordField, "Invalid password", "");
                 }
             } else if (name.length() <= 0){
                 new Error().showError(usernameField, "Please enter a valid username", "");
-            } else if (password.length() <= 0){
-                new Error().showError(passwordField, "Please enter a valid password", "");
+            } else if (!users.containsKey(name)){
+                new Error().showError(usernameField,"Username does not exist, please check again" , name);
             } else{
-                new Error().showError(usernameField, "Username does not exist, please check again", name);
+                new Error().showError(passwordField,"Please enter a valid password" , "");
             }
-        } catch (Exception ignored){}
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     //have the xml ready before writing this writer

@@ -9,7 +9,7 @@ import Controller.LoginController;
 
 import java.util.Objects;
 
-public class MainWithLogin extends Application {
+public class Login extends Application {
     private static Stage stage;
 
     public static Stage getStage(){
@@ -18,7 +18,7 @@ public class MainWithLogin extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        MainWithLogin.stage = stage;
+        Login.stage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/LoginPage.fxml"));
         loader.setController(new LoginController());
         Parent root = loader.load();
