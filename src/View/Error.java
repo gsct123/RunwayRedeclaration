@@ -17,15 +17,15 @@ public class Error {
 
         if(result.isPresent() && result.get() == ButtonType.OK){
             field.setText(resetValue);
-            field.positionCaret(field.getText().length()-1);
             errorAlert.close();
+            field.positionCaret(field.getText().length());
         }
 
         Button okButton = (Button) errorAlert.getDialogPane().lookupButton(ButtonType.OK);
         okButton.setOnAction(event1 -> {
             field.setText(resetValue);
-            field.positionCaret(field.getText().length());
             errorAlert.close();
+            field.positionCaret(field.getText().length());
         });
     }
     public void showError(String message){
