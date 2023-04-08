@@ -5,7 +5,7 @@ import View.AirportManager;
 import View.Error;
 import View.Main;
 import View.OtherPopUp.NoRedeclarationNeeded;
-import View.OtherPopUp.ResetConfirmation;
+import View.OtherPopUp.Confirmation;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -247,7 +247,7 @@ public class MainController implements Initializable {
     }
     @FXML
     public void handleReset(ActionEvent event) throws IOException {
-        boolean flag = new ResetConfirmation().confirmReset();
+        boolean flag = new Confirmation().confirmReset();
         Main.setReset(true);
         if(flag) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Main.fxml"));

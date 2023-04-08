@@ -3,10 +3,9 @@ package Controller;
 import Model.Airport;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
-import View.AirportManager;
+import View.*;
 import View.Error;
-import View.Login;
-import View.Main;
+import View.OtherPopUp.Confirmation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,10 +32,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class AirportManagerController implements Initializable {
 
@@ -100,7 +97,6 @@ public class AirportManagerController implements Initializable {
             }
         });
 
-        System.out.println(MainController.airports + " airprot manager controller");
         airportTable.refresh();
     }
 
@@ -152,7 +148,7 @@ public class AirportManagerController implements Initializable {
     }
 
     public void addAirport(File selectedFile){
-        try{
+        try {
             // Create a DocumentBuilder
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -162,9 +158,9 @@ public class AirportManagerController implements Initializable {
 
             // Get a NodeList of all airport elements
             NodeList airportElements = doc.getElementsByTagName("airport");
-            if(airportElements.getLength() == 0){
+            if (airportElements.getLength() == 0) {
                 throw new Exception();
-            } else{
+            } else {
                 // Create a list to hold the airports
                 ObservableList<Airport> airports = FXCollections.observableArrayList();
 
@@ -180,10 +176,8 @@ public class AirportManagerController implements Initializable {
                         // Create a list to hold the physical runways
 
                         StringBuilder errorMessage = new StringBuilder();
-                        if(MainController.references.contains(reference)){
-                            errorMessage.append("\nDuplicated airport reference (").append(reference);
-                        } else if (MainController.airportNames.contains(airportName)) {
-                            errorMessage.append("\nDuplicated airport name ").append(airportName);
+                        if (checkAirport(airportName, reference).length() > 0) {
+                            errorMessage.append(checkAirport(airportName, reference));
                         }
 
                         ObservableList<PhysicalRunway> physicalRunways = FXCollections.observableArrayList();
@@ -208,6 +202,7 @@ public class AirportManagerController implements Initializable {
                                         Element logRunwayElement = (Element) logRunwayNode;
                                         // Get the logical runway designator and dimensions
                                         String designator = logRunwayElement.getAttribute("designator");
+
                                         double tora = Double.parseDouble(logRunwayElement.getAttribute("tora"));
                                         double toda = Double.parseDouble(logRunwayElement.getAttribute("toda"));
                                         double asda = Double.parseDouble(logRunwayElement.getAttribute("asda"));
@@ -215,66 +210,68 @@ public class AirportManagerController implements Initializable {
                                         // Create a new LogicalRunway object and add it to the list of logical runways
                                         LogicalRunway logicalRunway = new LogicalRunway(designator, tora, toda, asda, lda);
                                         logicalRunways.add(logicalRunway);
-
-                                        if(tora > asda | asda > toda || lda > tora){
-                                            errorMessage.append("Error in parameter values for physical runway ").append(physRunwayName).append(": ");
-                                            if(tora > asda){
-                                                errorMessage.append("\nTORA value");
-                                            }
-                                        }
                                     }
+                                    // Create a new PhysicalRunway object with the logical runways and add it to the list of physical runways
+
                                 }
-                                // Create a new PhysicalRunway object with the logical runways and add it to the list of physical runways
                                 PhysicalRunway physicalRunway = new PhysicalRunway(physRunwayName, logicalRunways);
                                 physicalRunways.add(physicalRunway);
+                                errorMessage.append(checkRunway(physicalRunway));
                             }
                         }
 
                         String manager = airportElement.getElementsByTagName("user").item(0).getTextContent();
-
-
                         Airport airport = new Airport(reference, airportName, physicalRunways, manager);
 
 
-                        if(errorMessage.toString().length() > 0){
+                        if (errorMessage.toString().length() > 0) {
                             new Error().showError(errorMessage.toString());
+                        } else {
+                            boolean result = new Confirmation().confirmAddAirport(airport, airportInfo(airport));
+                            System.out.println(result);
+                            if (result) {
+                                MainController.airports.add(airport);
+                                MainController.airportNames.add(airportName);
+                                MainController.references.add(reference);
+                                airportTable.refresh();
+                                new Notification(AirportManager.getStage()).sucessNotification("Successful", airportName + " successfully added to system.");
+                            }
                         }
-                        MainController.airports.add(airport);
                     }
                 }
                 airports.sort(Comparator.comparing(Airport::getName));
             }
-        }catch (Exception e){
+        } catch (Exception e){
+            e.printStackTrace();
             new Error().showError("""
-                    Invalid XML File. Please ensure the xml inputs matches the required format.
-
-                    Example:\s
-                    <?xml version="1.0" encoding="UTF-8"?>
-                    <airports>
-                     <airport>
-                      <ID>LHR</ID>
-                      <name>Heathrow Airport</name>
-                      <physicalRunways>
-                       <physicalRunway name="09L/27R">
-                        <logicalRunway designator="09L" tora="3902.0" toda="3902.0" asda="3902.0" lda="3595.0" />
-                        <logicalRunway designator="27R" tora="3884.0" toda="3962.0" asda="3884.0" lda="3884.0" />
-                       </physicalRunway>
-                       <physicalRunway name="09R/27L">
-                        <logicalRunway designator="09R" tora="3660.0" toda="3660.0" asda="3660.0" lda="3353.0" />
-                        <logicalRunway designator="27L" tora="3660.0" toda="3660.0" asda="3660.0" lda="3660.0" />
-                       </physicalRunway>
-                       <physicalRunway name="06/24">
-                        <logicalRunway designator="06" tora="2734.0" toda="2734.0" asda="2734.0" lda="2734.0" />
-                        <logicalRunway designator="24" tora="2734.0" toda="2900.0" asda="2800.0" lda="2500.0" />
-                       </physicalRunway>
-                      </physicalRunways>
-                      <user>manager</user>
-                     </airport>
-                    </airports>
-
-
-                    """);
-            System.out.println("Exeption caught");
+                        Invalid XML File. Please ensure the xml inputs matches the required format.
+    
+                        Example:\s
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <airports>
+                         <airport>
+                          <ID>LHR</ID>
+                          <name>Heathrow Airport</name>
+                          <physicalRunways>
+                           <physicalRunway name="09L/27R">
+                            <logicalRunway designator="09L" tora="3902.0" toda="3902.0" asda="3902.0" lda="3595.0" />
+                            <logicalRunway designator="27R" tora="3884.0" toda="3962.0" asda="3884.0" lda="3884.0" />
+                           </physicalRunway>
+                           <physicalRunway name="09R/27L">
+                            <logicalRunway designator="09R" tora="3660.0" toda="3660.0" asda="3660.0" lda="3353.0" />
+                            <logicalRunway designator="27L" tora="3660.0" toda="3660.0" asda="3660.0" lda="3660.0" />
+                           </physicalRunway>
+                           <physicalRunway name="06/24">
+                            <logicalRunway designator="06" tora="2734.0" toda="2734.0" asda="2734.0" lda="2734.0" />
+                            <logicalRunway designator="24" tora="2734.0" toda="2900.0" asda="2800.0" lda="2500.0" />
+                           </physicalRunway>
+                          </physicalRunways>
+                          <user>manager</user>
+                         </airport>
+                        </airports>
+    
+    
+                        """);
         }
 
     }
@@ -307,5 +304,96 @@ public class AirportManagerController implements Initializable {
                 }
             }
         });
+    }
+
+    private String checkAirport(String airportName, String airportReference){
+        StringBuilder errorMessage = new StringBuilder();
+        if(MainController.references.contains(airportReference)){
+            errorMessage.append("\nNAME ERROR: Duplicated airport reference (").append(airportReference).append(")");
+        }
+        if(MainController.airportNames.contains(airportName)) {
+            errorMessage.append("\nNAME ERROR: Duplicated airport name ").append(airportName);
+        }
+        if(errorMessage.length() > 0){
+            return "AIRPORT ERROR: "+ errorMessage;
+        }
+        return "";
+    }
+
+    private String checkRunway(PhysicalRunway physicalRunway){
+        StringBuilder res = new StringBuilder();
+        //physical runways
+        StringBuilder physError = new StringBuilder();
+        String name = physicalRunway.getName();
+        String[] split = name.split("/");
+        if(split.length != 2){
+            System.out.println("splitlength");
+            return "\n\nPHYSICAL RUNWAY ERROR (RUNWAY " + (physicalRunway.getName()) + ")" + "\nFORMAT ERROR: Please provide a valid physical runway with format NL/NR or NR/NL with N representing a numerical value from 01 to 36";
+        } else{
+            String lower = split[0];
+            String higher = split[1];
+            if(lower.charAt(lower.length()-1) == 'L' && higher.charAt(higher.length()-1) == 'R' || lower.charAt(lower.length()-1) == 'R' && higher.charAt(higher.length()-1) == 'L'){
+                try{
+                    int lowerThreshold = Integer.parseInt(lower.substring(0, lower.length()-1));
+                    int higherThreshold = Integer.parseInt(higher.substring(0, higher.length()-1));
+                    if(lowerThreshold > higherThreshold){
+                        physError.append("\nFORMAT ERROR: Please ensure the threshold with lower value is located at the left (Ex: 09R/27L instead of 27L/09R)");
+                    }
+                    if(Math.abs(higherThreshold - lowerThreshold) != 18){
+                        physError.append("\nFORMAT ERROR: Please ensure runways are 180 degrees away from each other");
+                    }
+                    StringBuilder logError = new StringBuilder();
+                    if(physicalRunway.getLogicalRunways().size() != 2){
+                        logError.append("\nINVALID LOGICAL RUNWAYS: Please ensure you have provided information for both runways: ").append(lower).append(" and ").append(higher);
+                    } else{
+                        LogicalRunway left = physicalRunway.getLogicalRunways().get(0);
+                        LogicalRunway right = physicalRunway.getLogicalRunways().get(1);
+                        if(left.getDesignator().equals(lower) && right.getDesignator().equals(higher)){
+                            if(left.getTora() != right.getTora()){
+                                logError.append("\nINVALID PARAMETERS: Unequal TORA values for logical runways ").append(lower).append(" and ").append(higher);
+                            }
+                            logError.append(checkLogRunway(left));
+                            logError.append(checkLogRunway(right));
+                        } else{
+                            logError.append("\nINVALID LOGICAL RUNWAYS: Please ensure you provided logical runway in correct sequence: ").append(lower).append(" followed by ").append(higher);
+                        }
+
+                    }
+                    if(logError.length() > 0){
+                        physError.append("\nLOGICAL RUNWAYS ERRORS: ");
+                        physError.append(logError);
+                    }
+                }catch (NumberFormatException e){
+                    physError.append("\nFORMAT ERROR: Please provide a valid physical runway with format NL/NR or NR/NL with N representing a numerical value from 01 to 36");
+                }
+            } else{
+                physError.append("\nFORMAT ERROR: Please provide a valid physical runway with format NL/NR or NR/NL with N representing a numerical value from 01 to 36");
+            }
+
+            if(physError.length() > 0){
+                res.append("\n\nPHYSICAL RUNWAY ERROR (RUNWAY ").append(physicalRunway.getName()).append("):");
+                res.append(physError);
+            }
+
+        }
+        return res.toString();
+    }
+
+    public String checkLogRunway(LogicalRunway logicalRunway){
+        StringBuilder res = new StringBuilder();
+        if(logicalRunway.getLda() > logicalRunway.getTora()){
+            res.append("\n-- LDA value greater than TORA value (Invalid displaced threshold value)");
+        }
+        if(logicalRunway.getTora() > logicalRunway.getAsda()){
+            res.append("\n-- TORA value greater than ASDA value (Invalid stopway value)");
+        }
+        if(logicalRunway.getAsda() > logicalRunway.getToda()){
+            res.append("\n-- ASDA value greater than TODA value (Invalid clearway value");
+        }
+        if(res.length() > 0){
+            return "\nPARAMETER ERROR (Logical Runway "+logicalRunway.getDesignator()+"): "+res;
+        } else{
+            return res.toString();
+        }
     }
 }

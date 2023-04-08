@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class AirportManager extends Application {
     private static Stage classStage;
     private static String username;
@@ -34,6 +36,7 @@ public class AirportManager extends Application {
         loader.setController(new AirportManagerController());
 
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
 
         stage.setTitle("SEG Runway Project");
         stage.setScene(scene);

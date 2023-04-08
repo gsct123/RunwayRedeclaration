@@ -1,6 +1,7 @@
 package View;
 
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ public class Error {
         errorAlert.setHeaderText("ERROR");
         errorAlert.setContentText(message);
         errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 10px");
+        errorAlert.initModality(Modality.APPLICATION_MODAL);
         Optional<ButtonType> result = errorAlert.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK){
@@ -32,6 +34,7 @@ public class Error {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setTitle("Error Message");
         errorAlert.setHeaderText("ERROR");
+        errorAlert.initModality(Modality.APPLICATION_MODAL);
         // Create a scroll pane for the content
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setPrefSize(800, 400);
@@ -44,7 +47,7 @@ public class Error {
 // Add the label to the scroll pane
         scrollPane.setContent(label);
         errorAlert.getDialogPane().setContent(scrollPane);
-        errorAlert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 10px");
+        label.setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 10px");
         Optional<ButtonType> result = errorAlert.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK){
