@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -16,12 +17,15 @@ import java.util.ResourceBundle;
 
 public class TopViewController implements Initializable {
 
+    //compass
+    @FXML
+    private Pane compass;
     @FXML
     private Label leftDirection;
     @FXML
     private Label rightDirection;
     @FXML
-    private AnchorPane topDownRunwayPane;
+    public AnchorPane topDownRunwayPane;
     @FXML
     private Label leftDesignator;
     @FXML
@@ -230,8 +234,7 @@ public class TopViewController implements Initializable {
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
 
         Utility.initializeZoom(topDownRunwayPane);
-        Utility.initializeDrag(topDownRunwayPane);
-
+        initializeMouseEvent(topDownRunwayPane,compass);
 
     }
 
@@ -823,4 +826,49 @@ public class TopViewController implements Initializable {
         pane.setScaleX(1);
         pane.setScaleY(1);
     }
+
+    private void initializeMouseEvent(AnchorPane pane, Pane compass){
+        pane.setOnMousePressed(mouseEvent->{
+            if (mouseEvent.isShortcutDown()){
+                //mouse position before drag
+                double mouseX = mouseEvent.getX();
+                double mouseY = mouseEvent.getY();
+                pane.setOnMouseDragged(dragEvent -> {
+                    //the amount dragged minus original mouse position
+                    double translationX = dragEvent.getX() - mouseX;
+                    double translationY = dragEvent.getY() - mouseY;
+                    //set translation
+                    pane.setTranslateX(pane.getTranslateX() + translationX);
+                    pane.setTranslateY(pane.getTranslateY() + translationY);
+                    dragEvent.consume();
+                });
+            }if (mouseEvent.isShiftDown()){
+                double x1 = mouseEvent.getX();
+                double y1 = mouseEvent.getY();
+                pane.setOnMouseDragged(draggedEvent -> {
+                    double x2 = draggedEvent.getX();
+                    double y2 = draggedEvent.getY();
+                    double x3 = pane.getLayoutX() + pane.getWidth()/2;
+                    double y3 = pane.getLayoutY() + pane.getHeight()/2;
+                    double angle = Utility.getAngleBetween(x1,y1,x2,y2,x3,y3);
+                    //System.out.println(angle);
+                    double runwayAngle = pane.getRotate() + angle;
+                    double compassAngle = compass.getRotate() + angle;
+                    //System.out.println("runwayAngle = " + runwayAngle);
+                    //System.out.println("compassAngle = " + compassAngle);
+                    pane.setRotate(runwayAngle);
+                    compass.setRotate(compassAngle);
+                    draggedEvent.consume();
+                });
+            }
+            mouseEvent.consume();
+        });
+        pane.setOnMouseReleased( releasedEvent -> {
+            pane.setOnMouseDragged(null);
+        });
+    }
+
+
+
+
 }
