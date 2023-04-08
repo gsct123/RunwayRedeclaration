@@ -19,11 +19,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,6 +52,13 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private static boolean needRedeclare = true;
+    //notification
+    @FXML
+    private Pane notiPane;
+    @FXML
+    private ScrollPane notiScrollPane;
+    @FXML
+    private VBox notiVBox;
 
     //fxml elements
     @FXML
@@ -222,12 +232,16 @@ public class MainController implements Initializable {
 
 
             if(Main.isReset()){
-                notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
+                addNotificationLabel(notiVBox,new Label("Status: Options Reset\t " + getDateTimeNow()));
+
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println(MainController.airports + " from main controller");
+
+        //initialize Notification
+        initializeNotification(notiPane,notiScrollPane,notiVBox);
     }
 
     //getters
@@ -329,7 +343,7 @@ public class MainController implements Initializable {
         }
         calculationBreakdown.setDisable(false);
         valueChanged.set(valueChanged.doubleValue() == 1? 0: 1);
-        notificationLabel.setText("Status: Calculation performed\t " + getDateTimeNow());
+        addNotificationLabel(notiVBox, new Label("Status: Calculation performed\t " + getDateTimeNow()));
 
     }
 
@@ -671,5 +685,48 @@ public class MainController implements Initializable {
             clDistTextField.setDisable(notAllowed);
             performCalculationButton.setDisable(notAllowed);
         }
+    }
+
+    public void initializeNotification( Pane pane, ScrollPane scrollPane, VBox vBox) {
+        scrollPane.setMinHeight(0);
+        scrollPane.setMaxHeight(1080);
+        //set the scroll pane to the latest notification
+        vBox.heightProperty().addListener((observableValue, number, t1) -> {
+            scrollPane.setVvalue(scrollPane.getVmax());
+        } );
+
+        pane.setOnMousePressed(mouseEvent -> {
+            double y = mouseEvent.getY();
+            double oriPaneY = pane.getLayoutY();
+            double oriPaneH = pane.getHeight();
+            double oriSPaneH = scrollPane.getHeight();
+            pane.setOnMouseDragged(event -> {
+                //-ve when up, +ve when down
+                double extension = event.getY() - y;
+                double newPaneH = pane.getPrefHeight() - extension;
+                double newSPaneH = scrollPane.getPrefHeight() - extension;
+                double newPaneY = pane.getLayoutY() + extension;
+                //set new Height and Layout
+                pane.setPrefHeight(newPaneH);
+                pane.setLayoutY(newPaneY);
+                scrollPane.setPrefHeight(newSPaneH);
+                //
+                if (pane.getLayoutY() >= Main.getStage().getHeight() -5){
+                    pane.setLayoutY(oriPaneY);
+                    pane.setPrefHeight(oriPaneH);
+                    scrollPane.setPrefHeight(oriSPaneH);
+
+                }
+                event.consume();
+            });
+            mouseEvent.consume();
+        });
+
+
+    }
+
+    public void addNotificationLabel(VBox vBox,Label label) {
+        label.setPrefHeight(40);
+        vBox.getChildren().add(label);
     }
 }
