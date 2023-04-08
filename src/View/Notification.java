@@ -28,6 +28,7 @@ public class Notification {
         res.getStyleClass().add("notification");
 
         res.showInformation();
+
     }
 
     public void failNotification(String title, String message){

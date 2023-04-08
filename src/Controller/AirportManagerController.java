@@ -34,7 +34,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -113,7 +115,8 @@ public class AirportManagerController implements Initializable {
     public String airportInfo(Airport airport){
         StringBuilder message = new StringBuilder();
         message.append("Airport name: ").append(airport.getName()).append(" (").append(airport.getID()).append(")");
-        message.append("\nPhysical runways: \n");
+        message.append("\nAirport manager: ").append(airport.getManager());
+        message.append("\n\nPhysical runways: \n");
         ObservableList<PhysicalRunway> runways = airport.getPhysicalRunways();
         for(PhysicalRunway runway: runways){
             message.append(runway.getName());
@@ -177,7 +180,53 @@ public class AirportManagerController implements Initializable {
                 MainController.airportNames.remove(airport.getName());
                 MainController.references.remove(airport.getID());
                 MainController.managerMap.remove(airport.getManager());
-                new Notification(AirportManager.getStage()).sucessNotification("Successful action", airport.getName()+" ("+airport.getID()+") has been deleted.");
+                new Notification(AirportManager.getStage()).sucessNotification("Successful action", airport.getName()+" has been deleted.");
+            }
+        }
+    }
+
+    @FXML
+    public void exportAirport() throws IOException, ParserConfigurationException, TransformerException {
+        Airport airport = airportTable.getSelectionModel().getSelectedItem();
+
+        if(airport == null){
+            new Error().errorPopUp("No airport selected. Hint: please select an airport to export the details.");
+        } else{
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Export Airport Details");
+
+// Set initial directory for the file chooser
+            File userDirectory = new File(System.getProperty("user.home"));
+            fileChooser.setInitialDirectory(userDirectory);
+
+// Set extension filters based on the type of file to be saved
+            FileChooser.ExtensionFilter textFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
+            FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("XML Files (*.xml)", "*.xml");
+            fileChooser.getExtensionFilters().addAll(textFilter, csvFilter);
+
+// Show the file chooser and get the selected file directory
+            File selectedDirectory = fileChooser.showSaveDialog(null);
+
+            if (selectedDirectory != null) {
+                // Get the file extension
+                String extension = "";
+                int dotIndex = selectedDirectory.getName().lastIndexOf('.');
+                if (dotIndex > 0 && dotIndex < selectedDirectory.getName().length() - 1) {
+                    extension = selectedDirectory.getName().substring(dotIndex + 1).toLowerCase();
+                }
+
+                BufferedWriter writer = new BufferedWriter(new FileWriter(selectedDirectory));
+
+                // Check the file extension
+                if (extension.equals("txt")) {
+                    writer.write(airportInfo(airport));
+                } else if (extension.equals("xml")) {
+                    ObservableList<Airport> temp = FXCollections.observableArrayList();
+                    temp.add(airport);
+                    writeToFile(temp, selectedDirectory.getAbsolutePath());
+                }
+                new Notification(AirportManager.getStage()).sucessNotification("Download successfull", "Saved to "+selectedDirectory);
+                writer.close();
             }
         }
     }
@@ -308,7 +357,7 @@ public class AirportManagerController implements Initializable {
     
     
                         """);
-            new Notification(AirportManager.getStage()).failNotification("Failed action", "Fail to add airport, check XML and reimport.");
+            new Notification(AirportManager.getStage()).failNotification("Failed action", "Fail to add airport.");
         }
 
     }

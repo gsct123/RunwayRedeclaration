@@ -119,7 +119,7 @@
                                 <Font name="Verdana" size="16.0" />
                             </font>
                         </Button>
-                        <Button fx:id="exportAirportDetails" layoutX="1096.0" layoutY="572.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="275.0" styleClass="functionButton" text="Export Airport Details">
+                        <Button fx:id="exportAirportDetails" layoutX="1096.0" layoutY="572.0" mnemonicParsing="false" onAction="#exportAirport" prefHeight="35.0" prefWidth="275.0" styleClass="functionButton" text="Export Airport Details">
                             <font>
                                 <Font name="Verdana" size="16.0" />
                             </font>
