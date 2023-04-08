@@ -1,9 +1,9 @@
-.success-noti > .pane {
+.notification > .pane {
     -fx-font-family: Verdana;
     -fx-background-color: #212f45;
 }
 
-.success-noti  > .pane .label {
+.notification  > .pane .label {
     -fx-text-fill: white;
     -fx-line-spacing: 5px;
 }

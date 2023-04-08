@@ -3,8 +3,8 @@ package Controller;
 import Model.Airport;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
-import View.*;
 import View.Error;
+import View.*;
 import View.OtherPopUp.Confirmation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,14 +26,23 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class AirportManagerController implements Initializable {
 
@@ -62,6 +71,7 @@ public class AirportManagerController implements Initializable {
     private TableColumn<Airport, String> nameCol;
     @FXML
     private TableColumn<Airport, String> managerCol;
+
 
 
     @Override
@@ -120,6 +130,13 @@ public class AirportManagerController implements Initializable {
     }
 
     @FXML
+    public void backToMain(ActionEvent event) throws Exception {
+        AirportManager.getStage().close();
+        writeToFile(MainController.airports, "src/Data/airports.xml");
+        new Main().start(new Stage());
+    }
+
+    @FXML
     public void handleLogout(ActionEvent event) throws Exception {
         AirportManager.getStage().close();
         new Login().start(new Stage());
@@ -144,6 +161,24 @@ public class AirportManagerController implements Initializable {
             addAirport(selectedFile);
             airportTable.setItems(MainController.airports);
             airportTable.refresh();
+        }
+    }
+
+    @FXML
+    public void deleteAirport(ActionEvent event){
+        Airport airport = airportTable.getSelectionModel().getSelectedItem();
+
+        if(airport == null){
+            new Error().errorPopUp("No airport selected. Hint: please select an airport to be deleted.");
+        } else{
+            boolean flag = new Confirmation().confirm("Are you sure you want to delete "+airport.getName()+" ("+airport.getID()+")?", "Warning: This action cannot be undone.\nSelected airport will be permanently deleted.");
+            if(flag){
+                MainController.airports.remove(airport);
+                MainController.airportNames.remove(airport.getName());
+                MainController.references.remove(airport.getID());
+                MainController.managerMap.remove(airport.getManager());
+                new Notification(AirportManager.getStage()).sucessNotification("Successful action", airport.getName()+" ("+airport.getID()+") has been deleted.");
+            }
         }
     }
 
@@ -226,6 +261,7 @@ public class AirportManagerController implements Initializable {
 
                         if (errorMessage.toString().length() > 0) {
                             new Error().showError(errorMessage.toString());
+                            new Notification(AirportManager.getStage()).failNotification("Failed action", "Fail to add airport.");
                         } else {
                             boolean result = new Confirmation().confirmAddAirport(airport, airportInfo(airport));
                             System.out.println(result);
@@ -233,8 +269,8 @@ public class AirportManagerController implements Initializable {
                                 MainController.airports.add(airport);
                                 MainController.airportNames.add(airportName);
                                 MainController.references.add(reference);
-                                airportTable.refresh();
-                                new Notification(AirportManager.getStage()).sucessNotification("Successful", airportName + " successfully added to system.");
+                                MainController.managerMap.put(manager, airport);
+                                new Notification(AirportManager.getStage()).sucessNotification("Successful action", airportName + " successfully added to system.");
                             }
                         }
                     }
@@ -272,6 +308,7 @@ public class AirportManagerController implements Initializable {
     
     
                         """);
+            new Notification(AirportManager.getStage()).failNotification("Failed action", "Fail to add airport, check XML and reimport.");
         }
 
     }
@@ -396,4 +433,61 @@ public class AirportManagerController implements Initializable {
             return res.toString();
         }
     }
+
+    public static void writeToFile(ObservableList<Airport> airports, String fileName) throws ParserConfigurationException, TransformerException {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document document = documentBuilder.newDocument();
+        document.setXmlStandalone(true);
+
+        Element root = document.createElement("airports");
+        document.appendChild(root);
+
+        for (Airport airport : airports) {
+            Element airportElement = document.createElement("airport");
+            root.appendChild(airportElement);
+
+            Element idElement = document.createElement("ID");
+            idElement.appendChild(document.createTextNode(airport.getID()));
+            airportElement.appendChild(idElement);
+
+            Element nameElement = document.createElement("name");
+            nameElement.appendChild(document.createTextNode(airport.getName()));
+            airportElement.appendChild(nameElement);
+
+            Element physicalRunwaysElement = document.createElement("physicalRunways");
+            airportElement.appendChild(physicalRunwaysElement);
+
+            ObservableList<PhysicalRunway> physicalRunways = airport.getPhysicalRunways();
+            for (PhysicalRunway physicalRunway : physicalRunways) {
+                Element physicalRunwayElement = document.createElement("physicalRunway");
+                physicalRunwayElement.setAttribute("name", physicalRunway.getName());
+                physicalRunwaysElement.appendChild(physicalRunwayElement);
+
+                ObservableList<LogicalRunway> logicalRunways = physicalRunway.getLogicalRunways();
+                for (LogicalRunway logicalRunway : logicalRunways) {
+                    Element logicalRunwayElement = document.createElement("logicalRunway");
+                    logicalRunwayElement.setAttribute("designator", logicalRunway.getDesignator());
+                    logicalRunwayElement.setAttribute("tora", String.valueOf(logicalRunway.getTora()));
+                    logicalRunwayElement.setAttribute("toda", String.valueOf(logicalRunway.getToda()));
+                    logicalRunwayElement.setAttribute("asda", String.valueOf(logicalRunway.getAsda()));
+                    logicalRunwayElement.setAttribute("lda", String.valueOf(logicalRunway.getLda()));
+                    physicalRunwayElement.appendChild(logicalRunwayElement);
+                }
+            }
+
+            Element userElement = document.createElement("user");
+            userElement.appendChild(document.createTextNode(airport.getManager()));
+            airportElement.appendChild(userElement);
+        }
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        DOMSource domSource = new DOMSource(document);
+        StreamResult streamResult = new StreamResult(new File(fileName));
+        transformer.transform(domSource, streamResult);
+    }
+
 }

@@ -11,13 +11,13 @@ import java.util.Optional;
 public class Confirmation {
     public Confirmation() {}
 
-    public boolean confirmReset(){
+    public boolean confirm(String header, String message){
         boolean flag = false;
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Are you sure you want to reset the system?");
-        alert.setContentText("Warning: This action cannot be undone.\nAll inputs and selections will be cleared.");
+        alert.setHeaderText(header);
+        alert.setContentText(message);
         alert.getDialogPane().lookup(".content.label").setStyle("-fx-font-family: Verdana; -fx-font-size: 14px; -fx-text-fill: red; -fx-line-spacing: 5px");
 
 // Create the DialogPane explicitly

@@ -4,8 +4,8 @@ import Model.*;
 import View.AirportManager;
 import View.Error;
 import View.Main;
-import View.OtherPopUp.NoRedeclarationNeeded;
 import View.OtherPopUp.Confirmation;
+import View.OtherPopUp.NoRedeclarationNeeded;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -47,6 +47,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -169,12 +170,12 @@ public class MainController implements Initializable {
     public static DoubleProperty obstacleHeight = new SimpleDoubleProperty();
     public static DoubleProperty obstacleWidth = new SimpleDoubleProperty();
 
-
     //list of airports and obstacles from files
     public static ObservableList<Airport> airports = FXCollections.observableArrayList();
     public static ObservableList<String> references = FXCollections.observableArrayList();
     public static ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
     public static ObservableList<String> airportNames = FXCollections.observableArrayList();
+    public static HashMap<String, Airport> managerMap = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -229,8 +230,6 @@ public class MainController implements Initializable {
                 }
             });
 
-
-
             if(Main.isReset()){
                 addNotificationLabel(notiVBox,new Label("Status: Options Reset\t " + getDateTimeNow()));
 
@@ -246,7 +245,7 @@ public class MainController implements Initializable {
 
     //getters
     public ObservableList<Obstacle> getObstacles(){return obstacles;}
-    public ObservableList<Airport> getAirports(){return airports;}
+    public static ObservableList<Airport> getAirports(){return airports;}
     public static PhysicalRunway getPhysRunwaySelected() {return physRunwayItem.get();}
     public static boolean needRedeclare(){return needRedeclare;}
     public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
@@ -261,7 +260,7 @@ public class MainController implements Initializable {
     }
     @FXML
     public void handleReset(ActionEvent event) throws IOException {
-        boolean flag = new Confirmation().confirmReset();
+        boolean flag = new Confirmation().confirm("Are you sure you want to reset the system?", "Warning: This action cannot be undone.\nAll inputs and selections will be cleared.");
         Main.setReset(true);
         if(flag) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Main.fxml"));
@@ -436,6 +435,8 @@ public class MainController implements Initializable {
         resaInfo.setOnMouseExited(mouseEvent -> resaInfoLabel.setVisible(false));
     }
 
+
+
     //this function read from a xml file and instantiate list of airports available
     public void loadAirports(String file) throws Exception {
         airports = FXCollections.observableArrayList();
@@ -507,6 +508,7 @@ public class MainController implements Initializable {
 
 
                 Airport airport = new Airport(reference, airportName, physicalRunways, manager);
+                managerMap.put(manager, airport);
 
                 getAirports().add(airport);
             }

@@ -23,11 +23,26 @@ public class Notification {
                 .position(Pos.BOTTOM_LEFT)
                 .owner(owner);
 
+        Scene scene = owner.getScene();
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/OtherStylesheet.css")).toExternalForm());
+        res.getStyleClass().add("notification");
+
+        res.showInformation();
+    }
+
+    public void failNotification(String title, String message){
+
+        Notifications res = Notifications.create()
+                .title(title)
+                .text(message)
+                .hideAfter(Duration.seconds(3))
+                .position(Pos.BOTTOM_LEFT)
+                .owner(owner);
 
         Scene scene = owner.getScene();
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/OtherStylesheet.css")).toExternalForm());
-        res.getStyleClass().add("success-noti");
+        res.getStyleClass().add("notification");
 
-        res.showInformation();
+        res.showWarning();
     }
 }
