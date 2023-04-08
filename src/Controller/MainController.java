@@ -52,6 +52,8 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private static boolean needRedeclare = true;
+    @FXML
+    private Button resetViewButton;
     //notification
     @FXML
     private Pane notiPane;
@@ -59,6 +61,8 @@ public class MainController implements Initializable {
     private ScrollPane notiScrollPane;
     @FXML
     private VBox notiVBox;
+    @FXML
+    private Button extendButton;
 
     //fxml elements
     @FXML
@@ -242,6 +246,8 @@ public class MainController implements Initializable {
 
         //initialize Notification
         initializeNotification(notiPane,notiScrollPane,notiVBox);
+        //System.out.println("slope distance = " + Utility.getDistBetween(0,0,4,3));
+        //System.out.println("angle = " + Utility.getAngleBetween(4,3,4,0,0,0));
     }
 
     //getters
@@ -688,6 +694,7 @@ public class MainController implements Initializable {
     }
 
     public void initializeNotification( Pane pane, ScrollPane scrollPane, VBox vBox) {
+        pane.setMinHeight(15);
         scrollPane.setMinHeight(0);
         scrollPane.setMaxHeight(1080);
         //set the scroll pane to the latest notification
@@ -697,9 +704,6 @@ public class MainController implements Initializable {
 
         pane.setOnMousePressed(mouseEvent -> {
             double y = mouseEvent.getY();
-            double oriPaneY = pane.getLayoutY();
-            double oriPaneH = pane.getHeight();
-            double oriSPaneH = scrollPane.getHeight();
             pane.setOnMouseDragged(event -> {
                 //-ve when up, +ve when down
                 double extension = event.getY() - y;
@@ -710,23 +714,44 @@ public class MainController implements Initializable {
                 pane.setPrefHeight(newPaneH);
                 pane.setLayoutY(newPaneY);
                 scrollPane.setPrefHeight(newSPaneH);
-                //
-                if (pane.getLayoutY() >= Main.getStage().getHeight() -5){
-                    pane.setLayoutY(oriPaneY);
-                    pane.setPrefHeight(oriPaneH);
-                    scrollPane.setPrefHeight(oriSPaneH);
-
-                }
+                //System.out.println("1. " + pane.getLayoutY());
+                //System.out.println("2. " + pane.getHeight());
+                //System.out.println("3. " + Main.getStage().getHeight());
                 event.consume();
             });
             mouseEvent.consume();
         });
-
-
+        //reset to bottom if our of bound
+        pane.setOnMouseReleased(releaseEvent -> {
+            double oriPaneY = 764;
+            double oriPaneH = 17;
+            if (pane.getLayoutY() >= oriPaneY  || pane.getLayoutY() < 0 ){
+                pane.setLayoutY(oriPaneY);
+                pane.setPrefHeight(oriPaneH);
+                scrollPane.setPrefHeight(0);
+            }
+        });
     }
 
     public void addNotificationLabel(VBox vBox,Label label) {
         label.setPrefHeight(40);
         vBox.getChildren().add(label);
     }
+
+    public void resetNotificationBar(Pane pane, ScrollPane scrollPane){
+        double oriPaneY = 764;
+        double oriPaneH = 17;
+        pane.setLayoutY(oriPaneY);
+        pane.setPrefHeight(oriPaneH);
+        scrollPane.setPrefHeight(0);
+    }
+
+    public void extendNotiBar(ActionEvent actionEvent) {
+
+    }
+
+    public void handleResetView(ActionEvent actionEvent) {
+
+    }
+
 }

@@ -20,6 +20,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <Pane prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
@@ -167,7 +168,7 @@
                                       <Insets bottom="5.0" top="5.0" />
                                   </padding>
                               </Label>
-                              <Button fx:id="resetButton" layoutX="19.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" prefWidth="235.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="Reset" textFill="WHITE">
+                              <Button fx:id="resetButton" layoutX="19.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" prefWidth="106.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="Reset" textFill="WHITE">
                                   <font>
                                       <Font name="Verdana" size="16.0" />
                                   </font>
@@ -190,6 +191,11 @@
                                       <Font name="Verdana" size="12.0" />
                                   </font>
                               </TextField>
+                        <Button fx:id="resetViewButton" layoutX="148.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleResetView" prefHeight="35.0" prefWidth="106.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="ResetView" textFill="WHITE">
+                           <font>
+                              <Font name="Verdana" size="16.0" />
+                           </font>
+                        </Button>
                           </children>
                       </AnchorPane>
                       <AnchorPane prefHeight="655.0" prefWidth="829.0">
@@ -391,10 +397,21 @@
               </SplitPane>
           </children>
       </VBox>
-       <Pane fx:id="notiPane" layoutY="765.0" prefHeight="17.0" prefWidth="1400.0" style="-fx-background-color: black;">
+       <Pane fx:id="notiPane" layoutY="764.0" prefHeight="17.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
            <children>
-               <Label layoutX="4.0" layoutY="-1.0" prefHeight="18.0" prefWidth="102.0" text="Notification Bar" textFill="WHITE" />
-               <ScrollPane fx:id="notiScrollPane" fitToHeight="true" fitToWidth="true" layoutY="16.0" prefHeight="0.0" prefWidth="1400.0" style="-fx-background-color: red;">
+               <Label layoutX="4.0" layoutY="-1.0" prefHeight="18.0" prefWidth="106.0" text="Notification Bar" textFill="WHITE">
+               <font>
+                  <Font name="Verdana Bold" size="12.0" />
+               </font></Label>
+            <Button fx:id="extendButton" layoutX="1345.0" layoutY="1.0" minHeight="17.0" minWidth="30.0" mnemonicParsing="false" onAction="#extendNotiBar" prefHeight="17.0" prefWidth="30.0" styleClass="extendButton" stylesheets="@../CSS/MainStylesheet.css">
+               <font>
+                  <Font size="1.0" />
+               </font>
+               <graphic>
+                  <Line accessibleRole="BUTTON" endX="-12.0" stroke="#ffffffb3" strokeWidth="3.0" />
+               </graphic>
+            </Button>
+               <ScrollPane fx:id="notiScrollPane" fitToHeight="true" fitToWidth="true" layoutY="16.0" prefHeight="0.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
                    <content>
                        <VBox fx:id="notiVBox" prefWidth="1398.0" />
                    </content>
