@@ -25,6 +25,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -181,6 +182,10 @@ public class MainController implements Initializable {
     public static ObservableList<String> airportNames = FXCollections.observableArrayList();
     public static HashMap<String, Airport> managerMap = new HashMap<>();
 
+    //Controllers
+    private TopViewController topViewController;
+    private SideViewController sideViewController;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DropShadow shadow = new DropShadow(2, Color.valueOf("#212f45"));
@@ -201,8 +206,15 @@ public class MainController implements Initializable {
 
         loadInfos();
         try {
-            topViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/TopView.fxml"))));
-            sideViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/SideView.fxml"))));
+            //create instances of the controller so that we can direct access their field when needed
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/TopView.fxml"));
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/FXML/SideView.fxml"));
+            Parent root = loader.load();
+            Parent root1 = loader1.load();
+            topViewController = loader.getController();
+            sideViewController = loader1.getController();
+            topViewTab.setContent(root);
+            sideViewTab.setContent(root1);
             simultaneousViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/SimultaneousView.fxml"))));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
@@ -243,7 +255,6 @@ public class MainController implements Initializable {
         }
         System.out.println(MainController.airports + " from main controller");
 
-        //initialize Notification
         initializeNotification(notiPane,notiScrollPane,notiVBox);
         //System.out.println("slope distance = " + Utility.getDistBetween(0,0,4,3));
         //System.out.println("angle = " + Utility.getAngleBetween(4,3,4,0,0,0));
@@ -753,7 +764,20 @@ public class MainController implements Initializable {
     }
 
     public void handleResetView(ActionEvent actionEvent) {
-
+        System.out.println("asd");
+        try {
+            resetView(topViewController.getTopDownRunwayPane());
+            resetView(sideViewController.getSideOnPane());
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public void resetView(AnchorPane pane){
+        pane.setTranslateX(0);
+        pane.setTranslateY(0);
+        pane.setScaleX(1);
+        pane.setScaleY(1);
+        pane.setRotate(0);
     }
 
 }

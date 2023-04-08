@@ -25,7 +25,7 @@ public class TopViewController implements Initializable {
     @FXML
     private Label rightDirection;
     @FXML
-    public AnchorPane topDownRunwayPane;
+    private AnchorPane topDownRunwayPane;
     @FXML
     private Label leftDesignator;
     @FXML
@@ -820,12 +820,6 @@ public class TopViewController implements Initializable {
         rotate.play();
     }
 
-    private void resetZoomAndDrag(AnchorPane pane){
-        pane.setTranslateX(0);
-        pane.setTranslateY(0);
-        pane.setScaleX(1);
-        pane.setScaleY(1);
-    }
 
     private void initializeMouseEvent(AnchorPane pane, Pane compass){
         pane.setOnMousePressed(mouseEvent->{
@@ -868,7 +862,7 @@ public class TopViewController implements Initializable {
         });
     }
 
-
-
-
+    public AnchorPane getTopDownRunwayPane() {
+        return topDownRunwayPane;
+    }
 }

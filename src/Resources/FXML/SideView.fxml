@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: #d9e8ff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SideViewController">
+<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: #d9e8ff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SideViewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcf347" height="12.0" layoutX="635.0" layoutY="56.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5ff552" height="12.0" layoutX="635.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
@@ -104,13 +104,13 @@
             </Label>
             <Rectangle id="clearwayR" fx:id="clearwayR" fill="#1fff42" height="15.0" layoutX="700.0" layoutY="208.0" stroke="#1fff3d" strokeType="INSIDE" width="50.0" />
             <Rectangle id="clearwayL" fx:id="clearwayL" fill="#1fff3d" height="15.0" layoutX="50.0" layoutY="208.0" stroke="#1fff3d" strokeType="INSIDE" width="50.0" />
-            <Line id="displacedThresholdR" fx:id="displacedThresholdR" endY="15.0" fill="BLUE" layoutX="700.0" layoutY="208.0" stroke="BLUE" />
-            <Line id="displacedThresholdL" fx:id="displacedThresholdL" endY="15.0" fill="BLUE" layoutX="166.0" layoutY="208.0" stroke="BLUE" />
+            <Line id="displacedThresholdR" fx:id="displacedThresholdR" endY="15.0" fill="BLUE" layoutX="700.0" layoutY="208.0" stroke="BLUE" strokeWidth="3.0" />
+            <Line id="displacedThresholdL" fx:id="displacedThresholdL" endY="15.0" fill="BLUE" layoutX="166.0" layoutY="208.0" stroke="BLUE" strokeWidth="3.0" />
             <Rectangle id="stopwayR" fx:id="stopwayR" fill="YELLOW" height="15.0" layoutX="700.0" layoutY="208.0" stroke="YELLOW" strokeType="INSIDE" width="25.0" />
             <Rectangle id="stopwayL" fx:id="stopwayL" fill="YELLOW" height="15.0" layoutX="75.0" layoutY="208.0" stroke="YELLOW" strokeType="INSIDE" width="25.0" />
-            <Line id="thresholdL" fx:id="thresholdL" endY="15.0" fill="#f4f4f4" layoutX="100.0" layoutY="208.0" stroke="#f4f4f4" />
+            <Line id="thresholdL" fx:id="thresholdL" endY="15.0" fill="#f4f4f4" layoutX="100.0" layoutY="208.0" stroke="#f4f4f4" strokeWidth="3.0" />
             <Line id="toraEnd" fx:id="toraEnd" endY="25.0" layoutX="700.0" layoutY="115.0" />
-            <Line id="thresholdR" fx:id="thresholdR" endY="15.0" fill="#f4f4f4" layoutX="700.0" layoutY="208.0" stroke="#f4f4f4" />
+            <Line id="thresholdR" fx:id="thresholdR" endY="15.0" fill="#f4f4f4" layoutX="700.0" layoutY="208.0" stroke="#f4f4f4" strokeWidth="3.0" />
             <Line id="ldaStart" fx:id="ldaStart" endY="25.0" layoutX="166.0" layoutY="38.0" />
             <Line id="asdaStart" fx:id="asdaStart" endY="25.0" layoutX="100.0" layoutY="89.0" />
             <Line id="ldaEnd" fx:id="ldaEnd" endY="25.0" layoutX="700.0" layoutY="38.0" />
