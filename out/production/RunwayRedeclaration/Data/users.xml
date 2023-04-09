@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <user>
+        <username>admin</username>
+        <password>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</password>
+        <airportID>0</airportID>
+        <role>1</role>
+    </user>
+    <user>
+        <username>manager</username>
+        <password>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</password>
+        <airportID>LHR</airportID>
+        <role>2</role>
+    </user>
+    <user>
+        <username>atc</username>
+        <password>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</password>
+        <airportID>LHR</airportID>
+        <role>3</role>
+    </user>
+</users>
+
+
