@@ -18,4 +18,15 @@
     </physicalRunways>
     <user>manager</user>
   </airport>
+  <airport>
+    <ID>DUM</ID>
+    <name>Dummy Airport</name>
+    <physicalRunways>
+      <physicalRunway name="09L/27R">
+        <logicalRunway asda="3902.0" designator="09L" lda="3595.0" toda="3902.0" tora="3902.0"/>
+        <logicalRunway asda="3902.0" designator="27R" lda="3902.0" toda="3962.0" tora="3902.0"/>
+      </physicalRunway>
+    </physicalRunways>
+    <user>jingru</user>
+  </airport>
 </airports>

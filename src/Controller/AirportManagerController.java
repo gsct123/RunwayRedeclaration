@@ -116,10 +116,10 @@ public class AirportManagerController implements Initializable {
         StringBuilder message = new StringBuilder();
         message.append("Airport name: ").append(airport.getName()).append(" (").append(airport.getID()).append(")");
         message.append("\nAirport manager: ").append(airport.getManager());
-        message.append("\n\nPhysical runways: \n");
+        message.append("\n\nPhysical runways:");
         ObservableList<PhysicalRunway> runways = airport.getPhysicalRunways();
         for(PhysicalRunway runway: runways){
-            message.append(runway.getName());
+            message.append("\n").append(runway.getName());
             ObservableList<LogicalRunway> logRunways = runway.getLogicalRunways();
             for(LogicalRunway logRunway: logRunways){
                 message.append("\n  ").append(logRunway.getDesignator());
@@ -182,6 +182,18 @@ public class AirportManagerController implements Initializable {
                 MainController.managerMap.remove(airport.getManager());
                 new Notification(AirportManager.getStage()).sucessNotification("Successful action", airport.getName()+" has been deleted.");
             }
+        }
+    }
+
+    @FXML
+    public void editAirport(ActionEvent event){
+        Airport airport = airportTable.getSelectionModel().getSelectedItem();
+
+        if(airport == null){
+            new Error().errorPopUp("No airport selected. Hint: please select an airport to edit its details.");
+        } else{
+
+            new Notification(AirportManager.getStage()).sucessNotification("Successful action", "Airport info has been updated.");
         }
     }
 
@@ -305,6 +317,9 @@ public class AirportManagerController implements Initializable {
                         }
 
                         String manager = airportElement.getElementsByTagName("user").item(0).getTextContent();
+                        if(MainController.managerMap.containsKey(manager)){
+                            errorMessage.append("\nDuplicated username for airport manager, already in use");
+                        }
                         Airport airport = new Airport(reference, airportName, physicalRunways, manager);
 
 

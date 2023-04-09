@@ -25,7 +25,7 @@
 <!--                <logicalRunway designator="27L" tora="3660.0" toda="3660.0" asda="3660.0" lda="3660.0" />-->
 <!--            </physicalRunway>-->
         </physicalRunways>
-        <user>manager</user>
+        <user>jingru</user>
     </airport>
 </airports>
 
