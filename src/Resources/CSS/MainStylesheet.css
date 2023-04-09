@@ -97,3 +97,20 @@
     -fx-pref-height: 0;
     -fx-max-height: 0;
 }
+
+#extendButton{
+    -fx-background-color:  #212f45;
+}
+
+#extendButton:hover{
+    -fx-background-color: #353d4a;
+}
+
+#notificationButton{
+    -fx-background-color: #212f45;
+    -fx-background-radius: 0;
+}
+
+#notificationButton:hover{
+    -fx-background-color: #353d4a;
+}

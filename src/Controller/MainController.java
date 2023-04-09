@@ -25,9 +25,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
@@ -53,6 +57,10 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private static boolean needRedeclare = true;
+    @FXML
+    private Button notificationButton;
+    @FXML
+    private Button resetViewButton;
     //notification
     @FXML
     private Pane notiPane;
@@ -60,6 +68,8 @@ public class MainController implements Initializable {
     private ScrollPane notiScrollPane;
     @FXML
     private VBox notiVBox;
+    @FXML
+    private Button extendButton;
 
     //fxml elements
     @FXML
@@ -177,6 +187,10 @@ public class MainController implements Initializable {
     public static ObservableList<String> airportNames = FXCollections.observableArrayList();
     public static HashMap<String, Airport> managerMap = new HashMap<>();
 
+    //Controllers
+    private TopViewController topViewController;
+    private SideViewController sideViewController;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DropShadow shadow = new DropShadow(2, Color.valueOf("#212f45"));
@@ -197,8 +211,15 @@ public class MainController implements Initializable {
 
         loadInfos();
         try {
-            topViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/TopView.fxml"))));
-            sideViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/SideView.fxml"))));
+            //create instances of the controller so that we can direct access their field when needed
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/TopView.fxml"));
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/FXML/SideView.fxml"));
+            Parent root = loader.load();
+            Parent root1 = loader1.load();
+            topViewController = loader.getController();
+            sideViewController = loader1.getController();
+            topViewTab.setContent(root);
+            sideViewTab.setContent(root1);
             simultaneousViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/SimultaneousView.fxml"))));
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
@@ -232,15 +253,15 @@ public class MainController implements Initializable {
 
             if(Main.isReset()){
                 addNotificationLabel(notiVBox,new Label("Status: Options Reset\t " + getDateTimeNow()));
-
+                notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println(MainController.airports + " from main controller");
 
-        //initialize Notification
         initializeNotification(notiPane,notiScrollPane,notiVBox);
+        topViewController.initializeCompass();
     }
 
     //getters
@@ -343,7 +364,7 @@ public class MainController implements Initializable {
         calculationBreakdown.setDisable(false);
         valueChanged.set(valueChanged.doubleValue() == 1? 0: 1);
         addNotificationLabel(notiVBox, new Label("Status: Calculation performed\t " + getDateTimeNow()));
-
+        notificationLabel.setText("Status: Calculation performed\t " + getDateTimeNow());
     }
 
     public String getDateTimeNow(){
@@ -690,6 +711,7 @@ public class MainController implements Initializable {
     }
 
     public void initializeNotification( Pane pane, ScrollPane scrollPane, VBox vBox) {
+        pane.setMinHeight(15);
         scrollPane.setMinHeight(0);
         scrollPane.setMaxHeight(1080);
         //set the scroll pane to the latest notification
@@ -699,9 +721,6 @@ public class MainController implements Initializable {
 
         pane.setOnMousePressed(mouseEvent -> {
             double y = mouseEvent.getY();
-            double oriPaneY = pane.getLayoutY();
-            double oriPaneH = pane.getHeight();
-            double oriSPaneH = scrollPane.getHeight();
             pane.setOnMouseDragged(event -> {
                 //-ve when up, +ve when down
                 double extension = event.getY() - y;
@@ -712,23 +731,79 @@ public class MainController implements Initializable {
                 pane.setPrefHeight(newPaneH);
                 pane.setLayoutY(newPaneY);
                 scrollPane.setPrefHeight(newSPaneH);
-                //
-                if (pane.getLayoutY() >= Main.getStage().getHeight() -5){
-                    pane.setLayoutY(oriPaneY);
-                    pane.setPrefHeight(oriPaneH);
-                    scrollPane.setPrefHeight(oriSPaneH);
-
-                }
+                //System.out.println("1. " + pane.getLayoutY());
+                //System.out.println("2. " + pane.getHeight());
+                //System.out.println("3. " + Main.getStage().getHeight());
                 event.consume();
             });
             mouseEvent.consume();
         });
-
-
+        //reset to bottom if our of bound
+        pane.setOnMouseReleased(releaseEvent -> {
+            double oriPaneY = 759;
+            double oriPaneH = 25;
+            if (pane.getLayoutY() >= oriPaneY  || pane.getLayoutY() < 0 ){
+                pane.setLayoutY(oriPaneY);
+                pane.setPrefHeight(oriPaneH);
+                scrollPane.setPrefHeight(0);
+            }
+        });
     }
 
     public void addNotificationLabel(VBox vBox,Label label) {
         label.setPrefHeight(40);
+        label.setTextFill(Color.RED);
+        Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR,12);
+        label.setFont(font);
         vBox.getChildren().add(label);
     }
+
+    public void resetNotificationBar(Pane pane, ScrollPane scrollPane){
+        double oriPaneY = 759;
+        double oriPaneH = 25;
+        pane.setLayoutY(oriPaneY);
+        pane.setPrefHeight(oriPaneH);
+        scrollPane.setPrefHeight(0);
+    }
+
+    public void handleResetView(ActionEvent actionEvent) {
+        //System.out.println("asd");
+        try {
+            resetView(topViewController.getTopDownRunwayPane());
+            resetView(sideViewController.getSideOnPane());
+            topViewController.getCompass().setRotate(0);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public void resetView(AnchorPane pane){
+        pane.setTranslateX(0);
+        pane.setTranslateY(0);
+        pane.setScaleX(1);
+        pane.setScaleY(1);
+        pane.setRotate(0);
+    }
+
+    int clickCount = 0;
+    public void showNotibar(ActionEvent actionEvent) {
+        if (clickCount%2 ==0){
+            notiPane.setVisible(true);
+            notificationLabel.setVisible(false);
+        }else {
+
+            notiPane.setVisible(false);
+            notificationLabel.setVisible(true);
+        }
+
+        clickCount++;
+    }
+
+    public void extendNotiBar(ActionEvent actionEvent) {
+        resetNotificationBar(notiPane,notiScrollPane);
+        notiPane.setVisible(false);
+        notificationLabel.setVisible(true);
+        clickCount++;
+    }
+
+
 }

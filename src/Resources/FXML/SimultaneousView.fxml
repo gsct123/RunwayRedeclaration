@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: #d9e8ff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SimultaneousViewController">
+<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: #d9e8ff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SimultaneousViewController">
    <children>
       <AnchorPane fx:id="topDownRunwayPane" layoutY="58.0" prefHeight="280.0" prefWidth="804.0" scaleX="0.95" scaleY="0.95">
          <children>
@@ -276,15 +276,15 @@
       <Polygon fill="#0f0f0f" layoutX="394.0" layoutY="39.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Line endX="504.5" endY="-70.64111328125" layoutX="-75.0" layoutY="89.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="57.5" endY="-70.64114379882812" layoutX="15.0" layoutY="89.0" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
-      <Label layoutX="94.0" layoutY="591.0" text="Landing/Taking Off Direction">
+      <Label layoutX="94.0" layoutY="586.0" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="15.0" />
          </font>
       </Label>
-      <Polygon fill="#0f0f0f" layoutX="-11.0" layoutY="622.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <Line endX="499.5" endY="-70.64111328125" layoutX="-74.0" layoutY="671.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
-      <Line endX="432.5" endY="-70.64111328125" layoutX="-354.0" layoutY="671.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
-      <AnchorPane layoutX="491.0" layoutY="576.0" scaleX="0.95" scaleY="0.95">
+      <Polygon fill="#0f0f0f" layoutX="-11.0" layoutY="617.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Line endX="499.5" endY="-70.64111328125" layoutX="-74.0" layoutY="666.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Line endX="432.5" endY="-70.64111328125" layoutX="-354.0" layoutY="666.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
+      <AnchorPane layoutX="491.0" layoutY="571.0" scaleX="0.95" scaleY="0.95">
          <children>
             <Rectangle fx:id="scaleLength" fill="WHITE" height="7.0" layoutX="3.0" layoutY="20.0" stroke="#3c3c3c" strokeType="INSIDE" width="150.0" />
             <Rectangle fx:id="scaleStart" fill="#3c3c3c" height="7.0" layoutX="3.0" layoutY="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="50.0" />

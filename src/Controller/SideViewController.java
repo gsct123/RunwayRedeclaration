@@ -776,5 +776,7 @@ public class SideViewController {
         return start.getLayoutX() + (length.getEndX()/2 - label.getWidth()/2);
     }
 
-
+    public AnchorPane getSideOnPane() {
+        return sideOnPane;
+    }
 }

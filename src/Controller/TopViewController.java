@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -16,6 +17,11 @@ import java.util.ResourceBundle;
 
 public class TopViewController implements Initializable {
 
+    @FXML
+    private Label compassDegree;
+    //compass
+    @FXML
+    private Pane compass;
     @FXML
     private Label leftDirection;
     @FXML
@@ -230,8 +236,7 @@ public class TopViewController implements Initializable {
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
 
         Utility.initializeZoom(topDownRunwayPane);
-        Utility.initializeDrag(topDownRunwayPane);
-
+        initializeMouseEvent(topDownRunwayPane,compass);
 
     }
 
@@ -810,17 +815,75 @@ public class TopViewController implements Initializable {
 
     private void rotateRunway(){
         LogicalRunway lLogicalRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(0);
-        int designatorInt = Integer.parseInt(lLogicalRunway.getDesignator().trim().replaceAll("[^0-9]",""));
-        int direction = designatorInt * 10 - 90;
+        double designatorInt = Integer.parseInt(lLogicalRunway.getDesignator().trim().replaceAll("[^0-9]",""));
+        double runwayDirection = designatorInt * 10 - 90;
+        double compassDirection = designatorInt * 10;
         RotateTransition rotate = new RotateTransition(Duration.millis(1500),topDownRunwayPane);
-        rotate.setToAngle(direction);
+        RotateTransition rotate1 = new RotateTransition(Duration.millis(1500),compass);
+        rotate.setToAngle(runwayDirection);
+        rotate1.setToAngle(compassDirection);
         rotate.play();
+        rotate1.play();
+        topDownRunwayPane.setRotate(runwayDirection);
+        compass.setRotate(compassDirection);
+        compassDegree.setText(compassDirection + "°");
     }
 
-    private void resetZoomAndDrag(AnchorPane pane){
-        pane.setTranslateX(0);
-        pane.setTranslateY(0);
-        pane.setScaleX(1);
-        pane.setScaleY(1);
+
+
+    private void initializeMouseEvent(AnchorPane pane, Pane compass){
+        pane.setOnMousePressed(mouseEvent->{
+            if (mouseEvent.isShortcutDown()){
+                //mouse position before drag
+                double mouseX = mouseEvent.getX();
+                double mouseY = mouseEvent.getY();
+                pane.setOnMouseDragged(dragEvent -> {
+                    //the amount dragged minus original mouse position
+                    double translationX = dragEvent.getX() - mouseX;
+                    double translationY = dragEvent.getY() - mouseY;
+                    //set translation
+                    pane.setTranslateX(pane.getTranslateX() + translationX);
+                    pane.setTranslateY(pane.getTranslateY() + translationY);
+                    dragEvent.consume();
+                });
+            }if (mouseEvent.isShiftDown()){
+                double x1 = mouseEvent.getX();
+                double y1 = mouseEvent.getY();
+                pane.setOnMouseDragged(draggedEvent -> {
+                    double x2 = draggedEvent.getX();
+                    double y2 = draggedEvent.getY();
+                    double x3 = pane.getLayoutX() + pane.getWidth()/2;
+                    double y3 = pane.getLayoutY() + pane.getHeight()/2;
+                    double angle = Utility.getAngleBetween(x1,y1,x2,y2,x3,y3);
+                    //System.out.println(angle);
+                    double runwayAngle = (pane.getRotate() + angle )%360;
+                    double compassAngle = (compass.getRotate() + angle) %360 ;
+
+                    System.out.println("runwayAngle = " + runwayAngle);
+                    System.out.println("compassAngle = " + compassAngle);
+                    pane.setRotate(runwayAngle);
+                    compass.setRotate(compassAngle);
+                    compassDegree.setText((Math.round(compassAngle * 10)/10.0) + "°");
+                    draggedEvent.consume();
+                });
+            }
+            mouseEvent.consume();
+        });
+        pane.setOnMouseReleased( releasedEvent -> {
+            pane.setOnMouseDragged(null);
+        });
+    }
+
+    public AnchorPane getTopDownRunwayPane() {
+        return topDownRunwayPane;
+    }
+
+    public Pane getCompass() {
+        return compass;
+    }
+
+    public void initializeCompass(){
+        compass.setRotate(90);
+        compassDegree.setText(90.0 + "°");
     }
 }
