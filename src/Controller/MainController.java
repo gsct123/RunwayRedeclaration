@@ -29,6 +29,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
@@ -54,6 +57,8 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private static boolean needRedeclare = true;
+    @FXML
+    private Button notificationButton;
     @FXML
     private Button resetViewButton;
     //notification
@@ -248,7 +253,7 @@ public class MainController implements Initializable {
 
             if(Main.isReset()){
                 addNotificationLabel(notiVBox,new Label("Status: Options Reset\t " + getDateTimeNow()));
-
+                notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -256,8 +261,7 @@ public class MainController implements Initializable {
         System.out.println(MainController.airports + " from main controller");
 
         initializeNotification(notiPane,notiScrollPane,notiVBox);
-        //System.out.println("slope distance = " + Utility.getDistBetween(0,0,4,3));
-        //System.out.println("angle = " + Utility.getAngleBetween(4,3,4,0,0,0));
+        topViewController.initializeCompass();
     }
 
     //getters
@@ -360,7 +364,7 @@ public class MainController implements Initializable {
         calculationBreakdown.setDisable(false);
         valueChanged.set(valueChanged.doubleValue() == 1? 0: 1);
         addNotificationLabel(notiVBox, new Label("Status: Calculation performed\t " + getDateTimeNow()));
-
+        notificationLabel.setText("Status: Calculation performed\t " + getDateTimeNow());
     }
 
     public String getDateTimeNow(){
@@ -736,8 +740,8 @@ public class MainController implements Initializable {
         });
         //reset to bottom if our of bound
         pane.setOnMouseReleased(releaseEvent -> {
-            double oriPaneY = 764;
-            double oriPaneH = 17;
+            double oriPaneY = 759;
+            double oriPaneH = 25;
             if (pane.getLayoutY() >= oriPaneY  || pane.getLayoutY() < 0 ){
                 pane.setLayoutY(oriPaneY);
                 pane.setPrefHeight(oriPaneH);
@@ -748,26 +752,26 @@ public class MainController implements Initializable {
 
     public void addNotificationLabel(VBox vBox,Label label) {
         label.setPrefHeight(40);
+        label.setTextFill(Color.RED);
+        Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR,12);
+        label.setFont(font);
         vBox.getChildren().add(label);
     }
 
     public void resetNotificationBar(Pane pane, ScrollPane scrollPane){
-        double oriPaneY = 764;
-        double oriPaneH = 17;
+        double oriPaneY = 759;
+        double oriPaneH = 25;
         pane.setLayoutY(oriPaneY);
         pane.setPrefHeight(oriPaneH);
         scrollPane.setPrefHeight(0);
     }
 
-    public void extendNotiBar(ActionEvent actionEvent) {
-
-    }
-
     public void handleResetView(ActionEvent actionEvent) {
-        System.out.println("asd");
+        //System.out.println("asd");
         try {
             resetView(topViewController.getTopDownRunwayPane());
             resetView(sideViewController.getSideOnPane());
+            topViewController.getCompass().setRotate(0);
         }catch (Exception e){
             System.out.println(e);
         }
@@ -779,5 +783,27 @@ public class MainController implements Initializable {
         pane.setScaleY(1);
         pane.setRotate(0);
     }
+
+    int clickCount = 0;
+    public void showNotibar(ActionEvent actionEvent) {
+        if (clickCount%2 ==0){
+            notiPane.setVisible(true);
+            notificationLabel.setVisible(false);
+        }else {
+
+            notiPane.setVisible(false);
+            notificationLabel.setVisible(true);
+        }
+
+        clickCount++;
+    }
+
+    public void extendNotiBar(ActionEvent actionEvent) {
+        resetNotificationBar(notiPane,notiScrollPane);
+        notiPane.setVisible(false);
+        notificationLabel.setVisible(true);
+        clickCount++;
+    }
+
 
 }

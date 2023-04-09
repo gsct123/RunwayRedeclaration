@@ -22,6 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <Pane prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <children>
@@ -42,7 +43,7 @@
                       </Menu>
                   </menus>
               </MenuBar>
-              <HBox prefHeight="93.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
+              <HBox prefHeight="75.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
                   <children>
                       <Label alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="1089.0" text="RUNWAY REDECLARATION" textAlignment="CENTER" textFill="WHITE">
                           <font>
@@ -397,13 +398,14 @@
               </SplitPane>
           </children>
       </VBox>
-       <Pane fx:id="notiPane" layoutY="764.0" prefHeight="17.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
+       <Pane fx:id="notiPane" layoutX="180.0" layoutY="759.0" prefHeight="22.0" prefWidth="1220.0" style="-fx-background-color: #212f45;" visible="false">
            <children>
-               <Label layoutX="4.0" layoutY="-1.0" prefHeight="18.0" prefWidth="106.0" text="Notification Bar" textFill="WHITE">
-               <font>
-                  <Font name="Verdana Bold" size="12.0" />
-               </font></Label>
-            <Button fx:id="extendButton" layoutX="1345.0" layoutY="1.0" minHeight="17.0" minWidth="30.0" mnemonicParsing="false" onAction="#extendNotiBar" prefHeight="17.0" prefWidth="30.0" styleClass="extendButton" stylesheets="@../CSS/MainStylesheet.css">
+               <ScrollPane fx:id="notiScrollPane" fitToHeight="true" fitToWidth="true" layoutY="22.0" prefHeight="36.0" prefWidth="1220.0" style="-fx-background-color: #212f45;">
+                   <content>
+                       <VBox fx:id="notiVBox" prefHeight="34.0" prefWidth="849.0" />
+                   </content>
+               </ScrollPane>
+            <Button fx:id="extendButton" layoutX="1153.0" minHeight="17.0" minWidth="36.0" mnemonicParsing="false" onAction="#extendNotiBar" prefHeight="22.0" prefWidth="60.0" styleClass="extendButton" stylesheets="@../CSS/MainStylesheet.css">
                <font>
                   <Font size="1.0" />
                </font>
@@ -411,12 +413,27 @@
                   <Line accessibleRole="BUTTON" endX="-12.0" stroke="#ffffffb3" strokeWidth="3.0" />
                </graphic>
             </Button>
-               <ScrollPane fx:id="notiScrollPane" fitToHeight="true" fitToWidth="true" layoutY="16.0" prefHeight="0.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
-                   <content>
-                       <VBox fx:id="notiVBox" prefWidth="1398.0" />
-                   </content>
-               </ScrollPane>
            </children>
        </Pane>
+      <Button fx:id="notificationButton" alignment="CENTER" layoutY="759.0" minHeight="18.0" mnemonicParsing="false" onAction="#showNotibar" prefHeight="22.0" prefWidth="180.0" styleClass="notificationButton" stylesheets="@../CSS/MainStylesheet.css" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="Verdana Bold" size="10.0" />
+         </font>
+         <graphic>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Notification History" textAlignment="CENTER" wrappingWidth="172.17559051513672">
+               <font>
+                  <Font name="Verdana Bold" size="12.0" />
+               </font>
+            </Text>
+         </graphic>
+      </Button>
+       <Label fx:id="notificationLabel" layoutX="282.0" layoutY="759.0" prefHeight="22.0" prefWidth="799.0" style="-fx-text-fill: grey;" text="Status">
+           <padding>
+               <Insets left="20.0" />
+           </padding>
+           <font>
+               <Font name="Verdana" size="13.0" />
+           </font>
+       </Label>
    </children>
 </Pane>

@@ -393,34 +393,29 @@
                         </RadialGradient>
                      </fill>
                   </Circle>
-                  <Polyline layoutX="100.0" layoutY="140.0" points="0.0, -40.0, 10.0, -40.0, 0.0, -120.0, -10.0, -40.0" stroke="#da4545" strokeType="INSIDE">
+                  <Polyline layoutX="100.0" layoutY="141.0" points="0.0, -40.00000762939453, 10.0, -40.0, 0.0, -102.36439514160156, -10.0, -40.0" stroke="#a41e1eb8" strokeType="INSIDE">
                      <fill>
                         <LinearGradient endX="0.6492890995260664" endY="1.0" startY="1.0">
                            <stops>
                               <Stop>
                                  <color>
-                                    <Color red="1.0" opacity="0.48917749524116516" />
+                                    <Color red="0.32894736528396606" green="0.32894736528396606" blue="0.32894736528396606" opacity="0.49000000953674316" />
                                  </color>
                               </Stop>
                               <Stop offset="1.0">
                                  <color>
-                                    <Color red="1.0" />
+                                    <Color red="0.7236841917037964" green="0.07035818696022034" blue="0.07035818696022034" />
                                  </color>
                               </Stop>
                            </stops>
                         </LinearGradient>
                      </fill>
                   </Polyline>
-                  <Circle centerX="100.0" centerY="100.0" radius="10.0" stroke="#753b3b" strokeType="INSIDE">
+                  <Circle centerX="100.0" centerY="100.0" radius="10.0" stroke="#522a2a00" strokeType="INSIDE">
                      <fill>
-                        <LinearGradient endX="0.4691943127962085" endY="1.0" startX="0.957345971563981">
+                        <LinearGradient endX="1.0" endY="1.0">
                            <stops>
                               <Stop>
-                                 <color>
-                                    <Color />
-                                 </color>
-                              </Stop>
-                              <Stop offset="0.13409961685823754">
                                  <color>
                                     <Color />
                                  </color>
@@ -432,15 +427,24 @@
                               </Stop>
                            </stops>
                         </LinearGradient>
-                     </fill>
-                  </Circle>
+                     </fill></Circle>
                   <Line endY="300.0" layoutX="100.0" startY="5.0" stroke="RED" visible="false" />
+                  <Label layoutX="95.0" layoutY="21.0" text="N" textFill="RED">
+                     <font>
+                        <Font name="Verdana Bold" size="12.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
             <Line endX="12.88226318359375" endY="-0.8822479248046875" layoutX="155.0" layoutY="33.0" startX="4.5" startY="7.75" stroke="WHITE" strokeWidth="3.0" />
             <Line endX="34.25" endY="-15.25" layoutX="6.0" layoutY="175.0" startX="26.5" startY="-7.5" stroke="WHITE" strokeWidth="3.0" />
             <Line endX="34.5" endY="16.25" layoutX="6.0" layoutY="24.0" startX="26.11773681640625" startY="8.117752075195312" stroke="WHITE" strokeWidth="3.0" />
             <Line endX="-10.11773681640625" endY="5.88226318359375" layoutX="178.0" layoutY="162.0" startX="-18.5" startY="-2.5" stroke="WHITE" strokeWidth="3.0" />
+            <Label fx:id="compassDegree" alignment="CENTER" layoutX="59.0" layoutY="131.0" prefHeight="15.0" prefWidth="83.0" text="0.0°" textFill="WHITE">
+               <font>
+                  <Font name="Verdana Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
