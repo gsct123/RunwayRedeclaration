@@ -113,7 +113,7 @@ public class Utility {
         double angle1To3 = Math.atan2(y1-y3,x1-x3);
         double angle2To3 = Math.atan2(y2-y3,x2-x3);
         double differenceInAngle = angle2To3 - angle1To3;
-        System.out.println(Math.toDegrees(differenceInAngle));
+        //System.out.println(Math.toDegrees(differenceInAngle));
         //System.out.println(differenceInAngle);
         return Math.toDegrees(differenceInAngle);
     }

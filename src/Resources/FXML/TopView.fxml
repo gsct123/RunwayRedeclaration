@@ -16,7 +16,25 @@
 
 <AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
    <children>
-      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#d9e8ff" height="627.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
+      <Polyline layoutX="76.0" layoutY="118.0" points="0.0, -40.00000762939453, 6.5, -40.0, 0.0, -102.36439514160156, -7.0, -40.0" stroke="#a41e1eb8" strokeType="INSIDE">
+         <fill>
+            <LinearGradient endX="0.6492890995260664" endY="1.0" startY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.32894736528396606" green="0.32894736528396606" blue="0.32894736528396606" opacity="0.49000000953674316" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.7236841917037964" green="0.07035818696022034" blue="0.07035818696022034" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Polyline>
+      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#d9e8ff" height="627.0" layoutX="-4.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
       <AnchorPane fx:id="topDownRunwayPane" layoutY="139.0" prefHeight="400.0" prefWidth="600.0">
          <children>
             <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#a4a4a4" height="200.0" layoutY="105.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />
@@ -308,7 +326,7 @@
       <Polygon fill="#0f0f0f" layoutX="564.0" layoutY="42.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Line endX="504.5" endY="-70.64111328125" layoutX="95.0" layoutY="92.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="57.5" endY="-70.64114379882812" layoutX="186.0" layoutY="92.0" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
-      <Pane fx:id="wholeCompass" layoutX="-24.0" layoutY="-24.0" scaleX="0.75" scaleY="0.75">
+      <Pane fx:id="wholeCompass" layoutX="-19.0" layoutY="-19.0" scaleX="0.8" scaleY="0.8">
          <children>
             <Circle centerX="100.0" centerY="100.0" radius="100.0" stroke="BLACK" strokeType="INSIDE">
                <fill>
@@ -343,7 +361,7 @@
                   </RadialGradient>
                </fill>
             </Circle>
-            <Label layoutX="95.0" layoutY="3.0" text="N" textFill="WHITE">
+            <Label layoutX="95.0" layoutY="3.0" text="N" textFill="RED">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
@@ -393,43 +411,31 @@
                         </RadialGradient>
                      </fill>
                   </Circle>
-                  <Polyline layoutX="100.0" layoutY="141.0" points="0.0, -40.00000762939453, 10.0, -40.0, 0.0, -102.36439514160156, -10.0, -40.0" stroke="#a41e1eb8" strokeType="INSIDE">
+                  <Polyline layoutX="100.0" layoutY="141.0" points="0.0, -40.00000762939453, 10.0, -40.0, 0.0, -102.36439514160156, -10.0, -40.0" stroke="#aba9a900" strokeType="INSIDE">
                      <fill>
                         <LinearGradient endX="0.6492890995260664" endY="1.0" startY="1.0">
                            <stops>
                               <Stop>
                                  <color>
-                                    <Color red="0.32894736528396606" green="0.32894736528396606" blue="0.32894736528396606" opacity="0.49000000953674316" />
+                                    <Color red="0.5789473652839661" green="0.5601851940155029" blue="0.5601851940155029" opacity="0.49000000953674316" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.3754789272030651">
+                                 <color>
+                                    <Color red="0.6973684430122375" green="0.6844542026519775" blue="0.6844542026519775" opacity="0.49000000953674316" />
                                  </color>
                               </Stop>
                               <Stop offset="1.0">
                                  <color>
-                                    <Color red="0.7236841917037964" green="0.07035818696022034" blue="0.07035818696022034" />
+                                    <Color red="1.0" green="1.0" blue="1.0" opacity="0.7200000286102295" />
                                  </color>
                               </Stop>
                            </stops>
                         </LinearGradient>
                      </fill>
                   </Polyline>
-                  <Circle centerX="100.0" centerY="100.0" radius="10.0" stroke="#522a2a00" strokeType="INSIDE">
-                     <fill>
-                        <LinearGradient endX="1.0" endY="1.0">
-                           <stops>
-                              <Stop>
-                                 <color>
-                                    <Color />
-                                 </color>
-                              </Stop>
-                              <Stop offset="1.0">
-                                 <color>
-                                    <Color red="1.0" green="1.0" blue="1.0" />
-                                 </color>
-                              </Stop>
-                           </stops>
-                        </LinearGradient>
-                     </fill></Circle>
                   <Line endY="300.0" layoutX="100.0" startY="5.0" stroke="RED" visible="false" />
-                  <Label layoutX="95.0" layoutY="21.0" text="N" textFill="RED">
+                  <Label layoutX="95.0" layoutY="21.0" text="N" textFill="#b5b5b5">
                      <font>
                         <Font name="Verdana Bold" size="12.0" />
                      </font>
@@ -442,10 +448,51 @@
             <Line endX="-10.11773681640625" endY="5.88226318359375" layoutX="178.0" layoutY="162.0" startX="-18.5" startY="-2.5" stroke="WHITE" strokeWidth="3.0" />
          </children>
       </Pane>
-      <Label fx:id="compassDegree" alignment="CENTER" layoutX="34.0" layoutY="97.0" prefHeight="15.0" prefWidth="83.0" text="0.0°" textFill="WHITE">
+      <Label fx:id="compassDegree" alignment="CENTER" layoutX="39.0" layoutY="102.0" prefHeight="15.0" prefWidth="83.0" text="0.0°" textFill="WHITE">
          <font>
             <Font name="Verdana Bold" size="12.0" />
          </font>
       </Label>
+      <Polyline layoutX="82.0" layoutY="124.0" points="-1.0, -43.0, 6.75, -42.25, -1.0, -92.5, -8.5, -43.0" stroke="#820a0a00" strokeType="INSIDE">
+         <fill>
+            <LinearGradient endX="0.6492890995260664" endY="1.0" startY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.8289473652839661" green="0.04221491143107414" blue="0.04221491143107414" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.5019157088122606">
+                     <color>
+                        <Color red="0.5526315569877625" green="0.08187134563922882" blue="0.08187134563922882" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" opacity="0.7200000286102295" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Polyline>
+      <Circle centerX="100.0" centerY="100.0" layoutX="-19.0" layoutY="-19.0" radius="8.0" stroke="#522a2a00" strokeType="INSIDE">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Circle>
    </children>
 </AnchorPane>
