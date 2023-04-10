@@ -234,7 +234,10 @@ public class TopViewController implements Initializable {
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.disFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
-
+        //variables
+        AnchorPane topDownRunwayPane = getTopDownRunwayPane();
+        Pane compass = getCompass();
+        //initialize drag, zoom and rotate
         Utility.initializeZoom(topDownRunwayPane);
         initializeMouseEvent(topDownRunwayPane,compass);
 
@@ -814,10 +817,15 @@ public class TopViewController implements Initializable {
     }
 
     private void rotateRunway(){
+        //variables
+        AnchorPane topDownRunwayPane = getTopDownRunwayPane();
+        Pane compass = getCompass();
+        Label compassDegree = getCompassDegree();
         LogicalRunway lLogicalRunway = MainController.getPhysRunwaySelected().getLogicalRunways().get(0);
         double designatorInt = Integer.parseInt(lLogicalRunway.getDesignator().trim().replaceAll("[^0-9]",""));
         double runwayDirection = designatorInt * 10 - 90;
         double compassDirection = designatorInt * 10;
+        //rotation
         RotateTransition rotate = new RotateTransition(Duration.millis(1500),topDownRunwayPane);
         RotateTransition rotate1 = new RotateTransition(Duration.millis(1500),compass);
         rotate.setToAngle(runwayDirection);
@@ -832,6 +840,7 @@ public class TopViewController implements Initializable {
 
 
     private void initializeMouseEvent(AnchorPane pane, Pane compass){
+
         pane.setOnMousePressed(mouseEvent->{
             if (mouseEvent.isShortcutDown()){
                 //mouse position before drag
@@ -847,24 +856,28 @@ public class TopViewController implements Initializable {
                     dragEvent.consume();
                 });
             }if (mouseEvent.isShiftDown()){
+                //mouse position before drag
                 double x1 = mouseEvent.getX();
                 double y1 = mouseEvent.getY();
                 pane.setOnMouseDragged(draggedEvent -> {
+                    Label compassDegree = getCompassDegree();
+                    //set up xs and ys for calculation
                     double x2 = draggedEvent.getX();
                     double y2 = draggedEvent.getY();
                     double x3 = pane.getLayoutX() + pane.getWidth()/2;
                     double y3 = pane.getLayoutY() + pane.getHeight()/2;
                     double angle = Utility.getAngleBetween(x1,y1,x2,y2,x3,y3);
-                    //System.out.println(angle);
+                    //get angles
                     double runwayAngle = (pane.getRotate() + angle )%360;
-                    double compassAngle = (compass.getRotate() + angle) %360 ;
-
-                    System.out.println("runwayAngle = " + runwayAngle);
-                    System.out.println("compassAngle = " + compassAngle);
+                    double compassAngle = (compass.getRotate() + angle) %360;
+                    if (compassAngle < 0){
+                        compassAngle += 360;
+                    }
                     pane.setRotate(runwayAngle);
                     compass.setRotate(compassAngle);
-                    compassDegree.setText((Math.round(compassAngle * 10)/10.0) + "°");
+                    compassDegree.setText(Math.round(compassAngle *10)/10.0 + "°");
                     draggedEvent.consume();
+
                 });
             }
             mouseEvent.consume();
@@ -874,6 +887,7 @@ public class TopViewController implements Initializable {
         });
     }
 
+    //getter
     public AnchorPane getTopDownRunwayPane() {
         return topDownRunwayPane;
     }
@@ -882,8 +896,12 @@ public class TopViewController implements Initializable {
         return compass;
     }
 
+    public Label getCompassDegree() {
+        return compassDegree;
+    }
+
     public void initializeCompass(){
-        compass.setRotate(90);
-        compassDegree.setText(90.0 + "°");
+        getCompass().setRotate(90);
+        getCompassDegree().setText(90.0 + "°");
     }
 }
