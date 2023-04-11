@@ -114,7 +114,7 @@
                                 <Insets bottom="5.0" top="5.0" />
                             </padding>
                         </Label>
-                        <Button fx:id="editAirportButton" layoutX="1096.0" layoutY="512.0" mnemonicParsing="false" onAction="#editAirport" prefHeight="35.0" prefWidth="275.0" styleClass="functionButton" text="Edit Airport Details">
+                        <Button fx:id="editAirportButton" layoutX="1096.0" layoutY="510.0" mnemonicParsing="false" onAction="#editAirport" prefHeight="35.0" prefWidth="275.0" styleClass="functionButton" text="Edit Airport Details">
                             <font>
                                 <Font name="Verdana" size="16.0" />
                             </font>

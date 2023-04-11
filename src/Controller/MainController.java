@@ -786,9 +786,6 @@ public class MainController implements Initializable {
                 pane.setPrefHeight(newPaneH);
                 pane.setLayoutY(newPaneY);
                 scrollPane.setPrefHeight(newSPaneH);
-                //System.out.println("1. " + pane.getLayoutY());
-                //System.out.println("2. " + pane.getHeight());
-                //System.out.println("3. " + Main.getStage().getHeight());
                 event.consume();
             });
             mouseEvent.consume();
@@ -822,15 +819,15 @@ public class MainController implements Initializable {
     }
 
     public void handleResetView(ActionEvent actionEvent) {
-        //System.out.println("asd");
         try {
             resetView(topViewController.getTopDownRunwayPane());
             resetView(sideViewController.getSideOnPane());
-            topViewController.getCompass().setRotate(0);
+            topViewController.initializeCompass();
         }catch (Exception e){
             System.out.println(e);
         }
     }
+
     public void resetView(AnchorPane pane){
         pane.setTranslateX(0);
         pane.setTranslateY(0);
