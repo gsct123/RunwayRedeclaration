@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Model.Helper.Utility;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -229,6 +230,7 @@ public class TopViewController implements Initializable {
             newValue.setDistFThreshold(MainController.disFromThreshold.get());
             relocateObstacle();
         });
+
         //listener for result change to update with the revised parameters
         MainController.dirFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> relocateObstacle());

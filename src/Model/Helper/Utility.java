@@ -1,4 +1,4 @@
-package Model;
+package Model.Helper;
 
 import View.Login;
 import View.Main;

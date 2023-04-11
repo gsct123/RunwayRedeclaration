@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.*;
+import Model.Helper.Utility;
+import Model.Helper.XMLParserWriter;
 import View.AirportManager;
 import View.Error;
 import View.Main;
@@ -9,6 +11,7 @@ import View.OtherPopUp.NoRedeclarationNeeded;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -193,6 +196,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        obstacleProperty = new SimpleObjectProperty<>();
         DropShadow shadow = new DropShadow(2, Color.valueOf("#212f45"));
         leftTableView.setEffect(shadow);
         rightTableView.setEffect(shadow);
@@ -262,7 +266,57 @@ public class MainController implements Initializable {
 
         initializeNotification(notiPane,notiScrollPane,notiVBox);
         topViewController.initializeCompass();
+
+        airports.addListener(listener);
     }
+
+    public ListChangeListener<Airport> listener = new ListChangeListener<Airport>() {
+        @Override
+        public void onChanged(Change<? extends Airport> c) {
+            Airport temp = airportItem.get();
+            try {
+                XMLParserWriter.writeToFile(MainController.airports, "src/Data/airports.xml");
+                loadAirports("src/Data/airports.xml");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            addAirportEvent();
+            System.out.println("Listener detected airport list changes");
+            if(temp != null){
+                boolean flag = false;
+                while (c.next()) {
+                    if (c.wasRemoved() && c.getRemoved().contains(temp)) {
+                        flag = true;
+                        airportMenu.setText("Select an Airport");
+                        physicalRunwayMenu.setText("Select Physical Runway");
+                        //create instances of the controller so that we can direct access their field when needed
+                        try{
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/TopView.fxml"));
+                            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/FXML/SideView.fxml"));
+                            Parent root = loader.load();
+                            Parent root1 = loader1.load();
+                            topViewController = loader.getController();
+                            sideViewController = loader1.getController();
+                            topViewTab.setContent(root);
+                            sideViewTab.setContent(root1);
+                            simultaneousViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/SimultaneousView.fxml"))));
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                }
+                if(!flag){
+                    airportMenu.setText(temp.getName());
+                    PhysicalRunway runway = physRunwayItem.get();
+                    if(runway != null){
+                        physicalRunwayMenu.setText(runway.getName());
+                    }
+                }
+            }
+            airports.addListener(listener);
+        }
+    };
 
     //getters
     public ObservableList<Obstacle> getObstacles(){return obstacles;}
@@ -538,6 +592,7 @@ public class MainController implements Initializable {
     }
 
     public void addAirportEvent() {
+        airportMenu.getItems().clear();
         for(Airport airport: getAirports()){
             MenuItem airportMenuItem = new MenuItem(airport.getName());
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");

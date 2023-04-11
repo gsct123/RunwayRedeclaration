@@ -3,21 +3,49 @@ package Controller;
 import Model.Airport;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
+import View.EditAirport;
+import View.Error;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.DoubleStringConverter;
 
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EditAirportController implements Initializable {
-    private static Airport airportSelected;
+    public static Airport airportSelected;
+    public static Airport airportWithNewInfo;
+    public static boolean actionCancel = false;
 
     @FXML
-    private TextArea textArea;
+    private Label nameReference;
+    @FXML
+    private Label managerName;
+    @FXML
+    private MenuButton runwayMenu;
+    @FXML
+    private TableView<LogicalRunway> logRunwayTable;
+    @FXML
+    private TableColumn<LogicalRunway, String> designatorCol;
+    @FXML
+    private TableColumn<LogicalRunway, Double> toraCol;
+    @FXML
+    private TableColumn<LogicalRunway, Double> todaCol;
+    @FXML
+    private TableColumn<LogicalRunway, Double> asdaCol;
+    @FXML
+    private TableColumn<LogicalRunway, Double> ldaCol;
+    @FXML
+    private TextField toraTextField;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private Button saveButton;
 
     public static void setAirportSelected(Airport airportSelected) {
         EditAirportController.airportSelected = airportSelected;
@@ -27,57 +55,151 @@ public class EditAirportController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        textArea.setText(airportInfo(airportSelected));
-    }
-
-    public String airportInfo(Airport airport){
-        StringBuilder message = new StringBuilder();
-        message.append("Airport name: ").append(airport.getName()).append(" (").append(airport.getID()).append(")");
-        message.append("\nAirport manager: ").append(airport.getManager());
-        message.append("\n\nPhysical runways:");
-        ObservableList<PhysicalRunway> runways = airport.getPhysicalRunways();
-        for(PhysicalRunway runway: runways){
-            message.append("\n").append(runway.getName());
-            ObservableList<LogicalRunway> logRunways = runway.getLogicalRunways();
-            for(LogicalRunway logRunway: logRunways){
-                message.append("\n  ").append(logRunway.getDesignator());
-                message.append("\n      ").append("TORA: ").append(logRunway.getTora());
-                message.append("\n      ").append("ASDA: ").append(logRunway.getAsda());
-                message.append("\n      ").append("TODA: ").append(logRunway.getToda());
-                message.append("\n      ").append("LDA: ").append(logRunway.getLda());
-            }
-        }
-        return message.toString();
-    }
-
-    public static Airport parseAirport(String content) throws FileNotFoundException {
-        String[] lines = content.split("\n");
-        String[] nameReference = lines[0].replace("Airport name: ", "").split("(");
-        String airportName = nameReference[0].trim();
-        String airportReference = nameReference[1].trim().substring(0, nameReference[1].trim().length()-1);
-        String airportManager = lines[1].replace("Airport manager: ", "");
-        ObservableList<PhysicalRunway> physicalRunways = FXCollections.observableArrayList();
-        int i = 3;
-        while (i < lines.length) {
-            String[] runwayInfo = lines[i].split("/");
-            String runwayName = runwayInfo[0].trim();
+        ObservableList<PhysicalRunway> runways = FXCollections.observableArrayList();
+        for(PhysicalRunway physRunway: airportSelected.getPhysicalRunways()){
             ObservableList<LogicalRunway> logicalRunways = FXCollections.observableArrayList();
-            i++;
-            while (i < lines.length && lines[i].startsWith(" ")) {
-                String[] logicalRunwayInfo = lines[i].trim().split("\s+");
-                String logicalRunwayDesignator = logicalRunwayInfo[0];
-                double tora = Double.parseDouble(logicalRunwayInfo[1].replace("TORA:", ""));
-                double toda = Double.parseDouble(logicalRunwayInfo[2].replace("TODA:", ""));
-                double asda = Double.parseDouble(logicalRunwayInfo[3].replace("ASDA:", ""));
-                double lda = Double.parseDouble(logicalRunwayInfo[4].replace("LDA:", ""));
-                LogicalRunway logicalRunway = new LogicalRunway(logicalRunwayDesignator, tora, toda, asda, lda);
-                logicalRunways.add(logicalRunway);
-                i++;
+            for(LogicalRunway logRunway: physRunway.getLogicalRunways()){
+                logicalRunways.add(new LogicalRunway(logRunway.getDesignator(), logRunway.getTora(), logRunway.getToda(), logRunway.getAsda(), logRunway.getLda()));
             }
-            PhysicalRunway physicalRunway = new PhysicalRunway(runwayName, logicalRunways);
-            physicalRunways.add(physicalRunway);
+            runways.add(new PhysicalRunway(physRunway.getName(), logicalRunways));
         }
-        Airport airport = new Airport(airportReference, airportName, physicalRunways, airportManager);
-        return airport;
+        airportWithNewInfo = new Airport(airportSelected.getID(), airportSelected.getName(), FXCollections.observableList(airportSelected.getPhysicalRunways()), airportSelected.getManager());
+        cancelButton.setOnAction(actionEvent -> {
+            EditAirportController.actionCancel = true;
+            EditAirport.getStage().close();
+        });
+        saveButton.setOnAction(actionEvent -> {
+            EditAirportController.actionCancel = false;
+            EditAirport.getStage().close();
+        });
+        nameReference.setText("Airport Name: "+ airportSelected.getName() + " (" + airportSelected.getID() + ")");
+        managerName.setText("Manager: "+airportSelected.getManager());
+
+        for(PhysicalRunway runway: airportWithNewInfo.getPhysicalRunways()){
+            MenuItem runwayMenuItem = new MenuItem(runway.getName());
+            runwayMenuItem.setOnAction(f -> {
+                toraTextField.setText(""+runway.getLogicalRunways().get(0).getTora());
+                designatorCol.setCellValueFactory(
+                        new PropertyValueFactory<>("designator")
+                );
+                todaCol.setCellValueFactory(
+                        new PropertyValueFactory<>("toda")
+                );
+                asdaCol.setCellValueFactory(
+                        new PropertyValueFactory<>("asda")
+                );
+                ldaCol.setCellValueFactory(
+                        new PropertyValueFactory<>("lda")
+                );
+
+                todaCol.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDoubleStringConverter()));
+                todaCol.setOnEditCommit(event -> {
+                    try{
+                        LogicalRunway logRunway = event.getRowValue();
+                        double newToda = event.getNewValue();
+                        if(newToda < logRunway.getAsda()){
+                            new Error().errorPopUp("TODA value is smaller than ASDA value, invalid clearway. Hint: please input a TODA value that is greater than runway's ASDA value");
+                        }
+                        logRunway.setToda(event.getNewValue());
+                    }catch (NullPointerException ignored){
+                        LogicalRunway logRunway = event.getRowValue();
+                        logRunway.setToda(event.getOldValue());
+                    }
+                    logRunwayTable.refresh();
+                });
+
+                todaCol.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDoubleStringConverter()));
+                todaCol.setOnEditCommit(event -> {
+                    try{
+                        LogicalRunway logRunway = event.getRowValue();
+                        double newToda = event.getNewValue();
+                        if(newToda < logRunway.getAsda()){
+                            new Error().errorPopUp("TODA value is smaller than ASDA value, invalid clearway. Hint: please input a TODA value that is greater than or equals to runway's ASDA value");
+                        } else{
+                            logRunway.setToda(event.getNewValue());
+                        }
+                    }catch (NullPointerException ignored){
+                        LogicalRunway logRunway = event.getRowValue();
+                        logRunway.setToda(event.getOldValue());
+                    }
+                    logRunwayTable.refresh();
+                });
+
+                asdaCol.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDoubleStringConverter()));
+                asdaCol.setOnEditCommit(event -> {
+                    try{
+                        LogicalRunway logRunway = event.getRowValue();
+                        double newAsda = event.getNewValue();
+                        if(newAsda < logRunway.getTora()){
+                            new Error().errorPopUp("ASDA value is smaller than TORA value, invalid stopway. Hint: please input an ASDA value that is greater than or equals to runway's TORA value");
+                        } else{
+                            logRunway.setAsda(event.getNewValue());
+                        }
+                    }catch (NullPointerException ignored){
+                        LogicalRunway logRunway = event.getRowValue();
+                        logRunway.setAsda(event.getOldValue());
+                    }
+                    logRunwayTable.refresh();
+                });
+
+                ldaCol.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDoubleStringConverter()));
+                ldaCol.setOnEditCommit(event -> {
+                    try{
+                        LogicalRunway logRunway = event.getRowValue();
+                        double newLDA = event.getNewValue();
+                        if( newLDA > logRunway.getTora()){
+                            new Error().errorPopUp("LDA value is greater than TORA value, invalid displaced threshold. Hint: please input a LDA value that is smaller than or equals to runway's TORA value");
+                        } else{
+                            logRunway.setAsda(event.getNewValue());
+                        }
+                    }catch (NullPointerException ignored){
+                        LogicalRunway logRunway = event.getRowValue();
+                        logRunway.setAsda(event.getOldValue());
+                    }
+                    logRunwayTable.refresh();
+                });
+
+                logRunwayTable.setItems(runway.getLogicalRunways());
+
+            });
+            runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
+            runwayMenu.getItems().add(runwayMenuItem);
+        }
+
     }
+
+
+    //a class that will be used to handler double value for cell editing
+    public static class CustomDoubleStringConverter extends DoubleStringConverter {
+        @Override
+        public String toString(Double object) {
+            try {
+                if(object < 0){
+                    throw new NumberFormatException();
+                }
+                return object.toString();
+
+            } catch (NumberFormatException | NullPointerException e) {
+                new Error().errorPopUp("Invalid double value. Hint: please provide a double value that is greater than 0");
+            }
+            return null;
+        }
+        @Override
+        public Double fromString(String string) {
+            try {
+                double value = Double.parseDouble(string);
+                if(value < 0){
+                    throw new NumberFormatException();
+                }
+                return value;
+            } catch (NumberFormatException ignored) {
+            }
+            return null;
+        }
+    }
+
+
+
+
+
 }

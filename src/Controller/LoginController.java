@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.User;
-import Model.Utility;
+import Model.Helper.Utility;
 import View.Error;
 import View.Login;
 import javafx.fxml.FXML;

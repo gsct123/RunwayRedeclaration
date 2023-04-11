@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Airport;
+import Model.Helper.XMLParserWriter;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
 import View.Error;
@@ -27,12 +28,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -135,8 +131,7 @@ public class AirportManagerController implements Initializable {
     @FXML
     public void backToMain(ActionEvent event) throws Exception {
         AirportManager.getStage().close();
-        writeToFile(MainController.airports, "src/Data/airports.xml");
-        new Main().start(new Stage());
+        Main.getStage().show();
     }
 
     @FXML
@@ -153,7 +148,7 @@ public class AirportManagerController implements Initializable {
     }
 
     @FXML
-    public void importAirport(ActionEvent event){
+    public void importAirport(ActionEvent event) throws ParserConfigurationException, TransformerException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Airport XML File");
         fileChooser.getExtensionFilters().addAll(
@@ -165,10 +160,11 @@ public class AirportManagerController implements Initializable {
             airportTable.setItems(MainController.airports);
             airportTable.refresh();
         }
+
     }
 
     @FXML
-    public void deleteAirport(ActionEvent event){
+    public void deleteAirport(ActionEvent event) throws ParserConfigurationException, TransformerException {
         Airport airport = airportTable.getSelectionModel().getSelectedItem();
 
         if(airport == null){
@@ -180,20 +176,41 @@ public class AirportManagerController implements Initializable {
                 MainController.airportNames.remove(airport.getName());
                 MainController.references.remove(airport.getID());
                 MainController.managerMap.remove(airport.getManager());
+                airportTable.getSelectionModel().clearSelection();
+                airportDetails.setText("No content to display, select an airport to view airport details");
+
                 new Notification(AirportManager.getStage()).sucessNotification("Successful action", airport.getName()+" has been deleted.");
+                airportTable.refresh();
             }
         }
+
     }
 
     @FXML
-    public void editAirport(ActionEvent event){
+    public void editAirport(ActionEvent event) throws Exception {
         Airport airport = airportTable.getSelectionModel().getSelectedItem();
 
         if(airport == null){
             new Error().errorPopUp("No airport selected. Hint: please select an airport to edit its details.");
         } else{
+            EditAirportController.setAirportSelected(airport);
+            new EditAirport().start(new Stage());
+            MainController.airports.remove(airport);
+            if(EditAirportController.actionCancel){
+                MainController.airports.add(airport);
+                new Notification(AirportManager.getStage()).sucessNotification("Successful revert", "Changes reverted.");
 
-            new Notification(AirportManager.getStage()).sucessNotification("Successful action", "Airport info has been updated.");
+            } else{
+                MainController.airports.add(EditAirportController.airportWithNewInfo);
+                System.out.println("original airport" + EditAirportController.airportWithNewInfo);
+                new Notification(AirportManager.getStage()).sucessNotification("Successful action", "Airport info has been updated.");
+            }
+            System.out.println(EditAirportController.actionCancel);
+            System.out.println(EditAirportController.airportSelected);
+            System.out.println(EditAirportController.airportWithNewInfo);
+
+            airportTable.setItems(MainController.airports);
+            airportTable.refresh();
         }
     }
 
@@ -204,6 +221,7 @@ public class AirportManagerController implements Initializable {
         if(airport == null){
             new Error().errorPopUp("No airport selected. Hint: please select an airport to export the details.");
         } else{
+
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Export Airport Details");
 
@@ -217,7 +235,7 @@ public class AirportManagerController implements Initializable {
             fileChooser.getExtensionFilters().addAll(textFilter, csvFilter);
 
 // Show the file chooser and get the selected file directory
-            File selectedDirectory = fileChooser.showSaveDialog(null);
+            File selectedDirectory = fileChooser.showSaveDialog(AirportManager.getStage());
 
             if (selectedDirectory != null) {
                 // Get the file extension
@@ -235,7 +253,7 @@ public class AirportManagerController implements Initializable {
                 } else if (extension.equals("xml")) {
                     ObservableList<Airport> temp = FXCollections.observableArrayList();
                     temp.add(airport);
-                    writeToFile(temp, selectedDirectory.getAbsolutePath());
+                    XMLParserWriter.writeToFile(temp, selectedDirectory.getAbsolutePath());
                 }
                 new Notification(AirportManager.getStage()).sucessNotification("Download successfull", "Saved to "+selectedDirectory);
                 writer.close();
@@ -322,13 +340,11 @@ public class AirportManagerController implements Initializable {
                         }
                         Airport airport = new Airport(reference, airportName, physicalRunways, manager);
 
-
                         if (errorMessage.toString().length() > 0) {
                             new Error().showError(errorMessage.toString());
                             new Notification(AirportManager.getStage()).failNotification("Failed action", "Fail to add airport.");
                         } else {
                             boolean result = new Confirmation().confirmAddAirport(airport, airportInfo(airport));
-                            System.out.println(result);
                             if (result) {
                                 MainController.airports.add(airport);
                                 MainController.airportNames.add(airportName);
@@ -374,7 +390,6 @@ public class AirportManagerController implements Initializable {
                         """);
             new Notification(AirportManager.getStage()).failNotification("Failed action", "Fail to add airport.");
         }
-
     }
 
     private ObservableList<Airport> filterList(List<Airport> list, String searchText){
@@ -483,13 +498,13 @@ public class AirportManagerController implements Initializable {
     public String checkLogRunway(LogicalRunway logicalRunway){
         StringBuilder res = new StringBuilder();
         if(logicalRunway.getLda() > logicalRunway.getTora()){
-            res.append("\n-- LDA value greater than TORA value (Invalid displaced threshold value)");
+            res.append("\n-- LDA value should be smaller than or equals to TORA value (Invalid displaced threshold value)");
         }
         if(logicalRunway.getTora() > logicalRunway.getAsda()){
-            res.append("\n-- TORA value greater than ASDA value (Invalid stopway value)");
+            res.append("\n-- TORA value should be smaller than or equals to ASDA value (Invalid stopway value)");
         }
         if(logicalRunway.getAsda() > logicalRunway.getToda()){
-            res.append("\n-- ASDA value greater than TODA value (Invalid clearway value");
+            res.append("\n-- ASDA value should be smaller than or equals to TODA value (Invalid clearway value");
         }
         if(res.length() > 0){
             return "\nPARAMETER ERROR (Logical Runway "+logicalRunway.getDesignator()+"): "+res;
@@ -497,61 +512,4 @@ public class AirportManagerController implements Initializable {
             return res.toString();
         }
     }
-
-    public static void writeToFile(ObservableList<Airport> airports, String fileName) throws ParserConfigurationException, TransformerException {
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document document = documentBuilder.newDocument();
-        document.setXmlStandalone(true);
-
-        Element root = document.createElement("airports");
-        document.appendChild(root);
-
-        for (Airport airport : airports) {
-            Element airportElement = document.createElement("airport");
-            root.appendChild(airportElement);
-
-            Element idElement = document.createElement("ID");
-            idElement.appendChild(document.createTextNode(airport.getID()));
-            airportElement.appendChild(idElement);
-
-            Element nameElement = document.createElement("name");
-            nameElement.appendChild(document.createTextNode(airport.getName()));
-            airportElement.appendChild(nameElement);
-
-            Element physicalRunwaysElement = document.createElement("physicalRunways");
-            airportElement.appendChild(physicalRunwaysElement);
-
-            ObservableList<PhysicalRunway> physicalRunways = airport.getPhysicalRunways();
-            for (PhysicalRunway physicalRunway : physicalRunways) {
-                Element physicalRunwayElement = document.createElement("physicalRunway");
-                physicalRunwayElement.setAttribute("name", physicalRunway.getName());
-                physicalRunwaysElement.appendChild(physicalRunwayElement);
-
-                ObservableList<LogicalRunway> logicalRunways = physicalRunway.getLogicalRunways();
-                for (LogicalRunway logicalRunway : logicalRunways) {
-                    Element logicalRunwayElement = document.createElement("logicalRunway");
-                    logicalRunwayElement.setAttribute("designator", logicalRunway.getDesignator());
-                    logicalRunwayElement.setAttribute("tora", String.valueOf(logicalRunway.getTora()));
-                    logicalRunwayElement.setAttribute("toda", String.valueOf(logicalRunway.getToda()));
-                    logicalRunwayElement.setAttribute("asda", String.valueOf(logicalRunway.getAsda()));
-                    logicalRunwayElement.setAttribute("lda", String.valueOf(logicalRunway.getLda()));
-                    physicalRunwayElement.appendChild(logicalRunwayElement);
-                }
-            }
-
-            Element userElement = document.createElement("user");
-            userElement.appendChild(document.createTextNode(airport.getManager()));
-            airportElement.appendChild(userElement);
-        }
-
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        DOMSource domSource = new DOMSource(document);
-        StreamResult streamResult = new StreamResult(new File(fileName));
-        transformer.transform(domSource, streamResult);
-    }
-
 }
