@@ -63,7 +63,7 @@ public class EditAirportController implements Initializable {
             }
             runways.add(new PhysicalRunway(physRunway.getName(), logicalRunways));
         }
-        airportWithNewInfo = new Airport(airportSelected.getID(), airportSelected.getName(), FXCollections.observableList(airportSelected.getPhysicalRunways()), airportSelected.getManager());
+        airportWithNewInfo = new Airport(airportSelected.getID(), airportSelected.getName(), runways, airportSelected.getManager());
         cancelButton.setOnAction(actionEvent -> {
             EditAirportController.actionCancel = true;
             EditAirport.getStage().close();
@@ -114,8 +114,11 @@ public class EditAirportController implements Initializable {
                         LogicalRunway logRunway = event.getRowValue();
                         double newToda = event.getNewValue();
                         if(newToda < logRunway.getAsda()){
-                            new Error().errorPopUp("TODA value is smaller than ASDA value, invalid clearway. Hint: please input a TODA value that is greater than or equals to runway's ASDA value");
-                        } else{
+                            new Error().errorPopUp("TODA value is smaller than ASDA value, invalid clearway. Hint: TODA has to be greater than or equals to both TORA and ASDA");
+                        } else if (newToda < logRunway.getTora()){
+                            new Error().errorPopUp("TODA value is smaller than TORA value, invalid clearway. Hint: TODA has to be greater than or equals to both TORA and ASDA");
+                        }
+                        else{
                             logRunway.setToda(event.getNewValue());
                         }
                     }catch (NullPointerException ignored){

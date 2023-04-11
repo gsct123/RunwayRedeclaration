@@ -205,9 +205,7 @@ public class AirportManagerController implements Initializable {
                 System.out.println("original airport" + EditAirportController.airportWithNewInfo);
                 new Notification(AirportManager.getStage()).sucessNotification("Successful action", "Airport info has been updated.");
             }
-            System.out.println(EditAirportController.actionCancel);
-            System.out.println(EditAirportController.airportSelected);
-            System.out.println(EditAirportController.airportWithNewInfo);
+
 
             airportTable.setItems(MainController.airports);
             airportTable.refresh();

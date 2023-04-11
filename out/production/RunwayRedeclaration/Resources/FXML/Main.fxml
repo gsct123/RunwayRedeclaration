@@ -24,7 +24,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<Pane prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <children>
       <VBox layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0">
           <children>
@@ -169,9 +169,9 @@
                                       <Insets bottom="5.0" top="5.0" />
                                   </padding>
                               </Label>
-                              <Button fx:id="resetButton" layoutX="19.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" prefWidth="106.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="Reset" textFill="WHITE">
+                              <Button fx:id="resetButton" layoutX="19.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" prefWidth="106.0" style="-fx-background-color: #EADF0C; -fx-border-color: black;" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="Reset" textFill="WHITE">
                                   <font>
-                                      <Font name="Verdana" size="16.0" />
+                                      <Font name="Verdana" size="14.0" />
                                   </font>
                               </Button>
                               <Label alignment="CENTER" layoutX="20.0" layoutY="99.0" prefHeight="42.0" prefWidth="219.0" text="RUNWAY">
@@ -192,9 +192,9 @@
                                       <Font name="Verdana" size="12.0" />
                                   </font>
                               </TextField>
-                        <Button fx:id="resetViewButton" layoutX="148.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleResetView" prefHeight="35.0" prefWidth="106.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="ResetView" textFill="WHITE">
+                        <Button fx:id="resetViewButton" layoutX="148.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleResetView" prefHeight="35.0" prefWidth="106.0" style="-fx-background-color: #EADF0C; -fx-border-color: black;" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="ResetView" textFill="#fffafa">
                            <font>
-                              <Font name="Verdana" size="16.0" />
+                              <Font name="Verdana" size="14.0" />
                            </font>
                         </Button>
                           </children>
@@ -207,7 +207,7 @@
                                           <content>
                                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                   <children>
-                                                      <AnchorPane prefHeight="627.0" prefWidth="804.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-border-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                   </children>
                                               </AnchorPane>
                                           </content>
@@ -216,7 +216,7 @@
                                           <content>
                                               <AnchorPane prefHeight="607.0" prefWidth="774.0">
                                                   <children>
-                                                      <AnchorPane layoutX="-2.0" prefHeight="623.0" prefWidth="804.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0" />
+                                                      <AnchorPane layoutX="-2.0" prefHeight="623.0" prefWidth="804.0" style="-fx-border-insets: 100;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0" />
                                                   </children>
                                               </AnchorPane>
                                           </content>
