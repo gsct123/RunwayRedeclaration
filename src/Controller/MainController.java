@@ -8,6 +8,7 @@ import View.Error;
 import View.Main;
 import View.OtherPopUp.Confirmation;
 import View.OtherPopUp.NoRedeclarationNeeded;
+import View.UserManager;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -53,10 +54,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MainController implements Initializable {
     private static boolean needRedeclare = true;
@@ -184,11 +182,12 @@ public class MainController implements Initializable {
     public static DoubleProperty obstacleWidth = new SimpleDoubleProperty();
 
     //list of airports and obstacles from files
-    public static ObservableList<Airport> airports = FXCollections.observableArrayList();
-    public static ObservableList<String> references = FXCollections.observableArrayList();
+    public static HashMap<String, Airport> airports = new HashMap<>();
     public static ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
     public static ObservableList<String> airportNames = FXCollections.observableArrayList();
     public static HashMap<String, Airport> managerMap = new HashMap<>();
+    public static HashMap<Airport, ArrayList<User>> users = new HashMap<>();
+    public static HashMap<User, Airport> managers = new HashMap<>();
 
     //Controllers
     private TopViewController topViewController;
@@ -229,6 +228,7 @@ public class MainController implements Initializable {
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
             addObstacleEvent();
+            loadUsers();
 
             identityLabel.setText("Logged in as "+ Main.getUsername());
             logoutItem.setOnAction(actionEvent -> {
@@ -262,12 +262,11 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(MainController.airports + " from main controller");
 
         initializeNotification(notiPane,notiScrollPane,notiVBox);
         topViewController.initializeCompass();
 
-        airports.addListener(listener);
+        FXCollections.observableArrayList(airports.values().stream().toList()).addListener(listener);
     }
 
     public ListChangeListener<Airport> listener = new ListChangeListener<Airport>() {
@@ -275,7 +274,7 @@ public class MainController implements Initializable {
         public void onChanged(Change<? extends Airport> c) {
             Airport temp = airportItem.get();
             try {
-                XMLParserWriter.writeToFile(MainController.airports, "src/Data/airports.xml");
+                XMLParserWriter.writeToFile(FXCollections.observableArrayList(MainController.airports.values().stream().toList()), "src/Data/airports.xml");
                 loadAirports("src/Data/airports.xml");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -314,13 +313,13 @@ public class MainController implements Initializable {
                     }
                 }
             }
-            airports.addListener(listener);
+            FXCollections.observableArrayList(airports.values().stream().toList()).addListener(listener);
         }
     };
 
     //getters
     public ObservableList<Obstacle> getObstacles(){return obstacles;}
-    public static ObservableList<Airport> getAirports(){return airports;}
+    public static HashMap<String, Airport> getAirports(){return airports;}
     public static PhysicalRunway getPhysRunwaySelected() {return physRunwayItem.get();}
     public static boolean needRedeclare(){return needRedeclare;}
     public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
@@ -333,6 +332,13 @@ public class MainController implements Initializable {
             Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
         } catch (IOException | URISyntaxException ignored) {}
     }
+
+    @FXML
+    public void goUserManager(ActionEvent event) throws Exception {
+        Main.getStage().close();
+        new UserManager(Main.getUsername()).start(new Stage());
+    }
+
     @FXML
     public void handleReset(ActionEvent event) throws IOException {
         boolean flag = new Confirmation().confirm("Are you sure you want to reset the system?", "Warning: This action cannot be undone.\nAll inputs and selections will be cleared.");
@@ -510,12 +516,25 @@ public class MainController implements Initializable {
         resaInfo.setOnMouseExited(mouseEvent -> resaInfoLabel.setVisible(false));
     }
 
+    public void loadUsers() {
+        for(User user: LoginController.users.values()){
+            if(user.getRole() == 2){
+                managers.put(user, MainController.airports.get(user.getAirportID()));
+            } else if(user.getRole() == 3){
+                ArrayList<User> list = new ArrayList<>();
+                if(users.containsKey(airports.get(user.getAirportID()))){
+                    list = users.get(airports.get(user.getAirportID()));
+                }
+                list.add(user);
+                users.put(MainController.airports.get(user.getAirportID()), list);
+            }
+        }
+    }
 
 
     //this function read from a xml file and instantiate list of airports available
     public void loadAirports(String file) throws Exception {
-        airports = FXCollections.observableArrayList();
-        references = FXCollections.observableArrayList();
+        airports = new HashMap<>();
         airportNames = FXCollections.observableArrayList();
         // Create a DocumentBuilder
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -537,7 +556,6 @@ public class MainController implements Initializable {
             if (airportNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element airportElement = (Element) airportNode;
                 String reference = airportElement.getElementsByTagName("ID").item(0).getTextContent();
-                references.add(reference);
                 // Get the airport name
                 String airportName = airportElement.getElementsByTagName("name").item(0).getTextContent();
                 airportNames.add(airportName);
@@ -585,7 +603,7 @@ public class MainController implements Initializable {
                 Airport airport = new Airport(reference, airportName, physicalRunways, manager);
                 managerMap.put(manager, airport);
 
-                getAirports().add(airport);
+                getAirports().put(airport.getID(), airport);
             }
         }
         airports.sort(Comparator.comparing(Airport::getName));
@@ -593,7 +611,7 @@ public class MainController implements Initializable {
 
     public void addAirportEvent() {
         airportMenu.getItems().clear();
-        for(Airport airport: getAirports()){
+        for(Airport airport: getAirports().values()){
             MenuItem airportMenuItem = new MenuItem(airport.getName());
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             airportMenuItem.setOnAction(e -> {

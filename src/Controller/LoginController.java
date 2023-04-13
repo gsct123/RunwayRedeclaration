@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-    HashMap<String, User> users = new HashMap<>();
+    public static HashMap<String, User> users = new HashMap<>();
     private String username = null;
 
     @FXML
@@ -84,7 +84,7 @@ public class LoginController implements Initializable {
             if(name.length() > 0 && password.length() > 0 && users.containsKey(name)){
                 if(users.get(name).getPassword().equals(Utility.toHexString(Utility.getSHA(password)))) {
                     Login.getStage().close();
-                    new View.Main(name).start(new Stage());
+                    new View.Main(users.get(name)).start(new Stage());
                 } else{
                     new Error().showError(passwordField, "Invalid password", "");
                 }
@@ -122,11 +122,12 @@ public class LoginController implements Initializable {
 
                 //get username
                 String username = userElement.getElementsByTagName("username").item(0).getTextContent();
+                String name = userElement.getElementsByTagName("name").item(0).getTextContent();
                 String password = userElement.getElementsByTagName("password").item(0).getTextContent();
                 String airport = userElement.getElementsByTagName("airportID").item(0).getTextContent();
                 int role = Integer.parseInt(userElement.getElementsByTagName("role").item(0).getTextContent());
 
-                User user = new User(username, password, airport, role);
+                User user = new User(username, name, password, airport, role);
                 users.put(username, user);
             }
         }

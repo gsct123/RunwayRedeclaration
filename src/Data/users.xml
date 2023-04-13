@@ -2,18 +2,21 @@
 <users>
     <user>
         <username>admin</username>
+        <name>Admin</name>
         <password>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</password>
         <airportID>0</airportID>
         <role>1</role>
     </user>
     <user>
         <username>manager</username>
+        <name>Manager</name>
         <password>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</password>
         <airportID>LHR</airportID>
         <role>2</role>
     </user>
     <user>
         <username>atc</username>
+        <name>Air Traffic Controller</name>
         <password>9af15b336e6a9619928537df30b2e6a2376569fcf9d7e773eccede65606529a0</password>
         <airportID>LHR</airportID>
         <role>3</role>

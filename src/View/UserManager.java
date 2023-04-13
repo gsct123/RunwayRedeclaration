@@ -1,6 +1,6 @@
 package View;
 
-import Model.User;
+import Controller.AirportManagerController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,45 +9,31 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-
-public class Main extends Application {
+public class UserManager extends Application {
     private static Stage classStage;
-    private static boolean status;
-    private static User user;
+    private static String username;
 
-    public Main(){}
+    //default constructor
+    public UserManager(){}
 
-    public Main(User user) {
-        Main.user = user;
-    }
-
-    public static int getRole(){
-        return user.getRole();
+    public UserManager(String username) {
+        UserManager.username = username;
     }
 
     public static String getUsername() {
-        return user.getUsername();
+        return username;
     }
 
     public static Stage getStage(){
         return classStage;
     }
 
-    public static boolean isReset(){
-        return status;
-    }
-
-    public static void setReset(boolean reset){
-        status = reset;
-
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
-        Main.classStage = stage;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Main.fxml"));
-
+        classStage = stage;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/UserManager.fxml"));
         Parent root = loader.load();
+        loader.setController(new AirportManagerController());
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
