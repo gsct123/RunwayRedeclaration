@@ -896,6 +896,12 @@ public class TopViewController implements Initializable {
         });
     }
 
+    public void initializeCompass(){
+        getCompass().setRotate(90);
+        getCompassDegree().setText(90.0 + "°");
+
+    }
+
     //getter
     public AnchorPane getTopDownRunwayPane() {
         return topDownRunwayPane;
@@ -909,8 +915,9 @@ public class TopViewController implements Initializable {
         return compassDegree;
     }
 
-    public void initializeCompass(){
-        getCompass().setRotate(90);
-        getCompassDegree().setText(90.0 + "°");
+    public Pane getDragPane() {
+        return dragPane;
     }
+
+
 }

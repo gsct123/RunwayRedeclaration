@@ -783,4 +783,8 @@ public class SideViewController {
     public AnchorPane getSideOnPane() {
         return sideOnPane;
     }
+
+    public Pane getDragPane() {
+        return dragPane;
+    }
 }
