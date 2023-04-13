@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
 public class TopViewController implements Initializable {
 
     @FXML
+    private Pane dragPane;
+    @FXML
     private Label compassDegree;
     //compass
     @FXML
@@ -241,7 +243,7 @@ public class TopViewController implements Initializable {
         Pane compass = getCompass();
         //initialize drag, zoom and rotate
         Utility.initializeZoom(topDownRunwayPane);
-        initializeMouseEvent(topDownRunwayPane,compass);
+        initializeMouseEvent(topDownRunwayPane,dragPane,compass);
 
     }
 
@@ -841,26 +843,31 @@ public class TopViewController implements Initializable {
 
 
 
-    private void initializeMouseEvent(AnchorPane pane, Pane compass){
+    private void initializeMouseEvent(AnchorPane pane,Pane dragPane, Pane compass){
 
         pane.setOnMousePressed(mouseEvent->{
+            //mouse position before drag
+            double mouseX = mouseEvent.getX();
+            double mouseY = mouseEvent.getY();
             if (mouseEvent.isShortcutDown()){
-                //mouse position before drag
-                double mouseX = mouseEvent.getX();
-                double mouseY = mouseEvent.getY();
-                pane.setOnMouseDragged(dragEvent -> {
+                dragPane.setOnMouseDragged(dragEvent -> {
                     //the amount dragged minus original mouse position
                     double translationX = dragEvent.getX() - mouseX;
                     double translationY = dragEvent.getY() - mouseY;
+                    System.out.println("Drag eventX : " + dragEvent.getX());
+                    System.out.println("Drag eventY : " + dragEvent.getY());
+                    System.out.println("mouseX :" + mouseX);
+                    System.out.println("mouseY :" + mouseY);
+                    System.out.println(translationX);
+                    System.out.println(translationY);
                     //set translation
-                    pane.setTranslateX(pane.getTranslateX() + translationX);
-                    pane.setTranslateY(pane.getTranslateY() + translationY);
-                    dragEvent.consume();
+                    dragPane.setTranslateX(dragPane.getTranslateX() + translationX);
+                    dragPane.setTranslateY(dragPane.getTranslateY() + translationY);
+                    //dragEvent.consume();
+                    mouseEvent.consume();
                 });
             }if (mouseEvent.isShiftDown()){
                 //mouse position before drag
-                double x1 = mouseEvent.getX();
-                double y1 = mouseEvent.getY();
                 pane.setOnMouseDragged(draggedEvent -> {
                     Label compassDegree = getCompassDegree();
                     //set up xs and ys for calculation
@@ -868,7 +875,7 @@ public class TopViewController implements Initializable {
                     double y2 = draggedEvent.getY();
                     double x3 = pane.getLayoutX() + pane.getWidth()/2;
                     double y3 = pane.getLayoutY() + pane.getHeight()/2;
-                    double angle = Utility.getAngleBetween(x1,y1,x2,y2,x3,y3);
+                    double angle = Utility.getAngleBetween(mouseX,mouseY,x2,y2,x3,y3);
                     //get angles
                     double runwayAngle = (pane.getRotate() + angle )%360;
                     double compassAngle = (compass.getRotate() + angle) %360;
@@ -879,13 +886,13 @@ public class TopViewController implements Initializable {
                     compass.setRotate(compassAngle);
                     compassDegree.setText(Math.round(compassAngle *10)/10.0 + "°");
                     draggedEvent.consume();
-
+                    mouseEvent.consume();
                 });
             }
-            mouseEvent.consume();
         });
         pane.setOnMouseReleased( releasedEvent -> {
             pane.setOnMouseDragged(null);
+            releasedEvent.consume();
         });
     }
 
