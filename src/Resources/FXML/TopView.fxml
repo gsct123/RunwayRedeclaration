@@ -231,14 +231,14 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5ff552" height="12.0" layoutX="635.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f53e3e" height="12.0" layoutX="635.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="12.0" layoutX="635.0" layoutY="122.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Label layoutX="271.0" layoutY="593.0" text="Landing/Taking Off Direction">
+      <Label layoutX="172.0" layoutY="573.0" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="15.0" />
          </font>
       </Label>
-      <Polygon fill="#0f0f0f" layoutX="166.0" layoutY="624.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <Line endX="499.5" endY="-70.64111328125" layoutX="103.0" layoutY="673.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
-      <Line endX="432.5" endY="-70.64111328125" layoutX="-177.0" layoutY="673.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Polygon fill="#0f0f0f" layoutX="67.0" layoutY="604.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Line endX="499.5" endY="-70.64111328125" layoutX="-16.0" layoutY="653.0" startX="450.70379638671875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Line endX="432.5" endY="-70.64111328125" layoutX="-276.0" layoutY="653.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="635.0" layoutY="34.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4a4a4" height="12.0" layoutX="635.0" layoutY="12.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Label layoutX="660.0" layoutY="12.0" prefHeight="12.0" prefWidth="130.0" style="-fx-text-fill: black;" text="Clear and Graded Area" wrapText="true">
@@ -246,9 +246,9 @@
             <Font name="Verdana Bold Italic" size="10.0" />
          </font>
       </Label>
-      <Rectangle fx:id="scaleLength" fill="WHITE" height="7.0" layoutX="311.0" layoutY="559.0" stroke="#3c3c3c" strokeType="INSIDE" width="150.0" />
-      <Rectangle fx:id="scaleStart" fill="#3c3c3c" height="7.0" layoutX="311.0" layoutY="559.0" stroke="TRANSPARENT" strokeType="INSIDE" width="50.0" />
-      <Rectangle fx:id="scaleEnd" fill="#3c3c3c" height="7.0" layoutX="411.0" layoutY="559.0" stroke="TRANSPARENT" strokeType="INSIDE" width="50.0" />
+      <Rectangle fx:id="scaleLength" fill="WHITE" height="7.0" layoutX="520.0" layoutY="578.0" stroke="#3c3c3c" strokeType="INSIDE" width="150.0" />
+      <Rectangle fx:id="scaleStart" fill="#3c3c3c" height="7.0" layoutX="520.0" layoutY="578.0" stroke="TRANSPARENT" strokeType="INSIDE" width="50.0" />
+      <Rectangle fx:id="scaleEnd" fill="#3c3c3c" height="7.0" layoutX="620.0" layoutY="578.0" stroke="TRANSPARENT" strokeType="INSIDE" width="50.0" />
       <Label layoutX="661.0" layoutY="34.0" prefHeight="12.0" prefWidth="130.0" style="-fx-text-fill: black;" text="Threshold" wrapText="true">
          <font>
             <Font name="Verdana Bold Italic" size="10.0" />
@@ -274,37 +274,37 @@
             <Font name="Verdana Bold Italic" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scaleLabel" layoutX="345.0" layoutY="572.0" style="-fx-text-fill: black;" text="Horizontal Scale">
+      <Label fx:id="scaleLabel" layoutX="554.0" layoutY="591.0" style="-fx-text-fill: black;" text="Horizontal Scale">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scale0" layoutX="308.0" layoutY="539.0" style="-fx-text-fill: black;" text="0">
+      <Label fx:id="scale0" layoutX="517.0" layoutY="558.0" style="-fx-text-fill: black;" text="0">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scale500" layoutX="354.0" layoutY="539.0" style="-fx-text-fill: black;" text="500">
+      <Label fx:id="scale500" layoutX="563.0" layoutY="558.0" style="-fx-text-fill: black;" text="500">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scale1000" layoutX="398.0" layoutY="539.0" style="-fx-text-fill: black;" text="1000">
+      <Label fx:id="scale1000" layoutX="607.0" layoutY="558.0" style="-fx-text-fill: black;" text="1000">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scale1500" layoutX="449.0" layoutY="539.0" style="-fx-text-fill: black;" text="1500">
+      <Label fx:id="scale1500" layoutX="658.0" layoutY="558.0" style="-fx-text-fill: black;" text="1500">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scaleUnit" layoutX="472.0" layoutY="557.0" style="-fx-text-fill: black;" text="m">
+      <Label fx:id="scaleUnit" layoutX="681.0" layoutY="576.0" style="-fx-text-fill: black;" text="m">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="261.0" layoutY="10.0" text="Landing/Taking Off Direction">
+      <Label layoutX="241.0" layoutY="49.0" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="15.0" />
          </font>

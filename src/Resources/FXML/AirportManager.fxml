@@ -21,10 +21,15 @@
             <menus>
                 <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="File">
                     <items>
-                  <MenuItem fx:id="aboutProject11" mnemonicParsing="false" onAction="#backToMain" text="Back to Main" />
-                        <MenuItem fx:id="aboutProject1" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+                        <MenuItem fx:id="logoutItem" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
                     </items>
                 </Menu>
+            <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Go">
+               <items>
+                  <MenuItem fx:id="backToMain" mnemonicParsing="false" text="Back to Main" />
+                  <MenuItem fx:id="userManager" mnemonicParsing="false" text="User Manager" />
+               </items>
+            </Menu>
                 <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
                     <items>
                         <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
