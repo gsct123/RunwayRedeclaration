@@ -256,14 +256,13 @@ public class MainController implements Initializable {
             });
 
             if(Main.isReset()){
-                addNotificationLabel(notiVBox,new Label("Status: Options Reset\t " + getDateTimeNow()));
-                notificationLabel.setText("Status: Options Reset\t " + getDateTimeNow());
+                setNotificationLabel("Status: Options Reset\t " + getDateTimeNow());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        initializeNotification(notiPane,notiScrollPane,notiVBox);
+        initializeNotification(getNotiPane(),getNotiScrollPane(),getNotiVBox());
         topViewController.initializeCompass();
 
         FXCollections.observableArrayList(airports.values().stream().toList()).addListener(listener);
@@ -324,6 +323,12 @@ public class MainController implements Initializable {
     public static boolean needRedeclare(){return needRedeclare;}
     public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
     public MenuButton getAirportMenu() {return this.airportMenu;}
+    public TopViewController getTopViewController() { return topViewController;}
+    public SideViewController getSideViewController() { return sideViewController;}
+    public VBox getNotiVBox() {return notiVBox;}
+    public Pane getNotiPane() {return notiPane;}
+    public ScrollPane getNotiScrollPane() {return notiScrollPane;}
+    public Label getNotificationLabel() {return notificationLabel;}
 
     //event handlers
     @FXML
@@ -423,8 +428,7 @@ public class MainController implements Initializable {
         }
         calculationBreakdown.setDisable(false);
         valueChanged.set(valueChanged.doubleValue() == 1? 0: 1);
-        addNotificationLabel(notiVBox, new Label("Status: Calculation performed\t " + getDateTimeNow()));
-        notificationLabel.setText("Status: Calculation performed\t " + getDateTimeNow());
+        setNotificationLabel( "Status: Calculation performed\t " + getDateTimeNow());
     }
 
     public String getDateTimeNow(){
@@ -820,13 +824,17 @@ public class MainController implements Initializable {
         });
     }
 
-    public void addNotificationLabel(VBox vBox,Label label) {
+    //add notification into history and set text into notification label
+    public void setNotificationLabel(String string) {
+        Label label = new Label(string);
         label.setPrefHeight(40);
         label.setTextFill(Color.RED);
         Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR,12);
         label.setFont(font);
-        vBox.getChildren().add(label);
+        getNotiVBox().getChildren().add(label);
+        getNotificationLabel().setText(string);
     }
+
 
     public void resetNotificationBar(Pane pane, ScrollPane scrollPane){
         double oriPaneY = 759;
@@ -837,21 +845,28 @@ public class MainController implements Initializable {
     }
 
     public void handleResetView(ActionEvent actionEvent) {
+        //Variables
+        AnchorPane topViewAnchorPane = getTopViewController().getTopDownRunwayPane();
+        AnchorPane sideViewAnchorPane = getSideViewController().getSideOnPane();
+        Pane topViewDragPane  = getTopViewController().getDragPane();
+        Pane sideViewDragPane = getSideViewController().getDragPane();
         try {
-            resetView(topViewController.getTopDownRunwayPane());
-            resetView(sideViewController.getSideOnPane());
-            topViewController.initializeCompass();
+            resetView(topViewAnchorPane,topViewDragPane);
+            resetView(sideViewAnchorPane,sideViewDragPane);
+            getTopViewController().initializeCompass();
         }catch (Exception e){
             System.out.println(e);
         }
+        setNotificationLabel("Status: View Reset\t " + getDateTimeNow());
     }
 
-    public void resetView(AnchorPane pane){
-        pane.setTranslateX(0);
-        pane.setTranslateY(0);
+    public void resetView(AnchorPane pane, Pane dragPane){
+        dragPane.setTranslateX(0);
+        dragPane.setTranslateY(0);
         pane.setScaleX(1);
         pane.setScaleY(1);
         pane.setRotate(0);
+
     }
 
     int clickCount = 0;
@@ -864,7 +879,6 @@ public class MainController implements Initializable {
             notiPane.setVisible(false);
             notificationLabel.setVisible(true);
         }
-
         clickCount++;
     }
 

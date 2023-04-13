@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.math.BigInteger;
@@ -66,7 +67,7 @@ public class Utility {
     public static void initializeZoom(AnchorPane pane){
         //constants
         double zoomSens = 0.005;
-        double zoomInLimit = 0.5;
+        double zoomInLimit = 0.75;
         pane.setOnScroll(scrollEvent -> {
             //conditions
             boolean zoomReachLimit = pane.getScaleX() >= zoomInLimit && pane.getScaleY() >= zoomInLimit;
@@ -85,25 +86,25 @@ public class Utility {
             }
         });
     }
-    public static void initializeDrag(AnchorPane pane){
-        pane.setOnMousePressed(mouseEvent->{
+    public static void initializeDrag(Pane dragPane){
+        dragPane.setOnMousePressed(mouseEvent->{
             if (mouseEvent.isShortcutDown()){
                 //mouse position before drag
                 double mouseX = mouseEvent.getX();
                 double mouseY = mouseEvent.getY();
-                pane.setOnMouseDragged(dragEvent -> {
+                dragPane.setOnMouseDragged(dragEvent -> {
                     //the amount dragged minus original mouse position
                     double translationX = dragEvent.getX() - mouseX;
                     double translationY = dragEvent.getY() - mouseY;
                     //set translation
-                    pane.setTranslateX(pane.getTranslateX() + translationX);
-                    pane.setTranslateY(pane.getTranslateY() + translationY);
+                    dragPane.setTranslateX(dragPane.getTranslateX() + translationX);
+                    dragPane.setTranslateY(dragPane.getTranslateY() + translationY);
                     dragEvent.consume();
                 });
             }
         });
-        pane.setOnMouseReleased( releasedEvent -> {
-            pane.setOnMouseDragged(null);
+        dragPane.setOnMouseReleased( releasedEvent -> {
+            dragPane.setOnMouseDragged(null);
         });
     }
 

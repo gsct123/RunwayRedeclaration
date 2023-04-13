@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -15,6 +16,8 @@ import javafx.scene.shape.Rectangle;
 public class SideViewController {
 
 
+    @FXML
+    private Pane dragPane;
     //physical runway
     @FXML
     private AnchorPane sideOnPane;
@@ -216,7 +219,7 @@ public class SideViewController {
         MainController.obstacleHeight.addListener((observable, oldValue, newValue) -> {setUpAlsTocs(MainController.getObstacleSelected(), MainController.getPhysRunwaySelected().getLogicalRunways().get(0));});
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel(new ActionEvent()));
         Utility.initializeZoom(sideOnPane);
-        Utility.initializeDrag(sideOnPane);
+        Utility.initializeDrag(dragPane);
     }
 
     @FXML
@@ -779,5 +782,9 @@ public class SideViewController {
 
     public AnchorPane getSideOnPane() {
         return sideOnPane;
+    }
+
+    public Pane getDragPane() {
+        return dragPane;
     }
 }
