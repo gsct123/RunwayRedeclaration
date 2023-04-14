@@ -243,8 +243,8 @@ public class TopViewController implements Initializable {
         Pane compass = getCompass();
         //initialize drag, zoom and rotate
         Utility.initializeZoom(topDownRunwayPane);
-        initializeMouseEvent(topDownRunwayPane,dragPane,compass);
-
+        Utility.initializeDrag(dragPane);
+        initializeRotate(topDownRunwayPane,compass);
     }
 
     //function to update labels and line in top view
@@ -843,30 +843,12 @@ public class TopViewController implements Initializable {
 
 
 
-    private void initializeMouseEvent(AnchorPane pane,Pane dragPane, Pane compass){
-
+    private void initializeRotate(AnchorPane pane, Pane compass){
         pane.setOnMousePressed(mouseEvent->{
             //mouse position before drag
             double mouseX = mouseEvent.getX();
             double mouseY = mouseEvent.getY();
-            if (mouseEvent.isShortcutDown()){
-                dragPane.setOnMouseDragged(dragEvent -> {
-                    //the amount dragged minus original mouse position
-                    double translationX = dragEvent.getX() - mouseX;
-                    double translationY = dragEvent.getY() - mouseY;
-                    System.out.println("Drag eventX : " + dragEvent.getX());
-                    System.out.println("Drag eventY : " + dragEvent.getY());
-                    System.out.println("mouseX :" + mouseX);
-                    System.out.println("mouseY :" + mouseY);
-                    System.out.println(translationX);
-                    System.out.println(translationY);
-                    //set translation
-                    dragPane.setTranslateX(dragPane.getTranslateX() + translationX);
-                    dragPane.setTranslateY(dragPane.getTranslateY() + translationY);
-                    //dragEvent.consume();
-                    mouseEvent.consume();
-                });
-            }if (mouseEvent.isShiftDown()){
+            if (mouseEvent.isShiftDown()){
                 //mouse position before drag
                 pane.setOnMouseDragged(draggedEvent -> {
                     Label compassDegree = getCompassDegree();
@@ -892,7 +874,6 @@ public class TopViewController implements Initializable {
         });
         pane.setOnMouseReleased( releasedEvent -> {
             pane.setOnMouseDragged(null);
-            releasedEvent.consume();
         });
     }
 
