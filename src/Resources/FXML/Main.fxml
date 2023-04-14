@@ -410,10 +410,13 @@
            <children>
                <ScrollPane fx:id="notiScrollPane" fitToHeight="true" fitToWidth="true" hvalue="1.0" layoutY="22.0" prefHeight="22.0" style="-fx-background-color: #212f45;">
                    <content>
-                       <VBox fx:id="notiVBox" prefWidth="1220.0" />
+                       <VBox fx:id="notiVBox" prefWidth="1220.0">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor></VBox>
                    </content>
                <cursor>
-                  <Cursor fx:constant="N_RESIZE" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
                </ScrollPane>
             <Button fx:id="extendButton" layoutX="1153.0" minHeight="17.0" minWidth="36.0" mnemonicParsing="false" onAction="#extendNotiBar" prefHeight="22.0" prefWidth="60.0" styleClass="extendButton" stylesheets="@../CSS/MainStylesheet.css">
@@ -451,7 +454,7 @@
             </Text>
          </graphic>
       </Button>
-       <Label fx:id="notificationLabel" layoutX="282.0" layoutY="759.0" prefHeight="22.0" prefWidth="799.0" style="-fx-text-fill: grey;" text="Status">
+       <Label id="notificationLabel" fx:id="notificationLabel" layoutX="282.0" layoutY="759.0" opacity="0.0" prefHeight="22.0" prefWidth="799.0" styleClass="notificationLabel" stylesheets="@../CSS/MainStylesheet.css" text="Status     ">
            <padding>
                <Insets left="20.0" />
            </padding>

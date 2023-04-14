@@ -820,7 +820,7 @@ public class TopViewController implements Initializable {
         way.setLayoutX(oriWayX);
     }
 
-    private void rotateRunway(){
+    protected void rotateRunway(){
         //variables
         AnchorPane topDownRunwayPane = getTopDownRunwayPane();
         Pane compass = getCompass();

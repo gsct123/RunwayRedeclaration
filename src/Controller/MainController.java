@@ -10,6 +10,7 @@ import View.OtherPopUp.Confirmation;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.UserManager;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -39,6 +40,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -267,6 +269,7 @@ public class MainController implements Initializable {
         topViewController.initializeCompass();
 
         FXCollections.observableArrayList(airports.values().stream().toList()).addListener(listener);
+
     }
 
     public ListChangeListener<Airport> listener = new ListChangeListener<Airport>() {
@@ -687,15 +690,16 @@ public class MainController implements Initializable {
             data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), "-"));
             data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), "-"));
         } else{
+            System.out.println(logRunway2);
             data1.add(new Parameter("TORA (m)", String.valueOf(logRunway1.getTora()), String.valueOf(needRedeclare? logRunway1.getNewTora(): logRunway1.getTora())));
             data1.add(new Parameter("TODA (m)", String.valueOf(logRunway1.getToda()), String.valueOf(needRedeclare? logRunway1.getNewToda(): logRunway1.getToda())));
             data1.add(new Parameter("ASDA (m)", String.valueOf(logRunway1.getAsda()), String.valueOf(needRedeclare? logRunway1.getNewAsda(): logRunway1.getAsda())));
             data1.add(new Parameter("LDA (m)", String.valueOf(logRunway1.getLda()), String.valueOf(needRedeclare? logRunway1.getNewLda(): logRunway1.getLda())));
 
-            data2.add(new Parameter("TORA (m)", String.valueOf(logRunway2.getTora()), String.valueOf(needRedeclare? logRunway2.getNewTora(): logRunway1.getTora())));
-            data2.add(new Parameter("TODA (m)", String.valueOf(logRunway2.getToda()), String.valueOf(needRedeclare? logRunway2.getNewToda(): logRunway1.getToda())));
-            data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), String.valueOf(needRedeclare? logRunway2.getNewAsda(): logRunway1.getAsda())));
-            data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), String.valueOf(needRedeclare? logRunway2.getNewLda(): logRunway1.getLda())));
+            data2.add(new Parameter("TORA (m)", String.valueOf(logRunway2.getTora()), String.valueOf(needRedeclare? logRunway2.getNewTora(): logRunway2.getTora())));
+            data2.add(new Parameter("TODA (m)", String.valueOf(logRunway2.getToda()), String.valueOf(needRedeclare? logRunway2.getNewToda(): logRunway2.getToda())));
+            data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), String.valueOf(needRedeclare? logRunway2.getNewAsda(): logRunway2.getAsda())));
+            data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), String.valueOf(needRedeclare? logRunway2.getNewLda(): logRunway2.getLda())));
         }
 
         leftTableView.setItems(data1);
@@ -796,7 +800,6 @@ public class MainController implements Initializable {
         vBox.heightProperty().addListener((observableValue, number, t1) -> {
             scrollPane.setVvalue(scrollPane.getVmax());
         } );
-
         pane.setOnMousePressed(mouseEvent -> {
             double y = mouseEvent.getY();
             pane.setOnMouseDragged(event -> {
@@ -821,6 +824,14 @@ public class MainController implements Initializable {
                 resetNotificationBar(getNotiPane(),getNotiScrollPane());
             }
         });
+        getNotificationLabel().setOnMouseEntered(mouseEvent -> {
+            getNotificationLabel().setOpacity(1.0);
+            mouseEvent.consume();
+        });
+        getNotificationLabel().setOnMouseExited(mouseEvent -> {
+            fadeTransition(getNotificationLabel());
+            mouseEvent.consume();
+        });
     }
 
     //add notification into history and set text into notification label
@@ -829,12 +840,20 @@ public class MainController implements Initializable {
         //label.setPrefHeight(40);
         label.setTextFill(Color.RED);
         label.setPadding(new Insets(5));
-        Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR,12);
+        Font font = Font.font("Verdana", FontWeight.MEDIUM, FontPosture.REGULAR,12);
         label.setFont(font);
         getNotiVBox().getChildren().add(label);
         getNotificationLabel().setText(string);
+        fadeTransition(getNotificationLabel());
     }
 
+    public void fadeTransition(Label label){
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), label);
+        //set opacity
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.play();
+    }
 
     public void resetNotificationBar(Pane pane, ScrollPane scrollPane){
         double oriPaneY = 759;
@@ -842,6 +861,14 @@ public class MainController implements Initializable {
         pane.setLayoutY(oriPaneY);
         pane.setPrefHeight(oriPaneH);
         scrollPane.setPrefHeight(0);
+    }
+
+    public void resetView(AnchorPane pane, Pane dragPane){
+        dragPane.setTranslateX(0);
+        dragPane.setTranslateY(0);
+        pane.setScaleX(1);
+        pane.setScaleY(1);
+        pane.setRotate(0);
     }
 
     public void handleResetView(ActionEvent actionEvent) {
@@ -854,19 +881,11 @@ public class MainController implements Initializable {
             resetView(topViewAnchorPane,topViewDragPane);
             resetView(sideViewAnchorPane,sideViewDragPane);
             getTopViewController().initializeCompass();
+            topViewController.rotateRunway();
         }catch (Exception e){
             System.out.println(e);
         }
         setNotificationLabel("Status: View Reset\t " + getDateTimeNow());
-    }
-
-    public void resetView(AnchorPane pane, Pane dragPane){
-        dragPane.setTranslateX(0);
-        dragPane.setTranslateY(0);
-        pane.setScaleX(1);
-        pane.setScaleY(1);
-        pane.setRotate(0);
-
     }
 
     int clickCount = 0;
