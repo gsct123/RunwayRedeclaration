@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -808,6 +809,7 @@ public class MainController implements Initializable {
                 pane.setPrefHeight(newPaneH);
                 pane.setLayoutY(newPaneY);
                 scrollPane.setPrefHeight(newSPaneH);
+                getNotiVBox().setPrefHeight(newSPaneH);
                 event.consume();
             });
             mouseEvent.consume();
@@ -815,11 +817,8 @@ public class MainController implements Initializable {
         //reset to bottom if our of bound
         pane.setOnMouseReleased(releaseEvent -> {
             double oriPaneY = 759;
-            double oriPaneH = 25;
             if (pane.getLayoutY() >= oriPaneY  || pane.getLayoutY() < 0 ){
-                pane.setLayoutY(oriPaneY);
-                pane.setPrefHeight(oriPaneH);
-                scrollPane.setPrefHeight(0);
+                resetNotificationBar(getNotiPane(),getNotiScrollPane());
             }
         });
     }
@@ -827,8 +826,9 @@ public class MainController implements Initializable {
     //add notification into history and set text into notification label
     public void setNotificationLabel(String string) {
         Label label = new Label(string);
-        label.setPrefHeight(40);
+        //label.setPrefHeight(40);
         label.setTextFill(Color.RED);
+        label.setPadding(new Insets(5));
         Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR,12);
         label.setFont(font);
         getNotiVBox().getChildren().add(label);
@@ -874,6 +874,7 @@ public class MainController implements Initializable {
         if (clickCount%2 ==0){
             notiPane.setVisible(true);
             notificationLabel.setVisible(false);
+            resetNotificationBar(getNotiPane(),getNotiScrollPane());
         }else {
 
             notiPane.setVisible(false);
