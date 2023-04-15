@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.*;
-import javafx.util.Duration;
 import Model.Helper.Utility;
 import Model.Helper.XMLParserWriter;
 import View.AirportManager;
@@ -11,6 +10,7 @@ import View.OtherPopUp.Confirmation;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import View.UserManager;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -39,6 +40,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -691,22 +693,84 @@ public class MainController implements Initializable {
             data2.add(new Parameter("TODA (m)", String.valueOf(logRunway2.getToda()), "-"));
             data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), "-"));
             data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), "-"));
-        } else{
-            System.out.println(logRunway2);
-            data1.add(new Parameter("TORA (m)", String.valueOf(logRunway1.getTora()), String.valueOf(needRedeclare? logRunway1.getNewTora(): logRunway1.getTora())));
-            data1.add(new Parameter("TODA (m)", String.valueOf(logRunway1.getToda()), String.valueOf(needRedeclare? logRunway1.getNewToda(): logRunway1.getToda())));
-            data1.add(new Parameter("ASDA (m)", String.valueOf(logRunway1.getAsda()), String.valueOf(needRedeclare? logRunway1.getNewAsda(): logRunway1.getAsda())));
-            data1.add(new Parameter("LDA (m)", String.valueOf(logRunway1.getLda()), String.valueOf(needRedeclare? logRunway1.getNewLda(): logRunway1.getLda())));
 
-            data2.add(new Parameter("TORA (m)", String.valueOf(logRunway2.getTora()), String.valueOf(needRedeclare? logRunway2.getNewTora(): logRunway2.getTora())));
-            data2.add(new Parameter("TODA (m)", String.valueOf(logRunway2.getToda()), String.valueOf(needRedeclare? logRunway2.getNewToda(): logRunway2.getToda())));
-            data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), String.valueOf(needRedeclare? logRunway2.getNewAsda(): logRunway2.getAsda())));
-            data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), String.valueOf(needRedeclare? logRunway2.getNewLda(): logRunway2.getLda())));
+            revisedCol1.setCellFactory(cell -> new BlackTableCell<>());
+            revisedCol2.setCellFactory(cell -> new BlackTableCell<>());
+
+        } else{
+            if(needRedeclare){
+                data1.add(new Parameter("TORA (m)", String.valueOf(logRunway1.getTora()), String.valueOf(logRunway1.getNewTora())));
+                data1.add(new Parameter("TODA (m)", String.valueOf(logRunway1.getToda()), String.valueOf(logRunway1.getNewToda())));
+                data1.add(new Parameter("ASDA (m)", String.valueOf(logRunway1.getAsda()), String.valueOf(logRunway1.getNewAsda())));
+                data1.add(new Parameter("LDA (m)", String.valueOf(logRunway1.getLda()), String.valueOf(logRunway1.getNewLda())));
+            } else{
+                data1.add(new Parameter("TORA (m)", String.valueOf(logRunway1.getTora()), "-"));
+                data1.add(new Parameter("TODA (m)", String.valueOf(logRunway1.getToda()), "-"));
+                data1.add(new Parameter("ASDA (m)", String.valueOf(logRunway1.getAsda()), "-"));
+                data1.add(new Parameter("LDA (m)", String.valueOf(logRunway1.getLda()), "-"));
+            }
+
+            if(needRedeclare){
+                data2.add(new Parameter("TORA (m)", String.valueOf(logRunway2.getTora()), String.valueOf(logRunway2.getNewTora())));
+                data2.add(new Parameter("TODA (m)", String.valueOf(logRunway2.getToda()), String.valueOf(logRunway2.getNewToda())));
+                data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), String.valueOf(logRunway2.getNewAsda())));
+                data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), String.valueOf(logRunway2.getNewLda())));
+            } else{
+                data2.add(new Parameter("TORA (m)", String.valueOf(logRunway2.getTora()), "-"));
+                data2.add(new Parameter("TODA (m)", String.valueOf(logRunway2.getToda()), "-"));
+                data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), "-"));
+                data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), "-"));
+            }
+
+            if(needRedeclare){
+                revisedCol1.setCellFactory(cell -> new RedTableCell<>());
+                revisedCol2.setCellFactory(cell -> new RedTableCell<>());
+            } else{
+                revisedCol1.setCellFactory(cell -> new BlackTableCell<>());
+                revisedCol2.setCellFactory(cell -> new BlackTableCell<>());
+            }
         }
 
         leftTableView.setItems(data1);
         rightTableView.setItems(data2);
     }
+
+    public static class RedTableCell<T> extends TableCell<T, String> {
+        public RedTableCell() {
+            setTextFill(Color.RED);
+        }
+
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (!empty) {
+                this.setStyle("-fx-background-color: rgb(244,244,244); -fx-alignment: CENTER;-fx-font-family: Verdana; -fx-padding: 7 0 0 0");
+                // Set the text of the cell to the item
+                setText(item);
+            } else {
+                setText(null);
+            }
+        }
+    }
+
+    public static class BlackTableCell<T> extends TableCell<T, String> {
+        public BlackTableCell() {
+            setTextFill(Color.BLACK);
+        }
+
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (!empty) {
+                this.setStyle("-fx-background-color: rgb(244,244,244); -fx-alignment: CENTER;-fx-font-family: Verdana; -fx-padding: 7 0 0 0");
+                // Set the text of the cell to the item
+                setText(item);
+            } else {
+                setText(null);
+            }
+        }
+    }
+
 
     private void editColumn(TableColumn<Parameter, String> tableColumn){
         tableColumn.setResizable(false);

@@ -115,3 +115,7 @@
 #notificationButton:hover{
     -fx-background-color: #353d4a;
 }
+
+#notificationLabel{
+    -fx-text-fill: red;
+}
