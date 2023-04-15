@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import javafx.util.Duration;
 import Model.Helper.Utility;
 import Model.Helper.XMLParserWriter;
 import View.AirportManager;
@@ -11,7 +12,9 @@ import View.OtherPopUp.NoRedeclarationNeeded;
 import View.UserManager;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
 import javafx.beans.property.*;
-import javafx.collections.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -689,6 +692,7 @@ public class MainController implements Initializable {
             data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), "-"));
             data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), "-"));
         } else{
+            System.out.println(logRunway2);
             data1.add(new Parameter("TORA (m)", String.valueOf(logRunway1.getTora()), String.valueOf(needRedeclare? logRunway1.getNewTora(): logRunway1.getTora())));
             data1.add(new Parameter("TODA (m)", String.valueOf(logRunway1.getToda()), String.valueOf(needRedeclare? logRunway1.getNewToda(): logRunway1.getToda())));
             data1.add(new Parameter("ASDA (m)", String.valueOf(logRunway1.getAsda()), String.valueOf(needRedeclare? logRunway1.getNewAsda(): logRunway1.getAsda())));
@@ -798,7 +802,6 @@ public class MainController implements Initializable {
         vBox.heightProperty().addListener((observableValue, number, t1) -> {
             scrollPane.setVvalue(scrollPane.getVmax());
         } );
-
         pane.setOnMousePressed(mouseEvent -> {
             double y = mouseEvent.getY();
             pane.setOnMouseDragged(event -> {
@@ -811,6 +814,7 @@ public class MainController implements Initializable {
                 pane.setPrefHeight(newPaneH);
                 pane.setLayoutY(newPaneY);
                 scrollPane.setPrefHeight(newSPaneH);
+                getNotiVBox().setPrefHeight(newSPaneH);
                 event.consume();
             });
             mouseEvent.consume();
@@ -818,26 +822,40 @@ public class MainController implements Initializable {
         //reset to bottom if our of bound
         pane.setOnMouseReleased(releaseEvent -> {
             double oriPaneY = 759;
-            double oriPaneH = 25;
             if (pane.getLayoutY() >= oriPaneY  || pane.getLayoutY() < 0 ){
-                pane.setLayoutY(oriPaneY);
-                pane.setPrefHeight(oriPaneH);
-                scrollPane.setPrefHeight(0);
+                resetNotificationBar(getNotiPane(),getNotiScrollPane());
             }
+        });
+        getNotificationLabel().setOnMouseEntered(mouseEvent -> {
+            getNotificationLabel().setOpacity(1.0);
+            mouseEvent.consume();
+        });
+        getNotificationLabel().setOnMouseExited(mouseEvent -> {
+            fadeTransition(getNotificationLabel());
+            mouseEvent.consume();
         });
     }
 
     //add notification into history and set text into notification label
     public void setNotificationLabel(String string) {
         Label label = new Label(string);
-        label.setPrefHeight(40);
+        //label.setPrefHeight(40);
         label.setTextFill(Color.RED);
-        Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR,12);
+        label.setPadding(new Insets(5));
+        Font font = Font.font("Verdana", FontWeight.MEDIUM, FontPosture.REGULAR,12);
         label.setFont(font);
         getNotiVBox().getChildren().add(label);
         getNotificationLabel().setText(string);
+        fadeTransition(getNotificationLabel());
     }
 
+    public void fadeTransition(Label label){
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), label);
+        //set opacity
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.play();
+    }
 
     public void resetNotificationBar(Pane pane, ScrollPane scrollPane){
         double oriPaneY = 759;
@@ -845,6 +863,14 @@ public class MainController implements Initializable {
         pane.setLayoutY(oriPaneY);
         pane.setPrefHeight(oriPaneH);
         scrollPane.setPrefHeight(0);
+    }
+
+    public void resetView(AnchorPane pane, Pane dragPane){
+        dragPane.setTranslateX(0);
+        dragPane.setTranslateY(0);
+        pane.setScaleX(1);
+        pane.setScaleY(1);
+        pane.setRotate(0);
     }
 
     public void handleResetView(ActionEvent actionEvent) {
@@ -857,19 +883,11 @@ public class MainController implements Initializable {
             resetView(topViewAnchorPane,topViewDragPane);
             resetView(sideViewAnchorPane,sideViewDragPane);
             getTopViewController().initializeCompass();
+            topViewController.rotateRunway();
         }catch (Exception e){
             System.out.println(e);
         }
         setNotificationLabel("Status: View Reset\t " + getDateTimeNow());
-    }
-
-    public void resetView(AnchorPane pane, Pane dragPane){
-        dragPane.setTranslateX(0);
-        dragPane.setTranslateY(0);
-        pane.setScaleX(1);
-        pane.setScaleY(1);
-        pane.setRotate(0);
-
     }
 
     int clickCount = 0;
@@ -877,6 +895,7 @@ public class MainController implements Initializable {
         if (clickCount%2 ==0){
             notiPane.setVisible(true);
             notificationLabel.setVisible(false);
+            resetNotificationBar(getNotiPane(),getNotiScrollPane());
         }else {
 
             notiPane.setVisible(false);

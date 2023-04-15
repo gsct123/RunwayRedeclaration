@@ -64,7 +64,7 @@
             <Image url="@../airplaneLogo.png" />
          </image>
       </ImageView>
-      <Circle fx:id="c2" fill="#1f93ff00" layoutX="400.0" layoutY="156.0" radius="57.0" stroke="#00ffb2" strokeType="INSIDE" strokeWidth="5.5" style="-fx-stroke-dash-array: 60;" />
+      <Circle fx:id="c2" fill="#1f93ff00" layoutX="400.0" layoutY="156.0" radius="57.0" stroke="#00b277" strokeType="INSIDE" strokeWidth="5.5" style="-fx-stroke-dash-array: 60;" />
       <Circle fx:id="c1" fill="#1f93ff00" layoutX="400.0" layoutY="155.0" radius="71.0" stroke="#0094ff" strokeType="INSIDE" strokeWidth="5.5" style="-fx-stroke-dash-array: 45;" />
     </children>
 </AnchorPane>
