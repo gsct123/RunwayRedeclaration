@@ -109,6 +109,7 @@
 #notificationButton{
     -fx-background-color: #212f45;
     -fx-background-radius: 0;
+    -fx-text-size: 12;
 }
 
 #notificationButton:hover{

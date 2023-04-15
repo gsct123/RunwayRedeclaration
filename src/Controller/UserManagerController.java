@@ -104,11 +104,11 @@ public class UserManagerController implements Initializable {
 
         airportCol.setCellValueFactory(cellData -> {
             String airportID = cellData.getValue().getAirportID();
-            Airport airport = MainController.airports.get(airportID);
+            Airport airport = MainController.airportMap.get(airportID);
             if(airport == null){
                 return new SimpleStringProperty("NULL");
             } else{
-                return new SimpleStringProperty(MainController.airports.get(airportID).getName());
+                return new SimpleStringProperty(MainController.airportMap.get(airportID).getName());
             }
         });
 

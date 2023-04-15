@@ -11,9 +11,7 @@ import View.OtherPopUp.NoRedeclarationNeeded;
 import View.UserManager;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -182,7 +180,9 @@ public class MainController implements Initializable {
     public static DoubleProperty obstacleWidth = new SimpleDoubleProperty();
 
     //list of airports and obstacles from files
-    public static HashMap<String, Airport> airports = new HashMap<>();
+    public static HashMap<String, Airport> airportMap = new HashMap<>();
+    public static ObservableList<Airport> airports = FXCollections.observableArrayList();
+//    public static MapProperty<String, Airport> airports = new SimpleMapProperty<>(FXCollections.observableMap(map));
     public static ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
     public static ObservableList<String> airportNames = FXCollections.observableArrayList();
     public static HashMap<String, Airport> managerMap = new HashMap<>();
@@ -265,7 +265,8 @@ public class MainController implements Initializable {
         initializeNotification(getNotiPane(),getNotiScrollPane(),getNotiVBox());
         topViewController.initializeCompass();
 
-        FXCollections.observableArrayList(airports.values().stream().toList()).addListener(listener);
+        airports.addListener(listener);
+
     }
 
     public ListChangeListener<Airport> listener = new ListChangeListener<Airport>() {
@@ -273,7 +274,7 @@ public class MainController implements Initializable {
         public void onChanged(Change<? extends Airport> c) {
             Airport temp = airportItem.get();
             try {
-                XMLParserWriter.writeToFile(FXCollections.observableArrayList(MainController.airports.values().stream().toList()), "src/Data/airports.xml");
+                XMLParserWriter.writeToFile(FXCollections.observableArrayList(MainController.airports.stream().toList()), "src/Data/airports.xml");
                 loadAirports("src/Data/airports.xml");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -312,13 +313,13 @@ public class MainController implements Initializable {
                     }
                 }
             }
-            FXCollections.observableArrayList(airports.values().stream().toList()).addListener(listener);
+            airports.addListener(listener);
         }
     };
 
     //getters
     public ObservableList<Obstacle> getObstacles(){return obstacles;}
-    public static HashMap<String, Airport> getAirports(){return airports;}
+    public static ObservableList<Airport> getAirports(){return airports;}
     public static PhysicalRunway getPhysRunwaySelected() {return physRunwayItem.get();}
     public static boolean needRedeclare(){return needRedeclare;}
     public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
@@ -523,14 +524,14 @@ public class MainController implements Initializable {
     public void loadUsers() {
         for(User user: LoginController.users.values()){
             if(user.getRole() == 2){
-                managers.put(user, MainController.airports.get(user.getAirportID()));
+                managers.put(user, MainController.airportMap.get(user.getAirportID()));
             } else if(user.getRole() == 3){
                 ArrayList<User> list = new ArrayList<>();
-                if(users.containsKey(airports.get(user.getAirportID()))){
-                    list = users.get(airports.get(user.getAirportID()));
+                if(users.containsKey(airportMap.get(user.getAirportID()))){
+                    list = users.get(airportMap.get(user.getAirportID()));
                 }
                 list.add(user);
-                users.put(MainController.airports.get(user.getAirportID()), list);
+                users.put(MainController.airportMap.get(user.getAirportID()), list);
             }
         }
     }
@@ -538,7 +539,8 @@ public class MainController implements Initializable {
 
     //this function read from a xml file and instantiate list of airports available
     public void loadAirports(String file) throws Exception {
-        airports = new HashMap<>();
+        airports = FXCollections.observableArrayList();
+        airportMap = new HashMap<>();
         airportNames = FXCollections.observableArrayList();
         // Create a DocumentBuilder
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -607,7 +609,8 @@ public class MainController implements Initializable {
                 Airport airport = new Airport(reference, airportName, physicalRunways, manager);
                 managerMap.put(manager, airport);
 
-                getAirports().put(airport.getID(), airport);
+                airportMap.put(airport.getID(), airport);
+                getAirports().add(airport);
             }
         }
         airports.sort(Comparator.comparing(Airport::getName));
@@ -615,7 +618,7 @@ public class MainController implements Initializable {
 
     public void addAirportEvent() {
         airportMenu.getItems().clear();
-        for(Airport airport: getAirports().values()){
+        for(Airport airport: airports){
             MenuItem airportMenuItem = new MenuItem(airport.getName());
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             airportMenuItem.setOnAction(e -> {
@@ -691,10 +694,10 @@ public class MainController implements Initializable {
             data1.add(new Parameter("ASDA (m)", String.valueOf(logRunway1.getAsda()), String.valueOf(needRedeclare? logRunway1.getNewAsda(): logRunway1.getAsda())));
             data1.add(new Parameter("LDA (m)", String.valueOf(logRunway1.getLda()), String.valueOf(needRedeclare? logRunway1.getNewLda(): logRunway1.getLda())));
 
-            data2.add(new Parameter("TORA (m)", String.valueOf(logRunway2.getTora()), String.valueOf(needRedeclare? logRunway2.getNewTora(): logRunway1.getTora())));
-            data2.add(new Parameter("TODA (m)", String.valueOf(logRunway2.getToda()), String.valueOf(needRedeclare? logRunway2.getNewToda(): logRunway1.getToda())));
-            data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), String.valueOf(needRedeclare? logRunway2.getNewAsda(): logRunway1.getAsda())));
-            data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), String.valueOf(needRedeclare? logRunway2.getNewLda(): logRunway1.getLda())));
+            data2.add(new Parameter("TORA (m)", String.valueOf(logRunway2.getTora()), String.valueOf(needRedeclare? logRunway2.getNewTora(): logRunway2.getTora())));
+            data2.add(new Parameter("TODA (m)", String.valueOf(logRunway2.getToda()), String.valueOf(needRedeclare? logRunway2.getNewToda(): logRunway2.getToda())));
+            data2.add(new Parameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), String.valueOf(needRedeclare? logRunway2.getNewAsda(): logRunway2.getAsda())));
+            data2.add(new Parameter("LDA (m)", String.valueOf(logRunway2.getLda()), String.valueOf(needRedeclare? logRunway2.getNewLda(): logRunway2.getLda())));
         }
 
         leftTableView.setItems(data1);
@@ -888,6 +891,5 @@ public class MainController implements Initializable {
         notificationLabel.setVisible(true);
         clickCount++;
     }
-
 
 }

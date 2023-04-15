@@ -78,7 +78,7 @@ public class AirportManagerController implements Initializable {
         identityLabel.setText("Logged in as "+ Main.getUsername());
 
         searchField.textProperty().addListener((observable, oldValue, newValue) ->
-                airportTable.setItems(filterList(MainController.airports.values().stream().toList(), newValue))
+                airportTable.setItems(filterList(MainController.airports.stream().toList(), newValue))
         );
 
         airportTable.setEditable(false);
@@ -97,7 +97,7 @@ public class AirportManagerController implements Initializable {
         editColumn(managerCol);
 
 
-        airportTable.setItems(FXCollections.observableList(MainController.airports.values().stream().toList()));
+        airportTable.setItems(MainController.airports);
 
         airportTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -157,7 +157,7 @@ public class AirportManagerController implements Initializable {
         File selectedFile = fileChooser.showOpenDialog(AirportManager.getStage());
         if(selectedFile != null) {
             addAirport(selectedFile);
-            airportTable.setItems(FXCollections.observableArrayList(MainController.airports.values().stream().toList()));
+            airportTable.setItems(MainController.airports);
             airportTable.refresh();
         }
 
@@ -172,13 +172,14 @@ public class AirportManagerController implements Initializable {
         } else{
             boolean flag = new Confirmation().confirm("Are you sure you want to delete "+airport.getName()+" ("+airport.getID()+")?", "Warning: This action cannot be undone.\nSelected airport will be permanently deleted.");
             if(flag){
-                MainController.airports.remove(airport.getID());
+                MainController.airports.remove(airport);
+                MainController.airportMap.remove(airport.getID());
                 MainController.airportNames.remove(airport.getName());
                 MainController.managerMap.remove(airport.getManager());
                 airportTable.getSelectionModel().clearSelection();
                 airportDetails.setText("No content to display, select an airport to view airport details");
-
                 new Notification(AirportManager.getStage()).sucessNotification("Successful action", airport.getName()+" has been deleted.");
+                airportTable.setItems(MainController.airports);
                 airportTable.refresh();
             }
         }
@@ -195,18 +196,17 @@ public class AirportManagerController implements Initializable {
             EditAirportController.setAirportSelected(airport);
             new EditAirport().start(new Stage());
             MainController.airports.remove(airport);
-            if(EditAirportController.actionCancel){
-                MainController.airports.put(airport.getID(), airport);
-                new Notification(AirportManager.getStage()).sucessNotification("Successful revert", "Changes reverted.");
+            MainController.airportMap.remove(airport.getID());
 
+            if(EditAirportController.actionCancel){
+                MainController.airportMap.put(airport.getID(), airport);
+                MainController.airports.add(airport);
+                new Notification(AirportManager.getStage()).sucessNotification("Successful revert", "Changes reverted.");
             } else{
-                MainController.airports.put(EditAirportController.airportWithNewInfo.getID(), EditAirportController.airportWithNewInfo);
-                System.out.println("original airport" + EditAirportController.airportWithNewInfo);
+                MainController.airportMap.put(EditAirportController.airportWithNewInfo.getID(), EditAirportController.airportWithNewInfo);
+                MainController.airports.add(EditAirportController.airportWithNewInfo);
                 new Notification(AirportManager.getStage()).sucessNotification("Successful action", "Airport info has been updated.");
             }
-
-
-            airportTable.setItems(FXCollections.observableArrayList(MainController.airports.values().stream().toList()));
             airportTable.refresh();
         }
     }
@@ -343,7 +343,8 @@ public class AirportManagerController implements Initializable {
                         } else {
                             boolean result = new Confirmation().confirmAddAirport(airport, airportInfo(airport));
                             if (result) {
-                                MainController.airports.put(airportDetails.getId(), airport);
+                                MainController.airportMap.put(airport.getID(), airport);
+                                MainController.getAirports().add(airport);
                                 MainController.airportNames.add(airportName);
                                 MainController.managerMap.put(manager, airport);
                                 new Notification(AirportManager.getStage()).sucessNotification("Successful action", airportName + " successfully added to system.");
@@ -420,7 +421,7 @@ public class AirportManagerController implements Initializable {
 
     private String checkAirport(String airportName, String airportReference){
         StringBuilder errorMessage = new StringBuilder();
-        if(MainController.airports.containsKey(airportReference)){
+        if(MainController.airportMap.containsKey(airportReference)){
             errorMessage.append("\nNAME ERROR: Duplicated airport reference (").append(airportReference).append(")");
         }
         if(MainController.airportNames.contains(airportName)) {

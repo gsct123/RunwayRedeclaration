@@ -7,6 +7,8 @@ import View.EditAirport;
 import View.Error;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -76,6 +78,32 @@ public class EditAirportController implements Initializable {
         managerName.setText("Manager: "+airportSelected.getManager());
 
         for(PhysicalRunway runway: airportWithNewInfo.getPhysicalRunways()){
+            toraTextField.setDisable(false);
+            toraTextField.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    String input = toraTextField.getText();
+                    try{
+                        double newTora = Double.parseDouble(input);
+                        if(newTora < 0){
+                            throw new NumberFormatException();
+                        }
+                        if(newTora < runway.getLogicalRunways().get(0).getLda() || newTora < runway.getLogicalRunways().get(1).getLda()){
+                            new Error().showError(toraTextField, "TORA value must be greater than or equal to LDA for both logical runways. Hint: LDA <= TORA <= ASDA <= TODA", String.valueOf(runway.getLogicalRunways().get(0).getTora()));
+                        } else if(newTora > runway.getLogicalRunways().get(0).getAsda() || newTora > runway.getLogicalRunways().get(1).getAsda()){
+                            new Error().showError(toraTextField, "TORA value must be smaller than or equal to ASDA for both logical runways. Hint: LDA <= TORA <= ASDA <= TODA", String.valueOf(runway.getLogicalRunways().get(0).getTora()));
+                        } else if(newTora > runway.getLogicalRunways().get(0).getToda() || newTora > runway.getLogicalRunways().get(1).getToda()){
+                            new Error().showError(toraTextField, "TORA value must be smaller than or equal to ASDA for both logical runways. Hint: LDA <= TORA <= ASDA <= TODA", String.valueOf(runway.getLogicalRunways().get(0).getTora()));
+                        } else{
+                            runway.getLogicalRunways().get(0).setTora(newTora);
+                            runway.getLogicalRunways().get(1).setTora(newTora);
+                        }
+                    }
+                    catch (NumberFormatException e){
+                        new Error().showError(toraTextField, "Invalid TORA value. Hint: Please input a numerical value that is greater than 0", String.valueOf(runway.getLogicalRunways().get(0).getTora()));
+                    }
+                }
+            });
             MenuItem runwayMenuItem = new MenuItem(runway.getName());
             runwayMenuItem.setOnAction(f -> {
                 toraTextField.setText(""+runway.getLogicalRunways().get(0).getTora());
