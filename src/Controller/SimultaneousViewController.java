@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -163,18 +164,22 @@ public class SimultaneousViewController implements Initializable {
         PhysicalRunway selectedPhyRunway = MainController.getPhysRunwaySelected();
         LogicalRunway llogRunway = selectedPhyRunway.getLogicalRunways().get(0);
         Obstacle obstacle = MainController.getObstacleSelected();
+
+        //Setting up arrows for lines
+        Arrow ToraArrow = new Arrow(toraStart,toraLength,toraEnd,toraLabel,toraArrow);
+        Arrow LdaArrow = new Arrow(ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
+        Arrow AsdaArrow = new Arrow(asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
+        Arrow TodaArrow = new Arrow(todaStart,todaLength,todaEnd,todaLabel,todaArrow);
+        Arrow ToraArrow1 = new Arrow(toraEnd1,toraLength1,toraStart1,toraLabel1,toraArrow1);
+        Arrow LdaArrow1 = new Arrow(ldaEnd1,ldaLength1,ldaStart1,ldaLabel1,ldaArrow1);
+        Arrow AsdaArrow1 = new Arrow(asdaEnd1,asdaLength1,asdaStart1,asdaLabel1,asdaArrow1);
+        Arrow TodaArrow1 = new Arrow(todaEnd1,todaLength1,todaStart1,todaLabel1,todaArrow1);
+        boolean needRedeclare = Calculator.needRedeclare(obstacle, llogRunway);
+
         if(Calculator.needRedeclare(obstacle, llogRunway)){
             Calculator.performCalc(obstacle,selectedPhyRunway);
             resetValues(selectedPhyRunway);
-            //Setting up arrows for lines
-            Arrow ToraArrow = new Arrow(toraStart,toraLength,toraEnd,toraLabel,toraArrow);
-            Arrow LdaArrow = new Arrow(ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
-            Arrow AsdaArrow = new Arrow(asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
-            Arrow TodaArrow = new Arrow(todaStart,todaLength,todaEnd,todaLabel,todaArrow);
-            Arrow ToraArrow1 = new Arrow(toraEnd1,toraLength1,toraStart1,toraLabel1,toraArrow1);
-            Arrow LdaArrow1 = new Arrow(ldaEnd1,ldaLength1,ldaStart1,ldaLabel1,ldaArrow1);
-            Arrow AsdaArrow1 = new Arrow(asdaEnd1,asdaLength1,asdaStart1,asdaLabel1,asdaArrow1);
-            Arrow TodaArrow1 = new Arrow(todaEnd1,todaLength1,todaStart1,todaLabel1,todaArrow1);
+
             //setting up new lines for new runway parameters
             setNewLine("TORA","Left",selectedPhyRunway,obstacle,ToraArrow);
             setNewLine("LDA","Left",selectedPhyRunway,obstacle,LdaArrow );
@@ -185,7 +190,6 @@ public class SimultaneousViewController implements Initializable {
             setNewLine("ASDA","Right",selectedPhyRunway,obstacle,AsdaArrow1);
             setNewLine("TODA","Right",selectedPhyRunway,obstacle,TodaArrow1);
             //setting up other lines (resa/stripend/alstocs/blast protection)
-            boolean needRedeclare = Calculator.needRedeclare(obstacle, llogRunway);
             boolean isTalo = Calculator.getFlightMethod(obstacle,llogRunway).equals(Calculator.talo);
             setToraOtherLine(needRedeclare,isTalo, false, toraOtherLabel, toraOtherLength, toraOtherStart, toraOtherArrow);
             setLdaOtherLine(needRedeclare,isTalo, false, ldaOtherLabel, ldaOtherLength, ldaOtherStart, ldaOtherArrow);
@@ -195,6 +199,31 @@ public class SimultaneousViewController implements Initializable {
             //if not runway redeclaration is needed, simply reset the value
             resetValues(selectedPhyRunway);
         }
+        int colour;
+        if(needRedeclare){
+            colour = 1;
+        } else{
+            colour = 2;
+        }
+        changeColor(colour, ToraArrow);
+        changeColor(colour, TodaArrow);
+        changeColor(colour, AsdaArrow);
+        changeColor(colour, LdaArrow);
+        changeColor(colour, ToraArrow1);
+        changeColor(colour, TodaArrow1);
+        changeColor(colour, AsdaArrow1);
+        changeColor(colour, LdaArrow1);
+
+    }
+
+    private void changeColor(int i, Arrow arrow){
+        Color colour;
+        if(i == 1){
+            colour = Color.DARKBLUE;
+        } else{
+            colour = Color.BLACK;
+        }
+        arrow.getLabel().setTextFill(colour);
     }
 
     protected void resetValues(PhysicalRunway physicalRunway){

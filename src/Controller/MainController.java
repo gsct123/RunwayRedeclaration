@@ -723,8 +723,8 @@ public class MainController implements Initializable {
             }
 
             if(needRedeclare){
-                revisedCol1.setCellFactory(cell -> new RedTableCell<>());
-                revisedCol2.setCellFactory(cell -> new RedTableCell<>());
+                revisedCol1.setCellFactory(cell -> new BlueTableCell<>());
+                revisedCol2.setCellFactory(cell -> new BlueTableCell<>());
             } else{
                 revisedCol1.setCellFactory(cell -> new BlackTableCell<>());
                 revisedCol2.setCellFactory(cell -> new BlackTableCell<>());
@@ -735,9 +735,9 @@ public class MainController implements Initializable {
         rightTableView.setItems(data2);
     }
 
-    public static class RedTableCell<T> extends TableCell<T, String> {
-        public RedTableCell() {
-            setTextFill(Color.RED);
+    public static class BlueTableCell<T> extends TableCell<T, String> {
+        public BlueTableCell() {
+            setTextFill(Color.DARKBLUE);
         }
 
         @Override

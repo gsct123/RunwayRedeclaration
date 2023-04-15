@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -250,20 +251,23 @@ public class SideViewController {
         PhysicalRunway selectedPhyRunway = MainController.getPhysRunwaySelected();
         LogicalRunway lLogicalRunway = selectedPhyRunway.getLogicalRunways().get(0);
         Obstacle selectedObstacle = MainController.getObstacleSelected();
+        boolean needRedeclare = Calculator.needRedeclare(selectedObstacle, lLogicalRunway);
 
-        if(Calculator.needRedeclare(selectedObstacle, lLogicalRunway)){
+        //Set Up Arrows for the logical runway
+        Arrow ToraArrow = new Arrow(toraStart,toraLength,toraEnd,toraLabel,toraArrow);
+        Arrow LdaArrow = new Arrow(ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
+        Arrow AsdaArrow = new Arrow(asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
+        Arrow TodaArrow = new Arrow(todaStart,todaLength,todaEnd,todaLabel,todaArrow);
+        Arrow RToraArrow = new Arrow(rToraStart,rToraLength,rToraEnd,rToraLabel,rToraArrow);
+        Arrow RLdaArrow = new Arrow(rLdaStart,rLdaLength,rLdaEnd,rLdaLabel,rLdaArrow);
+        Arrow RAsdaArrow = new Arrow(rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel,rAsdaArrow);
+        Arrow RTodaArrow = new Arrow(rTodaStart,rTodaLength,rTodaEnd,rTodaLabel,rTodaArrow);
+
+        if(needRedeclare){
             Calculator.performCalc(selectedObstacle,selectedPhyRunway);
             resetValues(selectedPhyRunway);
             setUpAlsTocs(selectedObstacle,lLogicalRunway);
-            //Set Up Arrows for the logical runway
-            Arrow ToraArrow = new Arrow(toraStart,toraLength,toraEnd,toraLabel,toraArrow);
-            Arrow LdaArrow = new Arrow(ldaStart,ldaLength,ldaEnd,ldaLabel,ldaArrow);
-            Arrow AsdaArrow = new Arrow(asdaStart,asdaLength,asdaEnd,asdaLabel,asdaArrow);
-            Arrow TodaArrow = new Arrow(todaStart,todaLength,todaEnd,todaLabel,todaArrow);
-            Arrow RToraArrow = new Arrow(rToraStart,rToraLength,rToraEnd,rToraLabel,rToraArrow);
-            Arrow RLdaArrow = new Arrow(rLdaStart,rLdaLength,rLdaEnd,rLdaLabel,rLdaArrow);
-            Arrow RAsdaArrow = new Arrow(rAsdaStart,rAsdaLength,rAsdaEnd,rAsdaLabel,rAsdaArrow);
-            Arrow RTodaArrow = new Arrow(rTodaStart,rTodaLength,rTodaEnd,rTodaLabel,rTodaArrow);
+
             //Set Up the new Lines
             setNewLine("TORA","Left",selectedPhyRunway,selectedObstacle,ToraArrow);
             setNewLine("LDA","Left",selectedPhyRunway,selectedObstacle,LdaArrow);
@@ -274,15 +278,39 @@ public class SideViewController {
             setNewLine("ASDA","Right",selectedPhyRunway,selectedObstacle,RAsdaArrow);
             setNewLine("TODA","Right",selectedPhyRunway,selectedObstacle,RTodaArrow);
             //Set up OtherLines (Resa,BlastProtection...)
-            boolean needRedeclare = Calculator.needRedeclare(selectedObstacle, lLogicalRunway);
             boolean isTalo = Calculator.getFlightMethod(selectedObstacle,lLogicalRunway).equals(Calculator.talo);
-            setToraOtherLine(needRedeclare,isTalo, false, toraOtherLabel, toraOtherLength, toraOtherStart, toraOtherArrow);
-            setLdaOtherLine(needRedeclare,isTalo, false, ldaOtherLabel, ldaOtherLength, ldaOtherStart, ldaOtherArrow);
-            setToraOtherLine(needRedeclare,isTalo, true, toraOtherLabel1, toraOtherLength1, toraOtherEnd, toraOtherArrow1);
-            setLdaOtherLine(needRedeclare,isTalo, true, ldaOtherLabel1, ldaOtherLength1, ldaOtherEnd, ldaOtherArrow1);
+            setToraOtherLine(true,isTalo, false, toraOtherLabel, toraOtherLength, toraOtherStart, toraOtherArrow);
+            setLdaOtherLine(true,isTalo, false, ldaOtherLabel, ldaOtherLength, ldaOtherStart, ldaOtherArrow);
+            setToraOtherLine(true,isTalo, true, toraOtherLabel1, toraOtherLength1, toraOtherEnd, toraOtherArrow1);
+            setLdaOtherLine(true,isTalo, true, ldaOtherLabel1, ldaOtherLength1, ldaOtherEnd, ldaOtherArrow1);
         } else{
             resetValues(selectedPhyRunway);
         }
+
+        int colour;
+        if(needRedeclare){
+            colour = 1;
+        } else{
+            colour = 2;
+        }
+        changeColor(colour, ToraArrow);
+        changeColor(colour, TodaArrow);
+        changeColor(colour, AsdaArrow);
+        changeColor(colour, LdaArrow);
+        changeColor(colour, RToraArrow);
+        changeColor(colour, RTodaArrow);
+        changeColor(colour, RAsdaArrow);
+        changeColor(colour, RLdaArrow);
+    }
+
+    private void changeColor(int i, Arrow arrow){
+        Color colour;
+        if(i == 1){
+            colour = Color.DARKBLUE;
+        } else{
+            colour = Color.BLACK;
+        }
+        arrow.getLabel().setTextFill(colour);
     }
 
     //type is TORA, LDA ,TODA or ASDA
