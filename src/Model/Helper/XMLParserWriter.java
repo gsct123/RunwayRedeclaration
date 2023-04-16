@@ -3,6 +3,7 @@ package Model.Helper;
 import Model.Airport;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
+import Model.User;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,7 +11,10 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
@@ -22,7 +26,17 @@ public class XMLParserWriter {
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        DOMSource domSource = new DOMSource(toXML(airports));
+        DOMSource domSource = new DOMSource(XMLParserWriter.airportToXML(airports));
+        StreamResult streamResult = new StreamResult(new File(fileName));
+        transformer.transform(domSource, streamResult);
+    }
+
+    public static void updateUserXML(ObservableList<User> users, String fileName) throws ParserConfigurationException, TransformerException {
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        DOMSource domSource = new DOMSource(XMLParserWriter.userToXML(users));
         StreamResult streamResult = new StreamResult(new File(fileName));
         transformer.transform(domSource, streamResult);
     }
@@ -32,14 +46,15 @@ public class XMLParserWriter {
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        DOMSource domSource = new DOMSource(toXML(airports));
+        DOMSource domSource = new DOMSource(XMLParserWriter.airportToXML(airports));
         StringWriter writer = new StringWriter();
         StreamResult result = new StreamResult(writer);
         transformer.transform(domSource, result);
         return writer.toString();
     }
 
-    public static Document toXML(ObservableList<Airport> airports) throws ParserConfigurationException {
+
+    public static Document airportToXML(ObservableList<Airport> airports) throws ParserConfigurationException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         Document document = documentBuilder.newDocument();
@@ -84,6 +99,42 @@ public class XMLParserWriter {
             Element userElement = document.createElement("user");
             userElement.appendChild(document.createTextNode(airport.getManager()));
             airportElement.appendChild(userElement);
+        }
+        return document;
+    }
+
+    public static Document userToXML(ObservableList<User> users) throws ParserConfigurationException {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document document = documentBuilder.newDocument();
+        document.setXmlStandalone(true);
+
+        Element root = document.createElement("users");
+        document.appendChild(root);
+
+        for (User user : users) {
+            Element userElement = document.createElement("user");
+            root.appendChild(userElement);
+
+            Element usernameElement = document.createElement("username");
+            usernameElement.appendChild(document.createTextNode(user.getUsername()));
+            userElement.appendChild(usernameElement);
+
+            Element nameElement = document.createElement("name");
+            nameElement.appendChild(document.createTextNode(user.getName()));
+            userElement.appendChild(nameElement);
+
+            Element passwordElement = document.createElement("password");
+            passwordElement.appendChild(document.createTextNode(user.getPassword()));
+            userElement.appendChild(passwordElement);
+
+            Element airportID = document.createElement("airportID");
+            airportID.appendChild(document.createTextNode(user.getAirportID()));
+            userElement.appendChild(airportID);
+
+            Element roleElement = document.createElement("role");
+            roleElement.appendChild(document.createTextNode(user.getRole()+""));
+            userElement.appendChild(roleElement);
         }
         return document;
     }

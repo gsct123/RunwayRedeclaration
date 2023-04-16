@@ -38,7 +38,7 @@
                               <MenuItem fx:id="logoutItem" mnemonicParsing="false" text="Logout" />
                           </items>
                       </Menu>
-                  <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Go">
+                  <Menu fx:id="navigatingMenu" mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Go">
                      <items>
                         <MenuItem fx:id="airportManager" mnemonicParsing="false" text="Airport Manager" />
                         <MenuItem fx:id="userManager" mnemonicParsing="false" onAction="#goUserManager" text="User Manager" />
@@ -61,19 +61,22 @@
                               <Insets bottom="20.0" right="170.0" top="20.0" />
                           </padding>
                       </Label>
-                      <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="219.0" textFill="WHITE">
+                      <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="219.0" text="sdf" textFill="WHITE">
                           <padding>
-                              <Insets right="25.0" top="20.0" />
+                              <Insets bottom="10.0" right="25.0" top="15.0" />
                           </padding>
                           <font>
                               <Font name="Verdana" size="13.0" />
                           </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                       </Label>
                   <HBox prefHeight="67.0" prefWidth="161.0">
                      <children>
                         <Button fx:id="logoutButton" alignment="CENTER" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" styleClass="logoutButton" stylesheets="@../CSS/MainStylesheet.css" text="LOGOUT" textFill="WHITE">
                            <HBox.margin>
-                              <Insets right="20.0" top="25.0" />
+                              <Insets right="20.0" top="20.0" />
                            </HBox.margin>
                            <font>
                               <Font name="Verdana Bold" size="13.0" />
@@ -156,7 +159,7 @@
                                       <Font name="Verdana" size="12.0" />
                                   </font>
                         </TextField>
-                              <Button fx:id="performCalculationButton" disable="true" layoutX="19.0" layoutY="539.0" mnemonicParsing="false" onAction="#performCalculation" prefHeight="35.0" prefWidth="235.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="Perform Recalculation" textFill="WHITE">
+                              <Button fx:id="performCalculationButton" disable="true" layoutX="19.0" layoutY="539.0" mnemonicParsing="false" onAction="#performCalculation" prefHeight="35.0" prefWidth="235.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="Perform Recalculation" textFill="#0d6986">
                                   <font>
                                       <Font name="Verdana" size="16.0" />
                                   </font>
@@ -177,7 +180,7 @@
                                       <Insets bottom="5.0" top="5.0" />
                                   </padding>
                               </Label>
-                              <Button fx:id="resetButton" layoutX="19.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" prefWidth="106.0" style="-fx-background-color: #EADF0C; -fx-border-color: black;" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="Reset" textFill="WHITE">
+                              <Button fx:id="resetButton" layoutX="19.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" prefWidth="106.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="Reset" textFill="#f2cd68">
                                   <font>
                                       <Font name="Verdana" size="14.0" />
                                   </font>
@@ -200,7 +203,7 @@
                                       <Font name="Verdana" size="12.0" />
                                   </font>
                               </TextField>
-                        <Button fx:id="resetViewButton" layoutX="148.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleResetView" prefHeight="35.0" prefWidth="106.0" style="-fx-background-color: #EADF0C; -fx-border-color: black;" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="ResetView" textFill="#fffafa">
+                        <Button fx:id="resetViewButton" layoutX="148.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleResetView" prefHeight="35.0" prefWidth="106.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="ResetView">
                            <font>
                               <Font name="Verdana" size="14.0" />
                            </font>

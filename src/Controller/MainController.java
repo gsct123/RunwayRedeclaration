@@ -24,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -86,6 +87,8 @@ public class MainController implements Initializable {
     private MenuItem logoutItem;
     @FXML
     private MenuItem airportManager;
+    @FXML
+    private MenuItem userManager;
     @FXML
     private Label obstacleHeightLabel;
     @FXML
@@ -172,6 +175,8 @@ public class MainController implements Initializable {
     private Button resetButton;
     @FXML
     private Label identityLabel;
+    @FXML
+    private Menu navigatingMenu;
 
     //property to be used in Visualisation classes
     public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -200,6 +205,15 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(Main.getRole() == 1){
+            userManager.setVisible(true);
+            airportManager.setVisible(true);
+        } else if(Main.getRole() == 2){
+            airportManager.setVisible(false);
+            userManager.setVisible(true);
+        } else{
+            navigatingMenu.setVisible(false);
+        }
         obstacleProperty = new SimpleObjectProperty<>();
         DropShadow shadow = new DropShadow(2, Color.valueOf("#212f45"));
         leftTableView.setEffect(shadow);

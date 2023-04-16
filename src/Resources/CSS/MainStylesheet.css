@@ -36,13 +36,15 @@
 
 .functionButton{
 -fx-border-radius: 5px;
+-fx-border-color: black;
 -fx-background-radius: 5px;
--fx-text-fill: black;
+-fx-text-fill: white;
+-fx-background-color: #0D6986;
 }
 
 .functionButton:hover{
--fx-background-color: #0D6986;
--fx-text-fill: white
+-fx-background-color: #478394;
+-fx-text-fill: white;
 }
 
 .tabButton{
@@ -98,6 +100,19 @@
     -fx-max-height: 0;
 }
 
+.resetButtons {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: white;
+    -fx-background-color: #DBA507;
+    -fx-border-color: black;
+}
+
+.resetButtons:hover {
+    -fx-text-fill: black;
+    -fx-background-color: #f2cd68;
+}
+
 #extendButton{
     -fx-background-color:  #212f45;
 }
@@ -119,3 +134,5 @@
 #notificationLabel{
     -fx-text-fill: red;
 }
+
+

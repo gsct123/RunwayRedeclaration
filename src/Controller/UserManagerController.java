@@ -1,39 +1,40 @@
 package Controller;
 
 import Model.Airport;
-import Model.LogicalRunway;
-import Model.PhysicalRunway;
+import Model.Helper.XMLParserWriter;
 import Model.User;
 import View.Error;
 import View.*;
+import View.OtherPopUp.Confirmation;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class UserManagerController implements Initializable {
@@ -63,8 +64,13 @@ public class UserManagerController implements Initializable {
     private Button deleteUserButton;
     @FXML
     private Button addManagerButton;
+    @FXML
+    private MenuItem airportManager;
+
+    public static Stage helperStage;
 
     private ObservableList<User> userData = FXCollections.observableArrayList();
+
 
 
 
@@ -80,13 +86,113 @@ public class UserManagerController implements Initializable {
             addManagerButton.setVisible(true);
             addUserButton.setVisible(false);
             deleteUserButton.setVisible(false);
+            airportManager.setVisible(true);
             //adduser
             //edit username and name
+            addManagerButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    helperStage = new Stage();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/AddNewUser.fxml"));
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+
+                    helperStage.setTitle("Set Up Manager Account");
+                    helperStage.setScene(scene);
+                    helperStage.setResizable(false);
+                    helperStage.initModality(Modality.APPLICATION_MODAL);
+                    helperStage.showAndWait();
+
+                    if(AddNewUserController.newUser != null){
+                        User newUser = AddNewUserController.newUser;
+                        LoginController.users.put(newUser.getUsername(), newUser);
+                        MainController.managerMap.put(newUser.getUsername(), MainController.airportMap.get(newUser.getAirportID()));
+                        userData = FXCollections.observableArrayList(MainController.managers.keySet().stream().toList());
+                        userTable.setItems(userData);
+                        userTable.refresh();
+                    }
+                }
+            });
         } else if (Main.getRole() == 2) {
             userData = FXCollections.observableArrayList(MainController.users.get(MainController.managerMap.get(Main.getUsername())));
             addManagerButton.setVisible(false);
             addUserButton.setVisible(true);
             deleteUserButton.setVisible(true);
+            airportManager.setVisible(false);
+            addUserButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    helperStage = new Stage();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/AddNewUser.fxml"));
+
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+
+                    helperStage.setTitle("Set Up Manager Account");
+                    helperStage.setScene(scene);
+                    helperStage.setResizable(false);
+                    helperStage.initModality(Modality.APPLICATION_MODAL);
+                    helperStage.showAndWait();
+
+                    if(AddNewUserController.newUser != null){
+                        User newUser = AddNewUserController.newUser;
+                        LoginController.users.put(newUser.getUsername(), newUser);
+                        ArrayList<User> original = MainController.users.get(MainController.airportMap.get(newUser.getAirportID()));
+                        original.add(newUser);
+                        MainController.users.put(MainController.airportMap.get(newUser.getAirportID()), original);
+                        userData = FXCollections.observableArrayList(MainController.users.get(MainController.managerMap.get(Main.getUsername())));
+                        userTable.setItems(userData);
+                        userTable.refresh();
+                        try {
+                            XMLParserWriter.updateUserXML(FXCollections.observableArrayList(LoginController.users.values()), "src/Data/users.xml");
+                        } catch (ParserConfigurationException e) {
+                            e.printStackTrace();
+                        } catch (TransformerException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+
+            deleteUserButton.setOnAction(actionEvent -> {
+                User user = userTable.getSelectionModel().getSelectedItem();
+                if(user == null){
+                    new Error().errorPopUp("Please select a user to be deleted");
+                } else{
+                    boolean res = new Confirmation().confirm("Are you sure you want to delete the selected user?", "This action cannot be undone.");
+                    if(res){
+                        LoginController.users.remove(user.getUsername());
+                        Airport airport = MainController.airportMap.get(user.getAirportID());
+                        ArrayList<User> original = MainController.users.get(airport);
+                        original.remove(user);
+                        MainController.users.put(airport, original);
+                        userData = FXCollections.observableArrayList(MainController.users.get(MainController.managerMap.get(Main.getUsername())));
+                        userTable.setItems(userData);
+                        userTable.refresh();
+                        try {
+                            XMLParserWriter.updateUserXML(FXCollections.observableArrayList(LoginController.users.values()), "src/Data/users.xml");
+                        } catch (ParserConfigurationException e) {
+                            e.printStackTrace();
+                        } catch (TransformerException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
         }
         searchField.textProperty().addListener((observable, oldValue, newValue) ->
                 //refer list of users
@@ -111,26 +217,30 @@ public class UserManagerController implements Initializable {
                 return new SimpleStringProperty(MainController.airportMap.get(airportID).getName());
             }
         });
-
-
         userTable.setItems(userData);
-
         userTable.refresh();
-
-
     }
 
 
+    @FXML
+    public void goAirportManager(ActionEvent event) throws Exception {
+        try {
+            UserManager.getStage().close();
+            new AirportManager(AirportManager.getUsername()).start(new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     public void backToMain(ActionEvent event) throws Exception {
-        AirportManager.getStage().close();
+        UserManager.getStage().close();
         Main.getStage().show();
     }
 
     @FXML
     public void handleLogout(ActionEvent event) throws Exception {
-        AirportManager.getStage().close();
+        UserManager.getStage().close();
         new Login().start(new Stage());
     }
 
@@ -142,129 +252,6 @@ public class UserManagerController implements Initializable {
     }
 
 
-    public void addAirport(File selectedFile){
-        try {
-            // Create a DocumentBuilder
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
-            // Parse the XML file into a Document
-            Document doc = docBuilder.parse(selectedFile);
-
-            // Get a NodeList of all airport elements
-            NodeList airportElements = doc.getElementsByTagName("airport");
-            if (airportElements.getLength() == 0) {
-                throw new Exception();
-            } else {
-                // Create a list to hold the airports
-                ObservableList<Airport> airports = FXCollections.observableArrayList();
-
-                // Loop over each airport element and create an Airport object
-                for (int i = 0; i < airportElements.getLength(); i++) {
-                    Node airportNode = airportElements.item(i);
-
-                    if (airportNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element airportElement = (Element) airportNode;
-                        String reference = airportElement.getElementsByTagName("ID").item(0).getTextContent();
-                        // Get the airport name
-                        String airportName = airportElement.getElementsByTagName("name").item(0).getTextContent();
-                        // Create a list to hold the physical runways
-
-                        StringBuilder errorMessage = new StringBuilder();
-//                        if (checkAirport(airportName, reference).length() > 0) {
-//                            errorMessage.append(checkAirport(airportName, reference));
-//                        }
-
-                        ObservableList<PhysicalRunway> physicalRunways = FXCollections.observableArrayList();
-                        // Get a NodeList of all physical runway elements for the current airport
-                        NodeList physRunwayElements = airportElement.getElementsByTagName("physicalRunway");
-                        // Loop over each physical runway element and create a PhysicalRunway object
-                        for (int j = 0; j < physRunwayElements.getLength(); j++) {
-                            Node physRunwayNode = physRunwayElements.item(j);
-
-                            if (physRunwayNode.getNodeType() == Node.ELEMENT_NODE) {
-                                Element physRunwayElement = (Element) physRunwayNode;
-                                // Get the physical runway name
-                                String physRunwayName = physRunwayElement.getAttribute("name");
-                                // Create a list to hold the logical runways
-                                ObservableList<LogicalRunway> logicalRunways = FXCollections.observableArrayList();
-                                // Get a NodeList of all logical runway elements for the current physical runway
-                                NodeList logRunwayElements = physRunwayElement.getElementsByTagName("logicalRunway");
-                                // Loop over each logical runway element and create a LogicalRunway object
-                                for (int k = 0; k < logRunwayElements.getLength(); k++) {
-                                    Node logRunwayNode = logRunwayElements.item(k);
-                                    if (logRunwayNode.getNodeType() == Node.ELEMENT_NODE) {
-                                        Element logRunwayElement = (Element) logRunwayNode;
-                                        // Get the logical runway designator and dimensions
-                                        String designator = logRunwayElement.getAttribute("designator");
-
-                                        double tora = Double.parseDouble(logRunwayElement.getAttribute("tora"));
-                                        double toda = Double.parseDouble(logRunwayElement.getAttribute("toda"));
-                                        double asda = Double.parseDouble(logRunwayElement.getAttribute("asda"));
-                                        double lda = Double.parseDouble(logRunwayElement.getAttribute("lda"));
-                                        // Create a new LogicalRunway object and add it to the list of logical runways
-                                        LogicalRunway logicalRunway = new LogicalRunway(designator, tora, toda, asda, lda);
-                                        logicalRunways.add(logicalRunway);
-                                    }
-                                    // Create a new PhysicalRunway object with the logical runways and add it to the list of physical runways
-
-                                }
-                                PhysicalRunway physicalRunway = new PhysicalRunway(physRunwayName, logicalRunways);
-                                physicalRunways.add(physicalRunway);
-//                                errorMessage.append(checkRunway(physicalRunway));
-                            }
-                        }
-
-                        String manager = airportElement.getElementsByTagName("user").item(0).getTextContent();
-                        if(MainController.managerMap.containsKey(manager)){
-                            errorMessage.append("\nDuplicated username for airport manager, already in use");
-                        }
-                        Airport airport = new Airport(reference, airportName, physicalRunways, manager);
-
-                        if (errorMessage.toString().length() > 0) {
-                            new Error().showError(errorMessage.toString());
-                            new Notification(AirportManager.getStage()).failNotification("Failed action", "Fail to add airport.");
-                        } else {
-
-                        }
-                    }
-                }
-                airports.sort(Comparator.comparing(Airport::getName));
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            new Error().showError("""
-                        Invalid XML File. Please ensure the xml inputs matches the required format.
-    
-                        Example:\s
-                        <?xml version="1.0" encoding="UTF-8"?>
-                        <airports>
-                         <airport>
-                          <ID>LHR</ID>
-                          <name>Heathrow Airport</name>
-                          <physicalRunways>
-                           <physicalRunway name="09L/27R">
-                            <logicalRunway designator="09L" tora="3902.0" toda="3902.0" asda="3902.0" lda="3595.0" />
-                            <logicalRunway designator="27R" tora="3884.0" toda="3962.0" asda="3884.0" lda="3884.0" />
-                           </physicalRunway>
-                           <physicalRunway name="09R/27L">
-                            <logicalRunway designator="09R" tora="3660.0" toda="3660.0" asda="3660.0" lda="3353.0" />
-                            <logicalRunway designator="27L" tora="3660.0" toda="3660.0" asda="3660.0" lda="3660.0" />
-                           </physicalRunway>
-                           <physicalRunway name="06/24">
-                            <logicalRunway designator="06" tora="2734.0" toda="2734.0" asda="2734.0" lda="2734.0" />
-                            <logicalRunway designator="24" tora="2734.0" toda="2900.0" asda="2800.0" lda="2500.0" />
-                           </physicalRunway>
-                          </physicalRunways>
-                          <user>manager</user>
-                         </airport>
-                        </airports>
-    
-    
-                        """);
-            new Notification(AirportManager.getStage()).failNotification("Failed action", "Fail to add airport.");
-        }
-    }
 
     private ObservableList<User> filterList(List<User> list, String searchText){
         List<User> filteredList = new ArrayList<>();
@@ -278,25 +265,6 @@ public class UserManagerController implements Initializable {
     private boolean searchFindAirport(User user, String searchText){
         return (user.getUsername().toLowerCase().contains(searchText.toLowerCase()) ||
                 user.getName().toLowerCase().contains(searchText.toLowerCase()) ||
-                user.getAirportID().toLowerCase().contains(searchText.toLowerCase()));
+                MainController.airportMap.get(user.getAirportID()).getName().toLowerCase().contains(searchText.toLowerCase()));
     }
-
-//    private void editColumn(TableColumn<Airport, String> tableColumn){
-//        tableColumn.setResizable(false);
-//        tableColumn.setCellFactory(column -> new TableCell<>() {
-//            @Override
-//            protected void updateItem(String item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (!empty) {
-//                    this.setStyle("-fx-background-color: rgb(244,244,244); -fx-alignment: CENTER;-fx-font-family: Verdana; -fx-padding: 7");
-//                    // Set the text of the cell to the item
-//                    setText(item);
-//                } else {
-//                    setText(null);
-//                }
-//            }
-//        });
-//    }
-
-
 }

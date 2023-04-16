@@ -135,6 +135,12 @@ public class AirportManagerController implements Initializable {
     }
 
     @FXML
+    public void goUserManager(ActionEvent event) throws Exception {
+        AirportManager.getStage().close();
+        new UserManager().start(new Stage());
+    }
+
+    @FXML
     public void handleLogout(ActionEvent event) throws Exception {
         AirportManager.getStage().close();
         new Login().start(new Stage());
