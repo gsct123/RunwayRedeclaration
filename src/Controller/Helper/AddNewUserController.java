@@ -1,5 +1,8 @@
-package Controller;
+package Controller.Helper;
 
+import Controller.LoginController;
+import Controller.MainController;
+import Controller.UserManagerController;
 import Model.Airport;
 import Model.Helper.Utility;
 import Model.User;
@@ -61,6 +64,9 @@ public class AddNewUserController implements Initializable {
                     });
                     airportMenu.getItems().add(airportItem);
                 }
+            }
+            if(airportMenu.getItems().size() == 0){
+                airportMenu.setText("All manager accounts have been set up");
             }
         } else{
             titleLabel.setText("Add New User");

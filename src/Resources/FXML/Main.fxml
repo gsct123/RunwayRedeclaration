@@ -35,6 +35,19 @@
                   <menus>
                       <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="File">
                           <items>
+                        <Menu fx:id="exportMenu" mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Export">
+                           <items>
+                              <MenuItem fx:id="exportAirport" mnemonicParsing="false" onAction="#exportAirport" text="Airport Details" />
+                              <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Visualisations">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#exportSideView" text="Side-On Visualisation" />
+                                    <MenuItem fx:id="regenerationReport1" mnemonicParsing="false" onAction="#exportTopView" text="Top-Down Visualisation" />
+                                    <MenuItem fx:id="regenerationReport2" mnemonicParsing="false" onAction="#exportSimulView" text="Simultaneous Visualisation" />
+                                 </items>
+                              </Menu>
+                              <MenuItem fx:id="regenerationReport" mnemonicParsing="false" text="Redeclaration Report" />
+                           </items>
+                        </Menu>
                               <MenuItem fx:id="logoutItem" mnemonicParsing="false" text="Logout" />
                           </items>
                       </Menu>

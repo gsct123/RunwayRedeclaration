@@ -21,6 +21,10 @@ public class Main extends Application {
         Main.user = user;
     }
 
+    public static String getAirportID(){
+        return user.getAirportID();
+    }
+
     public static int getRole(){
         return user.getRole();
     }

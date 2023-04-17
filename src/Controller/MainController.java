@@ -51,6 +51,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -177,6 +178,8 @@ public class MainController implements Initializable {
     private Label identityLabel;
     @FXML
     private Menu navigatingMenu;
+    @FXML
+    private Menu exportMenu;
 
     //property to be used in Visualisation classes
     public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -208,11 +211,14 @@ public class MainController implements Initializable {
         if(Main.getRole() == 1){
             userManager.setVisible(true);
             airportManager.setVisible(true);
+            exportMenu.setVisible(false);
         } else if(Main.getRole() == 2){
             airportManager.setVisible(false);
             userManager.setVisible(true);
+            exportMenu.setVisible(true);
         } else{
             navigatingMenu.setVisible(false);
+            exportMenu.setVisible(true);
         }
         obstacleProperty = new SimpleObjectProperty<>();
         DropShadow shadow = new DropShadow(2, Color.valueOf("#212f45"));
@@ -378,6 +384,29 @@ public class MainController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
+    }
+
+    @FXML
+    public void exportAirport(ActionEvent event) throws IOException, ParserConfigurationException, TransformerException {
+        Utility.exportAirport(Main.getStage(), FXCollections.observableArrayList(airportMap.get(Main.getAirportID())));
+    }
+
+    @FXML
+    public void exportSideView(ActionEvent event) {
+        javafx.scene.Node contentNode = sideViewTab.getContent();
+        Utility.exportVisual(contentNode);
+    }
+
+    @FXML
+    public void exportTopView(ActionEvent event){
+        javafx.scene.Node contentNode = topViewTab.getContent();
+        Utility.exportVisual(contentNode);
+    }
+
+    @FXML
+    public void exportSimulView(ActionEvent event){
+        javafx.scene.Node contentNode = simultaneousViewTab.getContent();
+        Utility.exportVisual(contentNode);
     }
 
     @FXML

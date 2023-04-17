@@ -1,7 +1,8 @@
 package Controller;
 
+import Controller.Helper.EditAirportController;
 import Model.Airport;
-import Model.Helper.XMLParserWriter;
+import Model.Helper.Utility;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
 import View.Error;
@@ -30,9 +31,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.awt.*;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -101,31 +100,11 @@ public class AirportManagerController implements Initializable {
 
         airportTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                airportDetails.setText(airportInfo(newSelection));
+                airportDetails.setText(Utility.airportInfo(FXCollections.observableArrayList(newSelection)));
             }
         });
 
         airportTable.refresh();
-    }
-
-    public String airportInfo(Airport airport){
-        StringBuilder message = new StringBuilder();
-        message.append("Airport name: ").append(airport.getName()).append(" (").append(airport.getID()).append(")");
-        message.append("\nAirport manager: ").append(airport.getManager());
-        message.append("\n\nPhysical runways:");
-        ObservableList<PhysicalRunway> runways = airport.getPhysicalRunways();
-        for(PhysicalRunway runway: runways){
-            message.append("\n").append(runway.getName());
-            ObservableList<LogicalRunway> logRunways = runway.getLogicalRunways();
-            for(LogicalRunway logRunway: logRunways){
-                message.append("\n  ").append(logRunway.getDesignator());
-                message.append("\n      ").append("TORA: ").append(logRunway.getTora());
-                message.append("\n      ").append("ASDA: ").append(logRunway.getAsda());
-                message.append("\n      ").append("TODA: ").append(logRunway.getToda());
-                message.append("\n      ").append("LDA: ").append(logRunway.getLda());
-            }
-        }
-        return message.toString();
     }
 
     @FXML
@@ -224,44 +203,13 @@ public class AirportManagerController implements Initializable {
         if(airport == null){
             new Error().errorPopUp("No airport selected. Hint: please select an airport to export the details.");
         } else{
-
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Export Airport Details");
-
-// Set initial directory for the file chooser
-            File userDirectory = new File(System.getProperty("user.home"));
-            fileChooser.setInitialDirectory(userDirectory);
-
-// Set extension filters based on the type of file to be saved
-            FileChooser.ExtensionFilter textFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
-            FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("XML Files (*.xml)", "*.xml");
-            fileChooser.getExtensionFilters().addAll(textFilter, csvFilter);
-
-// Show the file chooser and get the selected file directory
-            File selectedDirectory = fileChooser.showSaveDialog(AirportManager.getStage());
-
-            if (selectedDirectory != null) {
-                // Get the file extension
-                String extension = "";
-                int dotIndex = selectedDirectory.getName().lastIndexOf('.');
-                if (dotIndex > 0 && dotIndex < selectedDirectory.getName().length() - 1) {
-                    extension = selectedDirectory.getName().substring(dotIndex + 1).toLowerCase();
-                }
-
-                BufferedWriter writer = new BufferedWriter(new FileWriter(selectedDirectory));
-
-                // Check the file extension
-                if (extension.equals("txt")) {
-                    writer.write(airportInfo(airport));
-                } else if (extension.equals("xml")) {
-                    ObservableList<Airport> temp = FXCollections.observableArrayList();
-                    temp.add(airport);
-                    XMLParserWriter.writeToFile(temp, selectedDirectory.getAbsolutePath());
-                }
-                new Notification(AirportManager.getStage()).sucessNotification("Download successfull", "Saved to "+selectedDirectory);
-                writer.close();
-            }
+            Utility.exportAirport(AirportManager.getStage(), FXCollections.observableArrayList(airport));
         }
+    }
+
+    @FXML
+    public void exportAllAirport() throws ParserConfigurationException, IOException, TransformerException {
+        Utility.exportAirport(AirportManager.getStage(), MainController.airports);
     }
 
     public void addAirport(File selectedFile){
@@ -347,7 +295,7 @@ public class AirportManagerController implements Initializable {
                             new Error().showError(errorMessage.toString());
                             new Notification(AirportManager.getStage()).failNotification("Failed action", "Fail to add airport.");
                         } else {
-                            boolean result = new Confirmation().confirmAddAirport(airport, airportInfo(airport));
+                            boolean result = new Confirmation().confirmAddAirport(airport, Utility.airportInfo(FXCollections.observableArrayList(airport)));
                             if (result) {
                                 MainController.airportMap.put(airport.getID(), airport);
                                 MainController.getAirports().add(airport);

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="568.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CalculationBreakdownController">
+<AnchorPane prefHeight="568.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Helper.CalculationBreakdownController">
    <children>
       <TabPane fx:id="breakdownPane" layoutX="34.0" layoutY="145.0" prefHeight="174.0" prefWidth="410.0" style="-fx-border-color: rgb(200, 200, 200);" styleClass="visual" tabClosingPolicy="UNAVAILABLE">
         <tabs>

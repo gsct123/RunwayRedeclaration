@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Helper;
 
 import Model.Airport;
 import Model.LogicalRunway;

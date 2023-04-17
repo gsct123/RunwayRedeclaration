@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import Controller.LoginController;
 
 import java.util.Objects;
 
@@ -20,7 +19,6 @@ public class Login extends Application {
     public void start(Stage stage) throws Exception {
         Login.stage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/LoginPage.fxml"));
-        loader.setController(new LoginController());
         Parent root = loader.load();
 
         Scene scene = new Scene(root);

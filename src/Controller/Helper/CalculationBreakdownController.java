@@ -1,5 +1,6 @@
-package Controller;
+package Controller.Helper;
 
+import Controller.MainController;
 import Model.Calculator;
 import Model.LogicalRunway;
 import Model.Obstacle;

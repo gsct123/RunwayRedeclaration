@@ -22,3 +22,11 @@
 .text{
 -fx-text-fill: #dadada;
 }
+
+.link {
+-fx-text-fill: #2fa8ff;
+}
+
+.link:hover {
+-fx-text-fill: #9d91eb;
+}

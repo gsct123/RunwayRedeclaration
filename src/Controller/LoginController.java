@@ -1,13 +1,17 @@
 package Controller;
 
-import Model.User;
 import Model.Helper.Utility;
+import Model.User;
 import View.Error;
 import View.Login;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
@@ -15,6 +19,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.w3c.dom.Document;
@@ -24,8 +29,10 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -48,6 +55,8 @@ public class LoginController implements Initializable {
     private Circle c1;
     @FXML
     private Circle c2;
+    @FXML
+    private Label forgotPasswordLink;
 
 
     @Override
@@ -70,10 +79,36 @@ public class LoginController implements Initializable {
                 }
             });
             loginButton.setOnMouseClicked(actionEvent -> check());
+
+            forgotPasswordLink.setOnMouseClicked(mouseEvent -> {
+                try {
+                    forgotPassword();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println(MainController.airports+" from login");
+    }
+
+    @FXML
+    public void forgotPassword() throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ResetPassword.fxml"));
+
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+
+        stage.setTitle("Forgot password");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
 

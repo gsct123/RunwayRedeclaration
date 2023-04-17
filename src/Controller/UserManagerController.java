@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Helper.AddNewUserController;
 import Model.Airport;
 import Model.Helper.XMLParserWriter;
 import Model.User;
@@ -164,6 +165,7 @@ public class UserManagerController implements Initializable {
                         } catch (TransformerException e) {
                             e.printStackTrace();
                         }
+                        new Notification(UserManager.getStage()).sucessNotification("Successful Action", "User added to system.");
                     }
                 }
             });
@@ -190,6 +192,7 @@ public class UserManagerController implements Initializable {
                         } catch (TransformerException e) {
                             e.printStackTrace();
                         }
+                        new Notification(UserManager.getStage()).sucessNotification("Successful Action", "User has been deleted from system.");
                     }
                 }
             });
