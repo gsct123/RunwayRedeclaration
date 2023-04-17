@@ -10,20 +10,20 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="487.0" prefWidth="801.0" style="-fx-background-color: #212f45;" stylesheets="@../CSS/LoginStyleSheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="580.0" prefWidth="854.0" style="-fx-background-color: #212f45;" stylesheets="@../CSS/LoginStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
     <children>
-        <AnchorPane layoutY="435.0" prefHeight="50.0" prefWidth="338.0" style="-fx-background-color: #57cc99;">
+        <AnchorPane layoutY="525.0" prefHeight="50.0" prefWidth="338.0" style="-fx-background-color: #57cc99;">
          <children>
-            <Button fx:id="loginButton" layoutY="-4.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="801.0" styleClass="loginButton" stylesheets="@../CSS/LoginStyleSheet.css" text="Log In" textFill="WHITE">
+            <Button fx:id="loginButton" layoutY="-4.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="856.0" styleClass="loginButton" stylesheets="@../CSS/LoginStyleSheet.css" text="Log In" textFill="WHITE">
                <font>
                   <Font name="Verdana" size="17.0" />
                </font>
             </Button>
          </children>
         </AnchorPane>
-        <AnchorPane layoutX="4.0" layoutY="1.0" prefHeight="57.0" prefWidth="796.0">
+        <AnchorPane layoutX="4.0" layoutY="1.0" prefHeight="105.0" prefWidth="852.0">
             <children>
-                <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="53.0" layoutY="27.0" prefHeight="70.0" prefWidth="796.0" styleClass="text" stylesheets="@../CSS/LoginStyleSheet.css" text="Runway Redeclaration" textFill="#dadada" AnchorPane.bottomAnchor="-13.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="53.0" layoutY="27.0" prefHeight="147.0" prefWidth="849.0" styleClass="text" stylesheets="@../CSS/LoginStyleSheet.css" text="Runway Redeclaration" textFill="#dadada" AnchorPane.bottomAnchor="-42.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-53.0" AnchorPane.topAnchor="0.0">
                     <font>
                         <Font name="Verdana Bold" size="24.0" />
                     </font>
@@ -31,7 +31,7 @@
             </children>
         </AnchorPane>
         <ImageView fitHeight="124.0" fitWidth="149.0" layoutX="99.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true" />
-        <AnchorPane fx:id="userPane" layoutX="259.0" layoutY="271.0" prefHeight="48.0" prefWidth="308.0" styleClass="anchorPanesStyle" stylesheets="@../CSS/LoginStyleSheet.css">
+        <AnchorPane fx:id="userPane" layoutX="299.0" layoutY="311.0" prefHeight="48.0" prefWidth="308.0" styleClass="anchorPanesStyle" stylesheets="@../CSS/LoginStyleSheet.css">
          <children>
             <TextField fx:id="usernameField" layoutX="46.0" layoutY="10.0" prefHeight="29.0" prefWidth="247.0" promptText="Enter your username" styleClass="textPrompt" stylesheets="@../CSS/LoginStyleSheet.css">
                <font>
@@ -45,7 +45,7 @@
             </ImageView>
          </children>
         </AnchorPane>
-        <AnchorPane fx:id="passwordPane" layoutX="260.0" layoutY="343.0" prefHeight="48.0" prefWidth="308.0" styleClass="anchorPanesStyle" stylesheets="@../CSS/LoginStyleSheet.css">
+        <AnchorPane fx:id="passwordPane" layoutX="300.0" layoutY="383.0" prefHeight="48.0" prefWidth="308.0" styleClass="anchorPanesStyle" stylesheets="@../CSS/LoginStyleSheet.css">
          <children>
             <PasswordField fx:id="passwordField" layoutX="46.0" layoutY="10.0" prefHeight="29.0" prefWidth="247.0" promptText="Enter your password" styleClass="textPrompt" stylesheets="@../CSS/LoginStyleSheet.css">
                <font>
@@ -59,12 +59,17 @@
             </ImageView>
          </children>
         </AnchorPane>
-      <ImageView fx:id="airplaneLogo" fitHeight="82.0" fitWidth="84.0" layoutX="360.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="airplaneLogo" fitHeight="82.0" fitWidth="84.0" layoutX="410.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../airplaneLogo.png" />
          </image>
       </ImageView>
-      <Circle fx:id="c2" fill="#1f93ff00" layoutX="400.0" layoutY="156.0" radius="57.0" stroke="#00b277" strokeType="INSIDE" strokeWidth="5.5" style="-fx-stroke-dash-array: 60;" />
-      <Circle fx:id="c1" fill="#1f93ff00" layoutX="400.0" layoutY="155.0" radius="71.0" stroke="#0094ff" strokeType="INSIDE" strokeWidth="5.5" style="-fx-stroke-dash-array: 45;" />
+      <Circle fx:id="c2" fill="#1f93ff00" layoutX="450.0" layoutY="197.0" radius="57.0" stroke="#00b277" strokeType="INSIDE" strokeWidth="5.5" style="-fx-stroke-dash-array: 60;" />
+      <Circle fx:id="c1" fill="#1f93ff00" layoutX="450.0" layoutY="196.0" radius="71.0" stroke="#0094ff" strokeType="INSIDE" strokeWidth="5.5" style="-fx-stroke-dash-array: 45;" />
+      <Label fx:id="forgotPasswordLink" layoutX="385.0" layoutY="470.0" styleClass="link" text="Forgot password" textFill="#2fa8fff7" underline="true">
+         <font>
+            <Font name="Verdana" size="13.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

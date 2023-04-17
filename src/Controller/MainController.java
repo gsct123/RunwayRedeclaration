@@ -180,6 +180,8 @@ public class MainController implements Initializable {
     private Menu navigatingMenu;
     @FXML
     private Menu exportMenu;
+    @FXML
+    private Label airportNameLabel;
 
     //property to be used in Visualisation classes
     public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -208,18 +210,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if(Main.getRole() == 1){
-            userManager.setVisible(true);
-            airportManager.setVisible(true);
-            exportMenu.setVisible(false);
-        } else if(Main.getRole() == 2){
-            airportManager.setVisible(false);
-            userManager.setVisible(true);
-            exportMenu.setVisible(true);
-        } else{
-            navigatingMenu.setVisible(false);
-            exportMenu.setVisible(true);
-        }
+
         obstacleProperty = new SimpleObjectProperty<>();
         DropShadow shadow = new DropShadow(2, Color.valueOf("#212f45"));
         leftTableView.setEffect(shadow);
@@ -283,6 +274,32 @@ public class MainController implements Initializable {
             if(Main.isReset()){
                 setNotificationLabel("Status: Options Reset\t " + getDateTimeNow());
             }
+
+            if(Main.getRole() == 1){
+                userManager.setVisible(true);
+                airportManager.setVisible(true);
+                exportMenu.setVisible(false);
+                airportNameLabel.setVisible(false);
+                airportMenu.setVisible(true);
+            } else if(Main.getRole() == 2){
+                airportManager.setVisible(false);
+                userManager.setVisible(true);
+                exportMenu.setVisible(true);
+                airportMenu.setVisible(false);
+                airportNameLabel.setVisible(true);
+                airportNameLabel.setText(airportMap.get(Main.getAirportID()).getName());
+                airportItem.set(airportMap.get(Main.getAirportID()));
+                physicalRunwayMenu.setDisable(false);
+            } else{
+                navigatingMenu.setVisible(false);
+                exportMenu.setVisible(true);
+                airportMenu.setVisible(false);
+                airportNameLabel.setVisible(true);
+                airportNameLabel.setText(airportMap.get(Main.getAirportID()).getName());
+                airportItem.set(airportMap.get(Main.getAirportID()));
+                physicalRunwayMenu.setDisable(false);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

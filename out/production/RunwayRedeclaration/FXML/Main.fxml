@@ -221,6 +221,14 @@
                               <Font name="Verdana" size="14.0" />
                            </font>
                         </Button>
+                        <Label fx:id="airportNameLabel" alignment="CENTER" layoutX="20.0" layoutY="48.0" prefHeight="42.0" prefWidth="235.0" text="AIRPORT">
+                           <font>
+                              <Font name="Verdana" size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" top="5.0" />
+                           </padding>
+                        </Label>
                           </children>
                       </AnchorPane>
                       <AnchorPane prefHeight="655.0" prefWidth="829.0">
