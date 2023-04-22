@@ -3,14 +3,13 @@ package Controller;
 import Model.*;
 import Model.Helper.Utility;
 import Model.Helper.XMLParserWriter;
-import View.AirportManager;
+import View.*;
 import View.Error;
-import View.Main;
 import View.OtherPopUp.Confirmation;
 import View.OtherPopUp.NoRedeclarationNeeded;
-import View.UserManager;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -62,6 +61,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class MainController implements Initializable {
+    private static final int INACTIVITY_TIMEOUT = 3 * 1000; // 3 seconds in milliseconds
+    private Timer inactivityTimer;
+
     private static boolean needRedeclare = true;
     @FXML
     private Button notificationButton;
@@ -210,7 +212,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        resetInactivityTimer();
         obstacleProperty = new SimpleObjectProperty<>();
         DropShadow shadow = new DropShadow(2, Color.valueOf("#212f45"));
         leftTableView.setEffect(shadow);
@@ -263,6 +265,7 @@ public class MainController implements Initializable {
             });
 
             airportManager.setOnAction(actionEvent -> {
+                inactivityTimer.cancel();
                 try {
                     Main.getStage().close();
                     new AirportManager(AirportManager.getUsername()).start(new Stage());
@@ -376,6 +379,7 @@ public class MainController implements Initializable {
     //event handlers
     @FXML
     public void loadAboutProject(ActionEvent event){
+        resetInactivityTimer();
         try {
             Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
         } catch (IOException | URISyntaxException ignored) {}
@@ -383,12 +387,14 @@ public class MainController implements Initializable {
 
     @FXML
     public void goUserManager(ActionEvent event) throws Exception {
+        inactivityTimer.cancel();
         Main.getStage().close();
         new UserManager(Main.getUsername()).start(new Stage());
     }
 
     @FXML
     public void handleReset(ActionEvent event) throws IOException {
+        resetInactivityTimer();
         boolean flag = new Confirmation().confirm("Are you sure you want to reset the system?", "Warning: This action cannot be undone.\nAll inputs and selections will be cleared.");
         Main.setReset(true);
         if(flag) {
@@ -405,23 +411,27 @@ public class MainController implements Initializable {
 
     @FXML
     public void exportAirport(ActionEvent event) throws IOException, ParserConfigurationException, TransformerException {
+        resetInactivityTimer();
         Utility.exportAirport(Main.getStage(), FXCollections.observableArrayList(airportMap.get(Main.getAirportID())));
     }
 
     @FXML
     public void exportSideView(ActionEvent event) {
+        resetInactivityTimer();
         javafx.scene.Node contentNode = sideViewTab.getContent();
         Utility.exportVisual(contentNode);
     }
 
     @FXML
     public void exportTopView(ActionEvent event){
+        resetInactivityTimer();
         javafx.scene.Node contentNode = topViewTab.getContent();
         Utility.exportVisual(contentNode);
     }
 
     @FXML
     public void exportSimulView(ActionEvent event){
+        resetInactivityTimer();
         javafx.scene.Node contentNode = simultaneousViewTab.getContent();
         Utility.exportVisual(contentNode);
     }
@@ -476,6 +486,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void performCalculation(ActionEvent event){
+        resetInactivityTimer();
         checkDistFromThreshold(new ActionEvent());
         checkDistFromCentreLine(new ActionEvent());
         checkObstacleHeight(new ActionEvent());
@@ -505,6 +516,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void setStripEnd(ActionEvent event){
+        resetInactivityTimer();
         try{
             double stripEnd = Double.parseDouble(stripEndTextField.getText().trim());
             if(stripEnd < 0 || stripEnd > 100){throw new NumberFormatException();}
@@ -516,6 +528,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void setBlastProtection(ActionEvent event){
+        resetInactivityTimer();
         try{
             double blastProtection = Double.parseDouble(blastProtectionField.getText().trim());
             if(blastProtection < 300 || blastProtection > 500){
@@ -529,6 +542,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void setRESA(ActionEvent event){
+        resetInactivityTimer();
         try{
             double resa = Double.parseDouble(resaTextField.getText().trim());
             if(resa < 240 || resa > 500){
@@ -542,6 +556,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void showCalculationBreakdown(ActionEvent event) throws IOException {
+        inactivityTimer.cancel();
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CalculationBreakdown.fxml"));
 
@@ -555,10 +570,12 @@ public class MainController implements Initializable {
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
+        resetInactivityTimer();
     }
 
     @FXML
     public void setLeftRightDirection(ActionEvent event){
+        resetInactivityTimer();
         if(leftDirButton.isSelected()){
             getObstacleSelected().setDirFromCentre("L");
             dirFromCentre.set("L");
@@ -686,6 +703,7 @@ public class MainController implements Initializable {
             MenuItem airportMenuItem = new MenuItem(airport.getName());
             airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             airportMenuItem.setOnAction(e -> {
+                resetInactivityTimer();
                 airportItem.set(airport);
                 physicalRunwayMenu.getItems().clear();
                 getAirportMenu().setText(airport.getName());
@@ -696,6 +714,7 @@ public class MainController implements Initializable {
                 for(PhysicalRunway runway: airport.getPhysicalRunways()){
                     MenuItem runwayMenuItem = new MenuItem(runway.getName());
                     runwayMenuItem.setOnAction(f -> {
+                        resetInactivityTimer();
                         oldToraInfo.setVisible(true);
                         oldTodaInfo.setVisible(true);
                         oldLdaInfo.setVisible(true);
@@ -882,6 +901,7 @@ public class MainController implements Initializable {
             MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
             obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
             obstacleMenuItem.setOnAction(e -> {
+                resetInactivityTimer();
                 obstacleHeightField.setText(""+obstacle.getHeight());
                 obstacleWidthField.setText(""+obstacle.getWidth());
                 performCalculationButton.setDisable(false);
@@ -926,6 +946,7 @@ public class MainController implements Initializable {
             scrollPane.setVvalue(scrollPane.getVmax());
         } );
         pane.setOnMousePressed(mouseEvent -> {
+            resetInactivityTimer();
             double y = mouseEvent.getY();
             pane.setOnMouseDragged(event -> {
                 //-ve when up, +ve when down
@@ -944,16 +965,19 @@ public class MainController implements Initializable {
         });
         //reset to bottom if our of bound
         pane.setOnMouseReleased(releaseEvent -> {
+            resetInactivityTimer();
             double oriPaneY = 759;
             if (pane.getLayoutY() >= oriPaneY  || pane.getLayoutY() < 0 ){
                 resetNotificationBar(getNotiPane(),getNotiScrollPane());
             }
         });
         getNotificationLabel().setOnMouseEntered(mouseEvent -> {
+            resetInactivityTimer();
             getNotificationLabel().setOpacity(1.0);
             mouseEvent.consume();
         });
         getNotificationLabel().setOnMouseExited(mouseEvent -> {
+            resetInactivityTimer();
             fadeTransition(getNotificationLabel());
             mouseEvent.consume();
         });
@@ -989,6 +1013,7 @@ public class MainController implements Initializable {
     }
 
     public void resetView(AnchorPane pane, Pane dragPane){
+        resetInactivityTimer();
         dragPane.setTranslateX(0);
         dragPane.setTranslateY(0);
         pane.setScaleX(1);
@@ -1028,10 +1053,43 @@ public class MainController implements Initializable {
     }
 
     public void extendNotiBar(ActionEvent actionEvent) {
+        resetInactivityTimer();
         resetNotificationBar(notiPane,notiScrollPane);
         notiPane.setVisible(false);
         notificationLabel.setVisible(true);
         clickCount++;
+    }
+
+    public void startInactivityTimer() {
+        // Schedule the timer to prompt for logout after 3 minutes of inactivity
+        inactivityTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    // Prompt for logout
+                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/1000+" seconds.", "Do you want to continue using or logout");
+                    if(flag){
+                        Main.getStage().close();
+                        try {
+                            new Login().start(new Stage());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    // TODO: Add code to handle user input
+                });
+
+            }
+        }, INACTIVITY_TIMEOUT);
+    }
+
+    public void resetInactivityTimer() {
+        // Cancel the current timer and start a new one
+        if(inactivityTimer != null){
+            inactivityTimer.cancel();
+        }
+        inactivityTimer = new Timer();
+        startInactivityTimer();
     }
 
 }

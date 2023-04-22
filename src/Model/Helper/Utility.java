@@ -44,6 +44,7 @@ public class Utility {
         newStage.start(new Stage());
     }
 
+
     @FXML
     public static void handleLogout(ActionEvent event) throws Exception {
         Main.getStage().close();

@@ -7,6 +7,7 @@ import Model.User;
 import View.Error;
 import View.*;
 import View.OtherPopUp.Confirmation;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,12 +34,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class UserManagerController implements Initializable {
+    private static final int INACTIVITY_TIMEOUT = 3 * 1000; // 3 seconds in milliseconds
+    private Timer inactivityTimer;
     @FXML
     private Label identityLabel;
     @FXML
@@ -77,10 +78,17 @@ public class UserManagerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        resetInactivityTimer();
         identityLabel.setText("Logged in as "+ Main.getUsername());
 
-        infoButton.setOnMouseEntered(event -> infoLabel.setVisible(true));
-        infoButton.setOnMouseExited(event -> infoLabel.setVisible(false));
+        infoButton.setOnMouseEntered(event -> {
+            resetInactivityTimer();
+            infoLabel.setVisible(true);
+        });
+        infoButton.setOnMouseExited(event -> {
+            resetInactivityTimer();
+            infoLabel.setVisible(false);
+        });
 
         if(Main.getRole() == 1){
             userData = FXCollections.observableArrayList(MainController.managers.values().stream().toList());
@@ -93,6 +101,7 @@ public class UserManagerController implements Initializable {
             addManagerButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
+                    inactivityTimer.cancel();
                     helperStage = new Stage();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/AddNewUser.fxml"));
                     Parent root = null;
@@ -128,6 +137,7 @@ public class UserManagerController implements Initializable {
                         }
                         new Notification(UserManager.getStage()).sucessNotification("Successful Action", "Manager account has been set up.");
                     }
+                    resetInactivityTimer();
                 }
             });
         } else if (Main.getRole() == 2) {
@@ -139,6 +149,7 @@ public class UserManagerController implements Initializable {
             addUserButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
+                    inactivityTimer.cancel();
                     helperStage = new Stage();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/AddNewUser.fxml"));
 
@@ -174,10 +185,12 @@ public class UserManagerController implements Initializable {
                         }
                         new Notification(UserManager.getStage()).sucessNotification("Successful Action", "User added to system.");
                     }
+                    resetInactivityTimer();
                 }
             });
 
             deleteUserButton.setOnAction(actionEvent -> {
+                inactivityTimer.cancel();
                 User user = userTable.getSelectionModel().getSelectedItem();
                 if(user == null){
                     new Error().errorPopUp("Please select a user to be deleted");
@@ -200,12 +213,14 @@ public class UserManagerController implements Initializable {
                         new Notification(UserManager.getStage()).sucessNotification("Successful Action", "User has been deleted from system.");
                     }
                 }
+                resetInactivityTimer();
             });
         }
-        searchField.textProperty().addListener((observable, oldValue, newValue) ->
-                //refer list of users
-                userTable.setItems(filterList(userData, newValue))
-        );
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            resetInactivityTimer();
+            //refer list of users
+            userTable.setItems(filterList(userData, newValue));
+        });
 
         userTable.setEditable(false);
 
@@ -232,6 +247,7 @@ public class UserManagerController implements Initializable {
 
     @FXML
     public void goAirportManager(ActionEvent event) throws Exception {
+        inactivityTimer.cancel();
         try {
             UserManager.getStage().close();
             new AirportManager(AirportManager.getUsername()).start(new Stage());
@@ -242,6 +258,7 @@ public class UserManagerController implements Initializable {
 
     @FXML
     public void backToMain(ActionEvent event) throws Exception {
+        inactivityTimer.cancel();
         UserManager.getStage().close();
         Main.getStage().show();
     }
@@ -254,6 +271,7 @@ public class UserManagerController implements Initializable {
 
     @FXML
     public void loadAboutProject(ActionEvent event){
+        resetInactivityTimer();
         try {
             Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
         } catch (IOException | URISyntaxException ignored) {}
@@ -274,5 +292,39 @@ public class UserManagerController implements Initializable {
         return (user.getUsername().toLowerCase().contains(searchText.toLowerCase()) ||
                 user.getName().toLowerCase().contains(searchText.toLowerCase()) ||
                 MainController.airportMap.get(user.getAirportID()).getName().toLowerCase().contains(searchText.toLowerCase()));
+    }
+
+    public void startInactivityTimer() {
+        // Schedule the timer to prompt for logout after 3 minutes of inactivity
+        inactivityTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    // Prompt for logout
+                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/1000+" seconds.", "Do you want to continue using or logout");
+                    if(flag){
+                        UserManager.getStage().close();
+                        try {
+                            new Login().start(new Stage());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        resetInactivityTimer();
+                    }
+                    // TODO: Add code to handle user input
+                });
+
+            }
+        }, INACTIVITY_TIMEOUT);
+    }
+
+    public void resetInactivityTimer() {
+        // Cancel the current timer and start a new one
+        if(inactivityTimer != null){
+            inactivityTimer.cancel();
+        }
+        inactivityTimer = new Timer();
+        startInactivityTimer();
     }
 }
