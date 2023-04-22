@@ -83,7 +83,7 @@ public class UserManagerController implements Initializable {
         infoButton.setOnMouseExited(event -> infoLabel.setVisible(false));
 
         if(Main.getRole() == 1){
-            userData = FXCollections.observableArrayList(MainController.managers.keySet().stream().toList());
+            userData = FXCollections.observableArrayList(MainController.managers.values().stream().toList());
             addManagerButton.setVisible(true);
             addUserButton.setVisible(false);
             deleteUserButton.setVisible(false);
@@ -111,18 +111,27 @@ public class UserManagerController implements Initializable {
                     helperStage.initModality(Modality.APPLICATION_MODAL);
                     helperStage.showAndWait();
 
+
                     if(AddNewUserController.newUser != null){
                         User newUser = AddNewUserController.newUser;
                         LoginController.users.put(newUser.getUsername(), newUser);
                         MainController.managerMap.put(newUser.getUsername(), MainController.airportMap.get(newUser.getAirportID()));
-                        userData = FXCollections.observableArrayList(MainController.managers.keySet().stream().toList());
+                        MainController.managers.put(newUser.getUsername(), newUser);
+                        userData = FXCollections.observableArrayList(MainController.managers.values().stream().toList());
                         userTable.setItems(userData);
                         userTable.refresh();
+
+                        try {
+                            XMLParserWriter.updateUserXML(FXCollections.observableArrayList(LoginController.users.values()), "src/Data/users.xml");
+                        } catch (ParserConfigurationException | TransformerException e) {
+                            e.printStackTrace();
+                        }
+                        new Notification(UserManager.getStage()).sucessNotification("Successful Action", "Manager account has been set up.");
                     }
                 }
             });
         } else if (Main.getRole() == 2) {
-            userData = FXCollections.observableArrayList(MainController.users.get(MainController.managerMap.get(Main.getUsername())));
+            userData = FXCollections.observableArrayList(MainController.users.getOrDefault(MainController.managerMap.get(Main.getUsername()), new ArrayList<>()));
             addManagerButton.setVisible(false);
             addUserButton.setVisible(true);
             deleteUserButton.setVisible(true);
@@ -152,7 +161,7 @@ public class UserManagerController implements Initializable {
                     if(AddNewUserController.newUser != null){
                         User newUser = AddNewUserController.newUser;
                         LoginController.users.put(newUser.getUsername(), newUser);
-                        ArrayList<User> original = MainController.users.get(MainController.airportMap.get(newUser.getAirportID()));
+                        ArrayList<User> original = MainController.users.getOrDefault(MainController.airportMap.get(newUser.getAirportID()), new ArrayList<>());
                         original.add(newUser);
                         MainController.users.put(MainController.airportMap.get(newUser.getAirportID()), original);
                         userData = FXCollections.observableArrayList(MainController.users.get(MainController.managerMap.get(Main.getUsername())));
@@ -160,9 +169,7 @@ public class UserManagerController implements Initializable {
                         userTable.refresh();
                         try {
                             XMLParserWriter.updateUserXML(FXCollections.observableArrayList(LoginController.users.values()), "src/Data/users.xml");
-                        } catch (ParserConfigurationException e) {
-                            e.printStackTrace();
-                        } catch (TransformerException e) {
+                        } catch (ParserConfigurationException | TransformerException e) {
                             e.printStackTrace();
                         }
                         new Notification(UserManager.getStage()).sucessNotification("Successful Action", "User added to system.");
@@ -187,9 +194,7 @@ public class UserManagerController implements Initializable {
                         userTable.refresh();
                         try {
                             XMLParserWriter.updateUserXML(FXCollections.observableArrayList(LoginController.users.values()), "src/Data/users.xml");
-                        } catch (ParserConfigurationException e) {
-                            e.printStackTrace();
-                        } catch (TransformerException e) {
+                        } catch (ParserConfigurationException | TransformerException e) {
                             e.printStackTrace();
                         }
                         new Notification(UserManager.getStage()).sucessNotification("Successful Action", "User has been deleted from system.");

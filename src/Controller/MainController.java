@@ -202,7 +202,7 @@ public class MainController implements Initializable {
     public static ObservableList<String> airportNames = FXCollections.observableArrayList();
     public static HashMap<String, Airport> managerMap = new HashMap<>();
     public static HashMap<Airport, ArrayList<User>> users = new HashMap<>();
-    public static HashMap<User, Airport> managers = new HashMap<>();
+    public static HashMap<String, User> managers = new HashMap<>();
 
     //Controllers
     private TopViewController topViewController;
@@ -589,7 +589,8 @@ public class MainController implements Initializable {
     public void loadUsers() {
         for(User user: LoginController.users.values()){
             if(user.getRole() == 2){
-                managers.put(user, MainController.airportMap.get(user.getAirportID()));
+                managers.put(user.getUsername(), user);
+                managerMap.put(user.getUsername(), MainController.airportMap.get(user.getAirportID()));
             } else if(user.getRole() == 3){
                 ArrayList<User> list = new ArrayList<>();
                 if(users.containsKey(airportMap.get(user.getAirportID()))){
@@ -672,8 +673,6 @@ public class MainController implements Initializable {
 
 
                 Airport airport = new Airport(reference, airportName, physicalRunways, manager);
-                managerMap.put(manager, airport);
-
                 airportMap.put(airport.getID(), airport);
                 getAirports().add(airport);
             }

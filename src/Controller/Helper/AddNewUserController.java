@@ -8,8 +8,6 @@ import Model.Helper.Utility;
 import Model.User;
 import View.Error;
 import View.Main;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -54,13 +52,14 @@ public class AddNewUserController implements Initializable {
             airportLabel.setVisible(false);
             airportNameLabel.setVisible(false);
             for(Airport airport: MainController.airports){
-                if(!MainController.managerMap.containsValue(airport)){
+                if(!(MainController.managerMap.containsKey(airport.getManager()))){
+                    System.out.println("not in map");
                     MenuItem airportItem = new MenuItem(airport.getName());
-                    airportItem.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent actionEvent) {
-                            airportSelected[0] = airport;
-                        }
+                    airportItem.setOnAction(actionEvent -> {
+                        airportSelected[0] = airport;
+                        airportMenu.setText(airport.getName());
+                        usernameField.setText(airport.getManager());
+                        usernameField.setDisable(true);
                     });
                     airportMenu.getItems().add(airportItem);
                 }
@@ -105,7 +104,11 @@ public class AddNewUserController implements Initializable {
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }
-                    newUser = new User(username, name, password, airportSelected[0].getID(), 3);
+                    if(Main.getRole() == 1){
+                        newUser = new User(username, name, password, airportSelected[0].getID(), 2);
+                    } else{
+                        newUser = new User(username, name, password, airportSelected[0].getID(), 3);
+                    }
                     UserManagerController.helperStage.close();
                 }
             }

@@ -3,8 +3,10 @@ package Controller;
 import Controller.Helper.EditAirportController;
 import Model.Airport;
 import Model.Helper.Utility;
+import Model.Helper.XMLParserWriter;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
+import Model.User;
 import View.Error;
 import View.*;
 import View.OtherPopUp.Confirmation;
@@ -161,11 +163,23 @@ public class AirportManagerController implements Initializable {
                 MainController.airportMap.remove(airport.getID());
                 MainController.airportNames.remove(airport.getName());
                 MainController.managerMap.remove(airport.getManager());
+                for(User u: MainController.users.getOrDefault(airport, new ArrayList<>())){
+                    LoginController.users.remove(u.getUsername());
+                }
+                MainController.users.remove(airport);
+                LoginController.users.remove(airport.getManager());
+                MainController.managers.remove(airport.getManager());
                 airportTable.getSelectionModel().clearSelection();
                 airportDetails.setText("No content to display, select an airport to view airport details");
                 new Notification(AirportManager.getStage()).sucessNotification("Successful action", airport.getName()+" has been deleted.");
                 airportTable.setItems(MainController.airports);
                 airportTable.refresh();
+
+                try {
+                    XMLParserWriter.updateUserXML(FXCollections.observableArrayList(LoginController.users.values()), "src/Data/users.xml");
+                } catch (ParserConfigurationException | TransformerException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
