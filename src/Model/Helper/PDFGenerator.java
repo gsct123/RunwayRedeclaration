@@ -3,6 +3,7 @@ package Model.Helper;
 import Model.*;
 import View.AirportManager;
 import View.Main;
+import View.Notification;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -216,6 +217,8 @@ public class PDFGenerator {
             document.add(t3);
 
             document.close();
+
+            new Notification(Main.getStage()).sucessNotification("Successful generation", "Report downloaded to "+selectedDirectory);
         }
     }
 

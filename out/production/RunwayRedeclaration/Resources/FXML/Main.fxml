@@ -27,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<Pane prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <children>
       <VBox layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0">
           <children>
@@ -40,7 +40,7 @@
                               <MenuItem fx:id="exportAirport" mnemonicParsing="false" onAction="#exportAirport" text="Airport Details" />
                               <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Visualisations">
                                  <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#exportSideView" text="Side-On Visualisation" />
+                                    <MenuItem fx:id="regenerationReport" mnemonicParsing="false" onAction="#exportSideView" text="Side-On Visualisation" />
                                     <MenuItem fx:id="regenerationReport1" mnemonicParsing="false" onAction="#exportTopView" text="Top-Down Visualisation" />
                                     <MenuItem fx:id="regenerationReport2" mnemonicParsing="false" onAction="#exportSimulView" text="Simultaneous Visualisation" />
                                  </items>
@@ -56,6 +56,15 @@
                         <MenuItem fx:id="airportManager" mnemonicParsing="false" text="Airport Manager" />
                         <MenuItem fx:id="userManager" mnemonicParsing="false" onAction="#goUserManager" text="User Manager" />
                      </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Tools">
+                    <items>
+                        <MenuItem fx:id="notiHistoryCmd" mnemonicParsing="false" text="Notification history" />
+                      <MenuItem fx:id="resetViewCmd" mnemonicParsing="false" text="Reset View" />
+                        <MenuItem fx:id="resetCmd" mnemonicParsing="false" text="Reset Calculator" />
+                        <MenuItem fx:id="calcBDCmd" mnemonicParsing="false" text="Breakdown" />
+                        <MenuItem fx:id="tabCmd" mnemonicParsing="false" text="Switch Tab" />
+                    </items>
                   </Menu>
                       <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
                           <items>

@@ -140,16 +140,18 @@ public class AirportManagerController implements Initializable {
 
     @FXML
     public void handleLogout(ActionEvent event) throws Exception {
+        inactivityTimer.cancel();
         AirportManager.getStage().close();
         new Login().start(new Stage());
     }
 
     @FXML
     public void loadAboutProject(ActionEvent event){
-        resetInactivityTimer();
+        inactivityTimer.cancel();
         try {
             Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
         } catch (IOException | URISyntaxException ignored) {}
+        resetInactivityTimer();
     }
 
     @FXML
@@ -513,7 +515,7 @@ public class AirportManagerController implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     // Prompt for logout
-                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/1000+" seconds.", "Do you want to continue using or logout");
+                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/60000+" minutes.", "Do you want to continue using or logout");
                     if(flag){
                         AirportManager.getStage().close();
                         try {

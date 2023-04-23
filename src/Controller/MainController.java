@@ -285,6 +285,7 @@ public class MainController implements Initializable {
 
             identityLabel.setText("Logged in as "+ Main.getUsername());
             logoutItem.setOnAction(actionEvent -> {
+                inactivityTimer.cancel();
                 try {
                     Utility.handleLogout(new ActionEvent());
                 } catch (Exception e) {
@@ -292,6 +293,7 @@ public class MainController implements Initializable {
                 }
             });
             logoutButton.setOnMouseClicked(mouseEvent -> {
+                inactivityTimer.cancel();
                 try {
                     Utility.handleLogout(new ActionEvent());
                 } catch (Exception e) {
@@ -1177,7 +1179,7 @@ public class MainController implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     // Prompt for logout
-                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/1000+" seconds.", "Do you want to continue using or logout");
+                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/60000+" minutes.", "Do you want to continue using or logout");
                     if(flag){
                         Main.getStage().close();
                         try {
