@@ -45,7 +45,7 @@
                                     <MenuItem fx:id="regenerationReport2" mnemonicParsing="false" onAction="#exportSimulView" text="Simultaneous Visualisation" />
                                  </items>
                               </Menu>
-                              <MenuItem fx:id="regenerationReport" mnemonicParsing="false" text="Redeclaration Report" />
+                              <MenuItem fx:id="generateReport" mnemonicParsing="false" onAction="#printReport" text="Regeneration Report" />
                            </items>
                         </Menu>
                               <MenuItem fx:id="logoutItem" mnemonicParsing="false" text="Logout" />

@@ -1,13 +1,15 @@
 package Controller;
 
 import Model.*;
+import Model.Helper.PDFGenerator;
 import Model.Helper.Utility;
 import Model.Helper.XMLParserWriter;
-import View.*;
 import View.Error;
+import View.*;
 import View.OtherPopUp.Confirmation;
 import View.OtherPopUp.NoRedeclarationNeeded;
 import com.gluonhq.charm.glisten.control.ToggleButtonGroup;
+import com.itextpdf.text.DocumentException;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -56,12 +58,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class MainController implements Initializable {
-    private static final int INACTIVITY_TIMEOUT = 3 * 1000; // 3 seconds in milliseconds
+    private static final int INACTIVITY_TIMEOUT = 3 * 60* 1000; // 3 seconds in milliseconds
     private Timer inactivityTimer;
 
     private static boolean needRedeclare = true;
@@ -154,6 +154,8 @@ public class MainController implements Initializable {
     private RadioButton leftDirButton;
     @FXML
     private Label notificationLabel;
+    @FXML
+    private TabPane visualPane;
 
     //table
     @FXML
@@ -184,6 +186,10 @@ public class MainController implements Initializable {
     private Menu exportMenu;
     @FXML
     private Label airportNameLabel;
+    @FXML
+    private MenuItem generateReport;
+    @FXML
+    private MenuItem exportAirport;
 
     //property to be used in Visualisation classes
     public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -212,6 +218,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        beforeCalculation = true;
         resetInactivityTimer();
         obstacleProperty = new SimpleObjectProperty<>();
         DropShadow shadow = new DropShadow(2, Color.valueOf("#212f45"));
@@ -275,19 +282,20 @@ public class MainController implements Initializable {
             });
 
             if(Main.isReset()){
-                setNotificationLabel("Status: Options Reset\t " + getDateTimeNow());
+                setNotificationLabel("Status: Options Reset\t " + Utility.getDateTimeNow());
             }
+
+            exportMenu.setVisible(true);
 
             if(Main.getRole() == 1){
                 userManager.setVisible(true);
                 airportManager.setVisible(true);
-                exportMenu.setVisible(false);
+                exportAirport.setVisible(false);
                 airportNameLabel.setVisible(false);
                 airportMenu.setVisible(true);
             } else if(Main.getRole() == 2){
                 airportManager.setVisible(false);
                 userManager.setVisible(true);
-                exportMenu.setVisible(true);
                 airportMenu.setVisible(false);
                 airportNameLabel.setVisible(true);
                 airportNameLabel.setText(airportMap.get(Main.getAirportID()).getName());
@@ -295,13 +303,14 @@ public class MainController implements Initializable {
                 physicalRunwayMenu.setDisable(false);
             } else{
                 navigatingMenu.setVisible(false);
-                exportMenu.setVisible(true);
                 airportMenu.setVisible(false);
                 airportNameLabel.setVisible(true);
                 airportNameLabel.setText(airportMap.get(Main.getAirportID()).getName());
                 airportItem.set(airportMap.get(Main.getAirportID()));
                 physicalRunwayMenu.setDisable(false);
             }
+
+            generateReport.setDisable(true);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -337,13 +346,15 @@ public class MainController implements Initializable {
                         try{
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/TopView.fxml"));
                             FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/FXML/SideView.fxml"));
+                            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/FXML/SimultaneousView.fxml"));
                             Parent root = loader.load();
                             Parent root1 = loader1.load();
+                            Parent root2 = loader2.load();
                             topViewController = loader.getController();
                             sideViewController = loader1.getController();
                             topViewTab.setContent(root);
                             sideViewTab.setContent(root1);
-                            simultaneousViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/SimultaneousView.fxml"))));
+                            simultaneousViewTab.setContent(root2);
                         } catch (Exception e){
                             e.printStackTrace();
                         }
@@ -368,6 +379,7 @@ public class MainController implements Initializable {
     public static PhysicalRunway getPhysRunwaySelected() {return physRunwayItem.get();}
     public static boolean needRedeclare(){return needRedeclare;}
     public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
+    public static Airport getAirportSelected() {return airportItem.get();}
     public MenuButton getAirportMenu() {return this.airportMenu;}
     public TopViewController getTopViewController() { return topViewController;}
     public SideViewController getSideViewController() { return sideViewController;}
@@ -375,6 +387,7 @@ public class MainController implements Initializable {
     public Pane getNotiPane() {return notiPane;}
     public ScrollPane getNotiScrollPane() {return notiScrollPane;}
     public Label getNotificationLabel() {return notificationLabel;}
+    public static boolean beforeCalculation = false;
 
     //event handlers
     @FXML
@@ -398,6 +411,11 @@ public class MainController implements Initializable {
         boolean flag = new Confirmation().confirm("Are you sure you want to reset the system?", "Warning: This action cannot be undone.\nAll inputs and selections will be cleared.");
         Main.setReset(true);
         if(flag) {
+            beforeCalculation = true;
+            physRunwayItem.set(null);
+            airportItem.set(null);
+            obstacleProperty.set(null);
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Main.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -411,29 +429,54 @@ public class MainController implements Initializable {
 
     @FXML
     public void exportAirport(ActionEvent event) throws IOException, ParserConfigurationException, TransformerException {
-        resetInactivityTimer();
+        inactivityTimer.cancel();
         Utility.exportAirport(Main.getStage(), FXCollections.observableArrayList(airportMap.get(Main.getAirportID())));
+        resetInactivityTimer();
+    }
+
+    public void refreshTab(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/TopView.fxml"));
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/FXML/SideView.fxml"));
+            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/FXML/SimultaneousView.fxml"));
+            Parent root = loader.load();
+            Parent root1 = loader1.load();
+            Parent root2 = loader2.load();
+            topViewController = loader.getController();
+            sideViewController = loader1.getController();
+            topViewTab.setContent(root);
+            sideViewTab.setContent(root1);
+            simultaneousViewTab.setContent(root2);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void exportSideView(ActionEvent event) {
-        resetInactivityTimer();
+        refreshTab();
+        inactivityTimer.cancel();
         javafx.scene.Node contentNode = sideViewTab.getContent();
         Utility.exportVisual(contentNode);
+        resetInactivityTimer();
     }
 
     @FXML
     public void exportTopView(ActionEvent event){
-        resetInactivityTimer();
+        refreshTab();
+        inactivityTimer.cancel();
         javafx.scene.Node contentNode = topViewTab.getContent();
         Utility.exportVisual(contentNode);
+        resetInactivityTimer();
     }
 
     @FXML
     public void exportSimulView(ActionEvent event){
-        resetInactivityTimer();
+        refreshTab();
+        inactivityTimer.cancel();
         javafx.scene.Node contentNode = simultaneousViewTab.getContent();
         Utility.exportVisual(contentNode);
+        resetInactivityTimer();
     }
 
     @FXML
@@ -504,14 +547,18 @@ public class MainController implements Initializable {
             new NoRedeclarationNeeded().showNoRedeclarationNeeded();
         }
         calculationBreakdown.setDisable(false);
+        generateReport.setDisable(false);
         valueChanged.set(valueChanged.doubleValue() == 1? 0: 1);
-        setNotificationLabel( "Status: Calculation performed\t " + getDateTimeNow());
+        setNotificationLabel( "Status: Calculation performed\t " + Utility.getDateTimeNow());
+        beforeCalculation = false;
     }
 
-    public String getDateTimeNow(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        return  dtf.format(now);
+    @FXML
+    public void printReport(ActionEvent action) throws DocumentException, IOException {
+        refreshTab();
+        inactivityTimer.cancel();
+        new PDFGenerator(getAirportSelected(), getObstacleSelected(), getPhysRunwaySelected(), topViewTab.getContent(), sideViewTab.getContent(), simultaneousViewTab.getContent());
+        resetInactivityTimer();
     }
 
     @FXML
@@ -1035,7 +1082,7 @@ public class MainController implements Initializable {
         }catch (Exception e){
             System.out.println(e);
         }
-        setNotificationLabel("Status: View Reset\t " + getDateTimeNow());
+        setNotificationLabel("Status: View Reset\t " + Utility.getDateTimeNow());
     }
 
     int clickCount = 0;

@@ -219,19 +219,23 @@ public class TopViewController implements Initializable {
         });
         //listener for different physical runway selections
         MainController.physRunwayItem.addListener((observable, oldValue, newValue) -> {
-            resetValues(MainController.getPhysRunwaySelected());
-            if(MainController.getObstacleSelected() != null){
-                relocateObstacle();
+            if(newValue != null){
+                resetValues(MainController.getPhysRunwaySelected());
+                if(MainController.getObstacleSelected() != null){
+                    relocateObstacle();
+                }
             }
         });
         //listener for different obstacle selection
         MainController.obstacleProperty.addListener((observable, oldValue, newValue) -> {
-            if(oldValue != null){
-                oldValue.setDistFThreshold(0);
-                oldValue.setDistFCent(0);
+            if(newValue != null){
+                if(oldValue != null){
+                    oldValue.setDistFThreshold(0);
+                    oldValue.setDistFCent(0);
+                }
+                newValue.setDistFThreshold(MainController.disFromThreshold.get());
+                relocateObstacle();
             }
-            newValue.setDistFThreshold(MainController.disFromThreshold.get());
-            relocateObstacle();
         });
 
         //listener for result change to update with the revised parameters
@@ -246,6 +250,17 @@ public class TopViewController implements Initializable {
         Utility.initializeZoom(topDownRunwayPane);
         Utility.initializeDrag(dragPane);
         initializeRotate(topDownRunwayPane,compass);
+
+        if(MainController.beforeCalculation){
+            if(MainController.getPhysRunwaySelected() != null){
+                resetValues(MainController.getPhysRunwaySelected());
+            }
+            if(MainController.getObstacleSelected() != null){
+                relocateObstacle();
+            }
+        } else{
+            updateLabel();
+        }
     }
 
     //function to update labels and line in top view
@@ -439,7 +454,7 @@ public class TopViewController implements Initializable {
         }
 
         label.setText(" " + type +" = " + newValue + "m ");
-        labelLayout = getLabelLayout(LeftorRight.equals("Left")? start: end,length,label);
+        labelLayout = getLabelLayout(LeftorRight.equals("Left")? start: end, length, label);
         label.setLayoutX(labelLayout);
         arrowHead.setLayoutX(end.getLayoutX());
     }

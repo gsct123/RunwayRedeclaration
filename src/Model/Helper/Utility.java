@@ -35,6 +35,8 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Utility {
@@ -69,6 +71,12 @@ public class Utility {
         } else{
             return 1500;
         }
+    }
+
+    public static String getDateTimeNow(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return  dtf.format(now);
     }
 
     public static void exportAirport(Stage stage, ObservableList<Airport> airports) throws ParserConfigurationException, TransformerException, IOException {
@@ -120,7 +128,8 @@ public class Utility {
 
 // Set extension filters based on the type of file to be saved
         FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("Png Files (*.png)", "*.png");
-        fileChooser.getExtensionFilters().addAll(pngFilter);
+        FileChooser.ExtensionFilter jpegFilter = new FileChooser.ExtensionFilter("JPEG Files (*.jpeg)", "+.jpeg");
+        fileChooser.getExtensionFilters().addAll(pngFilter, jpegFilter);
 
 // Show the file chooser and get the selected file directory
         File selectedDirectory = fileChooser.showSaveDialog(AirportManager.getStage());

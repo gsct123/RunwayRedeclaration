@@ -203,24 +203,39 @@ public class SideViewController {
     private void initialize() {
         initialiseVisibility();
         MainController.physRunwayItem.addListener((observable, oldValue, newValue) -> {
-            PhysicalRunway runway = MainController.getPhysRunwaySelected();
-            resetValues(runway);
+            if(newValue != null){
+                PhysicalRunway runway = MainController.getPhysRunwaySelected();
+                resetValues(runway);
+            }
+
         });
         MainController.obstacleProperty.addListener(((ObservableValue<? extends Obstacle> observable, Obstacle oldValue, Obstacle newValue) -> {
-            if(oldValue != null){
-                oldValue.setDistFThreshold(0);
-                oldValue.setDistFCent(0);
+            if(newValue != null){
+                if(oldValue != null){
+                    oldValue.setDistFThreshold(0);
+                    oldValue.setDistFCent(0);
+                }
+                newValue.setDistFThreshold(MainController.disFromThreshold.get());
+                setUpAlsTocs(newValue,MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
             }
-            newValue.setDistFThreshold(MainController.disFromThreshold.get());
-            setUpAlsTocs(newValue,MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
         }));
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
             setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
         });
         MainController.obstacleHeight.addListener((observable, oldValue, newValue) -> {setUpAlsTocs(MainController.getObstacleSelected(), MainController.getPhysRunwaySelected().getLogicalRunways().get(0));});
-        MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel(new ActionEvent()));
+        MainController.valueChanged.addListener((observable, oldValue, newValue) -> {updateLabel(new ActionEvent());});
         Utility.initializeZoom(sideOnPane);
         Utility.initializeDrag(dragPane);
+        if(MainController.beforeCalculation){
+            if(MainController.getPhysRunwaySelected() != null){
+                resetValues(MainController.getPhysRunwaySelected());
+            }
+            if(MainController.getObstacleSelected() != null){
+                setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
+            }
+        } else{
+            updateLabel(new ActionEvent());
+        }
     }
 
     @FXML

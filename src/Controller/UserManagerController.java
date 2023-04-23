@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.*;
 
 public class UserManagerController implements Initializable {
-    private static final int INACTIVITY_TIMEOUT = 3 * 1000; // 3 seconds in milliseconds
+    private static final int INACTIVITY_TIMEOUT = 3 * 60 * 1000; // 3 seconds in milliseconds
     private Timer inactivityTimer;
     @FXML
     private Label identityLabel;

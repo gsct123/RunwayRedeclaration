@@ -2,7 +2,6 @@ package Controller;
 
 import Model.*;
 import Model.Helper.Utility;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -125,28 +124,26 @@ public class SimultaneousViewController implements Initializable {
         });
         //listener for different physical runway selections
         MainController.physRunwayItem.addListener((observable, oldValue, newValue) -> {
-            resetValues(MainController.getPhysRunwaySelected());
-            if(MainController.getObstacleSelected() != null){
-                relocateObstacle();
+            if(newValue != null){
+                resetValues(MainController.getPhysRunwaySelected());
+                if(MainController.getObstacleSelected() != null){
+                    relocateObstacle();
+                }
             }
         });
         //listener for different obstacle selection
         MainController.obstacleProperty.addListener((observable, oldValue, newValue) -> {
-            if(oldValue != null){
-                oldValue.setDistFThreshold(0);
-                oldValue.setDistFCent(0);
+            if(newValue != null){
+                if(oldValue != null){
+                    oldValue.setDistFThreshold(0);
+                    oldValue.setDistFCent(0);
+                }
+                newValue.setDistFThreshold(MainController.disFromThreshold.get());
+                relocateObstacle();
+                setUpAlsTocs(newValue,MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
             }
-            newValue.setDistFThreshold(MainController.disFromThreshold.get());
-            relocateObstacle();
+
         });
-        MainController.obstacleProperty.addListener(((ObservableValue<? extends Obstacle> observable, Obstacle oldValue, Obstacle newValue) -> {
-            if(oldValue != null){
-                oldValue.setDistFThreshold(0);
-                oldValue.setDistFCent(0);
-            }
-            newValue.setDistFThreshold(MainController.disFromThreshold.get());
-            setUpAlsTocs(newValue,MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
-        }));
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
             setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
         });
@@ -156,6 +153,17 @@ public class SimultaneousViewController implements Initializable {
         MainController.disFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
         MainController.obstacleHeight.addListener((observable, oldValue, newValue) -> {setUpAlsTocs(MainController.getObstacleSelected(), MainController.getPhysRunwaySelected().getLogicalRunways().get(0));});
+
+        if(MainController.beforeCalculation){
+            if(MainController.getPhysRunwaySelected() != null){
+                resetValues(MainController.getPhysRunwaySelected());
+            }
+            if(MainController.getObstacleSelected() != null){
+                setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
+            }
+        } else{
+            updateLabel();
+        }
     }
 
     //function to update labels and line in top view
@@ -617,6 +625,16 @@ public class SimultaneousViewController implements Initializable {
         setUpLine("LDA","Right",physicalRunway,LdaArrow1 );
         setUpLine("ASDA","Right",physicalRunway,AsdaArrow1);
         setUpLine("TODA","Right",physicalRunway,TodaArrow1);
+
+        int colour = 2;
+        changeColor(colour, ToraArrow);
+        changeColor(colour, TodaArrow);
+        changeColor(colour, AsdaArrow);
+        changeColor(colour, LdaArrow);
+        changeColor(colour, ToraArrow1);
+        changeColor(colour, TodaArrow1);
+        changeColor(colour, AsdaArrow1);
+        changeColor(colour, LdaArrow1);
     }
 
     protected void setUpLine(String type,String LeftorRight, PhysicalRunway physicalRunway,Arrow arrow){
