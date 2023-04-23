@@ -32,6 +32,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -62,6 +65,24 @@ import java.util.*;
 
 public class MainController implements Initializable {
     private static final int INACTIVITY_TIMEOUT = 3 * 60* 1000; // 3 seconds in milliseconds
+    @FXML
+    private MenuItem regenerationReport;
+    @FXML
+    private MenuItem regenerationReport1;
+    @FXML
+    private MenuItem regenerationReport2;
+    @FXML
+    private MenuItem aboutProject;
+    @FXML
+    private MenuItem tabCmd;
+    @FXML
+    private MenuItem notiHistoryCmd;
+    @FXML
+    private MenuItem calcBDCmd;
+    @FXML
+    private MenuItem resetCmd;
+    @FXML
+    private MenuItem resetViewCmd;
     private Timer inactivityTimer;
 
     private static boolean needRedeclare = true;
@@ -327,7 +348,8 @@ public class MainController implements Initializable {
         topViewController.initializeCompass();
 
         airports.addListener(listener);
-
+        calcBDCmd.setDisable(true);
+        initShortcut();
     }
 
     public ListChangeListener<Airport> listener = new ListChangeListener<Airport>() {
@@ -439,6 +461,10 @@ public class MainController implements Initializable {
 
     @FXML
     public void handleReset(ActionEvent event) throws IOException {
+        reset();
+    }
+
+    private void reset () throws IOException {
         resetInactivityTimer();
         boolean flag = new Confirmation().confirm("Are you sure you want to reset the system?", "Warning: This action cannot be undone.\nAll inputs and selections will be cleared.");
         Main.setReset(true);
@@ -573,6 +599,7 @@ public class MainController implements Initializable {
             needRedeclare = true;
             Calculator.performCalc(getObstacleSelected(), getPhysRunwaySelected());
             showTable(false);
+            calcBDCmd.setDisable(false);
         } else{
             needRedeclare = false;
             showTable(false);
@@ -1101,6 +1128,10 @@ public class MainController implements Initializable {
     }
 
     public void handleResetView(ActionEvent actionEvent) {
+        resetView();
+    }
+
+    private void resetView(){
         //Variables
         AnchorPane topViewAnchorPane = getTopViewController().getTopDownRunwayPane();
         AnchorPane sideViewAnchorPane = getSideViewController().getSideOnPane();
@@ -1170,5 +1201,69 @@ public class MainController implements Initializable {
         inactivityTimer = new Timer();
         startInactivityTimer();
     }
+
+
+    // Reference https://blog.idrsolutions.com/tutorial-how-to-setup-key-combinations-in-javafx/
+    public void initShortcut() {
+        // Shortcut Keys
+        KeyCombination RESET_VIEW_KEY = new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN);
+        KeyCombination RESET_CALCULATOR_KEY = new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN,KeyCombination.SHIFT_DOWN);
+        KeyCombination CALCULATION_BREAKDOWN_KEY = new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN);
+        KeyCombination AIRPORT_MANAGER_KEY = new KeyCodeCombination(KeyCode.A,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination USER_MANAGER_KEY = new KeyCodeCombination(KeyCode.U,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination NOTIFICATION_HISTORY_KEY = new KeyCodeCombination(KeyCode.H,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination SWITCH_TAB_KEY = new KeyCodeCombination(KeyCode.TAB,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination LOGOUT_KEY = new KeyCodeCombination(KeyCode.L,KeyCombination.SHORTCUT_DOWN,KeyCombination.SHIFT_DOWN);
+        KeyCombination ABOUT_PROJECT_KEY = new KeyCodeCombination(KeyCode.I,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination EXPORT_SIDE_VIEW_KEY = new KeyCodeCombination(KeyCode.E,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination EXPORT_TOP_VIEW_KEY = new KeyCodeCombination(KeyCode.E,KeyCombination.ALT_DOWN,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination EXPORT_SIMULTANEOUS_VIEW_KEY = new KeyCodeCombination(KeyCode.E,KeyCombination.ALT_DOWN,KeyCombination.SHIFT_DOWN,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination EXPORT_REPORT_KEY = new KeyCodeCombination(KeyCode.E,KeyCombination.SHIFT_DOWN);
+
+        //reset View
+        resetViewCmd.setAccelerator(RESET_VIEW_KEY);
+        resetViewCmd.setOnAction(this::handleResetView);
+        //reset calculator
+        resetCmd.setAccelerator(RESET_CALCULATOR_KEY);
+        resetCmd.setOnAction(actionEvent -> {
+            try {
+                handleReset(actionEvent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        //show calculation breakdown
+        calcBDCmd.setAccelerator(CALCULATION_BREAKDOWN_KEY);
+        calcBDCmd.setOnAction(actionEvent -> {
+            try {
+                showCalculationBreakdown(actionEvent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        //go to airport manager
+        airportManager.setAccelerator(AIRPORT_MANAGER_KEY);
+        //go to user manager
+        userManager.setAccelerator(USER_MANAGER_KEY);
+        //show notification history
+        notiHistoryCmd.setAccelerator(NOTIFICATION_HISTORY_KEY);
+        notiHistoryCmd.setOnAction(this::showNotibar);
+        //allow switch visual tab
+        tabCmd.setAccelerator(SWITCH_TAB_KEY);
+        tabCmd.setOnAction(actionEvent -> {
+            int currentTabIndex = visualPane.getSelectionModel().getSelectedIndex();
+            int nextTabIndex = (currentTabIndex + 1) % visualPane.getTabs().size();
+            visualPane.getSelectionModel().select(nextTabIndex);
+            actionEvent.consume();
+        });
+
+        logoutItem.setAccelerator(LOGOUT_KEY);
+        aboutProject.setAccelerator(ABOUT_PROJECT_KEY);
+        regenerationReport.setAccelerator(EXPORT_SIDE_VIEW_KEY);
+        regenerationReport1.setAccelerator(EXPORT_TOP_VIEW_KEY);
+        regenerationReport2.setAccelerator(EXPORT_SIMULTANEOUS_VIEW_KEY);
+        generateReport.setAccelerator(EXPORT_REPORT_KEY);
+    }
+
 
 }
