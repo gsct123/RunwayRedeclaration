@@ -24,6 +24,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -39,6 +42,7 @@ import java.util.*;
 
 public class UserManagerController implements Initializable {
     private static final int INACTIVITY_TIMEOUT = 3 * 60 * 1000; // 3 seconds in milliseconds
+
     private Timer inactivityTimer;
     @FXML
     private Label identityLabel;
@@ -68,6 +72,12 @@ public class UserManagerController implements Initializable {
     private Button addManagerButton;
     @FXML
     private MenuItem airportManager;
+    @FXML
+    private MenuItem logoutItem;
+    @FXML
+    private MenuItem backToMain;
+    @FXML
+    private MenuItem aboutProject;
 
     public static Stage helperStage;
 
@@ -242,6 +252,7 @@ public class UserManagerController implements Initializable {
         });
         userTable.setItems(userData);
         userTable.refresh();
+        initShortcut();
     }
 
 
@@ -326,5 +337,17 @@ public class UserManagerController implements Initializable {
         }
         inactivityTimer = new Timer();
         startInactivityTimer();
+    }
+
+    private void initShortcut(){
+        KeyCombination AIRPORT_MANAGER_KEY = new KeyCodeCombination(KeyCode.A,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination USER_MANAGER_KEY = new KeyCodeCombination(KeyCode.U,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination LOGOUT_KEY = new KeyCodeCombination(KeyCode.L,KeyCombination.SHORTCUT_DOWN,KeyCombination.SHIFT_DOWN);
+        KeyCombination ABOUT_PROJECT_KEY = new KeyCodeCombination(KeyCode.I,KeyCombination.SHORTCUT_DOWN);
+
+        airportManager.setAccelerator(AIRPORT_MANAGER_KEY);
+        logoutItem.setAccelerator(LOGOUT_KEY);
+        aboutProject.setAccelerator(ABOUT_PROJECT_KEY);
+        backToMain.setAccelerator(USER_MANAGER_KEY);
     }
 }

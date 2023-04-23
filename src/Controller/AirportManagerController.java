@@ -18,10 +18,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
@@ -70,7 +74,14 @@ public class AirportManagerController implements Initializable {
     private TableColumn<Airport, String> nameCol;
     @FXML
     private TableColumn<Airport, String> managerCol;
-
+    @FXML
+    private MenuItem aboutProject;
+    @FXML
+    private MenuItem userManager;
+    @FXML
+    private MenuItem backToMain;
+    @FXML
+    private MenuItem logoutItem;
 
 
     @Override
@@ -110,6 +121,7 @@ public class AirportManagerController implements Initializable {
         });
 
         airportTable.refresh();
+        initShortcut();
     }
 
     @FXML
@@ -526,5 +538,17 @@ public class AirportManagerController implements Initializable {
         }
         inactivityTimer = new Timer();
         startInactivityTimer();
+    }
+
+    private void initShortcut(){
+        KeyCombination AIRPORT_MANAGER_KEY = new KeyCodeCombination(KeyCode.A,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination USER_MANAGER_KEY = new KeyCodeCombination(KeyCode.U,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination LOGOUT_KEY = new KeyCodeCombination(KeyCode.L,KeyCombination.SHORTCUT_DOWN,KeyCombination.SHIFT_DOWN);
+        KeyCombination ABOUT_PROJECT_KEY = new KeyCodeCombination(KeyCode.I,KeyCombination.SHORTCUT_DOWN);
+
+        userManager.setAccelerator(USER_MANAGER_KEY);
+        aboutProject.setAccelerator(ABOUT_PROJECT_KEY);
+        backToMain.setAccelerator(AIRPORT_MANAGER_KEY);
+        logoutItem.setAccelerator(LOGOUT_KEY);
     }
 }
