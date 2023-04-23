@@ -3,11 +3,14 @@ package Controller;
 import Controller.Helper.EditAirportController;
 import Model.Airport;
 import Model.Helper.Utility;
+import Model.Helper.XMLParserWriter;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
+import Model.User;
 import View.Error;
 import View.*;
 import View.OtherPopUp.Confirmation;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,13 +39,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AirportManagerController implements Initializable {
-
+    private static final int INACTIVITY_TIMEOUT = 3 * 60 * 1000; // 3 seconds in milliseconds
+    private Timer inactivityTimer;
 
     @FXML
     private Label identityLabel;
@@ -73,12 +75,14 @@ public class AirportManagerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        resetInactivityTimer();
         airportDetails.setText("No content to display, select an airport to view airport details");
         identityLabel.setText("Logged in as "+ Main.getUsername());
 
-        searchField.textProperty().addListener((observable, oldValue, newValue) ->
-                airportTable.setItems(filterList(MainController.airports.stream().toList(), newValue))
-        );
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            resetInactivityTimer();
+            airportTable.setItems(filterList(MainController.airports.stream().toList(), newValue));
+        });
 
         airportTable.setEditable(false);
 
@@ -99,6 +103,7 @@ public class AirportManagerController implements Initializable {
         airportTable.setItems(MainController.airports);
 
         airportTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            resetInactivityTimer();
             if (newSelection != null) {
                 airportDetails.setText(Utility.airportInfo(FXCollections.observableArrayList(newSelection)));
             }
@@ -109,12 +114,14 @@ public class AirportManagerController implements Initializable {
 
     @FXML
     public void backToMain(ActionEvent event) throws Exception {
+        inactivityTimer.cancel();
         AirportManager.getStage().close();
         Main.getStage().show();
     }
 
     @FXML
     public void goUserManager(ActionEvent event) throws Exception {
+        inactivityTimer.cancel();
         AirportManager.getStage().close();
         new UserManager().start(new Stage());
     }
@@ -127,6 +134,7 @@ public class AirportManagerController implements Initializable {
 
     @FXML
     public void loadAboutProject(ActionEvent event){
+        resetInactivityTimer();
         try {
             Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
         } catch (IOException | URISyntaxException ignored) {}
@@ -134,6 +142,7 @@ public class AirportManagerController implements Initializable {
 
     @FXML
     public void importAirport(ActionEvent event) throws ParserConfigurationException, TransformerException {
+        inactivityTimer.cancel();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Airport XML File");
         fileChooser.getExtensionFilters().addAll(
@@ -145,11 +154,12 @@ public class AirportManagerController implements Initializable {
             airportTable.setItems(MainController.airports);
             airportTable.refresh();
         }
-
+        resetInactivityTimer();
     }
 
     @FXML
     public void deleteAirport(ActionEvent event) throws ParserConfigurationException, TransformerException {
+        inactivityTimer.cancel();
         Airport airport = airportTable.getSelectionModel().getSelectedItem();
 
         if(airport == null){
@@ -161,18 +171,31 @@ public class AirportManagerController implements Initializable {
                 MainController.airportMap.remove(airport.getID());
                 MainController.airportNames.remove(airport.getName());
                 MainController.managerMap.remove(airport.getManager());
+                for(User u: MainController.users.getOrDefault(airport, new ArrayList<>())){
+                    LoginController.users.remove(u.getUsername());
+                }
+                MainController.users.remove(airport);
+                LoginController.users.remove(airport.getManager());
+                MainController.managers.remove(airport.getManager());
                 airportTable.getSelectionModel().clearSelection();
                 airportDetails.setText("No content to display, select an airport to view airport details");
                 new Notification(AirportManager.getStage()).sucessNotification("Successful action", airport.getName()+" has been deleted.");
                 airportTable.setItems(MainController.airports);
                 airportTable.refresh();
+
+                try {
+                    XMLParserWriter.updateUserXML(FXCollections.observableArrayList(LoginController.users.values()), "src/Data/users.xml");
+                } catch (ParserConfigurationException | TransformerException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
+        resetInactivityTimer();
     }
 
     @FXML
     public void editAirport(ActionEvent event) throws Exception {
+        inactivityTimer.cancel();
         Airport airport = airportTable.getSelectionModel().getSelectedItem();
 
         if(airport == null){
@@ -192,12 +215,15 @@ public class AirportManagerController implements Initializable {
                 MainController.airports.add(EditAirportController.airportWithNewInfo);
                 new Notification(AirportManager.getStage()).sucessNotification("Successful action", "Airport info has been updated.");
             }
+            airportTable.setItems(MainController.airports);
             airportTable.refresh();
         }
+        resetInactivityTimer();
     }
 
     @FXML
     public void exportAirport() throws IOException, ParserConfigurationException, TransformerException {
+        inactivityTimer.cancel();
         Airport airport = airportTable.getSelectionModel().getSelectedItem();
 
         if(airport == null){
@@ -205,14 +231,17 @@ public class AirportManagerController implements Initializable {
         } else{
             Utility.exportAirport(AirportManager.getStage(), FXCollections.observableArrayList(airport));
         }
+        resetInactivityTimer();
     }
 
     @FXML
     public void exportAllAirport() throws ParserConfigurationException, IOException, TransformerException {
+        resetInactivityTimer();
         Utility.exportAirport(AirportManager.getStage(), MainController.airports);
     }
 
     public void addAirport(File selectedFile){
+        inactivityTimer.cancel();
         try {
             // Create a DocumentBuilder
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -341,6 +370,7 @@ public class AirportManagerController implements Initializable {
                         """);
             new Notification(AirportManager.getStage()).failNotification("Failed action", "Fail to add airport.");
         }
+        resetInactivityTimer();
     }
 
     private ObservableList<Airport> filterList(List<Airport> list, String searchText){
@@ -462,5 +492,39 @@ public class AirportManagerController implements Initializable {
         } else{
             return res.toString();
         }
+    }
+
+    public void startInactivityTimer() {
+        // Schedule the timer to prompt for logout after 3 minutes of inactivity
+        inactivityTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    // Prompt for logout
+                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/1000+" seconds.", "Do you want to continue using or logout");
+                    if(flag){
+                        AirportManager.getStage().close();
+                        try {
+                            new Login().start(new Stage());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        resetInactivityTimer();
+                    }
+                    // TODO: Add code to handle user input
+                });
+
+            }
+        }, INACTIVITY_TIMEOUT);
+    }
+
+    public void resetInactivityTimer() {
+        // Cancel the current timer and start a new one
+        if(inactivityTimer != null){
+            inactivityTimer.cancel();
+        }
+        inactivityTimer = new Timer();
+        startInactivityTimer();
     }
 }

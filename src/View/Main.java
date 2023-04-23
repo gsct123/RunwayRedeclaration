@@ -29,6 +29,10 @@ public class Main extends Application {
         return user.getRole();
     }
 
+    public static String getName(){
+        return user.getName();
+    }
+
     public static String getUsername() {
         return user.getUsername();
     }
