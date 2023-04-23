@@ -9,8 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -207,6 +209,27 @@ public class TopViewController implements Initializable {
     @FXML
     private Label scaleUnit;
 
+    @FXML
+    private Rectangle gradedAreaLegend;
+    @FXML
+    private Rectangle stopwayLegend;
+    @FXML
+    private Rectangle clearwayLegend;
+    @FXML
+    private Rectangle obstacleLegend;
+    @FXML
+    private Rectangle displacedThresholdLegend;
+    @FXML
+    private Rectangle minCGArea1;
+    @FXML
+    private Polyline minCGArea2;
+    @FXML
+    private Polyline minCGArea3;
+    @FXML
+    private Polyline minCGArea4;
+    @FXML
+    private Polyline minCGArea5;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -243,6 +266,7 @@ public class TopViewController implements Initializable {
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.disFromCentre.addListener((observable, oldValue, newValue) -> relocateObstacle());
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> updateLabel());
+        MainController.themeProperty.addListener((observable, oldValue, newValue) -> setVisualColor(newValue.intValue()));
         //variables
         AnchorPane topDownRunwayPane = getTopDownRunwayPane();
         Pane compass = getCompass();
@@ -261,6 +285,54 @@ public class TopViewController implements Initializable {
         } else{
             updateLabel();
         }
+
+        setVisualColor(1);
+    }
+
+    public void setVisualColor(int i){
+        //1 = default
+        //2 = red-green
+        //3 = blue-yellow
+        Paint gradedArea = Paint.valueOf(i == 1? "#dddddd":
+                i == 2? "#EAEAEA": //rgb(237,232,233)
+                        "#E2E2E2"); //rgb(227,223,239)
+        Paint stopway = Paint.valueOf(i == 1? "#fcf264":
+                i == 2? "#FBCB92":  //rgb(225,210,155)
+                        "#EFA5A5");  //rgb(228, 165, 174)
+        Paint clearway = Paint.valueOf(i == 1? "#64cd72":
+                i == 2? "#35C9FF":  //rgb(170,1134,139)
+                        "#739DCC");  //rgb(117, 160, 172)
+        Paint obstacle = Paint.valueOf(i == 1? "#f53e3e":
+                "#FF0000");          //rgb(141,126,50)
+                                    //rgb(233,56,36)
+        Paint displacedThreshold = Paint.valueOf(i == 1? "#0000ff":
+                i == 2? "#9052FF":  //rgb(42,119,234)
+                        "#00F5FF");  //rgb(143,236,252)
+        gradedAreaLegend.setFill(gradedArea);
+        stopwayLegend.setFill(stopway);
+        clearwayLegend.setFill(clearway);
+        obstacleLegend.setFill(obstacle);
+        displacedThresholdLegend.setFill(displacedThreshold);
+
+        minCGArea.setFill(gradedArea);
+        minCGArea1.setFill(gradedArea);
+        minCGArea2.setFill(gradedArea);
+        minCGArea3.setFill(gradedArea);
+        minCGArea4.setFill(gradedArea);
+        minCGArea5.setFill(gradedArea);
+
+        stopwayL.setFill(stopway);
+        stopwayR.setFill(stopway);
+
+        clearwayL.setFill(clearway);
+        clearwayR.setFill(clearway);
+
+        obstacleBlock.setFill(obstacle);
+
+        displacedThresholdL.setFill(displacedThreshold);
+        displacedThresholdL.setStroke(displacedThreshold);
+        displacedThresholdR.setFill(displacedThreshold);
+        displacedThresholdR.setStroke(displacedThreshold);
     }
 
     //function to update labels and line in top view

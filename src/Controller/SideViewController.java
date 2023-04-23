@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -198,6 +199,17 @@ public class SideViewController {
     @FXML
     private Label scaleUnit;
 
+    @FXML
+    private Rectangle stopwayLegend;
+    @FXML
+    private Rectangle clearwayLegend;
+    @FXML
+    private Rectangle obstacleLegend;
+    @FXML
+    private Rectangle displacedThresholdLegend;
+    @FXML
+    private Rectangle minCGArea;
+
 
     @FXML
     private void initialize() {
@@ -222,6 +234,8 @@ public class SideViewController {
         MainController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
             setUpAlsTocs(MainController.getObstacleSelected(),MainController.getPhysRunwaySelected().getLogicalRunways().get(0));
         });
+        MainController.themeProperty.addListener((observable, oldValue, newValue) -> setVisualColor(newValue.intValue()));
+
         MainController.obstacleHeight.addListener((observable, oldValue, newValue) -> {setUpAlsTocs(MainController.getObstacleSelected(), MainController.getPhysRunwaySelected().getLogicalRunways().get(0));});
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> {updateLabel(new ActionEvent());});
         Utility.initializeZoom(sideOnPane);
@@ -236,6 +250,48 @@ public class SideViewController {
         } else{
             updateLabel(new ActionEvent());
         }
+        setVisualColor(1);
+    }
+
+    public void setVisualColor(int i){
+        //1 = default
+        //2 = red-green
+        //3 = blue-yellow
+        Paint gradedArea = Paint.valueOf(i == 1? "#dddddd":
+                i == 2? "#EAEAEA": //rgb(237,232,233)
+                        "#E2E2E2"); //rgb(227,223,239)
+        Paint stopway = Paint.valueOf(i == 1? "#fcf264":
+                i == 2? "#FBCB92":  //rgb(225,210,155)
+                        "#EFA5A5");  //rgb(228, 165, 174)
+        Paint clearway = Paint.valueOf(i == 1? "#64cd72":
+                i == 2? "#35C9FF":  //rgb(170,1134,139)
+                        "#739DCC");  //rgb(117, 160, 172)
+        Paint obstacle = Paint.valueOf(i == 1? "#f53e3e":
+                "#FF0000");          //rgb(141,126,50)
+        //rgb(233,56,36)
+        Paint displacedThreshold = Paint.valueOf(i == 1? "#0000ff":
+                i == 2? "#9052FF":  //rgb(42,119,234)
+                        "#00F5FF");  //rgb(143,236,252)
+        stopwayLegend.setFill(stopway);
+        clearwayLegend.setFill(clearway);
+        obstacleLegend.setFill(obstacle);
+        displacedThresholdLegend.setFill(displacedThreshold);
+
+        minCGArea.setFill(gradedArea);
+
+        stopwayL.setFill(stopway);
+        stopwayR.setFill(stopway);
+
+        clearwayL.setFill(clearway);
+        clearwayR.setFill(clearway);
+
+        alsSlope.setFill(obstacle);
+        tocsSlope.setFill(obstacle);
+
+        displacedThresholdL.setFill(displacedThreshold);
+        displacedThresholdL.setStroke(displacedThreshold);
+        displacedThresholdR.setFill(displacedThreshold);
+        displacedThresholdR.setStroke(displacedThreshold);
     }
 
     @FXML

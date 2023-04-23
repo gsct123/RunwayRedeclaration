@@ -190,6 +190,12 @@ public class MainController implements Initializable {
     private MenuItem generateReport;
     @FXML
     private MenuItem exportAirport;
+    @FXML
+    private MenuItem defaultTheme;
+    @FXML
+    private MenuItem rgTheme;
+    @FXML
+    private MenuItem byTheme;
 
     //property to be used in Visualisation classes
     public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -201,6 +207,7 @@ public class MainController implements Initializable {
     public static DoubleProperty valueChanged = new SimpleDoubleProperty();
     public static DoubleProperty obstacleHeight = new SimpleDoubleProperty();
     public static DoubleProperty obstacleWidth = new SimpleDoubleProperty();
+    public static IntegerProperty themeProperty = new SimpleIntegerProperty();
 
     //list of airports and obstacles from files
     public static HashMap<String, Airport> airportMap = new HashMap<>();
@@ -390,6 +397,31 @@ public class MainController implements Initializable {
     public static boolean beforeCalculation = false;
 
     //event handlers
+
+    @FXML
+    public void toDefaultTheme(ActionEvent event){
+        themeProperty.set(1);
+        defaultTheme.setDisable(true);
+        rgTheme.setDisable(false);
+        byTheme.setDisable(false);
+    }
+
+    @FXML
+    public void toRGTheme(ActionEvent event){
+        themeProperty.set(2);
+        defaultTheme.setDisable(false);
+        rgTheme.setDisable(true);
+        byTheme.setDisable(false);
+    }
+
+    @FXML
+    public void toBYTheme(ActionEvent event){
+        themeProperty.set(3);
+        defaultTheme.setDisable(false);
+        rgTheme.setDisable(false);
+        byTheme.setDisable(true);
+    }
+
     @FXML
     public void loadAboutProject(ActionEvent event){
         resetInactivityTimer();

@@ -14,21 +14,21 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
+<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
    <children>
-      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#d9e8ff" height="627.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
+      <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="627.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
       <Pane fx:id="dragPane" layoutY="151.0" prefHeight="388.0" prefWidth="804.0">
          <children>
             <AnchorPane fx:id="topDownRunwayPane" prefHeight="400.0" prefWidth="600.0">
                <children>
-                  <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#a4a4a4" height="200.0" layoutY="105.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4a4a4" height="280.0" layoutX="192.0" layoutY="66.0" stroke="TRANSPARENT" strokeType="INSIDE" width="411.0" />
+                  <Rectangle fx:id="minCGArea" arcHeight="5.0" fill="#dddddd" height="200.0" layoutY="105.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />
+                  <Rectangle fx:id="minCGArea1" arcHeight="5.0" arcWidth="5.0" fill="#dddddd" height="280.0" layoutX="192.0" layoutY="66.0" stroke="TRANSPARENT" strokeType="INSIDE" width="411.0" />
                   <Rectangle fx:id="clearwayR" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="700.0" layoutY="159.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="50.0" />
                   <Rectangle fx:id="clearwayL" arcHeight="5.0" fill="#5ff552" height="93.0" layoutX="50.0" layoutY="159.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="50.0" />
                   <Rectangle fx:id="stopwayR" arcHeight="5.0" fill="#fcf347" height="93.0" layoutX="700.0" layoutY="159.0" stroke="#ffdd5400" strokeType="INSIDE" width="25.0" />
                   <Rectangle fx:id="stopwayL" arcHeight="5.0" fill="#fcf347" height="93.0" layoutX="75.0" layoutY="159.0" stroke="#ffff0000" strokeType="INSIDE" width="25.0" />
                   <Rectangle fx:id="runway" arcHeight="5.0" fill="#0f0f0f" height="93.0" layoutX="100.0" layoutY="159.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
-                  <Polyline fill="#a4a4a4" layoutX="180.0" layoutY="357.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Polyline fx:id="minCGArea5" fill="#dddddd" layoutX="180.0" layoutY="357.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
                   <Line endX="-100.43783569335938" layoutX="289.0" layoutY="205.0" startX="-109.85165405273438" stroke="WHITE" />
                   <Line endX="-100.43783569335938" layoutX="310.0" layoutY="205.0" startX="-109.85165405273438" stroke="WHITE" />
                   <Line endX="-100.43783569335938" layoutX="330.0" layoutY="205.0" startX="-109.85165405273438" stroke="WHITE" />
@@ -51,9 +51,9 @@
                   <Line endX="-100.43783569335938" layoutX="674.0" layoutY="205.0" startX="-109.85165405273438" stroke="WHITE" />
                   <Line endX="-100.43783569335938" layoutX="694.0" layoutY="205.0" startX="-109.85165405273438" stroke="WHITE" />
                   <Line endX="-100.43783569335938" layoutX="715.0" layoutY="205.0" startX="-109.85165405273438" stroke="WHITE" />
-                  <Polyline fill="#a4a4a4" layoutX="643.0" layoutY="131.0" points="-40.8277587890625, -11.999969482421875, -40.8277587890625, -11.999969482421875, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                  <Polyline fill="#a4a4a4" layoutX="180.0" layoutY="131.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -41.0, -11.999969482421875" stroke="TRANSPARENT" strokeType="INSIDE" />
-                  <Polyline fill="#a4a4a4" layoutX="643.0" layoutY="357.0" points="-2.0, -59.0, -2.0, -52.0, -40.8277587890625, -12.5, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Polyline fx:id="minCGArea2" fill="#dddddd" layoutX="643.0" layoutY="131.0" points="-40.8277587890625, -11.999969482421875, -40.8277587890625, -11.999969482421875, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Polyline fx:id="minCGArea3" fill="#dddddd" layoutX="180.0" layoutY="131.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -41.0, -11.999969482421875" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Polyline fx:id="minCGArea4" fill="#dddddd" layoutX="643.0" layoutY="357.0" points="-2.0, -59.0, -2.0, -52.0, -40.8277587890625, -12.5, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
                   <Line endX="30.0" layoutX="110.0" layoutY="185.0" stroke="WHITE" strokeWidth="2.0" />
                   <Line endX="30.0" layoutX="110.0" layoutY="189.0" stroke="WHITE" strokeWidth="2.0" />
                   <Line endX="30.0" layoutX="110.0" layoutY="193.0" stroke="WHITE" strokeWidth="2.0" />
@@ -227,28 +227,28 @@
             </AnchorPane>
          </children>
       </Pane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcf347" height="12.0" layoutX="635.0" layoutY="56.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5ff552" height="12.0" layoutX="635.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f53e3e" height="12.0" layoutX="635.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="12.0" layoutX="635.0" layoutY="122.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="stopwayLegend" arcHeight="5.0" arcWidth="5.0" fill="#fcf347" height="12.0" layoutX="635.0" layoutY="56.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="clearwayLegend" arcHeight="5.0" arcWidth="5.0" fill="#5ff552" height="12.0" layoutX="635.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="obstacleLegend" arcHeight="5.0" arcWidth="5.0" fill="#f53e3e" height="12.0" layoutX="635.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="displacedThresholdLegend" arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="12.0" layoutX="635.0" layoutY="122.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Label layoutX="172.0" layoutY="573.0" text="Landing/Taking Off Direction">
          <font>
-            <Font name="Verdana Bold" size="15.0" />
+            <Font name="Verdana Bold" size="13.0" />
          </font>
       </Label>
       <Polygon fill="#0f0f0f" layoutX="67.0" layoutY="604.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" rotate="180.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <Line endX="499.5" endY="-70.64111328125" layoutX="-16.0" layoutY="653.0" startX="454.0" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Line endX="499.5" endY="-70.64111328125" layoutX="-46.0" layoutY="653.0" startX="454.0" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="432.5" endY="-70.64111328125" layoutX="-276.0" layoutY="653.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="635.0" layoutY="34.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4a4a4" height="12.0" layoutX="635.0" layoutY="12.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="gradedAreaLegend" arcHeight="5.0" arcWidth="5.0" fill="#dddddd" height="12.0" layoutX="635.0" layoutY="12.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Label layoutX="660.0" layoutY="12.0" prefHeight="12.0" prefWidth="130.0" style="-fx-text-fill: black;" text="Clear and Graded Area" wrapText="true">
          <font>
             <Font name="Verdana Bold Italic" size="10.0" />
          </font>
       </Label>
-      <Rectangle fx:id="scaleLength" fill="WHITE" height="7.0" layoutX="520.0" layoutY="578.0" stroke="#3c3c3c" strokeType="INSIDE" width="150.0" />
-      <Rectangle fx:id="scaleStart" fill="#3c3c3c" height="7.0" layoutX="520.0" layoutY="578.0" stroke="TRANSPARENT" strokeType="INSIDE" width="50.0" />
-      <Rectangle fx:id="scaleEnd" fill="#3c3c3c" height="7.0" layoutX="620.0" layoutY="578.0" stroke="TRANSPARENT" strokeType="INSIDE" width="50.0" />
+      <Rectangle fx:id="scaleLength" fill="WHITE" height="7.0" layoutX="510.0" layoutY="578.0" stroke="#3c3c3c" strokeType="INSIDE" width="150.0" />
+      <Rectangle fx:id="scaleStart" fill="#3c3c3c" height="7.0" layoutX="510.0" layoutY="578.0" stroke="TRANSPARENT" strokeType="INSIDE" width="50.0" />
+      <Rectangle fx:id="scaleEnd" fill="#3c3c3c" height="7.0" layoutX="610.0" layoutY="578.0" stroke="TRANSPARENT" strokeType="INSIDE" width="50.0" />
       <Label layoutX="661.0" layoutY="34.0" prefHeight="12.0" prefWidth="130.0" style="-fx-text-fill: black;" text="Threshold" wrapText="true">
          <font>
             <Font name="Verdana Bold Italic" size="10.0" />
@@ -274,32 +274,32 @@
             <Font name="Verdana Bold Italic" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scaleLabel" layoutX="554.0" layoutY="591.0" style="-fx-text-fill: black;" text="Horizontal Scale">
+      <Label fx:id="scaleLabel" layoutX="544.0" layoutY="591.0" style="-fx-text-fill: black;" text="Horizontal Scale">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scale0" layoutX="517.0" layoutY="558.0" style="-fx-text-fill: black;" text="0">
+      <Label fx:id="scale0" layoutX="507.0" layoutY="558.0" style="-fx-text-fill: black;" text="0">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scale500" layoutX="563.0" layoutY="558.0" style="-fx-text-fill: black;" text="500">
+      <Label fx:id="scale500" layoutX="553.0" layoutY="558.0" style="-fx-text-fill: black;" text="500">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scale1000" layoutX="607.0" layoutY="558.0" style="-fx-text-fill: black;" text="1000">
+      <Label fx:id="scale1000" layoutX="597.0" layoutY="558.0" style="-fx-text-fill: black;" text="1000">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scale1500" layoutX="658.0" layoutY="558.0" style="-fx-text-fill: black;" text="1500">
+      <Label fx:id="scale1500" layoutX="648.0" layoutY="558.0" style="-fx-text-fill: black;" text="1500">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="scaleUnit" layoutX="681.0" layoutY="576.0" style="-fx-text-fill: black;" text="m">
+      <Label fx:id="scaleUnit" layoutX="671.0" layoutY="576.0" style="-fx-text-fill: black;" text="m">
          <font>
             <Font name="Verdana" size="10.0" />
          </font>
@@ -472,13 +472,13 @@
             </LinearGradient>
          </fill>
       </Circle>
-      <Label layoutX="276.0" layoutY="46.0" text="Landing/Taking Off Direction">
+      <Label layoutX="276.0" layoutY="47.0" text="Landing/Taking Off Direction">
          <font>
-            <Font name="Verdana Bold" size="15.0" />
+            <Font name="Verdana Bold" size="13.0" />
          </font>
       </Label>
-      <Polygon fill="#0f0f0f" layoutX="560.0" layoutY="76.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" stroke="TRANSPARENT" strokeType="INSIDE" />
-      <Line endX="499.5" endY="-70.64111328125" layoutX="88.0" layoutY="126.0" startX="450.70379638671875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Polygon fill="#0f0f0f" layoutX="530.0" layoutY="76.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" stroke="TRANSPARENT" strokeType="INSIDE" />
+      <Line endX="499.5" endY="-70.64111328125" layoutX="58.0" layoutY="126.0" startX="450.70379638671875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="432.5" endY="-70.64111328125" layoutX="-172.0" layoutY="126.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
    </children>
 </AnchorPane>

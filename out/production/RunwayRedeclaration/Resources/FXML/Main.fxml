@@ -62,6 +62,13 @@
                               <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
                           </items>
                       </Menu>
+                  <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="View">
+                     <items>
+                        <MenuItem fx:id="defaultTheme" mnemonicParsing="false" onAction="#toDefaultTheme" text="Default" />
+                        <MenuItem fx:id="rgTheme" mnemonicParsing="false" onAction="#toRGTheme" text="Red-Green Colour Blind" />
+                        <MenuItem fx:id="byTheme" mnemonicParsing="false" onAction="#toBYTheme" text="Blue-Yellow Colour Blind" />
+                     </items>
+                  </Menu>
                   </menus>
               </MenuBar>
               <HBox prefHeight="75.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
