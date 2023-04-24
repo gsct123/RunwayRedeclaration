@@ -23,51 +23,47 @@
     <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="library" exported="" name="charm-glisten-6.0.2" level="project" />
     <orderEntry type="library" exported="" name="junit.jupiter" level="project" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://$USER_HOME$/javafx-sdk-19.0.2.1/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <NATIVE>
-          <root url="file://$USER_HOME$/javafx-sdk-19.0.2.1/lib" />
-        </NATIVE>
-        <SOURCES />
-        <jarDirectory url="file://$USER_HOME$/javafx-sdk-19.0.2.1/lib" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/controlsfx-11.1.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://$USER_HOME$/Desktop/javafx-sdk-20/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <NATIVE>
-          <root url="file://$USER_HOME$/Desktop/javafx-sdk-20/lib" />
-        </NATIVE>
-        <SOURCES />
-        <jarDirectory url="file://$USER_HOME$/Desktop/javafx-sdk-20/lib" recursive="false" />
-      </library>
-    </orderEntry>
     <orderEntry type="library" exported="" name="charm-glisten-6.0.21" level="project" />
     <orderEntry type="library" exported="" name="lib1" level="project" />
     <orderEntry type="library" exported="" name="controlsfx-11.1.2" level="project" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/itextpdf-5.5.9.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/itextpdf-5.5.9.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/charm-glisten-4.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/controlsfx-11.1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Downloads/javafx-sdk-19.0.2.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <NATIVE>
+          <root url="file://$USER_HOME$/Downloads/javafx-sdk-19.0.2.1/lib" />
+        </NATIVE>
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/Downloads/javafx-sdk-19.0.2.1/lib" recursive="false" />
       </library>
     </orderEntry>
   </component>
