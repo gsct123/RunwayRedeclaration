@@ -217,6 +217,8 @@ public class MainController implements Initializable {
     private MenuItem rgTheme;
     @FXML
     private MenuItem byTheme;
+    @FXML
+    private MenuItem Help;
 
     //property to be used in Visualisation classes
     public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
@@ -453,6 +455,22 @@ public class MainController implements Initializable {
             Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
         } catch (IOException | URISyntaxException ignored) {}
     }
+
+    @FXML
+    public void loadHelpProject(ActionEvent event){
+        resetInactivityTimer();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Help.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Help & Documentation");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Cannot access help & documentation");
+        }
+    }
+
 
     @FXML
     public void goUserManager(ActionEvent event) throws Exception {
