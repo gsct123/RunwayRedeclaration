@@ -66,6 +66,22 @@ import java.util.*;
 public class MainController implements Initializable {
     private static final int INACTIVITY_TIMEOUT = 3 * 60* 1000; // 3 seconds in milliseconds
     @FXML
+    private MenuItem RotateRCmd;
+    @FXML
+    private MenuItem RotateLCmd;
+    @FXML
+    private MenuItem upCmd;
+    @FXML
+    private MenuItem downCmd;
+    @FXML
+    private MenuItem leftCmd;
+    @FXML
+    private MenuItem rightCmd;
+    @FXML
+    private MenuItem ZoomInCmd;
+    @FXML
+    private MenuItem ZoomOutCmd;
+    @FXML
     private MenuItem regenerationReport;
     @FXML
     private MenuItem regenerationReport1;
@@ -1239,6 +1255,15 @@ public class MainController implements Initializable {
         KeyCombination EXPORT_TOP_VIEW_KEY = new KeyCodeCombination(KeyCode.E,KeyCombination.ALT_DOWN,KeyCombination.SHORTCUT_DOWN);
         KeyCombination EXPORT_SIMULTANEOUS_VIEW_KEY = new KeyCodeCombination(KeyCode.E,KeyCombination.ALT_DOWN,KeyCombination.SHIFT_DOWN,KeyCombination.SHORTCUT_DOWN);
         KeyCombination EXPORT_REPORT_KEY = new KeyCodeCombination(KeyCode.E,KeyCombination.SHIFT_DOWN);
+        KeyCombination ZOOM_IN_KEY = new KeyCodeCombination(KeyCode.EQUALS,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination ZOOM_OUT_KEY = new KeyCodeCombination(KeyCode.MINUS,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination ROTATE_RIGHT_KEY = new KeyCodeCombination(KeyCode.COMMA, KeyCombination.SHORTCUT_DOWN);
+        KeyCombination ROTATE_LEFT_KEY = new KeyCodeCombination(KeyCode.PERIOD, KeyCombination.SHORTCUT_DOWN);
+        KeyCombination DRAG_UP_KEY = new KeyCodeCombination(KeyCode.UP,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination DRAG_DOWN_KEY = new KeyCodeCombination(KeyCode.DOWN,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination DRAG_LEFT_KEY = new KeyCodeCombination(KeyCode.LEFT,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination DRAG_RIGHT_KEY = new KeyCodeCombination(KeyCode.RIGHT,KeyCombination.SHORTCUT_DOWN);
+
 
         //reset View
         resetViewCmd.setAccelerator(RESET_VIEW_KEY);
@@ -1283,7 +1308,75 @@ public class MainController implements Initializable {
         regenerationReport1.setAccelerator(EXPORT_TOP_VIEW_KEY);
         regenerationReport2.setAccelerator(EXPORT_SIMULTANEOUS_VIEW_KEY);
         generateReport.setAccelerator(EXPORT_REPORT_KEY);
+
+        Pane topPane = topViewController.getTopDownRunwayPane();
+        Pane sidePane = sideViewController.getSideOnPane();
+        Pane topDragPane = topViewController.getDragPane();
+        Pane sideDragPane = sideViewController.getDragPane();
+        ZoomInCmd.setAccelerator(ZOOM_IN_KEY);
+        ZoomInCmd.setOnAction(actionEvent -> {
+            double zoomInAmount = +0.05;
+            double zoomInLimit = 2;
+            if (topPane.getScaleX() + zoomInAmount < zoomInLimit){
+                setPaneScale(zoomInAmount);
+            }
+        });
+
+        ZoomOutCmd.setAccelerator(ZOOM_OUT_KEY);
+        ZoomOutCmd.setOnAction(actionEvent -> {
+            double zoomOutAmount = -0.05;
+            double zoomOutLimit = 0.5;
+
+            if (topPane.getScaleX() + zoomOutAmount > zoomOutLimit){
+                setPaneScale(zoomOutAmount);
+            }
+        });
+
+        RotateLCmd.setAccelerator(ROTATE_LEFT_KEY);
+        RotateLCmd.setOnAction(actionEvent -> {
+            topPane.setRotate(topPane.getRotate()%360+5);
+        });
+        RotateRCmd.setAccelerator(ROTATE_RIGHT_KEY);
+        RotateRCmd.setOnAction(actionEvent -> {
+            topPane.setRotate(topPane.getRotate()%360-5);
+        });
+
+        int dragSens = 5;
+        upCmd.setAccelerator(DRAG_UP_KEY);
+        upCmd.setOnAction(actionEvent -> {
+            setPaneTranslation(0,-dragSens);
+        });
+        downCmd.setAccelerator(DRAG_DOWN_KEY);
+        downCmd.setOnAction(actionEvent -> {
+            setPaneTranslation(0,+dragSens);
+        });
+        leftCmd.setAccelerator(DRAG_LEFT_KEY);
+        leftCmd.setOnAction(actionEvent -> {
+            setPaneTranslation(-dragSens,0);
+        });
+        rightCmd.setAccelerator(DRAG_RIGHT_KEY);
+        rightCmd.setOnAction(actionEvent -> {
+            setPaneTranslation(+dragSens,0);
+        });
     }
+
+    private void setPaneScale(double d){
+        Pane topPane = topViewController.getTopDownRunwayPane();
+        Pane sidePane = sideViewController.getSideOnPane();
+        topPane.setScaleX(topPane.getScaleX()+d);
+        topPane.setScaleY(topPane.getScaleY()+d);
+        sidePane.setScaleX(sidePane.getScaleX()+d);
+        sidePane.setScaleY(sidePane.getScaleY()+d);
+    }
+    private void setPaneTranslation(double x,double y){
+        Pane topDragPane = topViewController.getDragPane();
+        Pane sideDragPane = sideViewController.getDragPane();
+        topDragPane.setTranslateX(topDragPane.getTranslateX() + x);
+        sideDragPane.setTranslateX(sideDragPane.getTranslateX() + x);
+        topDragPane.setTranslateY(sideDragPane.getTranslateY() + y);
+        sideDragPane.setTranslateY(sideDragPane.getTranslateY() + y);
+    }
+
 
 
 }

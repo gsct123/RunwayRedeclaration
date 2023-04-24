@@ -64,6 +64,14 @@
                         <MenuItem fx:id="resetCmd" mnemonicParsing="false" text="Reset Calculator" />
                         <MenuItem fx:id="calcBDCmd" mnemonicParsing="false" text="Breakdown" />
                         <MenuItem fx:id="tabCmd" mnemonicParsing="false" text="Switch Tab" />
+                        <MenuItem fx:id="ZoomInCmd" mnemonicParsing="false" text="Zoom In" />
+                        <MenuItem fx:id="ZoomOutCmd" mnemonicParsing="false" text="Zoom Out" />
+                        <MenuItem fx:id="RotateRCmd" mnemonicParsing="false" text="Rotate Left" />
+                        <MenuItem fx:id="RotateLCmd" mnemonicParsing="false" text="Rotate Right" />
+                        <MenuItem fx:id="upCmd" mnemonicParsing="false" text="Drag Up" />
+                        <MenuItem fx:id="downCmd" mnemonicParsing="false" text="Drag Down" />
+                        <MenuItem fx:id="leftCmd" mnemonicParsing="false" text=" Drag Left" />
+                        <MenuItem fx:id="rightCmd" mnemonicParsing="false" text="Drag Right" />
                     </items>
                   </Menu>
                       <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
