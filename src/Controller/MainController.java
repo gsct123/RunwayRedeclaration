@@ -1263,6 +1263,9 @@ public class MainController implements Initializable {
         KeyCombination DRAG_DOWN_KEY = new KeyCodeCombination(KeyCode.DOWN,KeyCombination.SHORTCUT_DOWN);
         KeyCombination DRAG_LEFT_KEY = new KeyCodeCombination(KeyCode.LEFT,KeyCombination.SHORTCUT_DOWN);
         KeyCombination DRAG_RIGHT_KEY = new KeyCodeCombination(KeyCode.RIGHT,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination THEME_1_KEY = new KeyCodeCombination(KeyCode.F1);
+        KeyCombination THEME_2_KEY = new KeyCodeCombination(KeyCode.F2);
+        KeyCombination THEME_3_KEY = new KeyCodeCombination(KeyCode.F3);
 
 
         //reset View
@@ -1310,9 +1313,6 @@ public class MainController implements Initializable {
         generateReport.setAccelerator(EXPORT_REPORT_KEY);
 
         Pane topPane = topViewController.getTopDownRunwayPane();
-        Pane sidePane = sideViewController.getSideOnPane();
-        Pane topDragPane = topViewController.getDragPane();
-        Pane sideDragPane = sideViewController.getDragPane();
         ZoomInCmd.setAccelerator(ZOOM_IN_KEY);
         ZoomInCmd.setOnAction(actionEvent -> {
             double zoomInAmount = +0.05;
@@ -1358,6 +1358,14 @@ public class MainController implements Initializable {
         rightCmd.setOnAction(actionEvent -> {
             setPaneTranslation(+dragSens,0);
         });
+
+        defaultTheme.setDisable(true);
+        defaultTheme.setAccelerator(THEME_1_KEY);
+        defaultTheme.setOnAction(this::toDefaultTheme);
+        rgTheme.setAccelerator(THEME_2_KEY);
+        rgTheme.setOnAction(this::toRGTheme);
+        byTheme.setAccelerator(THEME_3_KEY);
+        byTheme.setOnAction(this::toBYTheme);
     }
 
     private void setPaneScale(double d){
