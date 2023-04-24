@@ -462,7 +462,7 @@
            <children>
                <ScrollPane fx:id="notiScrollPane" fitToHeight="true" fitToWidth="true" hvalue="1.0" layoutY="22.0" prefHeight="22.0" style="-fx-background-color: #212f45;">
                    <content>
-                       <VBox fx:id="notiVBox" prefWidth="1220.0">
+                       <VBox fx:id="notiVBox" prefWidth="1220.0" style="-fx-background-color: #101824;">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor></VBox>

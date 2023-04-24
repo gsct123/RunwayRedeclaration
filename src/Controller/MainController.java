@@ -36,9 +36,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -320,6 +318,7 @@ public class MainController implements Initializable {
             });
 
             airportManager.setOnAction(actionEvent -> {
+                addNotificationLabel("Status: Go to Airport Manager");
                 inactivityTimer.cancel();
                 try {
                     Main.getStage().close();
@@ -330,7 +329,7 @@ public class MainController implements Initializable {
             });
 
             if(Main.isReset()){
-                setNotificationLabel("Status: Options Reset\t " + Utility.getDateTimeNow());
+                addNotificationLabel("Status: Options Reset");
             }
 
             exportMenu.setVisible(true);
@@ -446,6 +445,7 @@ public class MainController implements Initializable {
         defaultTheme.setDisable(true);
         rgTheme.setDisable(false);
         byTheme.setDisable(false);
+        addNotificationLabel("Status: Theme set to Default");
     }
 
     @FXML
@@ -454,6 +454,7 @@ public class MainController implements Initializable {
         defaultTheme.setDisable(false);
         rgTheme.setDisable(true);
         byTheme.setDisable(false);
+        addNotificationLabel("Status: Theme set to Red Green");
     }
 
     @FXML
@@ -462,6 +463,7 @@ public class MainController implements Initializable {
         defaultTheme.setDisable(false);
         rgTheme.setDisable(false);
         byTheme.setDisable(true);
+        addNotificationLabel("Status: Theme set to Blue Yellow");
     }
 
     @FXML
@@ -493,6 +495,7 @@ public class MainController implements Initializable {
         inactivityTimer.cancel();
         Main.getStage().close();
         new UserManager(Main.getUsername()).start(new Stage());
+        addNotificationLabel("Status: Go to User Manager");
     }
 
     @FXML
@@ -548,6 +551,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void exportSideView(ActionEvent event) {
+        addNotificationLabel("Status: Export Side View");
         refreshTab();
         inactivityTimer.cancel();
         javafx.scene.Node contentNode = sideViewTab.getContent();
@@ -557,6 +561,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void exportTopView(ActionEvent event){
+        addNotificationLabel("Status: Export Top View");
         refreshTab();
         inactivityTimer.cancel();
         javafx.scene.Node contentNode = topViewTab.getContent();
@@ -566,6 +571,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void exportSimulView(ActionEvent event){
+        addNotificationLabel("Status: Export Simultaneous View");
         refreshTab();
         inactivityTimer.cancel();
         javafx.scene.Node contentNode = simultaneousViewTab.getContent();
@@ -582,6 +588,7 @@ public class MainController implements Initializable {
         } catch (NumberFormatException exception) {
             //display error message
             new Error().showError(distanceThresholdTextField, "Invalid input for distance from threshold\nHint: please input a numerical value", ""+getObstacleSelected().getDistFThreshold());
+            addNotificationLabel("Error: Invalid input for distance from threshold! Hint: please input a numerical value");
         }
     }
 
@@ -594,6 +601,7 @@ public class MainController implements Initializable {
             disFromCentre.set(distFromCentreLine);
         } catch (NumberFormatException exception){
             new Error().showError(clDistTextField, "Invalid input for distance from centre line\nHint: please input a numerical value greater or equal to 0", ""+getObstacleSelected().getDirFromCentre());
+            addNotificationLabel("Error: Invalid input for distance from centre line\nHint: please input a numerical value greater or equal to 0");
         }
     }
 
@@ -606,6 +614,7 @@ public class MainController implements Initializable {
             obstacleHeight.set(height);
         } catch (NumberFormatException e){
             new Error().showError(obstacleHeightField, "Invalid obstacle height, please input a numerical value greater than 0", ""+getObstacleSelected().getHeight());
+            addNotificationLabel("Error: Invalid obstacle height, please input a numerical value greater than 0");
         }
     }
 
@@ -618,6 +627,7 @@ public class MainController implements Initializable {
             obstacleWidth.set(width);
         } catch (NumberFormatException e){
             new Error().showError(obstacleWidthField, "Invalid obstacle width, please input a numerical value greater than 0", ""+getObstacleSelected().getWidth());
+            addNotificationLabel("Error: Invalid obstacle width, please input a numerical value greater than 0");
         }
     }
 
@@ -644,12 +654,13 @@ public class MainController implements Initializable {
         calculationBreakdown.setDisable(false);
         generateReport.setDisable(false);
         valueChanged.set(valueChanged.doubleValue() == 1? 0: 1);
-        setNotificationLabel( "Status: Calculation performed\t " + Utility.getDateTimeNow());
+        addNotificationLabel( "Status: Calculation performed");
         beforeCalculation = false;
     }
 
     @FXML
     public void printReport(ActionEvent action) throws DocumentException, IOException {
+        addNotificationLabel("Status: Print report");
         refreshTab();
         inactivityTimer.cancel();
         new PDFGenerator(getAirportSelected(), getObstacleSelected(), getPhysRunwaySelected(), topViewTab.getContent(), sideViewTab.getContent(), simultaneousViewTab.getContent());
@@ -663,8 +674,10 @@ public class MainController implements Initializable {
             double stripEnd = Double.parseDouble(stripEndTextField.getText().trim());
             if(stripEnd < 0 || stripEnd > 100){throw new NumberFormatException();}
             PhysicalRunway.setStripEnd(stripEnd);
+            addNotificationLabel("Status: Strip End Value Changed to " + stripEnd);
         } catch (NumberFormatException e){
             new Error().showError(stripEndTextField, "Invalid input for strip end \nHint: please input a numerical value within this range 0-100", "60");
+            addNotificationLabel("Error: Invalid input for strip end! Hint: please input a numerical value within this range 0-100");
         }
     }
 
@@ -677,8 +690,10 @@ public class MainController implements Initializable {
                 throw new NumberFormatException();
             }
             PhysicalRunway.setBlastProtection(blastProtection);
+            addNotificationLabel("Status: Blast Protection Value Changed to " + blastProtection);
         } catch (NumberFormatException e){
             new Error().showError(blastProtectionField, "Invalid input for blast protection\nHint: please input a numerical value within this range: 300-500 (for safety purpose)", "300");
+            addNotificationLabel("Error: Invalid input for blast protection! Hint: please input a numerical value within this range: 300-500 (for safety purpose)");
         }
     }
 
@@ -691,8 +706,10 @@ public class MainController implements Initializable {
                 throw new NumberFormatException();
             }
             PhysicalRunway.setResa(resa);
+            addNotificationLabel("Status: RESA Value Changed to " + resa);
         } catch (NumberFormatException e){
             new Error().showError(resaTextField, "Invalid input for RESA\nHint: please input a numerical value within this range 240-500 (for safety purpose)", "240");
+            addNotificationLabel("Error: Invalid input for RESA! Hint: please input a numerical value within this range 240-500 (for safety purpose)");
         }
     }
 
@@ -1126,12 +1143,12 @@ public class MainController implements Initializable {
     }
 
     //add notification into history and set text into notification label
-    public void setNotificationLabel(String string) {
-        Label label = new Label(string);
+    public void addNotificationLabel(String string) {
+        Label label = new Label(string + "\t\t"+ Utility.getDateTimeNow());
         //label.setPrefHeight(40);
-        label.setTextFill(Color.RED);
+        label.setTextFill(Color.rgb(237, 92, 92));
         label.setPadding(new Insets(5));
-        Font font = Font.font("Verdana", FontWeight.MEDIUM, FontPosture.REGULAR,12);
+        Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR,12);
         label.setFont(font);
         getNotiVBox().getChildren().add(label);
         getNotificationLabel().setText(string);
@@ -1181,7 +1198,7 @@ public class MainController implements Initializable {
         }catch (Exception e){
             System.out.println(e);
         }
-        setNotificationLabel("Status: View Reset\t " + Utility.getDateTimeNow());
+        addNotificationLabel("Status: View Reset");
     }
 
     int clickCount = 0;
