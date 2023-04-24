@@ -77,10 +77,13 @@
                         <MenuItem fx:id="defaultTheme" mnemonicParsing="false" onAction="#toDefaultTheme" text="Default" />
                         <MenuItem fx:id="rgTheme" mnemonicParsing="false" onAction="#toRGTheme" text="Red-Green Colour Blind" />
                         <MenuItem fx:id="byTheme" mnemonicParsing="false" onAction="#toBYTheme" text="Blue-Yellow Colour Blind" />
+                        <MenuItem disable="true" mnemonicParsing="false" text="Zoom (Ctrl+Scroll)" />
                         <MenuItem fx:id="ZoomInCmd" mnemonicParsing="false" text="Zoom In" />
                         <MenuItem fx:id="ZoomOutCmd" mnemonicParsing="false" text="Zoom Out" />
+                        <MenuItem disable="true" mnemonicParsing="false" text="Rotate (Shift+LeftClick)" />
                         <MenuItem fx:id="RotateRCmd" mnemonicParsing="false" text="Rotate Left" />
                         <MenuItem fx:id="RotateLCmd" mnemonicParsing="false" text="Rotate Right" />
+                        <MenuItem disable="true" mnemonicParsing="false" text="Drag (Ctrl+LeftClick)" />
                         <MenuItem fx:id="leftCmd" mnemonicParsing="false" text="Drag Left" />
                         <MenuItem fx:id="rightCmd" mnemonicParsing="false" text="Drag Right" />
                         <MenuItem fx:id="upCmd" mnemonicParsing="false" text="Drag Up" />

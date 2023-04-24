@@ -1332,13 +1332,23 @@ public class MainController implements Initializable {
             }
         });
 
+        Pane compass = topViewController.getCompass();
+        Label compassDegree = topViewController.getCompassDegree();
         RotateLCmd.setAccelerator(ROTATE_LEFT_KEY);
         RotateLCmd.setOnAction(actionEvent -> {
-            topPane.setRotate(topPane.getRotate()%360+5);
+            double topPaneAngle = topPane.getRotate()%360+5;
+            double compassAngle = compass.getRotate()%360+5;
+            topPane.setRotate(topPaneAngle);
+            compass.setRotate(compassAngle);
+            compassDegree.setText(Math.round(compassAngle *10)/10.0 + "°");
         });
         RotateRCmd.setAccelerator(ROTATE_RIGHT_KEY);
         RotateRCmd.setOnAction(actionEvent -> {
-            topPane.setRotate(topPane.getRotate()%360-5);
+            double topPaneAngle = topPane.getRotate()%360-5;
+            double compassAngle = compass.getRotate()%360-5;
+            topPane.setRotate(topPaneAngle);
+            compass.setRotate(compassAngle);
+            compassDegree.setText(Math.round(compassAngle *10)/10.0 + "°");
         });
 
         int dragSens = 5;
