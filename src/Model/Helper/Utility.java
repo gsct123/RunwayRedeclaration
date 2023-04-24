@@ -198,20 +198,20 @@ public class Utility {
     public static void initializeZoom(AnchorPane pane){
         //constants
         double zoomSens = 0.005;
-        double zoomInLimit = 0.75;
+        double zoomOutLimit = 0.5;
+        double zoomInLimit = 2;
         pane.setOnScroll(scrollEvent -> {
-            //conditions
-            boolean zoomReachLimit = pane.getScaleX() >= zoomInLimit && pane.getScaleY() >= zoomInLimit;
-            boolean zoomSmallerThanLimit = pane.getScaleX() < zoomInLimit && pane.getScaleY() < zoomInLimit;
             //scroll event
             if (scrollEvent.isShortcutDown()){
                 double zoom = scrollEvent.getDeltaY();
-                if (zoomReachLimit){
-                    pane.setScaleX(pane.getScaleX() - zoom * -zoomSens);
-                    pane.setScaleY(pane.getScaleY() - zoom * -zoomSens);
-                }else if (zoomSmallerThanLimit){
-                    pane.setScaleX(zoomInLimit);
-                    pane.setScaleY(zoomInLimit);
+                // If user is zooming in (zoom is +ve) and the next scroll will not exceed the zoomInLimit
+                if (pane.getScaleX() - zoom * - zoomSens < zoomInLimit && zoom > 0){
+                    pane.setScaleX(pane.getScaleX() - zoom * - zoomSens);
+                    pane.setScaleY(pane.getScaleY() - zoom * - zoomSens);
+                // If user is zooming Out (zoom is -ve) and the next scroll is not lesser than zoomInLimit
+                } else if (pane.getScaleX() - zoom * - zoomSens > zoomOutLimit && zoom < 0) {
+                    pane.setScaleX(pane.getScaleX() - zoom * - zoomSens);
+                    pane.setScaleY(pane.getScaleY() - zoom * - zoomSens);
                 }
                 scrollEvent.consume();
             }
