@@ -72,10 +72,10 @@
     -fx-font-size: 12px;
 }
 
-
-.table-view {
+.table-row-cell:selected .table-cell{
+    -fx-text-fill: black;
+    -fx-background-color: #e4e4e4;
 }
-
 .table-view .column-header-background{
     -fx-background-color: linear-gradient( #212f45 0%,  #212f45 100%);
 }

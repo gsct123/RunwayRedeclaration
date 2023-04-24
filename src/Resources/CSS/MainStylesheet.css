@@ -72,8 +72,8 @@
     -fx-font-size: 12px;
 }
 
-
-.table-view {
+.table-row-cell:selected .table-cell{
+    -fx-text-fill: black;
 }
 
 .table-view .column-header-background{

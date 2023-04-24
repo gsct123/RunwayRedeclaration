@@ -120,7 +120,7 @@ public class Utility {
     public static void exportVisual(Node contentNode){
 
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Export Airport Details");
+        fileChooser.setTitle("Download Visualisations");
 
 // Set initial directory for the file chooser
         File userDirectory = new File(System.getProperty("user.home"));
