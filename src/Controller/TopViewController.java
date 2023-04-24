@@ -287,6 +287,7 @@ public class TopViewController implements Initializable {
         }
 
         setVisualColor(1);
+        initLabelFlip();
     }
 
     public void setVisualColor(int i){
@@ -1013,6 +1014,38 @@ public class TopViewController implements Initializable {
     public Pane getDragPane() {
         return dragPane;
     }
+
+    private void initLabelFlip(){
+        getTopDownRunwayPane().rotateProperty().addListener((observable, oldValue, newValue) -> {
+            double paneRotate = newValue.doubleValue();
+            System.out.println(paneRotate);
+            if (paneRotate < -300 || paneRotate > 300) {
+                setLabelsAngle(0);
+            }
+            else if (paneRotate >100 || paneRotate < -100){
+                setLabelsAngle(180);
+            }else {
+                setLabelsAngle(0);
+            }
+        });
+
+    }
+
+    private void setLabelsAngle(double d){
+        toraLabel.setRotate(d);
+        toraLabel1.setRotate(d);
+        todaLabel.setRotate(d);
+        todaLabel1.setRotate(d);
+        ldaLabel.setRotate(d);
+        ldaLabel1.setRotate(d);
+        asdaLabel.setRotate(d);
+        asdaLabel1.setRotate(d);
+        ldaOtherLineLabel.setRotate(d);
+        toraOtherLineLabel.setRotate(d);
+        ldaOtherLineLabel1.setRotate(d);
+        toraOtherLineLabel1.setRotate(d);
+    }
+
 
 
 }
