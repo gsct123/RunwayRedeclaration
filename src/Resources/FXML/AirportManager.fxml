@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AirportManagerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AirportManagerController">
     <children>
         <MenuBar prefHeight="28.0" prefWidth="1400.0">
             <menus>
@@ -33,6 +33,7 @@
                 <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
                     <items>
                         <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
+                  <MenuItem fx:id="Help" mnemonicParsing="false" onAction="#loadHelpProject" text="Help" />
                     </items>
                 </Menu>
             </menus>

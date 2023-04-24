@@ -78,6 +78,8 @@ public class UserManagerController implements Initializable {
     private MenuItem backToMain;
     @FXML
     private MenuItem aboutProject;
+    @FXML
+    private MenuItem Help;
 
     public static Stage helperStage;
 
@@ -253,6 +255,21 @@ public class UserManagerController implements Initializable {
         userTable.setItems(userData);
         userTable.refresh();
         initShortcut();
+    }
+
+    @FXML
+    public void loadHelpProject(ActionEvent event){
+        resetInactivityTimer();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Help.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Help & Documentation");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Cannot access help & documentation");
+        }
     }
 
 

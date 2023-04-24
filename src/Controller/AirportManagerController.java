@@ -7,7 +7,6 @@ import Model.Helper.XMLParserWriter;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
 import Model.User;
-import View.Error;
 import View.*;
 import View.OtherPopUp.Confirmation;
 import javafx.application.Platform;
@@ -15,7 +14,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -40,6 +42,7 @@ import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.lang.Error;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -82,6 +85,8 @@ public class AirportManagerController implements Initializable {
     private MenuItem backToMain;
     @FXML
     private MenuItem logoutItem;
+    @FXML
+    private MenuItem Help;
 
 
     @Override
@@ -152,6 +157,21 @@ public class AirportManagerController implements Initializable {
             Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
         } catch (IOException | URISyntaxException ignored) {}
         resetInactivityTimer();
+    }
+
+    @FXML
+    public void loadHelpProject(ActionEvent event){
+        resetInactivityTimer();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Help.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Help & Documentation");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Cannot access help & documentation");
+        }
     }
 
     @FXML
