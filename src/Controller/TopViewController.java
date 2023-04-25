@@ -1019,10 +1019,10 @@ public class TopViewController implements Initializable {
         getTopDownRunwayPane().rotateProperty().addListener((observable, oldValue, newValue) -> {
             double paneRotate = newValue.doubleValue();
             System.out.println(paneRotate);
-            if (paneRotate < -300 || paneRotate > 300) {
+            if (paneRotate < -275 || paneRotate > 275) {
                 setLabelsAngle(0);
             }
-            else if (paneRotate >100 || paneRotate < -100){
+            else if (paneRotate >95 || paneRotate < -95){
                 setLabelsAngle(180);
             }else {
                 setLabelsAngle(0);
