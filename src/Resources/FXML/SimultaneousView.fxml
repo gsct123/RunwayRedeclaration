@@ -176,8 +176,8 @@
             <Rectangle id="stopwayL" fx:id="stopwayL" fill="YELLOW" height="15.0" layoutX="75.0" layoutY="26.0" stroke="#ffff0000" strokeType="INSIDE" width="25.0" />
             <Line id="thresholdL" fx:id="thresholdL" endY="15.0" fill="#f4f4f4" layoutX="100.0" layoutY="26.0" stroke="#f4f4f4" strokeWidth="3.0" />
             <Line id="thresholdR" fx:id="thresholdR" endY="15.0" fill="#f4f4f4" layoutX="700.0" layoutY="26.0" stroke="#f4f4f4" strokeWidth="3.0" />
-            <Polygon id="tocsSlope" fx:id="tocsSlope" fill="RED" layoutX="693.0" layoutY="26.0" points="-52.5, 0.0, 3.0, -21.666671752929688, 3.0, 0.0" stroke="RED" strokeType="INSIDE" visible="false" />
-            <Polygon id="alsSlope" fx:id="alsSlope" fill="RED" layoutX="189.0" layoutY="26.0" points="46.33332824707031, 0.0, 1.0, -10.333328247070312, 1.0, 0.0" stroke="RED" strokeType="INSIDE" visible="false" />
+            <Polygon id="tocsSlope" fx:id="tocsSlope" fill="RED" layoutX="693.0" layoutY="26.0" points="-52.5, 0.0, 3.0, -21.666671752929688, 3.0, 0.0" stroke="#ff000000" strokeType="INSIDE" visible="false" />
+            <Polygon id="alsSlope" fx:id="alsSlope" fill="RED" layoutX="189.0" layoutY="26.0" points="46.33332824707031, 0.0, 1.0, -10.333328247070312, 1.0, 0.0" stroke="#ff000000" strokeType="INSIDE" visible="false" />
             <Label id="asdaLabel" fx:id="asdaLabel1" layoutX="399.0" layoutY="82.0" text=" ASDA ">
                <font>
                   <Font name="Verdana Bold" size="12.0" />

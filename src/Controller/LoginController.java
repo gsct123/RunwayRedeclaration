@@ -58,6 +58,8 @@ public class LoginController implements Initializable {
     @FXML
     private Label forgotPasswordLink;
 
+    public static Stage resetPasswordStage;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,8 +68,6 @@ public class LoginController implements Initializable {
             DropShadow shadow = new DropShadow(13, Color.valueOf("#4cc9f0"));
             userPane.setEffect(shadow);
             passwordPane.setEffect(shadow);
-            setRotate(c1,true, 360,10);
-            setRotate(c2,true,180, 15);
             usernameField.setOnKeyPressed(keyEvent -> {
                 if(new KeyCodeCombination(KeyCode.ENTER).match(keyEvent)){
                     check();
@@ -96,7 +96,7 @@ public class LoginController implements Initializable {
 
     @FXML
     public void forgotPassword() throws IOException {
-        Stage stage = new Stage();
+        resetPasswordStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ResetPassword.fxml"));
 
         Parent root = loader.load();
@@ -104,11 +104,11 @@ public class LoginController implements Initializable {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
 
-        stage.setTitle("Forgot password");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        resetPasswordStage.setTitle("Forgot password");
+        resetPasswordStage.setScene(scene);
+        resetPasswordStage.setResizable(false);
+        resetPasswordStage.initModality(Modality.APPLICATION_MODAL);
+        resetPasswordStage.show();
     }
 
 

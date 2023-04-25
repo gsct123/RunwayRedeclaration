@@ -7,7 +7,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="580.0" prefWidth="854.0" style="-fx-background-color: #212f45;" stylesheets="@../CSS/LoginStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
@@ -59,13 +58,11 @@
             </ImageView>
          </children>
         </AnchorPane>
-      <ImageView fx:id="airplaneLogo" fitHeight="82.0" fitWidth="84.0" layoutX="410.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="airplaneLogo" fitHeight="113.0" fitWidth="131.0" layoutX="400.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../airplaneLogo.png" />
          </image>
       </ImageView>
-      <Circle fx:id="c2" fill="#1f93ff00" layoutX="450.0" layoutY="197.0" radius="57.0" stroke="#00b277" strokeType="INSIDE" strokeWidth="5.5" style="-fx-stroke-dash-array: 60;" />
-      <Circle fx:id="c1" fill="#1f93ff00" layoutX="450.0" layoutY="196.0" radius="71.0" stroke="#0094ff" strokeType="INSIDE" strokeWidth="5.5" style="-fx-stroke-dash-array: 45;" />
       <Label fx:id="forgotPasswordLink" layoutX="385.0" layoutY="470.0" styleClass="link" text="Forgot password" textFill="#2fa8fff7" underline="true">
          <font>
             <Font name="Verdana" size="13.0" />

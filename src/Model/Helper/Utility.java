@@ -46,6 +46,29 @@ public class Utility {
         newStage.start(new Stage());
     }
 
+    public static boolean checkPassword(String password) {
+        boolean hasSymbol = false;
+        boolean hasLowercase = false;
+        boolean hasUppercase = false;
+        boolean hasNumber = false;
+
+        for (char c : password.toCharArray()) {
+            if (Character.isLetter(c)) {
+                if (Character.isLowerCase(c)) {
+                    hasLowercase = true;
+                } else if (Character.isUpperCase(c)) {
+                    hasUppercase = true;
+                }
+            } else if (Character.isDigit(c)) {
+                hasNumber = true;
+            } else {
+                hasSymbol = true;
+            }
+        }
+
+        return hasSymbol && hasLowercase && hasUppercase && hasNumber;
+    }
+
 
     @FXML
     public static void handleLogout(ActionEvent event) throws Exception {

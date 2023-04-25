@@ -93,7 +93,7 @@ public class AddNewUserController implements Initializable {
                 } else if(password.length() < 6){
                     new Error().showError(passwordField, "Please ensure password length is at least 6 characters.", "");
                     confirmPasswordField.clear();
-                } else if (!checkPassword(password)){
+                } else if (!Utility.checkPassword(password)){
                     new Error().showError(passwordField, "Please ensure your password contains mix of symbols, lowercase and uppercase letters and numbers.", "");
                     confirmPasswordField.clear();
                 } else if(!confirmPassword.equals(password)){
@@ -116,27 +116,6 @@ public class AddNewUserController implements Initializable {
         cancelButton.setOnAction(actionEvent -> {UserManagerController.helperStage.close();});
     }
 
-    public static boolean checkPassword(String password) {
-        boolean hasSymbol = false;
-        boolean hasLowercase = false;
-        boolean hasUppercase = false;
-        boolean hasNumber = false;
 
-        for (char c : password.toCharArray()) {
-            if (Character.isLetter(c)) {
-                if (Character.isLowerCase(c)) {
-                    hasLowercase = true;
-                } else if (Character.isUpperCase(c)) {
-                    hasUppercase = true;
-                }
-            } else if (Character.isDigit(c)) {
-                hasNumber = true;
-            } else {
-                hasSymbol = true;
-            }
-        }
-
-        return hasSymbol && hasLowercase && hasUppercase && hasNumber;
-    }
 
 }

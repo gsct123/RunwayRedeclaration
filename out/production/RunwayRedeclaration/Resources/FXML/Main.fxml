@@ -27,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<Pane prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <children>
       <VBox layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0">
           <children>
@@ -69,6 +69,7 @@
                       <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
                           <items>
                               <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadCopyright" text="Version and Copyright Information" />
                           </items>
                       </Menu>
                   <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="View">

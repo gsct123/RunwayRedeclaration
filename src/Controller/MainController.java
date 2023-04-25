@@ -457,18 +457,22 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void loadHelpProject(ActionEvent event){
-        resetInactivityTimer();
+    public void loadCopyright(ActionEvent event){
+        inactivityTimer.cancel();
+
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Help.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/VersionNCopyright.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
-            stage.setTitle("Help & Documentation");
+            stage.setTitle("Version Number and Copyright Information");
             stage.setScene(new Scene(root1));
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
             System.out.println("Cannot access help & documentation");
         }
+
+        resetInactivityTimer();
     }
 
 
@@ -1197,7 +1201,7 @@ public class MainController implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     // Prompt for logout
-                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/60000+" minutes.", "Do you want to continue using or logout");
+                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/60000+" minutes.", "Do you want to proceed to logout?");
                     if(flag){
                         Main.getStage().close();
                         try {

@@ -33,6 +33,7 @@
                 <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
                     <items>
                         <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
+                  <MenuItem fx:id="aboutProject1" mnemonicParsing="false" onAction="#loadCopyright" text="Version and Copyright Information" />
                     </items>
                 </Menu>
             </menus>

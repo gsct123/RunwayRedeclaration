@@ -268,6 +268,25 @@ public class UserManagerController implements Initializable {
     }
 
     @FXML
+    public void loadCopyright(ActionEvent event){
+        inactivityTimer.cancel();
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/VersionNCopyright.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Version Number and Copyright Information");
+            stage.setScene(new Scene(root1));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Cannot access help & documentation");
+        }
+
+        resetInactivityTimer();
+    }
+
+    @FXML
     public void backToMain(ActionEvent event) throws Exception {
         inactivityTimer.cancel();
         UserManager.getStage().close();
@@ -313,7 +332,7 @@ public class UserManagerController implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     // Prompt for logout
-                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/60000+" minutes.", "Do you want to continue using or logout");
+                    boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/60000+" minutes.", "Do you want to proceed to logout?");
                     if(flag){
                         UserManager.getStage().close();
                         try {
