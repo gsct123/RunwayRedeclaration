@@ -7,8 +7,8 @@ import Model.Helper.XMLParserWriter;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
 import Model.User;
-import View.Error;
 import View.*;
+import View.Error;
 import View.OtherPopUp.Confirmation;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -86,6 +86,8 @@ public class AirportManagerController implements Initializable {
     private MenuItem backToMain;
     @FXML
     private MenuItem logoutItem;
+    @FXML
+    private MenuItem Help;
 
 
     @Override
@@ -175,6 +177,21 @@ public class AirportManagerController implements Initializable {
             Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
         } catch (IOException | URISyntaxException ignored) {}
         resetInactivityTimer();
+    }
+
+    @FXML
+    public void loadHelpProject(ActionEvent event){
+        resetInactivityTimer();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Help.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Help & Documentation");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Cannot access help & documentation");
+        }
     }
 
     @FXML
