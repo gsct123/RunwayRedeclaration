@@ -239,7 +239,7 @@ public class SideViewController {
         MainController.obstacleHeight.addListener((observable, oldValue, newValue) -> {setUpAlsTocs(MainController.getObstacleSelected(), MainController.getPhysRunwaySelected().getLogicalRunways().get(0));});
         MainController.valueChanged.addListener((observable, oldValue, newValue) -> {updateLabel(new ActionEvent());});
         Utility.initializeZoom(sideOnPane);
-        Utility.initializeDrag(dragPane);
+        Utility.initializeDrag(dragPane,getSideOnPane());
         if(MainController.beforeCalculation){
             if(MainController.getPhysRunwaySelected() != null){
                 resetValues(MainController.getPhysRunwaySelected());

@@ -1374,7 +1374,7 @@ public class MainController implements Initializable {
             compassDegree.setText(Math.round(compassAngle *10)/10.0 + "°");
         });
 
-        int dragSens = 5;
+        final int dragSens = 5;
         upCmd.setAccelerator(DRAG_UP_KEY);
         upCmd.setOnAction(actionEvent -> {
             setPaneTranslation(0,-dragSens);
