@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
@@ -240,12 +241,13 @@ public class Utility {
             }
         });
     }
-    public static void initializeDrag(Pane dragPane){
+    public static void initializeDrag(Pane dragPane, AnchorPane pane){
         dragPane.setOnMousePressed(mouseEvent->{
             if (mouseEvent.isShortcutDown()){
                 //mouse position before drag
                 double mouseX = mouseEvent.getX();
                 double mouseY = mouseEvent.getY();
+                pane.setCursor(Cursor.CLOSED_HAND);
                 dragPane.setOnMouseDragged(dragEvent -> {
                     //the amount dragged minus original mouse position
                     double translationX = dragEvent.getX() - mouseX;
@@ -258,6 +260,7 @@ public class Utility {
             }
         });
         dragPane.setOnMouseReleased( releasedEvent -> {
+            pane.setCursor(Cursor.DEFAULT);
             dragPane.setOnMouseDragged(null);
         });
     }

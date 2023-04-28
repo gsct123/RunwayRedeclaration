@@ -122,6 +122,9 @@
                            <font>
                               <Font name="Verdana Bold" size="13.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </children>
                   </HBox>
@@ -137,27 +140,46 @@
                                   <font>
                                       <Font name="Verdana" size="16.0" />
                                   </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                               </MenuButton>
                               <MenuButton id="runwayMenu" fx:id="physicalRunwayMenu" disable="true" layoutX="20.0" layoutY="142.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="235.0" styleClass="normalButton" text="Select Physical Runway">
                                   <font>
                                       <Font name="Verdana" size="16.0" />
                                   </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                               </MenuButton>
                               <MenuButton fx:id="obstacleMenu" disable="true" layoutX="20.0" layoutY="236.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="235.0" styleClass="normalButton" text="Select an Obstacle">
                                   <font>
                                       <Font name="Verdana" size="16.0" />
                                   </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                               </MenuButton>
                               <Label fx:id="obstacleHeightLabel" layoutX="29.0" layoutY="286.0" text="Obstacle height (m):">
                                   <font>
                                       <Font name="Verdana" size="12.0" />
                                   </font>
                               </Label>
+                              <TextField fx:id="obstacleHeightField" editable="false" layoutX="160.0" layoutY="282.0" onAction="#checkObstacleHeight" prefHeight="23.0" prefWidth="94.0" text="-">
+                                  <font>
+                                      <Font name="Verdana" size="12.0" />
+                                  </font>
+                              </TextField>
                               <Label fx:id="obstacleWidthLabel" layoutX="29.0" layoutY="315.0" text="Obstacle width (m):">
                                   <font>
                                       <Font name="Verdana" size="12.0" />
                                   </font>
                               </Label>
+                              <TextField fx:id="obstacleWidthField" editable="false" layoutX="160.0" layoutY="313.0" onAction="#checkObstacleWidth" prefHeight="23.0" prefWidth="94.0" text="-">
+                                  <font>
+                                      <Font name="Verdana" size="12.0" />
+                                  </font>
+                              </TextField>
                               <Label fx:id="distFromThreshold" layoutX="29.0" layoutY="343.0" prefWidth="212.0" text="Distance From Threshold (m): ">
                                   <font>
                                       <Font name="Verdana" size="12.0" />
@@ -204,6 +226,9 @@
                                   <font>
                                       <Font name="Verdana" size="16.0" />
                                   </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                               </Button>
                               <Label alignment="CENTER" layoutX="20.0" layoutY="8.0" prefHeight="42.0" prefWidth="235.0" text="AIRPORT">
                                   <font>
@@ -225,6 +250,9 @@
                                   <font>
                                       <Font name="Verdana" size="14.0" />
                                   </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                               </Button>
                               <Label alignment="CENTER" layoutX="20.0" layoutY="99.0" prefHeight="42.0" prefWidth="219.0" text="RUNWAY">
                                   <font>
@@ -234,20 +262,13 @@
                                       <Insets bottom="5.0" top="5.0" />
                                   </padding>
                               </Label>
-                              <TextField fx:id="obstacleHeightField" editable="false" layoutX="160.0" layoutY="282.0" onAction="#checkObstacleHeight" prefHeight="23.0" prefWidth="94.0" text="-">
-                                  <font>
-                                      <Font name="Verdana" size="12.0" />
-                                  </font>
-                              </TextField>
-                              <TextField fx:id="obstacleWidthField" editable="false" layoutX="160.0" layoutY="313.0" onAction="#checkObstacleWidth" prefHeight="23.0" prefWidth="94.0" text="-">
-                                  <font>
-                                      <Font name="Verdana" size="12.0" />
-                                  </font>
-                              </TextField>
                         <Button fx:id="resetViewButton" layoutX="148.0" layoutY="597.0" mnemonicParsing="false" onAction="#handleResetView" prefHeight="35.0" prefWidth="106.0" styleClass="functionButton" stylesheets="@../CSS/MainStylesheet.css" text="ResetView">
                            <font>
                               <Font name="Verdana" size="14.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Label fx:id="airportNameLabel" alignment="CENTER" layoutX="20.0" layoutY="48.0" prefHeight="42.0" prefWidth="235.0" text="AIRPORT">
                            <font>
@@ -328,6 +349,9 @@
                                   <font>
                                       <Font name="Verdana" size="16.0" />
                                   </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                               </Button>
                               <Button fx:id="stripEndInfo" layoutX="2.0" layoutY="498.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="14.0" style="-fx-background-radius: 20px; -fx-label-padding: 0.3px;" text="?">
                                   <font>
@@ -458,9 +482,9 @@
               </SplitPane>
           </children>
       </VBox>
-       <Pane fx:id="notiPane" layoutX="180.0" layoutY="759.0" prefHeight="22.0" prefWidth="1220.0" style="-fx-background-color: #212f45;" visible="false">
+       <Pane fx:id="notiPane" layoutY="759.0" prefHeight="22.0" prefWidth="1400.0" style="-fx-background-color: #212f45;" visible="false">
            <children>
-               <ScrollPane fx:id="notiScrollPane" fitToHeight="true" fitToWidth="true" hvalue="1.0" layoutY="22.0" prefHeight="22.0" style="-fx-background-color: #212f45;">
+               <ScrollPane fx:id="notiScrollPane" fitToHeight="true" fitToWidth="true" hvalue="1.0" layoutY="22.0" prefHeight="36.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
                    <content>
                        <VBox fx:id="notiVBox" prefWidth="1220.0" style="-fx-background-color: #101824;">
                      <cursor>
@@ -471,7 +495,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
                </ScrollPane>
-            <Button fx:id="extendButton" layoutX="1153.0" minHeight="17.0" minWidth="36.0" mnemonicParsing="false" onAction="#extendNotiBar" prefHeight="22.0" prefWidth="60.0" styleClass="extendButton" stylesheets="@../CSS/MainStylesheet.css">
+            <Button fx:id="extendButton" layoutX="1340.0" minHeight="17.0" minWidth="36.0" mnemonicParsing="false" onAction="#extendNotiBar" prefHeight="22.0" prefWidth="60.0" styleClass="extendButton" stylesheets="@../CSS/MainStylesheet.css">
                <font>
                   <Font size="1.0" />
                </font>
@@ -479,7 +503,22 @@
                   <Line accessibleRole="BUTTON" endX="-12.0" stroke="#ffffffb3" strokeWidth="3.0" />
                </graphic>
                <cursor>
-                  <Cursor fx:constant="DEFAULT" />
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="notificationButton1" alignment="CENTER" minHeight="20.0" mnemonicParsing="false" onAction="#showNotibar" prefHeight="22.0" prefWidth="179.0" styleClass="notificationButton1" stylesheets="@../CSS/MainStylesheet.css" textOverrun="CENTER_ELLIPSIS">
+               <font>
+                  <Font name="Verdana Bold" size="10.0" />
+               </font>
+               <graphic>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Notification History" textAlignment="CENTER" wrappingWidth="172.17559051513672">
+                     <font>
+                        <Font name="Verdana Bold" size="12.0" />
+                     </font>
+                  </Text>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
            </children>
@@ -494,7 +533,7 @@
             </DisplacementMap>
          </effect>
        </Pane>
-      <Button fx:id="notificationButton" alignment="CENTER" layoutY="759.0" minHeight="18.0" mnemonicParsing="false" onAction="#showNotibar" prefHeight="22.0" prefWidth="180.0" styleClass="notificationButton" stylesheets="@../CSS/MainStylesheet.css" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="notificationButton" alignment="CENTER" layoutY="759.0" minHeight="20.0" mnemonicParsing="false" onAction="#showNotibar" prefHeight="22.0" prefWidth="179.0" styleClass="notificationButton" stylesheets="@../CSS/MainStylesheet.css" textOverrun="CENTER_ELLIPSIS">
          <font>
             <Font name="Verdana Bold" size="10.0" />
          </font>
@@ -505,8 +544,11 @@
                </font>
             </Text>
          </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-       <Label id="notificationLabel" fx:id="notificationLabel" layoutX="282.0" layoutY="759.0" opacity="0.0" prefHeight="22.0" prefWidth="799.0" styleClass="notificationLabel" stylesheets="@../CSS/MainStylesheet.css" text="Status     ">
+       <Label id="notificationLabel" fx:id="notificationLabel" layoutX="286.0" layoutY="759.0" opacity="0.0" prefHeight="22.0" prefWidth="795.0" styleClass="notificationLabel" stylesheets="@../CSS/MainStylesheet.css" text="Status     ">
            <padding>
                <Insets left="20.0" />
            </padding>

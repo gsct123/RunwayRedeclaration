@@ -1208,11 +1208,12 @@ public class MainController implements Initializable {
     int clickCount = 0;
     public void showNotibar(ActionEvent actionEvent) {
         if (clickCount%2 ==0){
+            notificationButton.setVisible(false);
             notiPane.setVisible(true);
             notificationLabel.setVisible(false);
             resetNotificationBar(getNotiPane(),getNotiScrollPane());
         }else {
-
+            notificationButton.setVisible(true);
             notiPane.setVisible(false);
             notificationLabel.setVisible(true);
         }
@@ -1220,6 +1221,7 @@ public class MainController implements Initializable {
     }
 
     public void extendNotiBar(ActionEvent actionEvent) {
+        notificationButton.setVisible(true);
         resetInactivityTimer();
         resetNotificationBar(notiPane,notiScrollPane);
         notiPane.setVisible(false);
@@ -1372,7 +1374,7 @@ public class MainController implements Initializable {
             compassDegree.setText(Math.round(compassAngle *10)/10.0 + "°");
         });
 
-        int dragSens = 5;
+        final int dragSens = 5;
         upCmd.setAccelerator(DRAG_UP_KEY);
         upCmd.setOnAction(actionEvent -> {
             setPaneTranslation(0,-dragSens);

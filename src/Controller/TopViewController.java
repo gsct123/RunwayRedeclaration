@@ -5,6 +5,7 @@ import Model.Helper.Utility;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -272,7 +273,7 @@ public class TopViewController implements Initializable {
         Pane compass = getCompass();
         //initialize drag, zoom and rotate
         Utility.initializeZoom(topDownRunwayPane);
-        Utility.initializeDrag(dragPane);
+        Utility.initializeDrag(dragPane,getTopDownRunwayPane());
         initializeRotate(topDownRunwayPane,compass);
 
         if(MainController.beforeCalculation){
@@ -964,6 +965,7 @@ public class TopViewController implements Initializable {
             double mouseX = mouseEvent.getX();
             double mouseY = mouseEvent.getY();
             if (mouseEvent.isShiftDown()){
+                pane.setCursor(Cursor.CLOSED_HAND);
                 //mouse position before drag
                 pane.setOnMouseDragged(draggedEvent -> {
                     Label compassDegree = getCompassDegree();
@@ -988,6 +990,7 @@ public class TopViewController implements Initializable {
             }
         });
         pane.setOnMouseReleased( releasedEvent -> {
+            pane.setCursor(Cursor.DEFAULT);
             pane.setOnMouseDragged(null);
         });
     }
@@ -1019,10 +1022,10 @@ public class TopViewController implements Initializable {
         getTopDownRunwayPane().rotateProperty().addListener((observable, oldValue, newValue) -> {
             double paneRotate = newValue.doubleValue();
             System.out.println(paneRotate);
-            if (paneRotate < -300 || paneRotate > 300) {
+            if (paneRotate < -275 || paneRotate > 275) {
                 setLabelsAngle(0);
             }
-            else if (paneRotate >100 || paneRotate < -100){
+            else if (paneRotate >95 || paneRotate < -95){
                 setLabelsAngle(180);
             }else {
                 setLabelsAngle(0);
