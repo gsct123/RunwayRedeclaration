@@ -196,6 +196,13 @@ public class AirportManagerController implements Initializable {
     public void backToMain(ActionEvent event) throws Exception {
         inactivityTimer.cancel();
         AirportManager.getStage().close();
+        Scene classScene = Main.getClassScene();
+        if(MainController.Theme.getState()){
+            classScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheetDark.css")).toExternalForm());
+        } else{
+            classScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+        }
+
         Main.getStage().show();
     }
 
@@ -208,6 +215,12 @@ public class AirportManagerController implements Initializable {
 
     @FXML
     public void handleLogout(ActionEvent event) throws Exception {
+
+        MainController.beforeCalculation = true;
+        MainController.physRunwayItem.set(null);
+        MainController.airportItem.set(null);
+        MainController.obstacleProperty.set(null);
+
         MainController.Theme.setState(false);
         inactivityTimer.cancel();
         AirportManager.getStage().close();

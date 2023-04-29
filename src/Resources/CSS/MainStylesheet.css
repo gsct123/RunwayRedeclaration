@@ -41,9 +41,15 @@
 }
 
 .normalButton{
+-fx-text-fill: black;
 -fx-border-color: #212f45;
 -fx-border-radius: 5px;
 -fx-background-radius: 5px;
+-fx-background-color: linear-gradient( rgb(247,247,247) 0%, rgb(231,231,231) 100%)
+}
+
+.normalButton .label {
+-fx-text-fill: black;
 }
 
 .functionButton{
@@ -140,4 +146,9 @@
 
 #notificationButton1:hover{
     -fx-background-color: #353d4a;
+}
+
+.text-fields {
+    -fx-background-color:  white;
+    -fx-text-fill: black;
 }

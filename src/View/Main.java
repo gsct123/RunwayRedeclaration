@@ -56,6 +56,10 @@ public class Main extends Application {
         return classScene;
     }
 
+    public static void setClassScene(Scene scene){
+        classScene = scene;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         Main.classStage = stage;
