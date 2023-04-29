@@ -77,6 +77,10 @@ public class UserManagerController implements Initializable {
     @FXML
     private MenuItem aboutProject;
     @FXML
+    private MenuItem copyright;
+    @FXML
+    private MenuItem userGuide;
+    @FXML
     private MenuItem Help;
     @FXML
     private AnchorPane testAnchor;
@@ -509,10 +513,14 @@ public class UserManagerController implements Initializable {
         KeyCombination USER_MANAGER_KEY = new KeyCodeCombination(KeyCode.U,KeyCombination.SHORTCUT_DOWN);
         KeyCombination LOGOUT_KEY = new KeyCodeCombination(KeyCode.L,KeyCombination.SHORTCUT_DOWN,KeyCombination.SHIFT_DOWN);
         KeyCombination ABOUT_PROJECT_KEY = new KeyCodeCombination(KeyCode.I,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination COPYRIGHT = new KeyCodeCombination(KeyCode.C,KeyCombination.SHIFT_DOWN);
+        KeyCombination USERGUIDE = new KeyCodeCombination(KeyCode.G,KeyCombination.SHIFT_DOWN);
 
         airportManager.setAccelerator(AIRPORT_MANAGER_KEY);
         logoutItem.setAccelerator(LOGOUT_KEY);
         aboutProject.setAccelerator(ABOUT_PROJECT_KEY);
+        userGuide.setAccelerator(USERGUIDE);
+        copyright.setAccelerator(COPYRIGHT);
         backToMain.setAccelerator(USER_MANAGER_KEY);
     }
 }

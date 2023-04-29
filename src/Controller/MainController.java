@@ -79,6 +79,10 @@ public class MainController implements Initializable {
     @FXML
     private MenuItem aboutProject;
     @FXML
+    private MenuItem copyright;
+    @FXML
+    private MenuItem userGuide;
+    @FXML
     private MenuItem tabCmd;
     @FXML
     private MenuItem notiHistoryCmd;
@@ -1417,6 +1421,8 @@ public class MainController implements Initializable {
         KeyCombination SWITCH_TAB_KEY = new KeyCodeCombination(KeyCode.TAB,KeyCombination.SHORTCUT_DOWN);
         KeyCombination LOGOUT_KEY = new KeyCodeCombination(KeyCode.L,KeyCombination.SHORTCUT_DOWN,KeyCombination.SHIFT_DOWN);
         KeyCombination ABOUT_PROJECT_KEY = new KeyCodeCombination(KeyCode.I,KeyCombination.SHORTCUT_DOWN);
+        KeyCombination COPYRIGHT = new KeyCodeCombination(KeyCode.C,KeyCombination.SHIFT_DOWN);
+        KeyCombination USERGUIDE = new KeyCodeCombination(KeyCode.G,KeyCombination.SHIFT_DOWN);
         KeyCombination EXPORT_SIDE_VIEW_KEY = new KeyCodeCombination(KeyCode.E,KeyCombination.SHORTCUT_DOWN);
         KeyCombination EXPORT_TOP_VIEW_KEY = new KeyCodeCombination(KeyCode.E,KeyCombination.ALT_DOWN,KeyCombination.SHORTCUT_DOWN);
         KeyCombination EXPORT_SIMULTANEOUS_VIEW_KEY = new KeyCodeCombination(KeyCode.E,KeyCombination.ALT_DOWN,KeyCombination.SHIFT_DOWN,KeyCombination.SHORTCUT_DOWN);
@@ -1473,6 +1479,8 @@ public class MainController implements Initializable {
 
         logoutItem.setAccelerator(LOGOUT_KEY);
         aboutProject.setAccelerator(ABOUT_PROJECT_KEY);
+        userGuide.setAccelerator(USERGUIDE);
+        copyright.setAccelerator(COPYRIGHT);
         regenerationReport.setAccelerator(EXPORT_SIDE_VIEW_KEY);
         regenerationReport1.setAccelerator(EXPORT_TOP_VIEW_KEY);
         regenerationReport2.setAccelerator(EXPORT_SIMULTANEOUS_VIEW_KEY);
