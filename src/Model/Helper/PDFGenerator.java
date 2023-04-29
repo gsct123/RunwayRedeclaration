@@ -18,10 +18,11 @@ import javafx.scene.transform.Transform;
 import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
@@ -193,14 +194,14 @@ public class PDFGenerator {
 
             PdfPTable t = new PdfPTable(1);
             t.getDefaultCell().setBorder(0);
-            t.addCell(createImageCell(Objects.requireNonNull(getClass().getResource("/Printer/SideView.png")).getPath(), 0.3f));
+            t.addCell(createImageCell("/Printer/SideView.png", 0.3f));
 
             PdfPTable t2 = new PdfPTable(1);
             t2.getDefaultCell().setBorder(0);
-            t2.addCell(createImageCell(Objects.requireNonNull(getClass().getResource("/Printer/SideView.png")).getPath(), 0.3f));
+            t2.addCell(createImageCell("/Printer/TopView.png", 0.3f));
 
             PdfPTable t3 = new PdfPTable(1);
-            t3.addCell(createImageCell(Objects.requireNonNull(getClass().getResource("/Printer/SimulView.png")).getPath(), 0.3f));
+            t3.addCell(createImageCell("/Printer/SimulView.png", 0.3f));
 
             document.add(new Paragraph(new Phrase("Side-On Visualisation", subTitleFontSmall)));
             addNewlines(document, 1);
@@ -400,6 +401,25 @@ public class PDFGenerator {
     }
 
     private Image createImage(String path) throws IOException, BadElementException {
-        return Image.getInstance(path);
+        InputStream inputStream = Objects.requireNonNull(getClass().getResourceAsStream(path));
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) != -1) {
+            baos.write(buffer, 0, length);
+        }
+        byte[] imageData = baos.toByteArray();
+
+// Use ImageIO to read the input stream and determine the format of the image
+        ImageInputStream imageInputStream = ImageIO.createImageInputStream(new ByteArrayInputStream(imageData));
+        Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
+        if (!readers.hasNext()) {
+            throw new IllegalArgumentException("Unsupported image format");
+        }
+        ImageReader reader = readers.next();
+        reader.setInput(imageInputStream);
+
+// Create an image object from the byte array
+        return Image.getInstance(imageData);
     }
 }
