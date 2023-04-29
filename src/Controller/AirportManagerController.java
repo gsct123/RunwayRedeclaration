@@ -26,9 +26,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -88,10 +90,96 @@ public class AirportManagerController implements Initializable {
     private MenuItem logoutItem;
     @FXML
     private MenuItem Help;
+    @FXML
+    private Button modeButtonAirport;
+    @FXML
+    private Button exportAirportDetails;
+    @FXML
+    private Button exportAllAirport;
+    @FXML
+    private AnchorPane backgroundPane;
+    @FXML
+    private ImageView iconImage2;
+    @FXML
+    private Label addNewAirport;
+    @FXML
+    private Label manageAirport;
+
+    public double mode = 1;
+    public void stateSetter(MainController.theme theme){
+        boolean state =theme.getState();
+        System.out.println("current setter:"+state);
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        modeButtonAirport.setOnMouseClicked(event -> {
+            if (MainController.theme.getState() == false ) {
+                backgroundPane.getStylesheets().add("CSS/darkMode.css");
+                backgroundPane.getStylesheets().remove("CSS/lightMode.css");
+                addNewAirport.getStylesheets().add("CSS/darkMode.css");
+                addNewAirport.getStylesheets().remove("CSS/lightMode.css");
+                manageAirport.getStylesheets().add("CSS/darkMode.css");
+                manageAirport.getStylesheets().remove("CSS/lightMode.css");
+                importAirportButton.getStylesheets().add("CSS/darkMode.css");
+                importAirportButton.getStylesheets().remove("CSS/lightMode.css");
+                deleteAirportButton.getStylesheets().add("CSS/darkMode.css");
+                deleteAirportButton.getStylesheets().remove("CSS/lightMode.css");
+                exportAirportDetails.getStylesheets().add("CSS/darkMode.css");
+                exportAirportDetails.getStylesheets().remove("CSS/lightMode.css");
+                editAirportButton.getStylesheets().add("CSS/darkMode.css");
+                editAirportButton.getStylesheets().remove("CSS/lightMode.css");
+                exportAllAirport.getStylesheets().add("CSS/darkMode.css");
+                exportAllAirport.getStylesheets().remove("CSS/lightMode.css");
+                airportDetails.getStylesheets().add("CSS/darkMode.css");
+                airportDetails.getStylesheets().remove("CSS/lightMode.css");
+
+
+
+                javafx.scene.image.Image image  = new javafx.scene.image.Image ("sun.png");
+                iconImage2.setImage(image);
+                System.out.println("Dark");
+                mode = 0;
+                MainController.theme theme1 = new MainController.theme();
+                theme1.setState(true);
+
+                System.out.println("setState: " + theme1.getState());
+                stateSetter(theme1);
+
+            }else if (MainController.theme.getState() == true) {
+                backgroundPane.getStylesheets().add("CSS/lightMode.css");
+                backgroundPane.getStylesheets().remove("CSS/darkMode.css");
+                addNewAirport.getStylesheets().add("CSS/lightMode.css");
+                addNewAirport.getStylesheets().remove("CSS/darkMode.css");
+                manageAirport.getStylesheets().add("CSS/lightMode.css");
+                manageAirport.getStylesheets().remove("CSS/darkMode.css");
+                importAirportButton.getStylesheets().add("CSS/lightMode.css");
+                importAirportButton.getStylesheets().remove("CSS/darkMode.css");
+                editAirportButton.getStylesheets().add("CSS/lightMode.css");
+                editAirportButton.getStylesheets().remove("CSS/darkMode.css");
+                exportAirportDetails.getStylesheets().add("CSS/lightMode.css");
+                exportAirportDetails.getStylesheets().remove("CSS/darkMode.css");
+                exportAllAirport.getStylesheets().add("CSS/lightMode.css");
+                exportAllAirport.getStylesheets().remove("CSS/darkMode.css");
+                airportDetails.getStylesheets().add("CSS/lightMode.css");
+                airportDetails.getStylesheets().remove("CSS/darkMode.css");
+
+
+
+                javafx.scene.image.Image image = new javafx.scene.image.Image("moon.png");
+                iconImage2.setImage(image);
+
+                System.out.println("Light");
+                mode = 1;
+                MainController.theme theme1 = new MainController.theme();
+                theme1.setState(false);
+
+                System.out.println("setState:" + theme1.getState());
+                stateSetter(theme1);
+
+            }
+        });
         resetInactivityTimer();
         airportDetails.setText("No content to display, select an airport to view airport details");
         identityLabel.setText("Logged in as "+ Main.getUsername());

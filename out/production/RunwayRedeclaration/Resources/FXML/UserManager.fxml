@@ -10,6 +10,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -41,12 +43,25 @@
       </MenuBar>
       <HBox layoutY="28.0" prefHeight="67.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
          <children>
+            <Button fx:id="modeButtonManager" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="46.0" prefWidth="50.0" style="-fx-border-color: white; -fx-border-width: 1px; -fx-border-style: solid; -fx-border-radius: 50; -fx-background-color: null;">
+               <graphic>
+                  <ImageView fx:id="imageView" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../moon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets bottom="15.0" left="35.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Label alignment="CENTER" layoutY="28.0" prefHeight="94.0" prefWidth="1060.0" text="USER MANAGER" textAlignment="CENTER" textFill="WHITE">
             <Label alignment="CENTER_RIGHT" layoutY="28.0" prefHeight="94.0" prefWidth="1060.0" text="USER MANAGER" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Verdana Bold" size="25.0" />
                </font>
                <padding>
-                  <Insets bottom="20.0" right="195.0" top="20.0" />
+                  <Insets bottom="20.0" left="400.0" right="195.0" top="20.0" />
                </padding>
             </Label>
             <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="263.0" textFill="WHITE">
@@ -73,9 +88,9 @@
       </HBox>
       <SplitPane layoutY="97.0" prefHeight="682.0" prefWidth="1400.0">
          <items>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="1400.0">
+            <AnchorPane fx:id="testAnchor" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="1400.0">
                <children>
-                  <TableView fx:id="userTable" editable="true" layoutX="255.0" layoutY="88.0" prefHeight="491.0" prefWidth="897.0" style="-fx-font-family: Verdana;" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="88.0">
+                  <TableView fx:id="userTable" layoutX="255.0" layoutY="88.0" prefHeight="491.0" prefWidth="897.0" style="-fx-font-family: Verdana;" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="88.0">
                      <columns>
                         <TableColumn fx:id="usernameCol" prefWidth="251.0" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="USERNAME" />
                         <TableColumn fx:id="nameCol" prefWidth="379.4342956542969" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="NAME" />

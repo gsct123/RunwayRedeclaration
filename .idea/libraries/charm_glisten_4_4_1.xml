@@ -1,7 +1,6 @@
 <component name="libraryTable">
   <library name="charm-glisten-4.4.1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../charm-glisten-4.4.1.jar!/" />
       <root url="file://$USER_HOME$/Desktop/javafx-sdk-20/lib" />
     </CLASSES>
     <JAVADOC />

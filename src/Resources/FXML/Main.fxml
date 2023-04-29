@@ -19,6 +19,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DisplacementMap?>
 <?import javafx.scene.effect.FloatMap?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -99,6 +101,18 @@
               </MenuBar>
               <HBox prefHeight="75.0" prefWidth="1400.0" style="-fx-background-color: #212f45;">
                   <children>
+                  <Button fx:id="modeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="62.0" style="-fx-border-color: white; -fx-border-width: 1px; -fx-border-style: solid; -fx-border-radius: 50; -fx-background-color: null;">
+                     <graphic>
+                        <ImageView fx:id="iconImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../moon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="15.0" left="35.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
                       <Label alignment="CENTER_RIGHT" prefHeight="94.0" prefWidth="1060.0" text="RUNWAY REDECLARATION" textAlignment="CENTER" textFill="WHITE">
                           <font>
                               <Font name="Verdana Bold" size="25.0" />
@@ -137,7 +151,7 @@
               </HBox>
               <SplitPane dividerPositions="0.20021489971346704, 0.7861747851002865" prefHeight="601.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" stylesheets="@../CSS/MainStylesheet.css">
                   <items>
-                      <AnchorPane prefHeight="692.0" prefWidth="261.0">
+                      <AnchorPane fx:id="anchorLeft" prefHeight="692.0" prefWidth="261.0">
                           <children>
                               <MenuButton id="airportMenu" fx:id="airportMenu" layoutX="20.0" layoutY="52.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="235.0" styleClass="normalButton" stylesheets="@../CSS/MainStylesheet.css" text="Select an Airport">
                                   <items>
@@ -195,7 +209,7 @@
                                       <Font name="Verdana" size="12.0" />
                                   </font>
                         </TextField>
-                              <Label layoutX="29.0" layoutY="424.0" text="L/R from Centre Line: ">
+                              <Label fx:id="leftRight" layoutX="29.0" layoutY="424.0" text="L/R from Centre Line: ">
                                   <font>
                                       <Font name="Verdana" size="12.0" />
                                   </font>
@@ -217,7 +231,7 @@
                                       </RadioButton>
                                   </toggles>
                               </ToggleButtonGroup>
-                              <Label layoutX="29.0" layoutY="454.0" text="Distance from Centre Line (m): ">
+                              <Label fx:id="distFromCentre" layoutX="29.0" layoutY="454.0" text="Distance from Centre Line (m): ">
                                   <font>
                                       <Font name="Verdana" size="12.0" />
                                   </font>
@@ -235,7 +249,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                               </Button>
-                              <Label alignment="CENTER" layoutX="20.0" layoutY="8.0" prefHeight="42.0" prefWidth="235.0" text="AIRPORT">
+                              <Label fx:id="airportTitle" alignment="CENTER" layoutX="20.0" layoutY="8.0" prefHeight="42.0" prefWidth="235.0" text="AIRPORT">
                                   <font>
                                       <Font name="Verdana Bold" size="16.0" />
                                   </font>
@@ -243,7 +257,7 @@
                                       <Insets bottom="5.0" top="5.0" />
                                   </padding>
                               </Label>
-                              <Label alignment="CENTER" layoutX="20.0" layoutY="191.0" prefHeight="42.0" prefWidth="235.0" text="OBSTACLE">
+                              <Label fx:id="obTitle" alignment="CENTER" layoutX="20.0" layoutY="191.0" prefHeight="42.0" prefWidth="235.0" text="OBSTACLE">
                                   <font>
                                       <Font name="Verdana Bold" size="16.0" />
                                   </font>
@@ -259,7 +273,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                               </Button>
-                              <Label alignment="CENTER" layoutX="20.0" layoutY="99.0" prefHeight="42.0" prefWidth="219.0" text="RUNWAY">
+                              <Label fx:id="runwayTitle" alignment="CENTER" layoutX="20.0" layoutY="99.0" prefHeight="42.0" prefWidth="219.0" text="RUNWAY">
                                   <font>
                                       <Font name="Verdana Bold" size="16.0" />
                                   </font>
@@ -382,7 +396,7 @@
                                       <TableColumn fx:id="revisedCol2" editable="false" prefWidth="93.5" sortable="false" style="-fx-font-family: Verdana; -fx-font-size: 14px;" text="Revised" />
                                   </columns>
                               </TableView>
-                              <Label alignment="CENTER" layoutX="11.0" layoutY="16.0" prefHeight="42.0" prefWidth="268.0" text="CALCULATION">
+                              <Label fx:id="calTitle" alignment="CENTER" layoutX="11.0" layoutY="16.0" prefHeight="42.0" prefWidth="268.0" text="CALCULATION">
                                   <font>
                                       <Font name="Verdana Bold" size="16.0" />
                                   </font>
