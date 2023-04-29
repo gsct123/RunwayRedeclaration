@@ -592,6 +592,25 @@ public class MainController implements Initializable {
             Parent root = loader.load();
             Scene scene = new Scene(root);
 
+            if(MainController.Theme.getState()){
+                darkModePng.setVisible(true);
+                lightModePng.setVisible(false);
+                modeButtonManager.setStyle("-fx-background-color: rgb(49,73,88); -fx-background-radius:50");
+            } else{
+                lightModePng.setVisible(true);
+                darkModePng.setVisible(false);
+                modeButtonManager.setStyle("-fx-background-color: rgb(149,195,240); -fx-background-radius: 50");
+            }
+
+            Scene classScene = Main.getClassScene();
+
+            classScene = new Scene(root);
+            if(MainController.Theme.getState()){
+                classScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheetDark.css")).toExternalForm());
+            } else{
+                classScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+            }
+
             Stage stage = Main.getStage();
             stage.setTitle("SEG Runway Project");
             stage.setScene(scene);
