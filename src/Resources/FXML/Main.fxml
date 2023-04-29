@@ -107,12 +107,12 @@
                         <Button fx:id="modeButtonManager" layoutX="24.0" layoutY="19.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#changeMode" prefHeight="32.0" prefWidth="61.0" scaleY="-1.0" style="-fx-border-radius: 50; -fx-background-color: rgb(149,195,240); -fx-background-radius: 50;" />
                         <ImageView fx:id="darkModePng" fitHeight="27.0" fitWidth="32.0" layoutX="25.0" layoutY="20.0" onMouseClicked="#changeMode" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
-                              <Image url="@../moon2.png" />
+                              <Image url="@../Images/moon.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="lightModePng" fitHeight="61.0" fitWidth="61.0" layoutX="40.0" layoutY="6.0" onMouseClicked="#changeMode" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../sun-flat-icon-vector-7376564.png" />
+                              <Image url="@../Images/sun.png" />
                            </image>
                         </ImageView>
                      </children>

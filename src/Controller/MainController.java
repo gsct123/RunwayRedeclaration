@@ -23,18 +23,14 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -52,10 +48,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 
@@ -538,11 +531,10 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void loadAboutProject(ActionEvent event){
+    public void loadAboutProject(ActionEvent event) throws IOException {
+        inactivityTimer.cancel();
+        Utility.loadAboutProject(Main.getStage());
         resetInactivityTimer();
-        try {
-            Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
-        } catch (IOException | URISyntaxException ignored) {}
     }
 
     @FXML
@@ -827,7 +819,6 @@ public class MainController implements Initializable {
             Main.getClassScene().getStylesheets().add("CSS/MainStylesheetDark.css");
 
 
-            javafx.scene.image.Image image  = new javafx.scene.image.Image ("sun.png");
             System.out.println("Dark");
             mode = 0;
             MainController.Theme theme1 = new MainController.Theme();

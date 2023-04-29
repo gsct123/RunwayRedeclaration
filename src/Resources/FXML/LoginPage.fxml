@@ -39,7 +39,7 @@
             </TextField>
             <ImageView fitHeight="30.0" fitWidth="35.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../userIcon.png" />
+                  <Image url="@../Images/userIcon.png" />
                </image>
             </ImageView>
          </children>
@@ -53,14 +53,14 @@
             </PasswordField>
             <ImageView fitHeight="36.0" fitWidth="49.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../passwordIcon.png" />
+                  <Image url="@../Images/passwordIcon.png" />
                </image>
             </ImageView>
          </children>
         </AnchorPane>
       <ImageView fx:id="airplaneLogo" fitHeight="113.0" fitWidth="131.0" layoutX="400.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../airplaneLogo.png" />
+            <Image url="@../Images/airplaneLogo.png" />
          </image>
       </ImageView>
       <Label fx:id="forgotPasswordLink" layoutX="385.0" layoutY="470.0" styleClass="link" text="Forgot password" textFill="#2fa8fff7" underline="true">

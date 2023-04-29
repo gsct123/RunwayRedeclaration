@@ -28,10 +28,7 @@ import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -101,6 +98,35 @@ public class Utility {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         return  dtf.format(now);
+    }
+
+    public static void loadAboutProject(Stage stage) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Download Project Definition");
+
+// Set initial directory for the file chooser
+        File userDirectory = new File(System.getProperty("user.home"));
+        fileChooser.setInitialDirectory(userDirectory);
+
+// Set extension filters based on the type of file to be saved
+        FileChooser.ExtensionFilter pdfFilter = new FileChooser.ExtensionFilter("PDF Files (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().addAll(pdfFilter);
+
+// Show the file chooser and get the selected file directory
+        File selectedDirectory = fileChooser.showSaveDialog(AirportManager.getStage());
+        if(selectedDirectory != null){
+            FileOutputStream outputStream = new FileOutputStream(selectedDirectory);
+            InputStream inputStream = Utility.class.getResourceAsStream("/Printer/runwayprojectdefinition.pdf");
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            inputStream.close();
+            outputStream.close();
+
+            new Notification(stage).sucessNotification("Download successful", "Project Info downloaded to "+selectedDirectory);
+        }
     }
 
     public static void exportAirport(Stage stage, ObservableList<Airport> airports) throws ParserConfigurationException, TransformerException, IOException {

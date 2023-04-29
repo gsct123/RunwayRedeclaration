@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.Helper.AddNewUserController;
 import Model.Airport;
+import Model.Helper.Utility;
 import Model.Helper.XMLParserWriter;
 import Model.User;
 import View.Error;
@@ -18,14 +19,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -36,12 +33,8 @@ import javafx.stage.Stage;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
 import java.util.*;
 
 public class UserManagerController implements Initializable {
@@ -413,11 +406,10 @@ public class UserManagerController implements Initializable {
     }
 
     @FXML
-    public void loadAboutProject(ActionEvent event){
+    public void loadAboutProject(ActionEvent event) throws IOException {
+        inactivityTimer.cancel();
+        Utility.loadAboutProject(UserManager.getStage());
         resetInactivityTimer();
-        try {
-            Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
-        } catch (IOException | URISyntaxException ignored) {}
     }
 
     @FXML
@@ -436,7 +428,6 @@ public class UserManagerController implements Initializable {
             UserManager.getClassScene().getStylesheets().add("CSS/MainStylesheetDark.css");
 
 
-            javafx.scene.image.Image image  = new javafx.scene.image.Image ("sun.png");
             System.out.println("Dark");
             mode = 0;
             MainController.Theme theme1 = new MainController.Theme();
@@ -455,11 +446,10 @@ public class UserManagerController implements Initializable {
             System.out.println("Light");
             mode = 1;
             MainController.Theme theme1 = new MainController.Theme();
-            theme1.setState(false);
+            MainController.Theme.setState(false);
 
             System.out.println("setState:" + MainController.Theme.getState());
             stateSetter(theme1);
-
         }
     }
 
