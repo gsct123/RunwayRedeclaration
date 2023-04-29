@@ -1387,6 +1387,7 @@ public class MainController implements Initializable {
                 Platform.runLater(() -> {
                     // Prompt for logout
                     boolean flag = new Confirmation().confirm("You have been inactive for "+INACTIVITY_TIMEOUT/60000+" minutes.", "Do you want to proceed to logout?");
+                    inactivityTimer.cancel();
                     if(flag){
                         Main.getStage().close();
                         try {
@@ -1395,6 +1396,7 @@ public class MainController implements Initializable {
                             e.printStackTrace();
                         }
                     }
+                    resetInactivityTimer();
                     // TODO: Add code to handle user input
                 });
 

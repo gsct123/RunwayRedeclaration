@@ -147,9 +147,9 @@
                   </HBox>
                </children>
             </HBox>
-              <SplitPane dividerPositions="0.20021489971346704, 0.7861747851002865" prefHeight="601.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);">
+              <SplitPane dividerPositions="0.20021489971346704, 0.7861747851002865" prefHeight="601.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" styleClass="pane">
                   <items>
-                      <AnchorPane fx:id="anchorLeft" prefHeight="692.0" prefWidth="261.0">
+                      <AnchorPane fx:id="anchorLeft" prefHeight="692.0" prefWidth="261.0" styleClass="pane">
                           <children>
                               <MenuButton id="airportMenu" fx:id="airportMenu" layoutX="20.0" layoutY="52.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="235.0" styleClass="normalButton" text="Select an Airport">
                                   <items>
@@ -332,7 +332,7 @@
                               </TabPane>
                           </children>
                   </AnchorPane>
-                      <AnchorPane fx:id="stripEndLabel" maxWidth="-Infinity" prefHeight="655.0" prefWidth="294.0">
+                      <AnchorPane fx:id="stripEndLabel" maxWidth="-Infinity" prefHeight="655.0" prefWidth="294.0" styleClass="pane">
                           <children>
                               <Label fx:id="otherDetails" alignment="CENTER" layoutX="7.0" layoutY="387.0" prefHeight="56.0" prefWidth="271.0" styleClass="common-text" text="OTHER DETAILS">
                                   <font>
