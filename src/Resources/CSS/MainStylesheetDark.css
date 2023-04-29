@@ -1,25 +1,27 @@
 .pane {
-    -fx-background-color: rgb(244,244,244);
-    -fx-border-color: rgb(244,244,244);
+    -fx-background-color: #212f45;
+    -fx-border-color: #212f45;
     -fx-border-width: 0;
 }
 
+.title-pane {
+    -fx-background-color:  #151f2c;
+}
+
+
+.split-pane {
+    -fx-background-color: #212f45;
+    -fx-border-color: #212f45;
+    -fx-border-width: 0;
+}
 
 .split-pane > .split-pane-divider {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
 
-.title-pane {
-    -fx-background-color:  #212f45;
-}
-
 .anchor-pane > .anchor-pane-border {
     -fx-border-color: transparent;
-}
-
-.common-text {
-    -fx-text-fill: #212f45;
 }
 
 .my-alert > .content-text {
@@ -29,7 +31,7 @@
 }
 
 .visualPane .tab-header-area .tab-header-background {
--fx-background-color: rgb(244,244,244);
+-fx-background-color: #212f45;
 }
 
 .logoutButton{
@@ -42,20 +44,25 @@
 
 .normalButton{
 -fx-border-color: #212f45;
--fx-border-radius: 5px;
 -fx-background-radius: 5px;
+-fx-text-fill: white;
+-fx-background-color: linear-gradient( #151f2c 20%,  black 100%);
+}
+
+.normalButton .label {
+-fx-text-fill: rgb(244,244,244);
 }
 
 .functionButton{
 -fx-border-radius: 5px;
--fx-border-color: gray;
 -fx-background-radius: 5px;
--fx-text-fill: black;
--fx-background-color: linear-gradient( rgb(247,247,247) 0%, rgb(231,231,231) 100%)
+-fx-background-color: #478394;
+-fx-text-fill: white;
+-fx-border-color: transparent;
 }
 
 .functionButton:hover{
--fx-background-color: #478394;
+-fx-background-color: #6a994e;
 -fx-text-fill: white;
 }
 
@@ -66,19 +73,21 @@
 
 .visualPane .tab
 {
-    -fx-background-color: #e6e6e6;
+    -fx-background-color: #212f45;
+    -fx-text-fill: white;
 }
 
-.visualPane .tab:selected {
- -fx-alignment: CENTER;
- -fx-textfill: white;
- -fx-font-size: 12px;
- -fx-background-color: d6d6d6;
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-font-size: 12px;
+    -fx-text-fill: black;
+    -fx-background-color: d6d6d6;
 }
 
 .tab .tab-label {
     -fx-alignment: CENTER;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-font-size: 12px;
 }
 
@@ -86,8 +95,13 @@
     -fx-text-fill: black;
 }
 
+.table-view {
+    -fx-border-width: 0;
+    -fx-border-color: #212f45;
+}
+
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient( #212f45 0%,  #212f45 100%);
+    -fx-background-color: linear-gradient( #151f2c 0%,  #151f2c 100%);
 }
 
 .table-view .column-header {
@@ -107,6 +121,19 @@
     -fx-min-height: 0;
     -fx-pref-height: 0;
     -fx-max-height: 0;
+}
+
+.resetButtons {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: white;
+    -fx-background-color: #DBA507;
+    -fx-border-color: black;
+}
+
+.resetButtons:hover {
+    -fx-text-fill: black;
+    -fx-background-color: #f2cd68;
 }
 
 #extendButton{
@@ -141,3 +168,14 @@
 #notificationButton1:hover{
     -fx-background-color: #353d4a;
 }
+
+.common-text {
+    -fx-text-fill: rgb(244,244,244);
+}
+
+.text-fields {
+    -fx-background-color:  #151f2c;
+    -fx-text-fill: rgb(244,244,244);
+}
+
+

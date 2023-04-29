@@ -29,6 +29,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -44,6 +45,7 @@ import java.util.List;
 import java.util.*;
 
 public class UserManagerController implements Initializable {
+
     private static final int INACTIVITY_TIMEOUT = 3 * 60 * 1000; // 3 seconds in milliseconds
 
     private Timer inactivityTimer;
@@ -86,7 +88,9 @@ public class UserManagerController implements Initializable {
     @FXML
     private AnchorPane testAnchor;
     @FXML
-    private ImageView imageView;
+    private ImageView lightModePng;
+    @FXML
+    private ImageView darkModePng;
 
     @FXML
     private Button modeButtonManager;
@@ -95,78 +99,27 @@ public class UserManagerController implements Initializable {
     public static Stage helperStage;
 
     private ObservableList<User> userData = FXCollections.observableArrayList();
-    public static class theme{
-        private static boolean state = false;
 
-        public boolean isState() {
-            return state;
-        }
-
-        public static boolean getState(){
-            return state;
-        }
-        public void setState(boolean state){
-            this.state = state;
-        }
-
-    }
-    public void stateSetter(MainController.theme theme){
-        boolean state =theme.getState();
+    public void stateSetter(MainController.Theme theme){
+        boolean state = MainController.Theme.getState();
         System.out.println("current setter:"+state);
     }
     public double mode = 1;
 
-
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        modeButtonManager.setOnMouseClicked(event -> {
-            if (MainController.theme.getState() == false ) {
-                testAnchor.getStylesheets().add("CSS/darkMode.css");
-                testAnchor.getStylesheets().remove("CSS/lightMode.css");
-                addUserButton.getStylesheets().add("CSS/darkMode.css");
-                addUserButton.getStylesheets().remove("CSS/lightMode.css");
-                addManagerButton.getStylesheets().add("CSS/darkMode.css");
-                addManagerButton.getStylesheets().remove("CSS/lightMode.css");
-
-
-                javafx.scene.image.Image image  = new javafx.scene.image.Image ("sun.png");
-                imageView.setImage(image);
-                System.out.println("Dark");
-                mode = 0;
-                MainController.theme theme1 = new MainController.theme();
-                theme1.setState(true);
-
-                System.out.println("setState: " + theme1.getState());
-                stateSetter(theme1);
-
-            }else if (MainController.theme.getState() == true) {
-                testAnchor.getStylesheets().add("CSS/lightMode.css");
-                testAnchor.getStylesheets().remove("CSS/darkMode.css");
-                addUserButton.getStylesheets().add("CSS/lightMode.css");
-                addUserButton.getStylesheets().remove("CSS/darkMode.css");
-                addManagerButton.getStylesheets().add("CSS/lightMode.css");
-                addManagerButton.getStylesheets().remove("CSS/darkMode.css");
-
-
-
-                javafx.scene.image.Image image  = new javafx.scene.image.Image ("moon.png");
-
-                imageView.setImage(image);
-                System.out.println("Light");
-                mode = 1;
-                MainController.theme theme1 = new MainController.theme();
-                theme1.setState(false);
-
-                System.out.println("setState:" + theme1.getState());
-                stateSetter(theme1);
-
-            }
-        });
         resetInactivityTimer();
+
+        if(MainController.Theme.getState()){
+            darkModePng.setVisible(true);
+            lightModePng.setVisible(false);
+            modeButtonManager.setStyle("-fx-background-color: rgb(49,73,88); -fx-background-radius:50");
+        } else{
+            lightModePng.setVisible(true);
+            darkModePng.setVisible(false);
+            modeButtonManager.setStyle("-fx-background-color: rgb(149,195,240); -fx-background-radius: 50");
+        }
+
         identityLabel.setText("Logged in as "+ Main.getUsername());
 
         infoButton.setOnMouseEntered(event -> {
@@ -439,6 +392,7 @@ public class UserManagerController implements Initializable {
 
     @FXML
     public void handleLogout(ActionEvent event) throws Exception {
+        MainController.Theme.setState(false);
         inactivityTimer.cancel();
         UserManager.getStage().close();
         new Login().start(new Stage());
@@ -450,6 +404,49 @@ public class UserManagerController implements Initializable {
         try {
             Desktop.getDesktop().browse(new URI("https://github.com/SEG-Group-1-2023/ProjectRelatedInformation/blob/main/runwayprojectdefinition.pdf"));
         } catch (IOException | URISyntaxException ignored) {}
+    }
+
+    @FXML
+    public void changeMode(MouseEvent event){
+        resetInactivityTimer();
+        toggleMode();
+    }
+
+    public void toggleMode(){
+        if (!MainController.Theme.getState()) {
+            darkModePng.setVisible(true);
+            lightModePng.setVisible(false);
+            modeButtonManager.setStyle("-fx-background-color: rgb(49,73,88); -fx-background-radius:50");
+
+            UserManager.getClassScene().getStylesheets().remove("CSS/MainStylesheet.css");
+            UserManager.getClassScene().getStylesheets().add("CSS/MainStylesheetDark.css");
+
+
+            javafx.scene.image.Image image  = new javafx.scene.image.Image ("sun.png");
+            System.out.println("Dark");
+            mode = 0;
+            MainController.Theme theme1 = new MainController.Theme();
+            theme1.setState(true);
+
+            System.out.println("setState: " + MainController.Theme.getState());
+            stateSetter(theme1);
+        }else {
+            lightModePng.setVisible(true);
+            darkModePng.setVisible(false);
+            modeButtonManager.setStyle("-fx-background-color: rgb(149,195,240); -fx-background-radius: 50");
+
+            UserManager.getClassScene().getStylesheets().remove("CSS/MainStylesheetDark.css");
+            UserManager.getClassScene().getStylesheets().add("CSS/MainStylesheet.css");
+
+            System.out.println("Light");
+            mode = 1;
+            MainController.Theme theme1 = new MainController.Theme();
+            theme1.setState(false);
+
+            System.out.println("setState:" + MainController.Theme.getState());
+            stateSetter(theme1);
+
+        }
     }
 
 

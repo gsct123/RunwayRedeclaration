@@ -1,6 +1,7 @@
 package View;
 
 import Controller.AirportManagerController;
+import Controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +13,7 @@ import java.util.Objects;
 public class UserManager extends Application {
     private static Stage classStage;
     private static String username;
+    private static Scene classScene;
 
     //default constructor
     public UserManager(){}
@@ -28,6 +30,10 @@ public class UserManager extends Application {
         return classStage;
     }
 
+    public static Scene getClassScene(){
+        return classScene;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         classStage = stage;
@@ -35,11 +41,15 @@ public class UserManager extends Application {
         Parent root = loader.load();
         loader.setController(new AirportManagerController());
 
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+        classScene = new Scene(root);
+        if(MainController.Theme.getState()){
+            classScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheetDark.css")).toExternalForm());
+        } else{
+            classScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+        }
 
         stage.setTitle("SEG Runway Project");
-        stage.setScene(scene);
+        stage.setScene(classScene);
         stage.setResizable(false);
         stage.show();
     }

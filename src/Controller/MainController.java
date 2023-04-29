@@ -33,10 +33,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -269,6 +266,14 @@ public class MainController implements Initializable {
     @FXML
     private Button modeButton;
 
+    @FXML
+    private ImageView lightModePng;
+    @FXML
+    private ImageView darkModePng;
+
+    @FXML
+    private Button modeButtonManager;
+
     //property to be used in Visualisation classes
     public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
     public static ObjectProperty<Airport> airportItem = new SimpleObjectProperty();
@@ -295,7 +300,7 @@ public class MainController implements Initializable {
     private TopViewController topViewController;
     private SideViewController sideViewController;
     public double mode = 1;
-    public static class theme{
+    public static class Theme{
         private static boolean state = false;
 
         public boolean isState() {
@@ -305,127 +310,30 @@ public class MainController implements Initializable {
         public static boolean getState(){
             return state;
         }
-        public void setState(boolean state){
-            this.state = state;
+        public static void setState(boolean state){
+            Theme.state = state;
         }
 
     }
 
 
-    public void stateSetter(theme theme){
-        boolean state =theme.getState();
+    public void stateSetter(Theme theme){
+        boolean state = theme.getState();
         System.out.println("current setter:"+state);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        modeButton.setOnMouseClicked(event -> {
-            if (!theme.getState()) {
-                stripEndLabel.getStylesheets().add("CSS/darkMode.css");
-                stripEndLabel.getStylesheets().remove("CSS/lightMode.css");
-                anchorLeft.getStylesheets().add("CSS/darkMode.css");
-                anchorLeft.getStylesheets().remove("CSS/lightMode.css");
-                airportTitle.getStylesheets().add("CSS/darkMode.css");
-                airportTitle.getStylesheets().remove("CSS/lightMode.css");
-                calTitle.getStylesheets().add("CSS/darkMode.css");
-                calTitle.getStylesheets().remove("CSS/lightMode.css");
-                runwayTitle.getStylesheets().add("CSS/darkMode.css");
-                runwayTitle.getStylesheets().remove("CSS/lightMode.css");
-                obTitle.getStylesheets().add("CSS/darkMode.css");
-                obTitle.getStylesheets().remove("CSS/lightMode.css");
-                otherDetails.getStylesheets().add("CSS/darkMode.css");
-                otherDetails.getStylesheets().remove("CSS/lightMode.css");
-                obstacleHeightLabel.getStylesheets().add("CSS/darkMode.css");
-                obstacleHeightLabel.getStylesheets().remove("CSS/lightMode.css");
-                obstacleWidthLabel.getStylesheets().add("CSS/darkMode.css");
-                obstacleWidthLabel.getStylesheets().remove("CSS/lightMode.css");
-                distFromThreshold.getStylesheets().add("CSS/darkMode.css");
-                distFromThreshold.getStylesheets().remove("CSS/lightMode.css");
-                leftRight.getStylesheets().add("CSS/darkMode.css");
-                leftRight.getStylesheets().remove("CSS/lightMode.css");
-                distFromCentre.getStylesheets().add("CSS/darkMode.css");
-                distFromCentre.getStylesheets().remove("CSS/lightMode.css");
-                blastProtectionLabel.getStylesheets().add("CSS/darkMode.css");
-                blastProtectionLabel.getStylesheets().remove("CSS/lightMode.css");
-                newToraLabel1.getStylesheets().add("CSS/darkMode.css");
-                newToraLabel1.getStylesheets().remove("CSS/lightMode.css");
-                newToraLabel11.getStylesheets().add("CSS/darkMode.css");
-                newToraLabel11.getStylesheets().remove("CSS/lightMode.css");
-                performCalculationButton.getStylesheets().add("CSS/darkMode.css");
-                performCalculationButton.getStylesheets().remove("CSS/lightMode.css");
-                resetButton.getStylesheets().add("CSS/darkMode.css");
-                resetButton.getStylesheets().remove("CSS/lightMode.css");
-                resetViewButton.getStylesheets().add("CSS/darkMode.css");
-                resetViewButton.getStylesheets().remove("CSS/lightMode.css");
-                calculationBreakdown.getStylesheets().add("CSS/darkMode.css");
-                calculationBreakdown.getStylesheets().remove("CSS/lightMode.css");
-
-
-                javafx.scene.image.Image image  = new javafx.scene.image.Image ("sun.png");
-                iconImage.setImage(image);
-
-                System.out.println("Dark");
-                mode = 0;
-                theme theme1 = new theme();
-                theme1.setState(true);
-
-                System.out.println("setState: " + theme1.getState());
-                stateSetter(theme1);
-
-            }else if (theme.getState()) {
-                stripEndLabel.getStylesheets().add("CSS/lightMode.css");
-                stripEndLabel.getStylesheets().remove("CSS/darkMode.css");
-                anchorLeft.getStylesheets().add("CSS/lightMode.css");
-                anchorLeft.getStylesheets().remove("CSS/darkMode.css");
-                airportTitle.getStylesheets().add("CSS/lightMode.css");
-                airportTitle.getStylesheets().remove("CSS/darkMode.css");
-                calTitle.getStylesheets().add("CSS/lightMode.css");
-                calTitle.getStylesheets().remove("CSS/darkMode.css");
-                runwayTitle.getStylesheets().add("CSS/lightMode.css");
-                runwayTitle.getStylesheets().remove("CSS/darkMode.css");
-                obTitle.getStylesheets().add("CSS/lightMode.css");
-                obTitle.getStylesheets().remove("CSS/darkMode.css");
-                obstacleHeightLabel.getStylesheets().add("CSS/lightMode.css");
-                obstacleHeightLabel.getStylesheets().remove("CSS/darkMode.css");
-                obstacleWidthLabel.getStylesheets().add("CSS/lightMode.css");
-                obstacleWidthLabel.getStylesheets().remove("CSS/darkMode.css");
-                distFromThreshold.getStylesheets().add("CSS/lightMode.css");
-                distFromThreshold.getStylesheets().remove("CSS/darkMode.css");
-                leftRight.getStylesheets().add("CSS/lightMode.css");
-                leftRight.getStylesheets().remove("CSS/darkMode.css");
-                otherDetails.getStylesheets().add("CSS/lightMode.css");
-                otherDetails.getStylesheets().remove("CSS/darkMode.css");
-                distFromCentre.getStylesheets().add("CSS/lightMode.css");
-                distFromCentre.getStylesheets().remove("CSS/darkMode.css");
-                blastProtectionLabel.getStylesheets().add("CSS/lightMode.css");
-                blastProtectionLabel.getStylesheets().remove("CSS/darkMode.css");
-                newToraLabel1.getStylesheets().add("CSS/lightMode.css");
-                newToraLabel1.getStylesheets().remove("CSS/darkMode.css");
-                newToraLabel11.getStylesheets().add("CSS/lightMode.css");
-                newToraLabel11.getStylesheets().remove("CSS/darkMode.css");
-                performCalculationButton.getStylesheets().add("CSS/lightMode.css");
-                performCalculationButton.getStylesheets().remove("CSS/darkMode.css");
-                resetButton.getStylesheets().add("CSS/lightMode.css");
-                resetButton.getStylesheets().remove("CSS/darkMode.css");
-                resetViewButton.getStylesheets().add("CSS/lightMode.css");
-                resetViewButton.getStylesheets().remove("CSS/darkMode.css");
-                calculationBreakdown.getStylesheets().add("CSS/lightMode.css");
-                calculationBreakdown.getStylesheets().remove("CSS/darkMode.css");
-
-                javafx.scene.image.Image image = new javafx.scene.image.Image("moon.png");
-                iconImage.setImage(image);
-
-                System.out.println("Light");
-                mode = 1;
-                theme theme1 = new theme();
-                theme1.setState(false);
-
-                System.out.println("setState:" + theme1.getState());
-                stateSetter(theme1);
-
-            }
-        });
+        if(MainController.Theme.getState()){
+            darkModePng.setVisible(true);
+            lightModePng.setVisible(false);
+            modeButtonManager.setStyle("-fx-background-color: rgb(49,73,88); -fx-background-radius:50");
+        } else{
+            lightModePng.setVisible(true);
+            darkModePng.setVisible(false);
+            modeButtonManager.setStyle("-fx-background-color: rgb(149,195,240); -fx-background-radius: 50");
+        }
 
         beforeCalculation = true;
         resetInactivityTimer();
@@ -491,22 +399,6 @@ public class MainController implements Initializable {
             loadUsers();
 
             identityLabel.setText("Logged in as "+ Main.getUsername());
-            logoutItem.setOnAction(actionEvent -> {
-                inactivityTimer.cancel();
-                try {
-                    Utility.handleLogout(new ActionEvent());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-            logoutButton.setOnMouseClicked(mouseEvent -> {
-                inactivityTimer.cancel();
-                try {
-                    Utility.handleLogout(new ActionEvent());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
 
             airportManager.setOnAction(actionEvent -> {
                 addNotificationLabel("Status: Go to Airport Manager");
@@ -604,6 +496,14 @@ public class MainController implements Initializable {
     public static boolean beforeCalculation = false;
 
     //event handlers
+
+    @FXML
+    public void handleLogout(ActionEvent event) throws Exception {
+        MainController.Theme.setState(false);
+        inactivityTimer.cancel();
+        Main.getStage().close();
+        new Login().start(new Stage());
+    }
 
     @FXML
     public void toDefaultTheme(ActionEvent event){
@@ -889,40 +789,64 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void showCalculationBreakdown(ActionEvent event) throws IOException {
-        if (theme.getState() == false ){
-            inactivityTimer.cancel();
-            System.out.println("breakdown:" + theme.getState());
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CalculationBreakdown.fxml"));
+    public void changeMode(MouseEvent event){
+        resetInactivityTimer();
+        toggleMode();
+    }
 
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
-            stage.setTitle("Calculation Breakdown");
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            resetInactivityTimer();
-        } else if (theme.getState() == true){
-            System.out.println("breakdown:" + theme.getState());
-            inactivityTimer.cancel();
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/calBreakDark.fxml"));
+    public void toggleMode(){
+        if (!MainController.Theme.getState()) {
+            darkModePng.setVisible(true);
+            lightModePng.setVisible(false);
+            modeButtonManager.setStyle("-fx-background-color: rgb(49,73,88); -fx-background-radius:50");
 
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
-            stage.setTitle("Calculation Breakdown");
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            resetInactivityTimer();
+            Main.getClassScene().getStylesheets().remove("CSS/MainStylesheet.css");
+            Main.getClassScene().getStylesheets().add("CSS/MainStylesheetDark.css");
+
+
+            javafx.scene.image.Image image  = new javafx.scene.image.Image ("sun.png");
+            System.out.println("Dark");
+            mode = 0;
+            MainController.Theme theme1 = new MainController.Theme();
+            theme1.setState(true);
+
+            System.out.println("setState: " + MainController.Theme.getState());
+            stateSetter(theme1);
+        }else {
+            lightModePng.setVisible(true);
+            darkModePng.setVisible(false);
+            modeButtonManager.setStyle("-fx-background-color: rgb(149,195,240); -fx-background-radius: 50");
+
+            Main.getClassScene().getStylesheets().remove("CSS/MainStylesheetDark.css");
+            Main.getClassScene().getStylesheets().add("CSS/MainStylesheet.css");
+
+            System.out.println("Light");
+            mode = 1;
+            MainController.Theme theme1 = new MainController.Theme();
+            theme1.setState(false);
+
+            System.out.println("setState:" + MainController.Theme.getState());
+            stateSetter(theme1);
 
         }
+    }
 
+    @FXML
+    public void showCalculationBreakdown(ActionEvent event) throws IOException {
+        inactivityTimer.cancel();
+        System.out.println("breakdown:" + Theme.getState());
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CalculationBreakdown.fxml"));
+
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+        stage.setTitle("Calculation Breakdown");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+        resetInactivityTimer();
     }
 
     @FXML
@@ -1054,7 +978,7 @@ public class MainController implements Initializable {
             airportMenu.getItems().clear();
             for(Airport airport: airports){
                 MenuItem airportMenuItem = new MenuItem(airport.getName());
-                airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
+                airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px; -fx-text-fill: black;");
                 airportMenuItem.setOnAction(e -> {
                     resetInactivityTimer();
                     if(airport != getAirportSelected()){
@@ -1099,7 +1023,7 @@ public class MainController implements Initializable {
                 }
 
             });
-            runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
+            runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px; -fx-text-fill: black;");
             physicalRunwayMenu.getItems().add(runwayMenuItem);
         }
     }
@@ -1265,7 +1189,7 @@ public class MainController implements Initializable {
     public void addObstacleEvent(){
         for(Obstacle obstacle: getObstacles()){
             MenuItem obstacleMenuItem = new MenuItem(obstacle.getName());
-            obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
+            obstacleMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px; -fx-text-fill: black;");
             obstacleMenuItem.setOnAction(e -> {
                 resetInactivityTimer();
                 obstacleHeightField.setText(""+obstacle.getHeight());

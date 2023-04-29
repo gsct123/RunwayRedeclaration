@@ -1,5 +1,6 @@
 package View;
 
+import Controller.MainController;
 import Model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import java.util.Objects;
 
 
 public class Main extends Application {
+    private static Scene classScene;
     private static Stage classStage;
     private static boolean status;
     private static User user;
@@ -50,6 +52,10 @@ public class Main extends Application {
 
     }
 
+    public static Scene getClassScene(){
+        return classScene;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         Main.classStage = stage;
@@ -57,11 +63,14 @@ public class Main extends Application {
 
         Parent root = loader.load();
 
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
-
+        classScene = new Scene(root);
+        if(MainController.Theme.getState()){
+            classScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheetDark.css")).toExternalForm());
+        } else{
+            classScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/MainStylesheet.css")).toExternalForm());
+        }
         stage.setTitle("SEG Runway Project");
-        stage.setScene(scene);
+        stage.setScene(classScene);
         stage.setResizable(false);
         stage.show();
     }
