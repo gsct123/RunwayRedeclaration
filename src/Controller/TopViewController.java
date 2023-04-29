@@ -230,6 +230,10 @@ public class TopViewController implements Initializable {
     private Polyline minCGArea4;
     @FXML
     private Polyline minCGArea5;
+    @FXML
+    private Label minCGLabel;
+    @FXML
+    private Label maxCGLabel;
 
 
     @Override
@@ -1047,8 +1051,7 @@ public class TopViewController implements Initializable {
         toraOtherLineLabel.setRotate(d);
         ldaOtherLineLabel1.setRotate(d);
         toraOtherLineLabel1.setRotate(d);
+        minCGLabel.setRotate(d);
+        maxCGLabel.setRotate(d);
     }
-
-
-
 }

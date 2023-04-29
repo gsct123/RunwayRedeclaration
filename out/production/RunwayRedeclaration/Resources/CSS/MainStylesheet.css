@@ -134,4 +134,13 @@
     -fx-text-fill: red;
 }
 
+#notificationButton1{
+    -fx-background-color: #212f45;
+    -fx-background-radius: 0;
+    -fx-text-size: 12;
+}
 
+
+#notificationButton1:hover{
+    -fx-background-color: #353d4a;
+}

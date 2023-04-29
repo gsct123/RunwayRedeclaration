@@ -24,6 +24,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -234,14 +235,75 @@ public class UserManagerController implements Initializable {
             userTable.setItems(filterList(userData, newValue));
         });
 
-        userTable.setEditable(false);
-
         usernameCol.setCellValueFactory(
                 new PropertyValueFactory<>("username")
         );
+        if(Main.getRole() == 1){
+            usernameCol.setEditable(true);
+            usernameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            usernameCol.setOnEditCommit(event -> {
+                try{
+                    User user = event.getRowValue();
+                    String oldUsername = user.getUsername();
+                    String newUsername = event.getNewValue().trim();
+                    if(LoginController.users.containsKey(newUsername)){
+                        new Error().errorPopUp("ERROR: username already exist, try another one");
+                    } else if(newUsername.length() > 0){
+                        user.setUsername(newUsername);
+                        MainController.managers.remove(oldUsername);
+                        MainController.managers.put(newUsername, user);
+                        MainController.managerMap.remove(oldUsername);
+                        MainController.managerMap.put(newUsername, MainController.airportMap.get(user.getAirportID()));
+                        LoginController.users.remove(oldUsername);
+                        LoginController.users.put(newUsername, user);
+                        Airport airport = MainController.airportMap.get(user.getAirportID());
+                        airport.setManager(newUsername);
+                        try {
+                            XMLParserWriter.updateUserXML(FXCollections.observableArrayList(LoginController.users.values()), "src/Data/users.xml");
+                            XMLParserWriter.writeToFile(FXCollections.observableArrayList(MainController.airports.stream().toList()), "src/Data/airports.xml");
+                        } catch (ParserConfigurationException | TransformerException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }catch (NullPointerException ignored){
+                    User user = event.getRowValue();
+                    user.setUsername(event.getOldValue());
+                }
+                userTable.setItems(FXCollections.observableArrayList(MainController.managers.values().stream().toList()));
+                userTable.refresh();
+            });
+        }
+
         nameCol.setCellValueFactory(
                 new PropertyValueFactory<>("name")
         );
+
+        if(Main.getRole() == 1){
+            nameCol.setEditable(true);
+            nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            nameCol.setOnEditCommit(event -> {
+                try{
+                    User user = event.getRowValue();
+                    String newName = event.getNewValue().trim();
+                    if(newName.length() > 0){
+                        user.setName(newName);
+                        MainController.managers.put(user.getUsername(), user);
+                        MainController.managerMap.put(user.getUsername(), MainController.airportMap.get(user.getAirportID()));
+                        LoginController.users.put(user.getUsername(), user);
+                        try {
+                            XMLParserWriter.updateUserXML(FXCollections.observableArrayList(LoginController.users.values()), "src/Data/users.xml");
+                        } catch (ParserConfigurationException | TransformerException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }catch (NullPointerException ignored){
+                    User user = event.getRowValue();
+                    user.setName(event.getOldValue());
+                }
+                userTable.setItems(FXCollections.observableArrayList(MainController.managers.values().stream().toList()));
+                userTable.refresh();
+            });
+        }
 
         airportCol.setCellValueFactory(cellData -> {
             String airportID = cellData.getValue().getAirportID();
@@ -258,18 +320,8 @@ public class UserManagerController implements Initializable {
     }
 
     @FXML
-    public void loadHelpProject(ActionEvent event){
-        resetInactivityTimer();
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Help.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Help & Documentation");
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Cannot access help & documentation");
-        }
+    public void downloadUserGuide(ActionEvent event){
+
     }
 
 

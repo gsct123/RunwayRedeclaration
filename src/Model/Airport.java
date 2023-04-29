@@ -47,4 +47,8 @@ public class Airport {
     public String getID() {
         return ID;
     }
+
+    public void setManager(String name){
+        this.manager = name;
+    }
 }

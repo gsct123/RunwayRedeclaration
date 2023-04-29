@@ -293,6 +293,32 @@ public class MainController implements Initializable {
             topViewTab.setContent(root);
             sideViewTab.setContent(root1);
             simultaneousViewTab.setContent(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/FXML/SimultaneousView.fxml"))));
+
+            exportMenu.setVisible(true);
+
+            if(Main.getRole() == 1){
+                userManager.setVisible(true);
+                airportManager.setVisible(true);
+                exportAirport.setVisible(false);
+                airportNameLabel.setVisible(false);
+                airportMenu.setVisible(true);
+            } else if(Main.getRole() == 2){
+                airportManager.setVisible(false);
+                userManager.setVisible(true);
+                airportMenu.setVisible(false);
+                airportNameLabel.setVisible(true);
+                airportNameLabel.setText(airportMap.get(Main.getAirportID()).getName());
+                airportItem.set(airportMap.get(Main.getAirportID()));
+                physicalRunwayMenu.setDisable(false);
+            } else{
+                navigatingMenu.setVisible(false);
+                airportMenu.setVisible(false);
+                airportNameLabel.setVisible(true);
+                airportNameLabel.setText(airportMap.get(Main.getAirportID()).getName());
+                airportItem.set(airportMap.get(Main.getAirportID()));
+                physicalRunwayMenu.setDisable(false);
+            }
+
             loadAirports("src/Data/airports.xml");
             addAirportEvent();
             loadObstacles("src/Data/obstacles.xml");
@@ -330,31 +356,6 @@ public class MainController implements Initializable {
 
             if(Main.isReset()){
                 addNotificationLabel("Status: Options Reset");
-            }
-
-            exportMenu.setVisible(true);
-
-            if(Main.getRole() == 1){
-                userManager.setVisible(true);
-                airportManager.setVisible(true);
-                exportAirport.setVisible(false);
-                airportNameLabel.setVisible(false);
-                airportMenu.setVisible(true);
-            } else if(Main.getRole() == 2){
-                airportManager.setVisible(false);
-                userManager.setVisible(true);
-                airportMenu.setVisible(false);
-                airportNameLabel.setVisible(true);
-                airportNameLabel.setText(airportMap.get(Main.getAirportID()).getName());
-                airportItem.set(airportMap.get(Main.getAirportID()));
-                physicalRunwayMenu.setDisable(false);
-            } else{
-                navigatingMenu.setVisible(false);
-                airportMenu.setVisible(false);
-                airportNameLabel.setVisible(true);
-                airportNameLabel.setText(airportMap.get(Main.getAirportID()).getName());
-                airportItem.set(airportMap.get(Main.getAirportID()));
-                physicalRunwayMenu.setDisable(false);
             }
 
             generateReport.setDisable(true);
@@ -491,6 +492,11 @@ public class MainController implements Initializable {
         }
 
         resetInactivityTimer();
+    }
+
+    @FXML
+    public void downloadUserGuide(ActionEvent event){
+
     }
 
 
@@ -861,43 +867,57 @@ public class MainController implements Initializable {
     }
 
     public void addAirportEvent() {
-        airportMenu.getItems().clear();
-        for(Airport airport: airports){
-            MenuItem airportMenuItem = new MenuItem(airport.getName());
-            airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
-            airportMenuItem.setOnAction(e -> {
+        if(Main.getRole() == 1){
+            airportMenu.getItems().clear();
+            for(Airport airport: airports){
+                MenuItem airportMenuItem = new MenuItem(airport.getName());
+                airportMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
+                airportMenuItem.setOnAction(e -> {
+                    resetInactivityTimer();
+                    if(airport != getAirportSelected()){
+                        airportItem.set(airport);
+                        physicalRunwayMenu.getItems().clear();
+                        getAirportMenu().setText(airport.getName());
+                        physicalRunwayMenu.setText("Select Physical Runway");
+                        physicalRunwayMenu.setDisable(false);
+                        performCalculationButton.setDisable(true);
+                        obstaclesEditing(true);
+                        addPhysicalRunwayEvent(airport);
+                    }
+                });
+                getAirportMenu().getItems().add(airportMenuItem);
+            }
+        } else{
+            addPhysicalRunwayEvent(getAirportSelected());
+        }
+
+    }
+
+    public void addPhysicalRunwayEvent(Airport airport){
+        for(PhysicalRunway runway: airport.getPhysicalRunways()){
+            MenuItem runwayMenuItem = new MenuItem(runway.getName());
+            runwayMenuItem.setOnAction(f -> {
                 resetInactivityTimer();
-                airportItem.set(airport);
-                physicalRunwayMenu.getItems().clear();
-                getAirportMenu().setText(airport.getName());
-                physicalRunwayMenu.setText("Select Physical Runway");
-                physicalRunwayMenu.setDisable(false);
-                performCalculationButton.setDisable(true);
-                obstaclesEditing(true);
-                for(PhysicalRunway runway: airport.getPhysicalRunways()){
-                    MenuItem runwayMenuItem = new MenuItem(runway.getName());
-                    runwayMenuItem.setOnAction(f -> {
-                        resetInactivityTimer();
-                        oldToraInfo.setVisible(true);
-                        oldTodaInfo.setVisible(true);
-                        oldLdaInfo.setVisible(true);
-                        oldAsdaInfo.setVisible(true);
-                        physRunwayItem.set(runway);
-                        physicalRunwayMenu.setText(runway.getName());
-                        stripEndTextField.setText(String.valueOf(PhysicalRunway.getStripEnd()));
-                        blastProtectionField.setText(String.valueOf(PhysicalRunway.getBlastProtection()));
-                        resaTextField.setText(String.valueOf(PhysicalRunway.getResa()));
-                        stripEndTextField.setDisable(false);
-                        blastProtectionField.setDisable(false);
-                        resaTextField.setDisable(false);
-                        obstaclesEditing(false);
-                        showTable(true);
-                    });
-                    runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
-                    physicalRunwayMenu.getItems().add(runwayMenuItem);
+                if(runway != getPhysRunwaySelected()){
+                    oldToraInfo.setVisible(true);
+                    oldTodaInfo.setVisible(true);
+                    oldLdaInfo.setVisible(true);
+                    oldAsdaInfo.setVisible(true);
+                    physRunwayItem.set(runway);
+                    physicalRunwayMenu.setText(runway.getName());
+                    stripEndTextField.setText(String.valueOf(PhysicalRunway.getStripEnd()));
+                    blastProtectionField.setText(String.valueOf(PhysicalRunway.getBlastProtection()));
+                    resaTextField.setText(String.valueOf(PhysicalRunway.getResa()));
+                    stripEndTextField.setDisable(false);
+                    blastProtectionField.setDisable(false);
+                    resaTextField.setDisable(false);
+                    obstaclesEditing(false);
+                    showTable(true);
                 }
+
             });
-            getAirportMenu().getItems().add(airportMenuItem);
+            runwayMenuItem.setStyle("-fx-font-family: Verdana; -fx-font-size: 16px");
+            physicalRunwayMenu.getItems().add(runwayMenuItem);
         }
     }
 
@@ -1148,7 +1168,7 @@ public class MainController implements Initializable {
 
     //add notification into history and set text into notification label
     public void addNotificationLabel(String string) {
-        Label label = new Label(string + "\t\t"+ Utility.getDateTimeNow());
+        Label label = new Label(Utility.getDateTimeNow() + "\t\t"+ string);
         //label.setPrefHeight(40);
         label.setTextFill(Color.rgb(237, 92, 92));
         label.setPadding(new Insets(5));

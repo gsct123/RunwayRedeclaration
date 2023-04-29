@@ -150,6 +150,11 @@ public class AirportManagerController implements Initializable {
     }
 
     @FXML
+    public void downloadUserGuide(ActionEvent event){
+
+    }
+
+    @FXML
     public void backToMain(ActionEvent event) throws Exception {
         inactivityTimer.cancel();
         AirportManager.getStage().close();
@@ -383,7 +388,6 @@ public class AirportManagerController implements Initializable {
                                 MainController.airportMap.put(airport.getID(), airport);
                                 MainController.getAirports().add(airport);
                                 MainController.airportNames.add(airportName);
-                                MainController.managerMap.put(manager, airport);
                                 new Notification(AirportManager.getStage()).sucessNotification("Successful action", airportName + " successfully added to system.");
                             }
                         }

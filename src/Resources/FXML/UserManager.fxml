@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserManagerController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UserManagerController">
    <children>
       <MenuBar prefWidth="1400.0">
          <menus>
@@ -34,6 +34,7 @@
                <items>
                   <MenuItem fx:id="aboutProject" mnemonicParsing="false" onAction="#loadAboutProject" text="About Runway Project" />
                   <MenuItem fx:id="aboutProject1" mnemonicParsing="false" onAction="#loadCopyright" text="Version and Copyright Information" />
+                  <MenuItem fx:id="userGuide" mnemonicParsing="false" onAction="#downloadUserGuide" text="Download User Guide" />
                </items>
             </Menu>
          </menus>
@@ -74,7 +75,7 @@
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="1400.0">
                <children>
-                  <TableView fx:id="userTable" layoutX="255.0" layoutY="88.0" prefHeight="491.0" prefWidth="897.0" style="-fx-font-family: Verdana;" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="88.0">
+                  <TableView fx:id="userTable" editable="true" layoutX="255.0" layoutY="88.0" prefHeight="491.0" prefWidth="897.0" style="-fx-font-family: Verdana;" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="88.0">
                      <columns>
                         <TableColumn fx:id="usernameCol" prefWidth="251.0" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="USERNAME" />
                         <TableColumn fx:id="nameCol" prefWidth="379.4342956542969" style="-fx-padding: 7; -fx-alignment: CENTER-LEFT;" text="NAME" />

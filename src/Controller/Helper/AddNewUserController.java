@@ -45,7 +45,8 @@ public class AddNewUserController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         final Airport[] airportSelected = new Airport[1];
-        System.out.println(Main.getRole());
+        System.out.println(MainController.airports.size());
+        System.out.println(MainController.managerMap.keySet());
         if(Main.getRole() == 1){
             titleLabel.setText("Set Up Manager Account");
             airportMenu.setVisible(true);

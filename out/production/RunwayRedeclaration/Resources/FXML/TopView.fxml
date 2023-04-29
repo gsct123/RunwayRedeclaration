@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -89,12 +90,12 @@
                      </font>
                   </Label>
                   <Line fx:id="gradedAreaLine" endX="-92.00152587890625" endY="-55.94866943359375" layoutX="867.0" layoutY="263.0" startX="-92.00146484375" startY="79.2928466796875" stroke="#0f0f0f" />
-                  <Label layoutX="742.0" layoutY="267.0" style="-fx-text-fill: black;" text="75m">
+                  <Label fx:id="minCGLabel" layoutX="742.0" layoutY="267.0" style="-fx-text-fill: black;" text="75m">
                      <font>
                         <Font name="Verdana" size="10.0" />
                      </font>
                   </Label>
-                  <Label layoutX="741.0" layoutY="313.0" style="-fx-text-fill: black;" text="30m">
+                  <Label fx:id="maxCGLabel" layoutX="741.0" layoutY="313.0" style="-fx-text-fill: black;" text="30m">
                      <font>
                         <Font name="Verdana" size="10.0" />
                      </font>
@@ -224,8 +225,14 @@
                      </font>
                   </Label>
                </children>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
             </AnchorPane>
          </children>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
       </Pane>
       <Rectangle fx:id="stopwayLegend" arcHeight="5.0" arcWidth="5.0" fill="#fcf347" height="12.0" layoutX="635.0" layoutY="56.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="clearwayLegend" arcHeight="5.0" arcWidth="5.0" fill="#5ff552" height="12.0" layoutX="635.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />

@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
+<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopViewController">
    <children>
       <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="627.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
       <Pane fx:id="dragPane" layoutY="151.0" prefHeight="388.0" prefWidth="804.0">
@@ -90,12 +90,12 @@
                      </font>
                   </Label>
                   <Line fx:id="gradedAreaLine" endX="-92.00152587890625" endY="-55.94866943359375" layoutX="867.0" layoutY="263.0" startX="-92.00146484375" startY="79.2928466796875" stroke="#0f0f0f" />
-                  <Label layoutX="742.0" layoutY="267.0" style="-fx-text-fill: black;" text="75m">
+                  <Label fx:id="minCGLabel" layoutX="742.0" layoutY="267.0" style="-fx-text-fill: black;" text="75m">
                      <font>
                         <Font name="Verdana" size="10.0" />
                      </font>
                   </Label>
-                  <Label layoutX="741.0" layoutY="313.0" style="-fx-text-fill: black;" text="30m">
+                  <Label fx:id="maxCGLabel" layoutX="741.0" layoutY="313.0" style="-fx-text-fill: black;" text="30m">
                      <font>
                         <Font name="Verdana" size="10.0" />
                      </font>

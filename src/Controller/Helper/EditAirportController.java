@@ -106,6 +106,7 @@ public class EditAirportController implements Initializable {
             });
             MenuItem runwayMenuItem = new MenuItem(runway.getName());
             runwayMenuItem.setOnAction(f -> {
+                runwayMenu.setText(runwayMenuItem.getText());
                 toraTextField.setText(""+runway.getLogicalRunways().get(0).getTora());
                 designatorCol.setCellValueFactory(
                         new PropertyValueFactory<>("designator")
