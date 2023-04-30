@@ -1,6 +1,6 @@
 # Runway Redecalaration Project
 
-This project is designed to calculate the new runway parameters based on the user input for runway redeclaration. During the first increment, we have developed a working prototype that have predefined airport, runways and obstacles for users to perform calculation. In the current version, we have added two main visualisations to show and display the calculation result. There are also some modifications to the main interface to address things that we have overlooked.
+This project is designed to calculate the new runway parameters based on the user input for runway redeclaration. 
 
 ## Dependencies
 
@@ -26,3 +26,5 @@ You may download JavaFX component [here](https://gluonhq.com/products/javafx/).
 Once the application is launched, you will see a form on the left hand side that you need to fill out either by selecting options or typing in values. Some menus have been disabled to ensure that the required information is selected before proceeding. Once all fields are completed, click on the "Perform Calculation" button to calculate the new runway parameters. 
 
 The calculated results will be displayed at the right side of the interface, in the form of table and calculation breakdown. Visualisation will also be displayed in the middle of the interface, with tabs to navigate between the three types of views, namely top-down, side-on and simultaneous views.
+
+Refer to User Guide and Report for more detailed explanation.
