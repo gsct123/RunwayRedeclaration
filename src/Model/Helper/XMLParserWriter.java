@@ -18,7 +18,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.StringWriter;
 
 public class XMLParserWriter {
     public static void writeToFile(ObservableList<Airport> airports, String fileName) throws ParserConfigurationException, TransformerException {
@@ -40,19 +39,6 @@ public class XMLParserWriter {
         StreamResult streamResult = new StreamResult(new File(fileName));
         transformer.transform(domSource, streamResult);
     }
-
-    public static String printString(ObservableList<Airport> airports) throws TransformerException, ParserConfigurationException {
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        DOMSource domSource = new DOMSource(XMLParserWriter.airportToXML(airports));
-        StringWriter writer = new StringWriter();
-        StreamResult result = new StreamResult(writer);
-        transformer.transform(domSource, result);
-        return writer.toString();
-    }
-
 
     public static Document airportToXML(ObservableList<Airport> airports) throws ParserConfigurationException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();

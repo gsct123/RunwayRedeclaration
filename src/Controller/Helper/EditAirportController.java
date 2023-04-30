@@ -35,8 +35,6 @@ public class EditAirportController implements Initializable {
     @FXML
     private TableColumn<LogicalRunway, String> designatorCol;
     @FXML
-    private TableColumn<LogicalRunway, Double> toraCol;
-    @FXML
     private TableColumn<LogicalRunway, Double> todaCol;
     @FXML
     private TableColumn<LogicalRunway, Double> asdaCol;

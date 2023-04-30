@@ -370,22 +370,10 @@ public class PDFGenerator {
     }
 
     public PdfPCell createImageCell(String path, float scale) throws DocumentException, IOException {
-        int indentation = 0;
         Image img = createImage(path);
-//        img.setAlignment(Element.ALIGN_CENTER);
         img.scaleAbsolute(img.getPlainWidth()*scale, img.getPlainHeight()*scale);
         PdfPCell cell = new PdfPCell(img, true);
         cell.setBorder(0);
-        return cell;
-    }
-
-    public static PdfPCell createTextCell(String text) {
-        PdfPCell cell = new PdfPCell();
-        Paragraph p = new Paragraph(text);
-        p.setAlignment(Element.ALIGN_RIGHT);
-        cell.addElement(p);
-        cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
-        cell.setBorder(Rectangle.NO_BORDER);
         return cell;
     }
 

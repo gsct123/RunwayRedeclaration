@@ -97,8 +97,7 @@ public class MainController implements Initializable {
     private static boolean needRedeclare = true;
     @FXML
     private Button notificationButton;
-    @FXML
-    private Button resetViewButton;
+
     //notification
     @FXML
     private Pane notiPane;
@@ -106,8 +105,7 @@ public class MainController implements Initializable {
     private ScrollPane notiScrollPane;
     @FXML
     private VBox notiVBox;
-    @FXML
-    private Button extendButton;
+
 
     //fxml elements
     @FXML
@@ -122,10 +120,6 @@ public class MainController implements Initializable {
     private MenuItem airportManager;
     @FXML
     private MenuItem userManager;
-    @FXML
-    private Label obstacleHeightLabel;
-    @FXML
-    private Label obstacleWidthLabel;
     @FXML
     private TextField obstacleHeightField;
     @FXML
@@ -226,42 +220,6 @@ public class MainController implements Initializable {
     private MenuItem rgTheme;
     @FXML
     private MenuItem byTheme;
-    @FXML
-    private MenuItem Help;
-    //darkMode
-    //for darkmode
-    @FXML
-    private AnchorPane anchorLeft;
-    @FXML
-    private ImageView iconImage;
-    @FXML
-    private AnchorPane stripEndLabel;
-    @FXML
-    private Label airportTitle;
-    @FXML
-    private Label calTitle;
-    @FXML
-    private VBox vboxx;
-    @FXML
-    private Label runwayTitle;
-    @FXML
-    private Label obTitle;
-    @FXML
-    private Label distFromThreshold;
-    @FXML
-    private Label leftRight;
-    @FXML
-    private Label distFromCentre;
-    @FXML
-    private Label otherDetails;
-    @FXML
-    private Label newToraLabel1;
-    @FXML
-    private Label newToraLabel11;
-    @FXML
-    private Label blastProtectionLabel;
-    @FXML
-    private Button modeButton;
 
     @FXML
     private ImageView lightModePng;
@@ -286,7 +244,7 @@ public class MainController implements Initializable {
     //list of airports and obstacles from files
     public static HashMap<String, Airport> airportMap = new HashMap<>();
     public static ObservableList<Airport> airports = FXCollections.observableArrayList();
-//    public static MapProperty<String, Airport> airports = new SimpleMapProperty<>(FXCollections.observableMap(map));
+    //    public static MapProperty<String, Airport> airports = new SimpleMapProperty<>(FXCollections.observableMap(map));
     public static ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
     public static ObservableList<String> airportNames = FXCollections.observableArrayList();
     public static HashMap<String, Airport> managerMap = new HashMap<>();
@@ -366,6 +324,15 @@ public class MainController implements Initializable {
 
             exportMenu.setVisible(true);
 
+
+
+            loadAirports("src/Data/airports.xml");
+            System.out.println(airports);
+            addAirportEvent();
+            loadObstacles("src/Data/obstacles.xml");
+            addObstacleEvent();
+            loadUsers();
+
             if(Main.getRole() == 1){
                 userManager.setVisible(true);
                 airportManager.setVisible(true);
@@ -388,12 +355,6 @@ public class MainController implements Initializable {
                 airportItem.set(airportMap.get(Main.getAirportID()));
                 physicalRunwayMenu.setDisable(false);
             }
-
-            loadAirports("src/Data/airports.xml");
-            addAirportEvent();
-            loadObstacles("src/Data/obstacles.xml");
-            addObstacleEvent();
-            loadUsers();
 
             identityLabel.setText("Logged in as "+ Main.getUsername());
 
@@ -537,7 +498,7 @@ public class MainController implements Initializable {
     @FXML
     public void loadAboutProject(ActionEvent event) throws IOException {
         inactivityTimer.cancel();
-        Utility.loadAboutProject(Main.getStage());
+        Utility.loadAboutProject("Download Project Definition", Main.getStage(), "/Printer/runwayprojectdefinition.pdf");
         resetInactivityTimer();
     }
 
@@ -561,8 +522,10 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void downloadUserGuide(ActionEvent event){
-
+    public void downloadUserGuide(ActionEvent event) throws IOException {
+        inactivityTimer.cancel();
+        Utility.loadAboutProject("Download User Guide", Main.getStage(), "/Printer/UserGuide.pdf");
+        resetInactivityTimer();
     }
 
 
@@ -826,7 +789,7 @@ public class MainController implements Initializable {
             System.out.println("Dark");
             mode = 0;
             MainController.Theme theme1 = new MainController.Theme();
-            theme1.setState(true);
+            Theme.setState(true);
 
             System.out.println("setState: " + MainController.Theme.getState());
             stateSetter(theme1);
@@ -841,7 +804,7 @@ public class MainController implements Initializable {
             System.out.println("Light");
             mode = 1;
             MainController.Theme theme1 = new MainController.Theme();
-            theme1.setState(false);
+            Theme.setState(false);
 
             System.out.println("setState:" + MainController.Theme.getState());
             stateSetter(theme1);
@@ -1013,7 +976,7 @@ public class MainController implements Initializable {
                 getAirportMenu().getItems().add(airportMenuItem);
             }
         } else{
-            addPhysicalRunwayEvent(getAirportSelected());
+            addPhysicalRunwayEvent(airportMap.get(Main.getAirportID()));
         }
 
     }

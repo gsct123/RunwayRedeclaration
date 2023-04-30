@@ -100,9 +100,9 @@ public class Utility {
         return  dtf.format(now);
     }
 
-    public static void loadAboutProject(Stage stage) throws IOException {
+    public static void loadAboutProject(String title, Stage stage, String path) throws IOException {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Download Project Definition");
+        fileChooser.setTitle(title);
 
 // Set initial directory for the file chooser
         File userDirectory = new File(System.getProperty("user.home"));
@@ -116,7 +116,7 @@ public class Utility {
         File selectedDirectory = fileChooser.showSaveDialog(AirportManager.getStage());
         if(selectedDirectory != null){
             FileOutputStream outputStream = new FileOutputStream(selectedDirectory);
-            InputStream inputStream = Utility.class.getResourceAsStream("/Printer/runwayprojectdefinition.pdf");
+            InputStream inputStream = Utility.class.getResourceAsStream(path);
             byte[] buffer = new byte[4096];
             int bytesRead;
             while ((bytesRead = inputStream.read(buffer)) != -1) {

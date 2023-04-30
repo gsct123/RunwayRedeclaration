@@ -46,15 +46,9 @@ public class Arrow {
         return end;
     }
 
-    public void setEnd(Line end) {
-        this.end = end;
-    }
 
     public Polygon getArrowHead() {
         return arrowHead;
     }
 
-    public void setArrowHead(Polygon arrowHead) {
-        this.arrowHead = arrowHead;
-    }
 }

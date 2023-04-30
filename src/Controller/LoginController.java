@@ -4,7 +4,6 @@ import Model.Helper.Utility;
 import Model.User;
 import View.Error;
 import View.Login;
-import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,10 +17,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -44,17 +41,11 @@ public class LoginController implements Initializable {
     @FXML
     private TextField passwordField;
     @FXML
-    private Button signInButton;
-    @FXML
     private AnchorPane userPane;
     @FXML
     private AnchorPane passwordPane;
     @FXML
     private Button loginButton;
-    @FXML
-    private Circle c1;
-    @FXML
-    private Circle c2;
     @FXML
     private Label forgotPasswordLink;
 
@@ -167,15 +158,4 @@ public class LoginController implements Initializable {
             }
         }
     }
-    private void setRotate(Circle c,boolean reverse,int angle,int duration) {
-        //To animation of circle rotation
-        RotateTransition rt = new RotateTransition (Duration.seconds (duration),c);
-        rt.setAutoReverse (reverse) ;
-        rt.setByAngle (angle);
-        rt.setDelay (Duration.seconds(0));
-        rt.setRate(3);
-        rt.setCycleCount (18);
-        rt.play();
-    }
-
 }

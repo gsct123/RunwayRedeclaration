@@ -27,7 +27,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -45,8 +44,6 @@ public class UserManagerController implements Initializable {
     @FXML
     private Label identityLabel;
     @FXML
-    private Button logoutButton;
-    @FXML
     private TableView<User> userTable;
     @FXML
     private Button infoButton;
@@ -60,8 +57,6 @@ public class UserManagerController implements Initializable {
     private TableColumn<User, String> nameCol;
     @FXML
     private TableColumn<User, String> airportCol;
-    @FXML
-    private TableColumn<User, String> airportIDCol;
     @FXML
     private Button addUserButton;
     @FXML
@@ -80,10 +75,6 @@ public class UserManagerController implements Initializable {
     private MenuItem copyright;
     @FXML
     private MenuItem userGuide;
-    @FXML
-    private MenuItem Help;
-    @FXML
-    private AnchorPane testAnchor;
     @FXML
     private ImageView lightModePng;
     @FXML
@@ -119,16 +110,16 @@ public class UserManagerController implements Initializable {
 
         identityLabel.setText("Logged in as "+ Main.getUsername());
 
-        infoButton.setOnMouseEntered(event -> {
-            resetInactivityTimer();
-            infoLabel.setVisible(true);
-        });
-        infoButton.setOnMouseExited(event -> {
-            resetInactivityTimer();
-            infoLabel.setVisible(false);
-        });
-
         if(Main.getRole() == 1){
+            infoButton.setOnMouseEntered(event -> {
+                resetInactivityTimer();
+                infoLabel.setVisible(true);
+            });
+            infoButton.setOnMouseExited(event -> {
+                resetInactivityTimer();
+                infoLabel.setVisible(false);
+            });
+
             userData = FXCollections.observableArrayList(MainController.managers.values().stream().toList());
             addManagerButton.setVisible(true);
             addUserButton.setVisible(false);
@@ -345,10 +336,11 @@ public class UserManagerController implements Initializable {
     }
 
     @FXML
-    public void downloadUserGuide(ActionEvent event){
-
+    public void downloadUserGuide(ActionEvent event) throws IOException {
+        inactivityTimer.cancel();
+        Utility.loadAboutProject("Download User Guide", Main.getStage(), "/Printer/UserGuide.pdf");
+        resetInactivityTimer();
     }
-
 
     @FXML
     public void goAirportManager(ActionEvent event) throws Exception {
@@ -412,7 +404,7 @@ public class UserManagerController implements Initializable {
     @FXML
     public void loadAboutProject(ActionEvent event) throws IOException {
         inactivityTimer.cancel();
-        Utility.loadAboutProject(UserManager.getStage());
+        Utility.loadAboutProject("Download Project Definition", UserManager.getStage(), "/Printer/runwayprojectdefinition.pdf");
         resetInactivityTimer();
     }
 

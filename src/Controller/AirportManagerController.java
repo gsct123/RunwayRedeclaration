@@ -26,7 +26,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -51,19 +50,9 @@ public class AirportManagerController implements Initializable {
     @FXML
     private Label identityLabel;
     @FXML
-    private Button logoutButton;
-    @FXML
     private TableView<Airport> airportTable;
     @FXML
-    private Button importAirportButton;
-    @FXML
-    private Button deleteAirportButton;
-    @FXML
     private TextArea airportDetails;
-    @FXML
-    private Button editAirportButton;
-    @FXML
-    private Button exportAirportButton;
     @FXML
     private TextField searchField;
     @FXML
@@ -85,23 +74,9 @@ public class AirportManagerController implements Initializable {
     @FXML
     private MenuItem logoutItem;
     @FXML
-    private MenuItem Help;
-    @FXML
-    private Button modeButtonAirport;
-    @FXML
-    private Button exportAirportDetails;
-    @FXML
-    private Button exportAllAirport;
-    @FXML
-    private AnchorPane backgroundPane;
-    @FXML
     private ImageView lightModePng;
     @FXML
     private ImageView darkModePng;
-    @FXML
-    private Label addNewAirport;
-    @FXML
-    private Label manageAirport;
     @FXML
     private Button modeButtonManager;
 
@@ -183,8 +158,10 @@ public class AirportManagerController implements Initializable {
     }
 
     @FXML
-    public void downloadUserGuide(ActionEvent event){
-
+    public void downloadUserGuide(ActionEvent event) throws IOException {
+        inactivityTimer.cancel();
+        Utility.loadAboutProject("Download User Guide", AirportManager.getStage(), "/Printer/UserGuide.pdf");
+        resetInactivityTimer();
     }
 
     @FXML
@@ -225,23 +202,8 @@ public class AirportManagerController implements Initializable {
     @FXML
     public void loadAboutProject(ActionEvent event) throws IOException {
         inactivityTimer.cancel();
-        Utility.loadAboutProject(AirportManager.getStage());
+        Utility.loadAboutProject("Download Project Definition", AirportManager.getStage(), "/Printer/runwayprojectdefinition.pdf");
         resetInactivityTimer();
-    }
-
-    @FXML
-    public void loadHelpProject(ActionEvent event){
-        resetInactivityTimer();
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/Help.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Help & Documentation");
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Cannot access help & documentation");
-        }
     }
 
     @FXML

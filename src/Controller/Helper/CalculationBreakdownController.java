@@ -7,10 +7,7 @@ import Model.Obstacle;
 import Model.PhysicalRunway;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,23 +39,6 @@ public class CalculationBreakdownController implements Initializable {
     private Label todaBreakdown1;
     @FXML
     private Label asdaBreakdown1;
-    @FXML
-    private AnchorPane breakDownPane;
-    @FXML
-    private Button modeButton;
-
-
-
-    public void changeMode(Color color) {
-        breakDownPane.setStyle("-fx-background-color: " + color.toString() + ";");
-    }
-    public class OtherController {
-        private MainController mainController;
-
-        public OtherController(MainController mainController) {
-            this.mainController = mainController;
-        }
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

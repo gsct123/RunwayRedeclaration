@@ -27,10 +27,6 @@ public class User {
         return password;
     }
 
-    public int getAccessControl() {
-        return role;
-    }
-
     public String getName() {
         return name;
     }
