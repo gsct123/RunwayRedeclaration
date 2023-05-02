@@ -642,6 +642,7 @@ public class MainController implements Initializable {
             double distFromThreshold = Double.parseDouble(distanceThresholdTextField.getText().trim());
             getObstacleSelected().setDistFThreshold(distFromThreshold);
             disFromThreshold.set(distFromThreshold);
+            distanceThresholdTextField.setText(distFromThreshold+"");
         } catch (NumberFormatException exception) {
             //display error message
             new Error().showError(distanceThresholdTextField, "Invalid input for distance from threshold\nHint: please input a numerical value", ""+getObstacleSelected().getDistFThreshold());
@@ -656,6 +657,7 @@ public class MainController implements Initializable {
             if(distFromCentreLine < 0){throw new NumberFormatException();}
             getObstacleSelected().setDistFCent(distFromCentreLine);
             disFromCentre.set(distFromCentreLine);
+            clDistTextField.setText(distFromCentreLine+"");
         } catch (NumberFormatException exception){
             new Error().showError(clDistTextField, "Invalid input for distance from centre line\nHint: please input a numerical value greater or equal to 0", ""+getObstacleSelected().getDirFromCentre());
             addNotificationLabel("Error: Invalid input for distance from centre line\nHint: please input a numerical value greater or equal to 0");
@@ -669,6 +671,7 @@ public class MainController implements Initializable {
             if(height <= 0){throw new NumberFormatException();}
             getObstacleSelected().setHeight(height);
             obstacleHeight.set(height);
+            obstacleHeightField.setText(""+height);
         } catch (NumberFormatException e){
             new Error().showError(obstacleHeightField, "Invalid obstacle height, please input a numerical value greater than 0", ""+getObstacleSelected().getHeight());
             addNotificationLabel("Error: Invalid obstacle height, please input a numerical value greater than 0");
@@ -682,6 +685,7 @@ public class MainController implements Initializable {
             if(width <= 0){throw new NumberFormatException();}
             getObstacleSelected().setWidth(width);
             obstacleWidth.set(width);
+            obstacleWidthField.setText(""+width);
         } catch (NumberFormatException e){
             new Error().showError(obstacleWidthField, "Invalid obstacle width, please input a numerical value greater than 0", ""+getObstacleSelected().getWidth());
             addNotificationLabel("Error: Invalid obstacle width, please input a numerical value greater than 0");
