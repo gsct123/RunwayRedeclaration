@@ -29,7 +29,7 @@
             <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Go">
                <items>
                   <MenuItem fx:id="backToMain" mnemonicParsing="false" onAction="#backToMain" text="Back To Main" />
-                  <MenuItem fx:id="airportManager" mnemonicParsing="false" onAction="#goAirportManager" text="Airport Manager" />
+                  <MenuItem fx:id="airportManager" mnemonicParsing="false" onAction="#goAirportManager" text="Manage Airport" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Info">
@@ -59,12 +59,12 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <Label alignment="CENTER" layoutY="28.0" prefHeight="72.0" prefWidth="959.0" text="USER MANAGER" textAlignment="CENTER" textFill="WHITE">
+            <Label alignment="CENTER" layoutY="28.0" prefHeight="72.0" prefWidth="959.0" text="MANAGE USER ACCOUNTS" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Verdana Bold" size="25.0" />
                </font>
                <padding>
-                  <Insets bottom="20.0" left="380.0" right="198.0" top="20.0" />
+                  <Insets bottom="20.0" left="380.0" right="160.0" top="20.0" />
                </padding>
             </Label>
             <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="263.0" textFill="WHITE">

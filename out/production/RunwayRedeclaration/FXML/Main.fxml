@@ -55,8 +55,8 @@
                       </Menu>
                   <Menu fx:id="navigatingMenu" mnemonicParsing="false" style="-fx-font-family: Verdana;" text="Go">
                      <items>
-                        <MenuItem fx:id="airportManager" mnemonicParsing="false" text="Airport Manager" />
-                        <MenuItem fx:id="userManager" mnemonicParsing="false" onAction="#goUserManager" text="User Manager" />
+                        <MenuItem fx:id="airportManager" mnemonicParsing="false" text="Manage Airport" />
+                        <MenuItem fx:id="userManager" mnemonicParsing="false" onAction="#goUserManager" text="Manage User Accounts" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Tools">
