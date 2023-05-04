@@ -339,6 +339,11 @@ public class MainController implements Initializable {
                 exportAirport.setVisible(false);
                 airportNameLabel.setVisible(false);
                 airportMenu.setVisible(true);
+                // disable
+                userManager.setDisable(false);
+                airportManager.setDisable(false);
+                exportAirport.setDisable(true);
+                airportMenu.setDisable(false);
             } else if(Main.getRole() == 2){
                 airportManager.setVisible(false);
                 userManager.setVisible(true);
@@ -347,6 +352,10 @@ public class MainController implements Initializable {
                 airportNameLabel.setText(airportMap.get(Main.getAirportID()).getName());
                 airportItem.set(airportMap.get(Main.getAirportID()));
                 physicalRunwayMenu.setDisable(false);
+                //disable
+                airportManager.setDisable(true);
+                userManager.setDisable(false);
+                airportMenu.setDisable(true);
             } else{
                 navigatingMenu.setVisible(false);
                 airportMenu.setVisible(false);
@@ -354,6 +363,10 @@ public class MainController implements Initializable {
                 airportNameLabel.setText(airportMap.get(Main.getAirportID()).getName());
                 airportItem.set(airportMap.get(Main.getAirportID()));
                 physicalRunwayMenu.setDisable(false);
+                //disable
+                navigatingMenu.setDisable(true);
+                airportMenu.setDisable(true);
+                airportNameLabel.setDisable(false);
             }
 
             identityLabel.setText("Logged in as "+ Main.getUsername());
