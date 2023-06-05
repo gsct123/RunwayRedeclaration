@@ -1,4 +1,4 @@
-# Runway Redecalaration Project
+# Runway Redeclaration Project
 
 This project is designed to calculate the new runway parameters based on the user input for runway redeclaration. 
 
